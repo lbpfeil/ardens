@@ -91,34 +91,50 @@ Extracted from `themes/dark.css` (Supabase Default).
 }
 ```
 
-## 🎨 Color Palette
 
-Mapped from `packages/ui/build/css/tw-extend/color.js`.
+## 🎨 Color Palette & Radix Scales
 
-| Nome | Tailwind Classes | Exact HSL Value (Dark) |
-|------|------------------|------------------------|
-| **Brand** | | |
-| Brand Primary | `bg-brand` / `text-brand` | `hsl(153.1 60.2% 52.7%)` |
-| Brand Link | `text-brand-link` | `hsl(155 100% 38.6%)` |
-| **Foreground** | | |
-| Default | `text-foreground` | `hsl(0 0% 98%)` |
-| Light | `text-foreground-light` | `hsl(0 0% 70.6%)` |
-| Lighter | `text-foreground-lighter` | `hsl(0 0% 53.7%)` |
-| Muted | `text-foreground-muted` | `hsl(0 0% 30.2%)` |
-| Contrast | `text-foreground-contrast` | `hsl(0 0% 8.6%)` |
-| **Background** | | |
-| Default | `bg-background` | `hsl(0 0% 7.1%)` |
-| Surface 100 | `bg-surface-100` | `hsl(0 0% 12.2%)` |
-| Surface 200 | `bg-surface-200` | `hsl(0 0% 12.9%)` |
-| Surface 300 | `bg-surface-300` | `hsl(0 0% 16.1%)` |
-| Sidebar | `bg-sidebar` | `hsl(0 0% 9%)` |
-| Selection | `bg-selection` | `hsl(0 0% 19.2%)` |
-| Overlay | `bg-overlay` | `hsl(0 0% 14.1%)` |
-| **Border** | | |
-| Default | `border-border` | `hsl(0 0% 18%)` |
-| Strong | `border-strong` | `hsl(0 0% 21.2%)` |
-| Stronger | `border-stronger` | `hsl(0 0% 27.1%)` |
-| Overlay | `border-overlay` | `hsl(0 0% 20%)` |
+Supabase uses a **12-step color scale** system (similar to Radix UI).
+The `brand` colors map to this scale.
+
+### Brand Scale (Green/Teal)
+| Token | Variable | Value (Dark Mode) | Usage |
+|-------|----------|-------------------|-------|
+| **1** | `--colors-brand1` | `hsl(153 75% 6%)` | App background |
+| **2** | `--colors-brand2` | `hsl(153 73% 7%)` | Subtle background |
+| **3** | `--colors-brand3` | `hsl(154 69% 9%)` | UI element background |
+| **4** | `--colors-brand4` | `hsl(154 67% 11%)` | Hovered UI element |
+| **5** | `--colors-brand5` | `hsl(154 66% 13%)` | Active/Selected UI element |
+| **6** | `--colors-brand6` | `hsl(154 64% 17%)` | Subtle borders and separators |
+| **7** | `--colors-brand7` | `hsl(154 62% 22%)` | UI element border and focus rings |
+| **8** | `--colors-brand8` | `hsl(153 60% 28%)` | Hovered UI element border |
+| **9** | `--colors-brand9` | `hsl(153 60% 53%)` | Solid backgrounds (Buttons) |
+| **10** | `--colors-brand10` | `hsl(153 60% 70%)` | Hovered solid backgrounds |
+| **11** | `--colors-brand11` | `hsl(153 60% 50%)` | Low-contrast text |
+| **12** | `--colors-brand12` | `hsl(153 60% 95%)` | High-contrast text |
+
+*Note: `var(--brand-default)` corresponds to `brand9`.*
+
+### Gray/Slate Scale
+Used for neutrals. Supabase uses `slate` (cool gray) extensively.
+
+| Token | Variable | Value (Dark Mode roughly) | Usage |
+|-------|----------|---------------------------|-------|
+| **1** | `--colors-slate1` | `hsl(200 7% 8.8%)` | App background |
+| **2** | `--colors-slate2` | `hsl(195 7% 11%)` | Subtle background |
+| **3** | `--colors-slate3` | `hsl(197 6.8% 13.6%)`| UI element background |
+| **4** | `--colors-slate4` | `hsl(198 6.6% 15.8%)`| Hovered UI element |
+| **5** | `--colors-slate5` | `hsl(199 6.4% 17.9%)`| Active/Selected UI element |
+| **6** | `--colors-slate6` | `hsl(201 6.2% 20.5%)`| Subtle borders |
+| **7** | `--colors-slate7` | `hsl(203 6% 24.3%)` | UI element border |
+| **8** | `--colors-slate8` | `hsl(207 5.6% 31.6%)`| Hovered UI element border |
+| **9** | `--colors-slate9` | `hsl(206 6% 43.9%)` | Solid backgrounds |
+| **10** | `--colors-slate10` | `hsl(206 5.2% 49.5%)`| Hovered solid backgrounds |
+| **11** | `--colors-slate11` | `hsl(206 6% 63%)` | Low-contrast text |
+| **12** | `--colors-slate12` | `hsl(210 6% 93%)` | High-contrast text |
+
+*Values extracted from `projectwallace-css.tokens.json`.*
+
 
 ## 📐 Typography
 
@@ -126,17 +142,22 @@ Mapped from `packages/ui/build/css/tw-extend/color.js`.
 **Mono Font**: `Source Code Pro`, `Office Code Pro`, `Menlo`, `monospace` (Variable: `var(--font-source-code-pro)`)
 
 ### Font Scale
-| Scale | Size | Line Height | Weight | Usage |
-|-------|------|-------------|--------|-------|
-| **xs** | 12px (0.75rem) | 1.125rem | 400 | Labels, metadata, captions |
-| **sm** | 14px (0.875rem) | 1.25rem | 400 | Body text, descriptions |
-| **base** | 16px (1rem) | 1.5rem | 400 | Default body text |
-| **lg** | 18px (1.125rem) | 1.75rem | 400 | Large body text |
-| **xl** | 20px (1.25rem) | 1.875rem | 400 | Small headings |
-| **2xl** | 24px (1.5rem) | 2rem | 400 | Card titles, section headers |
-| **3xl** | 30px (1.875rem) | 2.25rem | 400 | Page headers |
-| **4xl** | 36px (2.25rem) | 2.5rem | 400 | Hero titles |
-| **5xl** | 48px (3rem) | 3rem | 400 | Landing page titles |
+| Scale | Size | Line Height | Usage |
+|-------|------|-------------|-------|
+| **xs** | 12px (0.75rem) | 1rem | Labels, metadata |
+| **sm** | 14px (0.875rem) | 1.25rem | Body text |
+| **base** | 16px (1rem) | 1.5rem | Default body |
+| **lg** | 18px (1.125rem) | 1.75rem | Large body |
+| **xl** | 20px (1.25rem) | 1.75rem | Headings |
+| **2xl** | 24px (1.5rem) | 2rem | Section headers |
+| **3xl** | 30px (1.875rem) | 2.25rem | Page headers |
+| **4xl** | 36px (2.25rem) | 2.5rem | Hero titles |
+| **5xl** | 48px (3rem) | 1 | Display titles |
+| **6xl** | 60px (3.75rem) | 1 | Large display |
+| **7xl** | 72px (4.5rem) | 1 | Massive display |
+
+*Verified against CSS tokens (high usage of `0.75rem`, `0.875rem`, `1rem`).*
+
 
 ### Heading Hierarchy
 | Level | Size Class | Weight | Color Class | Usage |
@@ -201,13 +222,15 @@ Consistent border radius for different component sizes.
 | Scale | Value | Usage |
 |-------|-------|-------|
 | **none** | 0px | Sharp corners |
-| **sm** | 2px | Small elements, badges |
-| **DEFAULT** | 6px | Buttons, inputs, cards |
-| **md** | 8px | Large buttons, panels |
-| **lg** | 10px | Modals, sheets |
-| **xl** | 12px | Special components |
-| **2xl** | 16px | Large containers |
+| **sm** | 2px | Small elements, inner badges |
+| **DEFAULT** (md)| 6px | **Most Common**. Cards, inputs, buttons |
+| **lg** | 8px | Larger cards, modals |
+| **xl** | 12px | Panels, containers |
+| **2xl** | 16px | Large layout containers |
 | **full** | 9999px | Pills, avatars |
+
+*Analysis of standard usage: 6px is the dominant radius.*
+
 
 *Note: Most components use the default 6px radius.*
 
