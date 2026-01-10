@@ -1409,92 +1409,1332 @@ Quando empreiteiro solicita material (ex: rejunte para Casa B03), almoxarife con
 
 # 13. ASPECTOS TÉCNICOS
 
-## ⏳ SEÇÃO PENDENTE DE DISCUSSÃO COMPLETA
+## ✅ DECISÕES FUNDAMENTAIS (Consolidadas)
 
-### O que já sabemos:
+Esta seção documenta as decisões técnicas tomadas para o desenvolvimento do Arden FVS.
 
-**Tecnologias Mencionadas:**
-- Frontend Web: React, Node.js
-- Mobile: React Native (Android MVP, iOS Fase 2)
-- Banco Local Mobile: SQLite (para offline)
-- Inspiração: Supabase (Tailwind CSS, Radix UI)
+---
 
-**Requisitos Técnicos:**
-- Offline-first no mobile
-- Sincronização automática
-- Multi-tenancy (isolamento entre construtoras)
+## 13.1 Banco de Dados e Storage
 
-**Regras de Desenvolvimento (para IA/Windsurf):**
-1. Fácil manutenção (código modular)
-2. Robustez (soluções estáveis)
-3. Progresso visual
-4. Explicitude de conceitos
-5. Criatividade controlada
+### **Decisão: PostgreSQL via Supabase**
 
-### O que precisa ser discutido:
+**Banco escolhido:** PostgreSQL 15+ hospedado no Supabase (plataforma BaaS)
 
-**🏗️ Arquitetura Geral:**
-- [ ] Monolito vs Microserviços?
-- [ ] Onde hospedar? (AWS, GCP, Azure, DigitalOcean, Vercel, outro?)
-- [ ] CDN para assets estáticos?
-- [ ] Load balancer necessário desde MVP?
+**Razões da escolha:**
+1. ✅ Dev solo com experiência prévia em Supabase
+2. ✅ Interface visual para criação de tabelas (baixa curva de aprendizado)
+3. ✅ APIs REST geradas automaticamente (menos código)
+4. ✅ Autenticação e autorização prontas
+5. ✅ Row Level Security (RLS) para isolamento multi-tenancy
+6. ✅ Realtime subscriptions para atualizações ao vivo
+7. ✅ Backup automático e point-in-time recovery
+8. ✅ Custo previsível e escalável
 
-**🗄️ Banco de Dados:**
-- [ ] Qual banco usar? (PostgreSQL, MySQL, MongoDB, outro?)
-- [ ] Schema completo (tabelas, relacionamentos, índices)
-- [ ] Estratégia de migrations
-- [ ] Backup e recovery
+**Plano de hospedagem:**
+- **MVP:** Supabase Pro - $25/mês
+  - 8 GB database
+  - 100 GB storage inclusos
+  - 500K Edge Functions invocations/mês
+- **Projeção Ano 1 (100 construtoras):**
+  - Database: ~3 GB
+  - Storage adicional: ~200 GB ($4.20/mês)
+  - **Total: $29.20/mês**
 
-**🔌 Backend/API:**
-- [ ] Node.js: qual framework? (Express, Fastify, NestJS, outro?)
-- [ ] TypeScript ou JavaScript puro?
-- [ ] REST, GraphQL, ou ambos?
-- [ ] Autenticação: biblioteca/framework?
-- [ ] ORM: Prisma, TypeORM, Sequelize, outro?
+### **Storage de Fotos (Não-Conformidades)**
 
-**🎨 Frontend Web:**
-- [ ] React: qual versão? Context API ou Redux/Zustand?
-- [ ] Roteamento: React Router ou Next.js?
-- [ ] Gerenciamento de estado global
-- [ ] Biblioteca de formulários (React Hook Form, Formik, outro?)
-- [ ] Validação de dados (Zod, Yup, outro?)
+**Decisão Inicial:** Supabase Storage
 
-**📱 Mobile:**
-- [ ] React Native: Expo ou bare?
-- [ ] Navegação: React Navigation ou outro?
-- [ ] Gerenciamento de estado mobile
-- [ ] Biblioteca de câmera
-- [ ] Biblioteca de gestos
+**Estratégia:**
+- Começar simples com Supabase Storage
+- Compressão de imagens no cliente (reduzir 3-5 MB → 500-800 KB)
+- Migração futura opcional para Cloudflare R2 quando:
+  - Passar de 200 construtoras, OU
+  - Custo de transfer começar a impactar, OU
+  - Necessidade de melhor performance global
 
-**📦 File Storage:**
-- [ ] Onde armazenar fotos? (S3, Cloudflare R2, outro?)
-- [ ] Estratégia de compressão de imagens
-- [ ] Limite de tamanho por foto
-- [ ] Política de retenção
+**Volumetria calculada (100 construtoras):**
+- Dados estruturados: 7 MB/dia → **2.55 GB/ano**
+- Fotos (1.000/dia × 800 KB): 800 MB/dia → **292 GB/ano**
+- **Total Ano 1: ~295 GB**
 
-**⚡ Performance:**
-- [ ] Cache: Redis, Memcached, outro?
-- [ ] Otimizações de queries
-- [ ] Lazy loading
-- [ ] Paginação
+**Compressão de imagens:**
+- Cliente comprime antes de upload
+- Formato: JPEG com qualidade 80-85%
+- Watermark automático: obra, data, hora, inspetor
 
-**🚀 Deploy e CI/CD:**
-- [ ] Pipeline de deploy (GitHub Actions, GitLab CI, outro?)
-- [ ] Ambientes (dev, staging, prod)
-- [ ] Estratégia de versioning
-- [ ] Rollback: como funciona?
+**Limite de tamanho:**
+- Por foto: 5 MB (antes compressão), 1 MB (após compressão)
+- Por NC: até 5 fotos
 
-**🔍 Monitoramento:**
-- [ ] Logs: onde armazenar? (CloudWatch, LogDNA, outro?)
-- [ ] APM: Datadog, New Relic, outro?
-- [ ] Alertas de erro: Sentry, Rollbar, outro?
-- [ ] Uptime monitoring
+### **Multi-tenancy e Isolamento**
 
-**🧪 Testes:**
-- [ ] Framework de testes (Jest, Vitest, outro?)
-- [ ] Cobertura mínima esperada
-- [ ] E2E testing: Cypress, Playwright, outro?
-- [ ] Testing mobile: Detox, Appium, outro?
+**Estratégia:** Row Level Security (RLS) do PostgreSQL
+
+Cada construtora (tenant) é identificada por `cliente_id`. Todas tabelas principais têm:
+```sql
+cliente_id UUID REFERENCES clientes(id)
+```
+
+**Policies RLS (exemplo):**
+```sql
+-- Usuários só veem dados da construtora deles
+CREATE POLICY "Isolamento por cliente" ON verificacoes
+  FOR ALL
+  USING (
+    cliente_id = (SELECT cliente_id FROM usuarios WHERE id = auth.uid())
+  );
+```
+
+**Garantias:**
+- Isolamento completo no nível do banco
+- Impossível acessar dados de outro cliente via queries
+- Super Admin (Arden) tem política especial com auditoria
+
+---
+
+## 13.2 Backend e API
+
+### **Decisão: Arquitetura Supabase-First (Sem Backend Tradicional)**
+
+**Filosofia:** Maximizar uso das capacidades nativas do Supabase, minimizar código custom.
+
+### **Estrutura da Arquitetura:**
+
+```
+┌─────────────────────────────────────────────────────┐
+│               FRONTEND (React/React Native)         │
+│                   Supabase Client                   │
+└─────────────────┬───────────────────────────────────┘
+                  │
+                  ▼
+┌─────────────────────────────────────────────────────┐
+│                    SUPABASE                         │
+│  ┌───────────────────────────────────────────────┐  │
+│  │  PostgreSQL Database (dados estruturados)     │  │
+│  │  + Row Level Security (permissões)            │  │
+│  └───────────────────────────────────────────────┘  │
+│  ┌───────────────────────────────────────────────┐  │
+│  │  Supabase Auth (autenticação/sessões)        │  │
+│  └───────────────────────────────────────────────┘  │
+│  ┌───────────────────────────────────────────────┐  │
+│  │  Supabase Storage (fotos)                    │  │
+│  └───────────────────────────────────────────────┘  │
+│  ┌───────────────────────────────────────────────┐  │
+│  │  Edge Functions (Deno) - lógica complexa     │  │
+│  │  - Gerar PDFs                                │  │
+│  │  - Enviar emails                             │  │
+│  │  - Cálculos IRS                              │  │
+│  │  - Processar imagens                         │  │
+│  └───────────────────────────────────────────────┘  │
+└─────────────────────────────────────────────────────┘
+```
+
+### **Distribuição de Responsabilidades:**
+
+**90% - Frontend Direto com Supabase:**
+- CRUD básico (criar/ler/atualizar verificações, obras, usuários)
+- Queries e filtros
+- Upload de fotos
+- Autenticação (login/logout)
+
+**Exemplo:**
+```typescript
+// Criar verificação direto do React Native
+const { data, error } = await supabase
+  .from('verificacoes')
+  .insert({
+    obra_id: obraId,
+    servico_id: servicoId,
+    unidade_id: unidadeId,
+    inspetor_id: user.id
+  })
+```
+
+**10% - Edge Functions (quando necessário):**
+- Gerar PDFs (relatórios FVS, RNC, consolidados)
+- Enviar emails (relatórios agendados, alertas)
+- Processar imagens (comprimir, watermark)
+- Cálculos complexos (IRS, projeções)
+- Webhooks para integrações futuras
+
+**Exemplo:**
+```typescript
+// Edge Function: gerar PDF
+const { data } = await supabase.functions.invoke('gerar-pdf-fvs', {
+  body: { verificacao_id: '123' }
+})
+```
+
+### **Por que NÃO usar backend tradicional (Node.js/Express)?**
+
+**Razões:**
+1. ❌ Dev solo com pouco conhecimento → menos código = menos bugs
+2. ❌ Supabase já resolve 90% dos casos (CRUD, auth, permissões)
+3. ❌ Backend separado = servidor extra ($5-12/mês) + deploy + monitoring
+4. ❌ Mais tempo de desenvolvimento (2-3x mais lento)
+5. ✅ Edge Functions cobrem os 10% restantes ($0 extra)
+
+**Quando reavaliar:** Se crescer para 500+ construtoras e precisar lógicas muito customizadas.
+
+### **Edge Functions (Deno Runtime)**
+
+**Tecnologia:** Deno (JavaScript/TypeScript runtime moderno, criador do Node.js)
+
+**Vantagens:**
+- TypeScript nativo (sem configuração)
+- Seguro por padrão (sandboxed)
+- APIs web-standard (fetch, streams)
+- Deploy automático via Supabase CLI
+
+**Casos de uso confirmados:**
+1. **Gerar PDFs:** `gerar-pdf-fvs`, `gerar-pdf-rnc`
+2. **Enviar emails:** `enviar-relatorio-email`
+3. **Processar imagens:** `processar-foto-nc` (comprimir, watermark)
+4. **Cálculos:** `calcular-irs`, `projetar-conclusao`
+
+**Custo:** Incluído no Plano Pro (500K invocações/mês, mais que suficiente)
+
+---
+
+## 13.3 Frontend Web (Portal)
+
+### **Decisão: Next.js 15+ (App Router)**
+
+**Framework escolhido:** Next.js com App Router (React framework completo)
+
+**Razões da escolha:**
+1. ✅ Supabase usa Next.js no próprio dashboard (queremos clonar o design deles)
+2. ✅ Dev solo = menos decisões = mais produtividade
+3. ✅ Roteamento já incluído (baseado em pastas, automático)
+4. ✅ SEO otimizado (importante para landing page de vendas)
+5. ✅ Deploy gratuito e automático na Vercel (criadores do Next.js)
+6. ✅ Otimizações automáticas (code splitting, lazy loading, image optimization)
+7. ✅ Documentação excelente em português
+8. ✅ TypeScript de primeira classe
+
+**Stack Completa:**
+- **Framework:** Next.js 15+ (App Router)
+- **Linguagem:** TypeScript
+- **Estilização:** Tailwind CSS
+- **Componentes:** Radix UI (primitivos acessíveis)
+- **Design System:** Clone Supabase (ver DESIGN-SYSTEM.md)
+- **Hospedagem:** Vercel (natural para Next.js, grátis até escalar)
+
+**Estrutura de Pastas (Next.js App Router):**
+```
+/app
+  /(auth)
+    /login
+    /cadastro
+  /(portal)
+    /dashboard
+    /obras
+      /[id]
+    /relatorios
+  /api (opcional, se precisar)
+/components
+  /ui (botões, inputs, cards - Radix UI)
+  /layouts (sidebar, header)
+/lib
+  /supabase (client, queries)
+```
+
+### **Gerenciamento de Estado: Zustand**
+
+**Decisão:** Zustand para TODO estado global (sem exceções)
+
+**Razões da escolha:**
+1. ✅ **Zero ambiguidade** → Sempre usar Zustand (facilita para IA desenvolver)
+2. ✅ Código 100% consistente (uma única forma de fazer)
+3. ✅ Leve (4KB) e performance excelente
+4. ✅ TypeScript de primeira classe
+5. ✅ DevTools inclusos
+6. ✅ Sem boilerplate (menos código que Redux ou Context API)
+7. ✅ Fácil integração com Supabase
+
+**Estrutura da Store:**
+```typescript
+// lib/store.ts - ÚNICA fonte de estado global
+import { create } from 'zustand'
+
+export const useStore = create((set) => ({
+  // Auth
+  user: null,
+  session: null,
+  setUser: (user) => set({ user }),
+
+  // App state
+  obraSelecionada: null,
+  setObra: (obra) => set({ obraSelecionada: obra }),
+
+  // UI state
+  sidebarOpen: true,
+  setSidebarOpen: (open) => set({ sidebarOpen: open }),
+
+  // Filtros
+  filtros: { periodo: '30d', status: 'todas' },
+  setFiltros: (filtros) => set({ filtros })
+}))
+```
+
+**Regra para desenvolvimento:** Context API NÃO será utilizado para evitar ambiguidade. Todo estado global = Zustand.
+
+### **Formulários + Validação: React Hook Form + Zod**
+
+**Decisão:** React Hook Form + Zod (dupla integrada, sem exceções)
+
+**Razões da escolha:**
+1. ✅ **Integração nativa perfeita** (foram feitas para trabalhar juntas)
+2. ✅ **Zero ambiguidade** → Todo formulário usa esta dupla
+3. ✅ **TypeScript automático** (Zod infere tipos, zero duplicação)
+4. ✅ **Performance excelente** (React Hook Form usa refs, menos rerenders)
+5. ✅ **Menos código** que qualquer outra combinação
+6. ✅ **Padrão no ecossistema Next.js** (documentação abundante)
+7. ✅ **Reutilização de schemas** (mesmo schema para criar/editar)
+
+**Exemplo de uso:**
+```typescript
+// Schema Zod define validação + tipos TypeScript
+const obraSchema = z.object({
+  nome: z.string().min(3, 'Mínimo 3 caracteres'),
+  tipologia: z.enum(['residencial', 'comercial', 'retrofit']),
+  responsavel: z.string().email('Email inválido').optional()
+})
+
+type ObraForm = z.infer<typeof obraSchema> // Tipo inferido automaticamente
+
+// React Hook Form com Zod resolver
+const { register, handleSubmit, formState: { errors } } = useForm<ObraForm>({
+  resolver: zodResolver(obraSchema)
+})
+```
+
+**Regra para desenvolvimento:** Todo formulário usa React Hook Form com Zod resolver. Validação nativa HTML5 não será utilizada.
+
+### **Gráficos e Visualizações: Recharts**
+
+**Decisão:** Recharts como biblioteca única de gráficos
+
+**Razões da escolha:**
+1. ✅ **Componentes declarativos** → Sintaxe React-like (JSX)
+2. ✅ **TypeScript excelente** (tipos completos e intuitivos)
+3. ✅ **Responsivo por padrão** (mobile/tablet/desktop)
+4. ✅ **Leve e performático** (SVG nativo)
+5. ✅ **Documentação clara** com muitos exemplos
+6. ✅ **Customização simples** (estilo via props)
+7. ✅ **Mais popular** no ecossistema React/Next.js
+8. ✅ **Fácil manutenção** (código declarativo)
+
+**Tipos de gráficos disponíveis:**
+- `<BarChart>` → Progresso por obra, comparativos
+- `<LineChart>` → Evolução temporal, tendências
+- `<PieChart>` → Distribuição de status
+- `<RadarChart>` → Comparativo multi-dimensional
+- `<AreaChart>` → Áreas de tendência
+
+**Exemplo de uso:**
+```typescript
+import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend } from 'recharts'
+
+function GraficoConformidade({ data }) {
+  return (
+    <BarChart width={600} height={300} data={data}>
+      <XAxis dataKey="obra" />
+      <YAxis />
+      <Tooltip />
+      <Legend />
+      <Bar dataKey="conformidade" fill="#3ecf8e" />
+      <Bar dataKey="naoConformidade" fill="#ef4444" />
+    </BarChart>
+  )
+}
+```
+
+**Regra para desenvolvimento:** Todos os gráficos usam Recharts. Outras bibliotecas (Chart.js, Victory, Nivo) não serão utilizadas.
+
+### **Hospedagem:**
+- **Vercel** (grátis até 100K requests/mês, deploy automático via Git)
+
+---
+
+### **✅ BLOCO 3 CONCLUÍDO - Resumo Frontend Web**
+
+**Stack Completa Definida:**
+- ⚡ **Framework:** Next.js 15+ (App Router)
+- 🎨 **Estilização:** Tailwind CSS + Radix UI
+- 📦 **Estado Global:** Zustand (tudo)
+- 📝 **Formulários:** React Hook Form + Zod
+- 📊 **Gráficos:** Recharts
+- 🚀 **Hospedagem:** Vercel
+- 💻 **Linguagem:** TypeScript
+
+**Princípios aplicados:**
+- Zero ambiguidade (uma única forma de fazer cada coisa)
+- Praticidade e facilidade de gestão
+- Padrões da indústria (Next.js + Vercel)
+- Mínimo de decisões para IA desenvolver
+
+---
+
+## 13.4 Mobile (App) - BLOCO 4
+
+### **Decisão: Expo (React Native Framework)**
+
+**Framework escolhido:** Expo (React Native com ferramentas de produtividade)
+
+**Razões da escolha:**
+1. ✅ **Performance nativa real** (não é PWA, é app nativo verdadeiro)
+2. ✅ **Dev solo friendly** (zero configuração Android Studio/Xcode)
+3. ✅ **Build na nuvem** (EAS Build - envia código, recebe APK pronto)
+4. ✅ **Testes sem device físico** (Expo Go em celular Android emprestado)
+5. ✅ **SQLite nativo** (offline robusto para 50+ verificações)
+6. ✅ **Gestos fluidos** (60fps, swipes nativos)
+7. ✅ **Documentação excelente** (melhor que RN bare)
+8. ✅ **Suporta tudo necessário** (câmera, GPS, notificações, offline)
+
+**Por que NÃO PWA:**
+- ❌ Performance insuficiente para 50 verificações offline + fotos
+- ❌ Swipes web não são fluidos como nativos
+- ❌ IndexedDB menos confiável que SQLite para dados críticos
+- ❌ UX não-nativa (perceptível para usuários)
+
+**Por que NÃO React Native Bare:**
+- ❌ Complexidade alta para dev solo (Android Studio, Gradle, etc)
+- ❌ Requer device físico para testes (usuário não tem Android)
+- ❌ Build local complexo
+
+**Custo:**
+- **EAS Build:** $29/mês (build na nuvem, não precisa setup local)
+- **Google Play Store:** $25 (taxa única)
+- **Total Ano 1:** ~$373
+
+**Plataformas:**
+- **MVP:** Android (via EAS Build)
+- **Fase 2:** iOS (quando tiver budget para Apple Developer $99/ano)
+
+**Workflow de Testes:**
+1. Desenvolvimento local (VS Code)
+2. Testa via **Expo Go** (app grátis instalado em Android emprestado)
+3. QR Code → código roda instantaneamente no físico
+4. Build final via EAS Build (cloud) → recebe APK
+5. Publica via EAS Submit → Google Play Store
+
+---
+
+### **Estado Global: Zustand**
+
+**Decisão:** Zustand no mobile (mesma biblioteca do web)
+
+**Razões da escolha:**
+1. ✅ **Consistência total** → Mesma ferramenta web + mobile
+2. ✅ **Zero ambiguidade** → IA sempre usa Zustand em todo o projeto
+3. ✅ **Reutilização de conhecimento** → Aprende 1x, usa 2x
+4. ✅ **Performance** → Melhor que Context API
+5. ✅ **Funciona perfeitamente** em React Native
+
+**Store Mobile (exemplo):**
+```typescript
+// store.ts (mobile)
+import { create } from 'zustand'
+
+export const useStore = create((set) => ({
+  // Auth
+  user: null,
+  setUser: (user) => set({ user }),
+
+  // Verificações offline
+  verificacoesOffline: [],
+  addVerificacao: (v) => set(state => ({
+    verificacoesOffline: [...state.verificacoesOffline, v]
+  })),
+
+  // Sync status
+  syncStatus: 'idle', // idle | syncing | error | success
+  setSyncStatus: (status) => set({ syncStatus: status })
+}))
+```
+
+**Regra para desenvolvimento:** Todo estado global (web + mobile) usa Zustand. Context API não será utilizado.
+
+### **Navegação: React Navigation**
+
+**Decisão:** React Navigation (padrão oficial Expo)
+
+**Razões:**
+- ✅ Padrão oficial do Expo e React Native
+- ✅ Único viável para Expo (alternativas são incompatíveis)
+- ✅ Documentação integrada e completa
+- ✅ Suporta Stack, Tabs, Drawer (tudo necessário)
+
+**Sem alternativas viáveis.** Decisão automática.
+
+### **Câmera e Imagens: Expo Nativo**
+
+**Decisão:** expo-camera + expo-image-manipulator + expo-file-system
+
+**Stack de Câmera:**
+1. **expo-camera** → Tira foto
+2. **expo-image-manipulator** → Comprime (quality 0.8, ~800KB) + Watermark automático
+3. **expo-file-system** → Salva no filesystem local
+4. **SQLite** → Armazena referência (path da foto)
+5. **Supabase Storage** → Upload quando sincronizar
+
+**Razões da escolha:**
+- ✅ Oficiais do Expo (zero config)
+- ✅ Funciona no Expo Go (fácil testar)
+- ✅ Simples de usar
+- ✅ Faz tudo necessário (foto, compressão, watermark)
+
+**Watermark automático:**
+- Obra, data, hora, nome do inspetor
+- Adicionado via `expo-image-manipulator` antes de salvar
+
+**Edição de fotos (círculos, setas, desenho livre):**
+- ⏳ **Adiado para Fase 2** (não crítico para MVP)
+- MVP: Foto + observação em texto
+- Fase 2: Adicionar react-native-sketch-canvas (círculo, seta, caneta, undo/redo)
+
+---
+
+### **Formulários e Validação: React Hook Form + Zod**
+
+**Decisão:** React Hook Form + Zod no mobile (mesma stack do web)
+
+**Razões da escolha:**
+1. ✅ **Consistência total** → Mesma ferramenta web + mobile
+2. ✅ **Schemas reutilizáveis** → Validação compartilhada
+3. ✅ **TypeScript unificado** → Tipos inferidos por Zod
+4. ✅ **Zero ambiguidade** → IA sempre usa RHF + Zod
+
+**Particularidade Mobile:**
+- Usa `Controller` do RHF (necessário para `<TextInput>` do React Native)
+- Mais verboso que web, mas consistente
+
+**Exemplo:**
+```typescript
+import { useForm, Controller } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
+
+const verificacaoSchema = z.object({
+  observacao: z.string().min(3, 'Mínimo 3 caracteres'),
+  status: z.enum(['conforme', 'nao_conforme'])
+})
+
+// No componente
+const { control, handleSubmit } = useForm({
+  resolver: zodResolver(verificacaoSchema)
+})
+
+<Controller
+  control={control}
+  name="observacao"
+  render={({ field: { onChange, value } }) => (
+    <TextInput value={value} onChangeText={onChange} />
+  )}
+/>
+```
+
+**Regra para desenvolvimento:** Todos os formulários (web + mobile) usam React Hook Form + Zod. Sem exceções.
+
+### **Sincronização Offline: Arquitetura Completa**
+
+#### **Contexto e Requisitos**
+
+**Cenário operacional:**
+- Tablets dos inspetores **NÃO têm dados móveis** (só wifi)
+- Wifi disponível no container-escritório (3x/dia: manhã, almoço, fim do dia)
+- Inspetores trabalham **offline no campo** durante o dia
+- Múltiplos inspetores podem trabalhar na mesma obra simultaneamente
+- Granularidade: **ITEM por ITEM** (não serviço completo)
+- Conflitos são raros mas possíveis
+
+**Princípio fundamental:** **FIRST WRITE WINS** (quem sincronizar primeiro trava o item)
+
+---
+
+#### **Arquitetura de 3 Camadas**
+
+**Camada 1: Permissões de Obras**
+- Admin concede/revoca acesso de usuários a obras
+- A cada sync, app verifica lista de obras permitidas
+- Adiciona obras novas (download completo)
+- Remove obras sem permissão (deleta dados locais)
+
+**Camada 2: Verificações e Serviços**
+- Admin adiciona unidades novas → novas verificações geradas
+- Admin ativa serviço novo → novas verificações geradas
+- A cada sync, app baixa verificações/serviços novos (incremental)
+
+**Camada 3: Itens de Verificação**
+- Inspetor preenche item → salva SQLite local
+- Sync: Upload itens preenchidos + Download itens preenchidos por outros
+- Conflito: Servidor aceita primeiro, rejeita segundo
+
+---
+
+#### **Fluxo Completo de Sincronização**
+
+**1. Download Inicial (Primeira Vez ou Nova Obra)**
+
+```
+Inspetor João faz login (primeira vez):
+  → App verifica permissões no servidor
+  → João tem acesso a: Obra A, Obra B
+
+Download da Obra A:
+  - Dados da obra (agrupamentos, unidades) → 15 KB
+  - 25 serviços ativos + itens de verificação → 60 KB
+  - 3.750 verificações pendentes (150 unidades × 25 serviços) → 750 KB
+  - Total: ~1 MB
+
+Download da Obra B:
+  - Mesma estrutura → ~1 MB
+
+Total download inicial: ~2 MB
+Tempo: 3-5 segundos (wifi)
+Armazenamento SQLite: 2 MB
+
+✅ João está pronto para trabalhar offline
+```
+
+**2. Trabalho Offline (Durante o Dia)**
+
+```
+João no campo (SEM wifi, 09h-12h):
+
+Abre verificação:
+  - Obra A, Casa B10, Serviço PRC-001 (Revestimento Cerâmico)
+  - Vê 8 itens disponíveis:
+    1. Prumo das paredes [ ]
+    2. Nível do piso [ ]
+    3. Alinhamento das juntas [ ]
+    4. Limpeza das juntas [ ]
+    5. Qualidade do rejunte [ ]
+    6. Acabamento nos cantos [ ]
+    7. Quebras ou trincas [ ]
+    8. Tonalidade uniforme [ ]
+
+Preenche itens 1-4:
+  - Item 1: Conforme ✓
+  - Item 2: Conforme ✓
+  - Item 3: Não Conforme ✗ (tira 2 fotos: foto1.jpg, foto2.jpg)
+  - Item 4: Conforme ✓
+
+App salva no SQLite local:
+  - Tabela: itens_offline
+  - Registros: 4 itens com status "pending_sync"
+  - Fotos: /files/foto1.jpg (1.6 MB), /files/foto2.jpg (1.4 MB)
+
+Armazenamento: +4 KB (dados) +3 MB (fotos)
+
+João continua trabalhando, marca mais 20 itens de outras verificações...
+Total acumulado offline: ~50 KB dados + ~15 MB fotos
+```
+
+**3. Sincronização Automática (Almoço - Volta ao Container)**
+
+```
+João volta ao container (12h00):
+  → Tablet detecta wifi
+  → App inicia sync automática (background)
+
+FASE 1 - Download (Receber Atualizações):
+
+  Query ao servidor:
+    GET /sync/updates?user_id=joao&last_sync=2025-01-10T09:00:00
+
+  Resposta:
+    - Novas verificações: 0 (nenhuma unidade adicionada)
+    - Itens preenchidos por outros: 15 itens
+      (Gabriel preencheu itens 5-8 da Casa B10, mais outros)
+
+  App atualiza SQLite local:
+    - Remove item 5 (Gabriel fez)
+    - Remove item 6 (Gabriel fez)
+    - Remove item 7 (Gabriel fez)
+    - Remove item 8 (Gabriel fez)
+    - Atualiza outras verificações
+
+FASE 2 - Upload (Enviar Trabalho Local):
+
+  Lê da fila local (itens_offline com status "pending_sync"):
+    - 24 itens preenchidos
+    - 6 fotos (15 MB total)
+
+  Upload em BATCH:
+    POST /sync/upload
+    Body: {
+      itens: [
+        { item_id: "item-1", verificacao_id: "v-123", status: "conforme", ... },
+        { item_id: "item-3", verificacao_id: "v-123", status: "nao_conforme", fotos: ["foto1", "foto2"] },
+        ... (22 itens)
+      ]
+    }
+
+  Servidor processa:
+    - Verifica cada item: já foi preenchido?
+      - Item 1: NÃO → ACEITA ✅
+      - Item 3: NÃO → ACEITA ✅
+      - Item 15: SIM (Gabriel fez antes) → REJEITA ❌
+      - ... (resto OK)
+
+  Resposta:
+    {
+      success: [item-1, item-3, ... 22 itens],
+      rejected: [
+        { item_id: "item-15", reason: "already_filled", filled_by: "Gabriel", filled_at: "11h45" }
+      ]
+    }
+
+  App processa resposta:
+    - Itens aceitos: Remove do SQLite local + Deleta fotos associadas
+    - Itens rejeitados: Move para tabela "sync_conflicts"
+    - Mostra notificação no feed:
+      "1 item já foi verificado: Item 15 (Casa C05) por Gabriel às 11h45"
+
+FASE 3 - Upload de Fotos:
+
+  Para itens aceitos que têm fotos:
+    - Comprime fotos (quality 0.8, ~800KB cada)
+    - Adiciona watermark (obra, data, hora, inspetor)
+    - Upload para Supabase Storage:
+
+      POST /storage/v1/object/fotos-nc/obra-a/foto1.jpg
+
+  Aguarda confirmação
+
+  Depois de confirmar upload:
+    - Deleta foto local do filesystem
+    - Atualiza referência no servidor (URL da foto)
+
+Resultado final:
+  ✅ 23 itens sincronizados com sucesso
+  ❌ 1 item rejeitado (conflito)
+  📦 Armazenamento liberado: ~14 MB
+
+Notificação ao João:
+  "Sincronizado ✓ 23 itens enviados"
+```
+
+**4. Cenário de Conflito Real (Mesmo Item)**
+
+```
+09h00: João marca Item 3 (Casa B10) como "Conforme" (offline)
+09h30: Gabriel marca Item 3 (Casa B10) como "Não Conforme" (offline)
+
+12h00: João sincroniza PRIMEIRO
+  → Servidor recebe Item 3 = "Conforme"
+  → Servidor verifica: Item 3 disponível? SIM
+  → Servidor ACEITA ✅
+  → Marca Item 3 como LOCKED (filled_by: João, filled_at: 12h00)
+
+12h05: Gabriel sincroniza DEPOIS
+  → Servidor recebe Item 3 = "Não Conforme"
+  → Servidor verifica: Item 3 disponível? NÃO (João preencheu)
+  → Servidor REJEITA ❌
+
+  Resposta ao Gabriel:
+    {
+      rejected: [{
+        item_id: "item-3",
+        reason: "already_filled",
+        filled_by: "João",
+        filled_at: "12h00",
+        filled_value: "conforme"
+      }]
+    }
+
+  App de Gabriel:
+    - Remove Item 3 da fila de sync
+    - Adiciona notificação no feed:
+      "⚠️ Item 3 (Casa B10, Prumo) já foi verificado por João às 12h00 (Conforme)"
+    - Item 3 desaparece da lista de Gabriel
+    - Foto que Gabriel tirou é deletada (não serve mais)
+
+Item 3 permanece "Conforme" (primeiro que subiu)
+```
+
+**5. Cenário de Adição de Unidades (Admin)**
+
+```
+Admin no portal web (14h00):
+  → Adiciona 10 unidades novas à Obra A
+  → Sistema gera automaticamente:
+      10 unidades × 25 serviços = 250 verificações novas
+
+João sincroniza (18h00 - fim do dia):
+  → App pergunta ao servidor: "Tem novidades desde 12h00?"
+  → Servidor responde:
+      {
+        new_verificacoes: [250 verificações],
+        new_unidades: [10 unidades]
+      }
+
+  → App baixa incrementalmente (~50 KB)
+  → Adiciona no SQLite local
+  → João vê 250 novas verificações disponíveis
+
+Download incremental: 1-2 segundos
+```
+
+**6. Cenário de Remoção de Permissão**
+
+```
+Admin remove acesso de João à Obra B (15h00)
+
+João sincroniza (18h00):
+  → App baixa lista de obras permitidas: [Obra A]
+  → Compara com local: [Obra A, Obra B]
+  → Detecta: Obra B removida
+
+  App executa:
+    - Verifica fila de sync: Tem itens pendentes da Obra B?
+      - NÃO → Deleta tudo
+      - SIM → Mostra alerta:
+          "⚠️ Você perdeu acesso à Obra B mas tem 5 itens não sincronizados. Deseja tentar sincronizar agora?"
+          [Sim, sincronizar] [Não, descartar]
+
+  Se João escolhe "Sim":
+    - Tenta sincronizar itens pendentes (pode funcionar se remoção foi recente)
+
+  Se João escolhe "Não" ou sync falha:
+    - Deleta todos dados da Obra B do SQLite
+    - Deleta todas fotos da Obra B do filesystem
+    - Libera ~1 MB de espaço
+```
+
+---
+
+#### **Estrutura do SQLite Local**
+
+```sql
+-- Obras permitidas
+CREATE TABLE obras_locais (
+  id TEXT PRIMARY KEY,
+  nome TEXT,
+  tipologia TEXT,
+  last_sync_at TEXT
+);
+
+-- Unidades
+CREATE TABLE unidades (
+  id TEXT PRIMARY KEY,
+  obra_id TEXT,
+  nome TEXT,
+  agrupamento TEXT
+);
+
+-- Serviços ativos
+CREATE TABLE servicos (
+  id TEXT PRIMARY KEY,
+  obra_id TEXT,
+  codigo TEXT,
+  nome TEXT
+);
+
+-- Itens de verificação (biblioteca)
+CREATE TABLE itens_biblioteca (
+  id TEXT PRIMARY KEY,
+  servico_id TEXT,
+  descricao TEXT,
+  tipo TEXT -- conforme/nao_conforme/parcial
+);
+
+-- Verificações pendentes (baixadas do servidor)
+CREATE TABLE verificacoes (
+  id TEXT PRIMARY KEY,
+  obra_id TEXT,
+  unidade_id TEXT,
+  servico_id TEXT,
+  status TEXT -- pendente/em_andamento/finalizada
+);
+
+-- Itens preenchidos offline (fila de sync)
+CREATE TABLE itens_offline (
+  id TEXT PRIMARY KEY,
+  verificacao_id TEXT,
+  item_id TEXT,
+  status TEXT, -- conforme/nao_conforme/nao_aplicavel
+  observacao TEXT,
+  fotos TEXT, -- JSON array de paths locais
+  preenchido_em TEXT,
+  sync_status TEXT -- pending_sync/syncing/synced/error
+);
+
+-- Conflitos (itens rejeitados)
+CREATE TABLE sync_conflicts (
+  id TEXT PRIMARY KEY,
+  item_id TEXT,
+  filled_by TEXT,
+  filled_at TEXT,
+  reason TEXT
+);
+```
+
+---
+
+#### **Lógica de Código (Sync Service)**
+
+**Detecção de Wifi:**
+
+```typescript
+import NetInfo from '@react-native-community/netinfo';
+
+// Listener de conexão
+NetInfo.addEventListener(state => {
+  if (state.isConnected && state.type === 'wifi') {
+    console.log('Wifi detectado! Iniciando sync...');
+    startAutoSync();
+  }
+});
+```
+
+**Sync Automática:**
+
+```typescript
+async function startAutoSync() {
+  try {
+    // Mostra loading
+    useStore.setState({ syncStatus: 'syncing' });
+
+    // FASE 1: Download atualizações
+    const updates = await downloadUpdates();
+    await applyUpdates(updates); // Atualiza SQLite local
+
+    // FASE 2: Upload itens offline
+    const pendingItems = await getPendingItems(); // Lê da fila local
+    const uploadResult = await uploadItems(pendingItems);
+
+    // FASE 3: Upload fotos
+    const photosToUpload = uploadResult.success.filter(i => i.fotos?.length > 0);
+    await uploadPhotos(photosToUpload);
+
+    // FASE 4: Limpeza
+    await cleanupSyncedData(uploadResult.success);
+
+    // FASE 5: Notifica conflitos
+    if (uploadResult.rejected.length > 0) {
+      addConflictsToFeed(uploadResult.rejected);
+    }
+
+    // Atualiza last_sync timestamp
+    await updateLastSync();
+
+    useStore.setState({ syncStatus: 'success' });
+    showNotification('Sincronizado ✓');
+
+  } catch (error) {
+    useStore.setState({ syncStatus: 'error' });
+    showNotification('Erro ao sincronizar. Tente novamente.');
+  }
+}
+```
+
+**Download de Atualizações:**
+
+```typescript
+async function downloadUpdates() {
+  const lastSync = await getLastSyncTimestamp();
+
+  const { data } = await supabase
+    .rpc('sync_get_updates', {
+      user_id: currentUser.id,
+      last_sync_at: lastSync
+    });
+
+  return {
+    obras_permitidas: data.obras, // Lista de obras que user pode acessar
+    novas_verificacoes: data.novas_verificacoes,
+    itens_preenchidos_por_outros: data.itens_preenchidos
+  };
+}
+```
+
+**Upload em Batch:**
+
+```typescript
+async function uploadItems(pendingItems) {
+  const { data, error } = await supabase
+    .rpc('sync_upload_itens', {
+      itens: pendingItems.map(item => ({
+        item_id: item.item_id,
+        verificacao_id: item.verificacao_id,
+        status: item.status,
+        observacao: item.observacao,
+        preenchido_em: item.preenchido_em,
+        preenchido_por: currentUser.id
+      }))
+    });
+
+  // Servidor retorna quais foram aceitos e quais rejeitados
+  return {
+    success: data.accepted, // Itens aceitos (first write)
+    rejected: data.rejected // Itens rejeitados (conflito)
+  };
+}
+```
+
+**Stored Procedure no Supabase (Backend Logic):**
+
+```sql
+-- Função que processa upload de itens (garante first write wins)
+CREATE OR REPLACE FUNCTION sync_upload_itens(itens JSONB)
+RETURNS JSONB AS $$
+DECLARE
+  item JSONB;
+  result JSONB;
+  accepted JSONB[] := '{}';
+  rejected JSONB[] := '{}';
+BEGIN
+  -- Para cada item enviado
+  FOR item IN SELECT * FROM jsonb_array_elements(itens)
+  LOOP
+    -- Verifica se item já foi preenchido
+    IF EXISTS (
+      SELECT 1 FROM itens_verificacao
+      WHERE id = (item->>'item_id')::uuid
+      AND status IS NOT NULL -- Já preenchido
+    ) THEN
+      -- Item já existe, rejeita (first write wins)
+      rejected := array_append(rejected,
+        jsonb_build_object(
+          'item_id', item->>'item_id',
+          'reason', 'already_filled'
+        )
+      );
+    ELSE
+      -- Item disponível, aceita
+      UPDATE itens_verificacao SET
+        status = item->>'status',
+        observacao = item->>'observacao',
+        preenchido_por = (item->>'preenchido_por')::uuid,
+        preenchido_em = (item->>'preenchido_em')::timestamptz
+      WHERE id = (item->>'item_id')::uuid;
+
+      accepted := array_append(accepted, item);
+    END IF;
+  END LOOP;
+
+  RETURN jsonb_build_object(
+    'accepted', to_jsonb(accepted),
+    'rejected', to_jsonb(rejected)
+  );
+END;
+$$ LANGUAGE plpgsql;
+```
+
+**Limpeza Pós-Sync:**
+
+```typescript
+async function cleanupSyncedData(successItems) {
+  const db = await getDatabase();
+
+  for (const item of successItems) {
+    // Remove item da fila de sync
+    await db.executeSql(
+      'DELETE FROM itens_offline WHERE id = ?',
+      [item.id]
+    );
+
+    // Deleta fotos locais associadas
+    if (item.fotos?.length > 0) {
+      for (const fotoPath of item.fotos) {
+        await FileSystem.deleteAsync(fotoPath, { idempotent: true });
+      }
+    }
+  }
+}
+```
+
+---
+
+#### **Resumo da Estratégia de Sync**
+
+**Características:**
+- ✅ **First Write Wins** (não last write wins)
+- ✅ **Granularidade por item** (não por serviço)
+- ✅ **Multi-obra por usuário** (download de todas as obras permitidas)
+- ✅ **Sync automática ao detectar wifi**
+- ✅ **Upload em batch** (economiza requests)
+- ✅ **Auto-limpeza** (libera espaço após sync)
+- ✅ **Notificação de conflitos** (no feed, não bloqueante)
+- ✅ **Gerenciamento de permissões** (adiciona/remove obras dinamicamente)
+
+**Complexidade:** Média-Alta (mas totalmente viável com Expo + Supabase)
+
+**Performance:**
+- Download inicial: 2-5 segundos (1-2 MB)
+- Sync diária: 3-10 segundos (50 KB dados + 10-15 MB fotos)
+- SQLite queries: <50ms (muito rápido)
+
+---
+
+### **✅ BLOCO 4 CONCLUÍDO - Resumo Mobile**
+
+**Stack Completa Definida:**
+- 📱 **Framework:** Expo (React Native + ferramentas produtividade)
+- 🎨 **Navegação:** React Navigation
+- 📦 **Estado Global:** Zustand
+- 📝 **Formulários:** React Hook Form + Zod
+- 📸 **Câmera:** expo-camera + expo-image-manipulator
+- 💾 **Offline:** SQLite (expo-sqlite) + expo-file-system
+- 🔄 **Sync:** Automática ao detectar wifi, granularidade por item, first write wins
+- 🚀 **Build/Deploy:** EAS Build ($29/mês) + Google Play Store ($25 único)
+- 💻 **Linguagem:** TypeScript
+
+**Princípios aplicados:**
+- Consistência total com web (mesmas ferramentas onde possível)
+- Offline-first robusto (SQLite nativo)
+- Zero ambiguidade (regras claras de sync)
+- Performance nativa (não PWA)
+
+---
+
+## 13.5 Autenticação e Segurança
+
+### **Decisão: Supabase Auth**
+
+**Estratégia de autenticação:**
+- Email + Senha (MVP)
+- Magic links (fase futura)
+- SSO Google/Microsoft (fase futura, feature PRO)
+
+**Sessões:**
+- JWT tokens gerenciados pelo Supabase
+- Refresh tokens automáticos
+- Duração: 1 semana (configurável)
+
+**Row Level Security (RLS):**
+- Permissões no nível do banco
+- Policies baseadas em `auth.uid()` (usuário logado)
+- Isolamento perfeito entre construtoras
+
+**Exemplo de Policy:**
+```sql
+-- Engenheiro só vê obras atribuídas a ele
+CREATE POLICY "Engenheiro vê suas obras" ON verificacoes
+  FOR SELECT
+  USING (
+    EXISTS (
+      SELECT 1 FROM usuarios_obras
+      WHERE usuario_id = auth.uid()
+      AND obra_id = verificacoes.obra_id
+    )
+  );
+```
+
+**2FA:** Fase futura (não MVP)
+
+---
+
+## 13.6 Schema de Banco de Dados
+
+### **⏳ PENDENTE DE DEFINIÇÃO COMPLETA**
+
+**Status:** Estrutura conceitual definida (Seção 5), schema SQL detalhado será criado em sessão específica.
+
+**Tabelas principais (conceitual):**
+- `clientes` (construtoras)
+- `usuarios` (admin, engenheiro, inspetor, almoxarife)
+- `usuarios_obras` (relação N:N)
+- `obras`
+- `agrupamentos`
+- `unidades`
+- `servicos` (biblioteca FVS)
+- `obras_servicos` (serviços ativos por obra)
+- `verificacoes`
+- `itens_verificacao`
+- `fotos_nc`
+- `condicoes_inicio`
+
+**Relacionamentos chave:**
+- Cliente 1:N Obras
+- Obra 1:N Agrupamentos 1:N Unidades
+- Verificação → Obra + Unidade + Serviço + Inspetor
+- Verificação 1:N Itens
+- Item NC 1:N Fotos
+
+**Índices críticos (performance):**
+- `verificacoes(obra_id, created_at)`
+- `itens_verificacao(verificacao_id, status)`
+- `fotos_nc(item_id)`
+
+**Será detalhado em sessão específica de modelagem.**
+
+---
+
+## 13.7 Hospedagem e Infraestrutura
+
+### **Decisões:**
+
+**Banco de Dados:** Supabase (já confirmado)
+
+**Frontend Web:** ⏳ Pendente (opções: Vercel, Netlify, Cloudflare Pages)
+
+**Mobile:** Distribuição via Google Play Store (Android MVP)
+
+**CDN:** Supabase Storage já inclui CDN global
+
+**Backup:**
+- Supabase: backup automático diário + point-in-time recovery
+- Retenção: 7 dias (Plano Pro)
+
+**Ambientes:**
+- **Produção:** Supabase projeto principal
+- **Desenvolvimento:** Supabase projeto separado (plano Free)
+- **Staging:** Opcional (avaliar necessidade)
+
+---
+
+## 13.8 Monitoramento e Logs
+
+### **⏳ PENDENTE DE DECISÃO**
+
+**Necessário definir:**
+- [ ] Error tracking: Sentry, Rollbar, outro?
+- [ ] Logs: onde armazenar? (Supabase Logs + serviço externo?)
+- [ ] Uptime monitoring: UptimeRobot, Pingdom?
+- [ ] APM (Application Performance Monitoring): necessário no MVP?
+
+**Supabase já fornece:**
+- Logs de database queries
+- Logs de Edge Functions
+- Metrics de API usage
+
+**Será discutido em sessão de DevOps/Deploy.**
+
+---
+
+## 13.9 Testes
+
+### **⏳ PENDENTE DE DECISÃO**
+
+**Necessário definir:**
+- [ ] Framework: Jest, Vitest?
+- [ ] Cobertura mínima: 70%? 80%?
+- [ ] E2E testing: Playwright, Cypress?
+- [ ] Mobile testing: Detox, Appium?
+- [ ] CI/CD: GitHub Actions, GitLab CI?
+
+**Estratégia preliminar:**
+- Unit tests para Edge Functions (crítico)
+- Integration tests para fluxos principais
+- E2E para jornadas críticas (criar verificação, gerar PDF)
+- Mobile: testes manuais no MVP, automação na Fase 2
+
+**Será detalhado em sessão específica.**
+
+---
+
+## 13.10 Performance e Otimizações
+
+### **Estratégias confirmadas:**
+
+**Mobile Offline-first:**
+- SQLite local (todas verificações salvas instantaneamente)
+- Sincronização em background quando online
+- Conflict resolution: timestamp mais antigo vence
+
+**Compressão de imagens:**
+- Cliente comprime antes de upload (3-5 MB → 500-800 KB)
+- Biblioteca: react-native-image-compressor ou similar
+
+**Database:**
+- Índices nas queries mais frequentes
+- RLS policies otimizadas
+- Paginação: 50 itens por página
+
+**Frontend:**
+- Code splitting (lazy loading de rotas)
+- Virtualização de listas longas (react-window)
+- Cache de queries com Supabase realtime
+
+**Cache adicional:** ⏳ Avaliar necessidade de Redis (provavelmente não no MVP)
+
+---
+
+## 13.11 Tecnologias e Bibliotecas Confirmadas
+
+### **Confirmadas:**
+
+| Categoria | Tecnologia | Versão | Uso |
+|-----------|-----------|--------|-----|
+| **Database** | PostgreSQL | 15+ | Banco de dados principal |
+| **BaaS** | Supabase | Latest | Backend-as-a-Service |
+| **Frontend** | React | 18+ | Portal web |
+| **Mobile** | React Native | Latest | App mobile |
+| **Styling** | Tailwind CSS | 3.x | Estilização |
+| **UI Components** | Radix UI | Latest | Primitivos acessíveis |
+| **Language** | TypeScript | 5+ | Frontend + Edge Functions |
+| **Edge Runtime** | Deno | Latest | Serverless functions |
+| **Local DB Mobile** | SQLite | Latest | Offline storage |
+
+### **Pendentes de decisão:**
+
+| Categoria | Opções em análise |
+|-----------|-------------------|
+| **State Management** | Context API, Zustand, Redux Toolkit |
+| **Forms** | React Hook Form, Formik |
+| **Validation** | Zod, Yup |
+| **Routing** | React Router, Next.js |
+| **Charts** | Recharts, Chart.js, Victory |
+| **PDF Generation** | jsPDF, pdfmake, puppeteer |
+| **Hosting Web** | Vercel, Netlify, Cloudflare Pages |
+
+**Serão decididas no próximo bloco (Frontend Web).**
+
+---
+
+## 13.12 Regras de Desenvolvimento
+
+**Filosofia:** Código simples, manutenível, progressivo.
+
+**Princípios para IA/Windsurf:**
+1. **Fácil manutenção:** Código modular, funções pequenas, nomes descritivos
+2. **Robustez:** Validações, tratamento de erros, fallbacks
+3. **Progresso visual:** Sempre mostrar loading states e feedback ao usuário
+4. **Explicitude:** Preferir código verboso e claro a "clever code"
+5. **Criatividade controlada:** Seguir padrões estabelecidos, não reinventar
+
+**Convenções de código:**
+- TypeScript strict mode
+- ESLint + Prettier (configuração Supabase)
+- Commits semânticos (conventional commits)
+- Branch strategy: Gitflow (main, develop, feature/*)
+
+---
+
+## 13.13 Resumo de Custos (Ano 1)
+
+| Item | Custo/mês | Anual |
+|------|-----------|-------|
+| **Supabase Pro** (database + storage + edge functions) | $29 | $348 |
+| **Hospedagem Frontend** ⏳ | $0-20 | $0-240 |
+| **Google Play Store** (taxa única) | - | $25 |
+| **Apple Developer** (se iOS Fase 2) | - | $99 |
+| **Domínio** (.com.br) | $2 | $24 |
+| **Monitoramento** ⏳ | $0-10 | $0-120 |
+| **TOTAL ESTIMADO** | **$31-61** | **$397-856** |
+
+**Nota:** Valores podem variar conforme decisões pendentes. Custo inicial conservador: **~$400/ano**.
+
+---
+
+## 🎯 PRÓXIMO BLOCO: FRONTEND WEB
+
+**Objetivo:** Definir stack completa do portal web (React + ferramentas)
+
+**Tópicos:**
+- Gerenciamento de estado (Context API vs Zustand vs Redux)
+- Roteamento (React Router vs Next.js)
+- Formulários (React Hook Form vs Formik)
+- Validação (Zod vs Yup)
+- Gráficos (Recharts vs Chart.js)
+- Hospedagem (Vercel vs Netlify vs Cloudflare Pages)
+
+**Decisões necessárias antes de começar desenvolvimento do portal.**
 
 ---
 
