@@ -2,7 +2,7 @@
 
 **Versão:** 1.0 (Parcial - Em Construção)  
 **Data:** Janeiro 2026  
-**Status:** ✅ Seções 1-9 Consolidadas | ⏳ Seções 10-14 Pendentes
+**Status:** ✅ Seções 1-10 Consolidadas | ⏳ Seções 11-14 Pendentes
 
 ---
 
@@ -17,7 +17,7 @@
 7. [PORTAL WEB - OBRA ESPECÍFICA](#7-portal-web---obra-específica) ✅
 8. [PORTAL WEB - VISÃO GLOBAL](#8-portal-web---visão-global) ✅
 9. [PORTAL DO ALMOXARIFE](#9-portal-do-almoxarife) ✅
-10. [RELATÓRIOS E AUTOMAÇÕES](#10-relatórios-e-automações) ⏳
+10. [RELATÓRIOS E AUTOMAÇÕES](#10-relatórios-e-automações) ✅
 11. [PERMISSÕES E SEGURANÇA](#11-permissões-e-segurança) ⏳
 12. [DESIGN SYSTEM E UI/UX](#12-design-system-e-uiux) ⏳
 13. [ASPECTOS TÉCNICOS](#13-aspectos-técnicos) ⏳
@@ -435,12 +435,10 @@ Uma verificação contém múltiplos **Itens**, cada um com status individual.
 - Exceção ⊘ (item não se aplica naquele caso)
 
 **Reinspeção (se item estava Não Conforme):**
-- Conforme após reinspeção
-- Retrabalho (erro custoso de corrigir, mas aprovado - alimenta KPI IRS)
+- Conforme após reinspeção (nenhum retrabalho foi feito - mal entendido ou mudança de entendimento sobre a NC original)
+- Retrabalho (correção foi necessária e realizada - alimenta KPI IRS)
 - Aprovado com concessão (aceito com defeito menor)
 - Reprovado após retrabalho (tentaram corrigir mas continua errado)
-
-**Critério subjetivo:** Entre "Conforme após reinspeção" e "Retrabalho" é julgamento do inspetor/engenheiro (simples vs custoso).
 
 ### Dados de uma Verificação
 
@@ -1263,47 +1261,575 @@ Quando empreiteiro solicita material (ex: rejunte para Casa B03), almoxarife con
 
 # 10. RELATÓRIOS E AUTOMAÇÕES
 
-## ⏳ SEÇÃO PENDENTE DE DETALHAMENTO
+## 10.1 Visão Geral
 
-### O que já sabemos:
+O sistema ARDEN FVS oferece relatórios estratégicos para diferentes públicos: desde documentos obrigatórios para auditoria PBQP-H até dashboards executivos para tomada de decisão. Os relatórios são organizados em 4 categorias:
 
-**Tipos de Relatórios Mencionados:**
-- FVS Individual (PDF de uma verificação específica)
-- FVS Consolidada (todas unidades de um serviço)
-- Relatório de Não-Conformidades (RNC)
-- Resumo Executivo (para diretoria/investidores)
-- IRS - Índice de Retrabalho por Serviço (diferencial analítico)
-- Mapa de Calor (planta visual com unidades coloridas por status)
-- Rastreabilidade de Materiais (histórico liberações almoxarife)
+1. **Relatórios Operacionais** - Dia a dia (FVS, RNC)
+2. **Relatórios Estratégicos** - Tomada de decisão (Dashboard Executivo)
+3. **Relatórios de Accountability** - Performance de equipes (Eficiência de Correção)
+4. **Relatórios Preditivos** - IA/Análise Avançada (Plano PRO)
 
-**Automação:**
-- Relatórios agendados com envio automático por e-mail
-- Exemplo: "Todo dia 5, enviar FVS Consolidada filtrada por tag 'Financiamento Caixa' para auditoria@caixa.gov.br"
-- Configurável: destinatário, frequência, escopo, tipo, formato
+### 10.1.1 Priorização por Fase
 
-### O que precisa ser discutido:
+| Fase | Relatórios |
+|------|------------|
+| **MVP** | FVS por Grupo de Unidades, RNC, Dashboard Executivo, Eficiência de Correção |
+| **Fase 2** | Relatório de Tendências (análise estatística) |
+| **Plano PRO** | Análise Preditiva de NCs (Machine Learning) |
 
-**📋 Estrutura Detalhada de Cada Relatório:**
-- [ ] Qual exatamente é o conteúdo/seções de cada tipo?
-- [ ] Quais campos são obrigatórios vs opcionais?
-- [ ] Layout visual (não precisa mockup, mas descrição clara)
-- [ ] Diferenças entre formato PDF vs Excel
+---
 
-**🎯 Priorização por Fase:**
-- [ ] Quais relatórios são MVP (essenciais)?
-- [ ] Quais são Fase 2 (diferenciais)?
-- [ ] Quais são Fase 3/PRO (com IA)?
+## 10.2 Modelo de Status (Referência para Relatórios)
 
-**🔧 Configuração de Automações:**
-- [ ] Interface de configuração (detalhes do formulário)
-- [ ] Como testar antes de ativar?
-- [ ] Como gerenciar múltiplas automações?
-- [ ] Logs de envios realizados?
+### 10.2.1 Status de ITEM (granular)
 
-**📊 Relatórios com IA (Feature PRO):**
-- [ ] Projeção de Conclusão: como funciona o algoritmo?
-- [ ] Análise Preditiva: quais padrões identifica?
-- [ ] Interface de apresentação dos insights?
+**Primeira Inspeção:**
+| Status | Descrição | Ícone |
+|--------|-----------|-------|
+| Não Verificado | Estado inicial, aguardando avaliação | ⬜ |
+| Conforme | Atende aos critérios de qualidade | ✅ |
+| Não Conforme | Problema identificado → requer foto + observação | ❌ |
+| Exceção | Não se aplica ao contexto da unidade | ⚪ |
+
+**Reinspeção (somente itens que eram NC):**
+| Status | Descrição | Impacta IRS? |
+|--------|-----------|--------------|
+| Conforme após reinspeção | Não havia problema real, sem retrabalho executado | Não |
+| Retrabalho | Correção foi executada | **Sim** |
+| Aprovado com concessão | Defeito tolerável aceito | Não |
+| Reprovado após retrabalho | Correção insuficiente, problema persiste → loop continua | Não (até resolver) |
+
+### 10.2.2 Status de VERIFICAÇÃO (nível serviço + unidade)
+| Status | Descrição |
+|--------|-----------|
+| Pendente | Ainda há itens não verificados |
+| Concluída | Todos os itens verificados (sem NCs abertas) |
+| Com NC | Possui não-conformidades aguardando resolução |
+
+### 10.2.3 Fórmula IRS (Índice de Retrabalho por Serviço)
+
+```
+IRS = (Itens com status "Retrabalho" / Total de Itens Verificados) × 100
+```
+
+**Interpretação:**
+- IRS < 10%: 🟢 Saudável
+- IRS 10-15%: 🟡 Atenção
+- IRS > 15%: 🔴 Crítico
+
+---
+
+## 10.3 Relatórios MVP
+
+### 10.3.1 FVS por Grupo de Unidades
+
+**Propósito:** Documento oficial para auditoria PBQP-H. Checklist completo de verificação de serviço.
+
+**Público:** Auditor externo, Engenheiro
+
+**Formato:** PDF
+
+**Geração:** Sob demanda
+
+**Seleção:** Usuário escolhe:
+- Obra inteira OU
+- Unidades específicas (seleção múltipla)
+
+**Estrutura do PDF:**
+
+```
+┌─────────────────────────────────────────────────────────┐
+│ CABEÇALHO                                               │
+│ ─────────────────────────────────────────────────────── │
+│ Logo Construtora | Obra: [Nome da Obra]                 │
+│ Serviço: [Nome do Serviço FVS]                          │
+│ Data de emissão: [DD/MM/AAAA]                           │
+│ Unidades: [Lista ou "Todas"]                            │
+│ Total de unidades: [N]                                  │
+├─────────────────────────────────────────────────────────┤
+│ RESUMO                                                  │
+│ ─────────────────────────────────────────────────────── │
+│ Total de itens: [N]                                     │
+│ Conformes: [N] | Não Conformes: [N] | Exceções: [N]     │
+│ Taxa de conformidade: [X]%                              │
+│ IRS do serviço: [X]%                                    │
+├─────────────────────────────────────────────────────────┤
+│ TABELA DE VERIFICAÇÃO                                   │
+│ ─────────────────────────────────────────────────────── │
+│ Unidade | Item                  | Status    | Inspetor  │
+│ ────────┼───────────────────────┼───────────┼───────────│
+│ B01     │ [Nome do item 1]      │ ✅ Conf.  │ [Nome]    │
+│ B01     │ [Nome do item 2]      │ ❌ NC     │ [Nome]    │
+│ B01     │ [Nome do item 3]      │ ⚪ Exceção│ [Nome]    │
+│ B02     │ [Nome do item 1]      │ ✅ Conf.  │ [Nome]    │
+│ ...     │ ...                   │ ...       │ ...       │
+├─────────────────────────────────────────────────────────┤
+│ DETALHAMENTO DE NÃO CONFORMIDADES                       │
+│ ─────────────────────────────────────────────────────── │
+│                                                         │
+│ NC #[ID]: Unidade [X] - [Nome do Item]                  │
+│ Inspetor: [Nome] | Data: [DD/MM/AAAA HH:MM]             │
+│ Observação: [Texto da observação]                       │
+│ [FOTO COM WATERMARK]                                    │
+│ Status atual: [Aguardando reinspeção / Retrabalho /     │
+│               Conforme após reinspeção / etc.]          │
+│                                                         │
+│ Histórico de reinspeções (se houver):                   │
+│   - [DD/MM/AAAA]: [Status] por [Inspetor]               │
+│   - [DD/MM/AAAA]: [Status] por [Inspetor]               │
+│                                                         │
+│ [Repete para cada NC]                                   │
+├─────────────────────────────────────────────────────────┤
+│ RODAPÉ                                                  │
+│ Gerado por ARDEN FVS em [DD/MM/AAAA] às [HH:MM]         │
+│ Página [X] de [Y]                                       │
+└─────────────────────────────────────────────────────────┘
+```
+
+**Watermark nas Fotos:**
+- Nome da Obra
+- Data e Hora da foto
+- Nome do Inspetor
+- Coordenadas GPS
+
+---
+
+### 10.3.2 RNC - Relatório de Não Conformidades
+
+**Propósito:** Visão consolidada de todas as não conformidades da obra para gestão e correção.
+
+**Público:** Engenheiro, Mestre de obras
+
+**Formato:** PDF
+
+**Geração:**
+- Sob demanda (com filtros)
+- Automático semanal (segunda-feira, 7h)
+
+**Filtros disponíveis:**
+- Por obra
+- Por período (data início/fim)
+- Por serviço
+- Por status (abertas / resolvidas / todas)
+- Por agrupamento de unidades
+
+**Estrutura do PDF:**
+
+```
+┌─────────────────────────────────────────────────────────┐
+│ CABEÇALHO                                               │
+│ ─────────────────────────────────────────────────────── │
+│ Relatório de Não Conformidades                          │
+│ Obra: [Nome da Obra]                                    │
+│ Período: [DD/MM/AAAA] a [DD/MM/AAAA]                    │
+│ Filtros aplicados: [Lista de filtros]                   │
+│ Gerado em: [DD/MM/AAAA] às [HH:MM]                      │
+├─────────────────────────────────────────────────────────┤
+│ RESUMO EXECUTIVO                                        │
+│ ─────────────────────────────────────────────────────── │
+│ NCs abertas: [N]                                        │
+│ NCs resolvidas no período: [N]                          │
+│ Tempo médio de resolução: [X.X] dias                    │
+│ NC mais antiga aberta: [N] dias                         │
+│   ([Unidade] - [Serviço])                               │
+├─────────────────────────────────────────────────────────┤
+│ NCs POR SERVIÇO                                         │
+│ ─────────────────────────────────────────────────────── │
+│ [Serviço 1]............... [N] NCs ([X]%)               │
+│ [Serviço 2]............... [N] NCs ([X]%)               │
+│ [Serviço 3]............... [N] NCs ([X]%)               │
+│ [Serviço 4]............... [N] NCs ([X]%)               │
+│ [Serviço 5]............... [N] NCs ([X]%)               │
+├─────────────────────────────────────────────────────────┤
+│ NCs POR AGRUPAMENTO                                     │
+│ ─────────────────────────────────────────────────────── │
+│ [Agrupamento 1]........... [N] NCs                      │
+│ [Agrupamento 2]........... [N] NCs                      │
+│ [Agrupamento 3]........... [N] NCs                      │
+├─────────────────────────────────────────────────────────┤
+│ LISTA DETALHADA DE NCs ABERTAS                          │
+│ ─────────────────────────────────────────────────────── │
+│ (Ordenadas por tempo aberta, da mais antiga para mais   │
+│ recente)                                                │
+│                                                         │
+│ NC #[ID] - CRÍTICA ([N] dias aberta)                    │
+│ Unidade: [X] | Serviço: [Nome]                          │
+│ Item: [Nome do item]                                    │
+│ Inspetor: [Nome] | Data: [DD/MM/AAAA]                   │
+│ Observação: [Texto]                                     │
+│ [FOTO COM WATERMARK]                                    │
+│ Histórico:                                              │
+│   - [DD/MM/AAAA]: Reinspeção → [Status]                 │
+│   - [DD/MM/AAAA]: Reinspeção → [Status]                 │
+│                                                         │
+│ [Repete para cada NC aberta]                            │
+├─────────────────────────────────────────────────────────┤
+│ NCs RESOLVIDAS NO PERÍODO                               │
+│ ─────────────────────────────────────────────────────── │
+│ NC #[ID] | [Serviço] | [Status final] | Resolvida em    │
+│          |           |                | [N] dias        │
+│ NC #[ID] | [Serviço] | [Status final] | [N] dias        │
+│ ...                                                     │
+├─────────────────────────────────────────────────────────┤
+│ RODAPÉ                                                  │
+│ Gerado por ARDEN FVS em [DD/MM/AAAA] às [HH:MM]         │
+│ Página [X] de [Y]                                       │
+└─────────────────────────────────────────────────────────┘
+```
+
+**Watermark nas Fotos:** (mesmo padrão do FVS)
+- Nome da Obra
+- Data e Hora da foto
+- Nome do Inspetor
+- Coordenadas GPS
+
+---
+
+### 10.3.3 Dashboard Executivo
+
+**Propósito:** Visão consolidada de TODAS as obras da construtora para tomada de decisão estratégica.
+
+**Público:** Proprietário da construtora, Diretoria
+
+**Formato:** PDF (visual) + Excel (dados brutos)
+
+**Geração:**
+- Sob demanda
+- Automático mensal (dia 1, 8h)
+
+**Estrutura do PDF:**
+
+```
+┌─────────────────────────────────────────────────────────┐
+│ DASHBOARD EXECUTIVO - [MÊS/ANO]                         │
+│ [Nome da Construtora]                                   │
+│ Gerado em: [DD/MM/AAAA] às [HH:MM]                      │
+├─────────────────────────────────────────────────────────┤
+│ VISÃO GERAL MULTI-OBRAS                                 │
+│ ─────────────────────────────────────────────────────── │
+│ Obras ativas: [N]                                       │
+│ Total de unidades: [N]                                  │
+│ Verificações concluídas (mês): [N]                      │
+│ Taxa de conformidade global: [X]%                       │
+│ IRS médio: [X]%                                         │
+├─────────────────────────────────────────────────────────┤
+│ RANKING DE OBRAS                                        │
+│ ─────────────────────────────────────────────────────── │
+│ Status │ Obra                    │ Progresso │ NCs │ IRS│
+│ ───────┼─────────────────────────┼───────────┼─────┼────│
+│ 🟢     │ [Obra 1]                │ [X]%      │ [N] │[X]%│
+│ 🟢     │ [Obra 2]                │ [X]%      │ [N] │[X]%│
+│ 🟡     │ [Obra 3]                │ [X]%      │ [N] │[X]%│
+│ 🔴     │ [Obra 4]                │ [X]%      │ [N] │[X]%│
+│                                                         │
+│ Legenda:                                                │
+│ 🟢 Saudável (IRS < 10%)                                 │
+│ 🟡 Atenção (IRS 10-15%)                                 │
+│ 🔴 Crítico (IRS > 15%)                                  │
+├─────────────────────────────────────────────────────────┤
+│ ALERTAS CRÍTICOS                                        │
+│ ─────────────────────────────────────────────────────── │
+│ ⚠️ [Obra X]: IRS de [X]% (meta: 10%)                    │
+│ ⚠️ [N] NCs abertas há mais de 30 dias                   │
+│ ⚠️ [Serviço X] com [X]% de NCs (todas as obras)         │
+│ [Lista de alertas relevantes]                           │
+├─────────────────────────────────────────────────────────┤
+│ TOP 5 SERVIÇOS COM MAIS NCs (TODAS AS OBRAS)            │
+│ ─────────────────────────────────────────────────────── │
+│ 1. [Serviço 1]............ [N] NCs ([X]%)               │
+│ 2. [Serviço 2]............ [N] NCs ([X]%)               │
+│ 3. [Serviço 3]............ [N] NCs ([X]%)               │
+│ 4. [Serviço 4]............ [N] NCs ([X]%)               │
+│ 5. [Serviço 5]............ [N] NCs ([X]%)               │
+├─────────────────────────────────────────────────────────┤
+│ PRODUTIVIDADE DE INSPETORES (mês)                       │
+│ ─────────────────────────────────────────────────────── │
+│ Ranking │ Inspetor      │ Verificações │ Média/dia      │
+│ ────────┼───────────────┼──────────────┼────────────────│
+│ 🥇      │ [Nome 1]      │ [N]          │ [X.X]          │
+│ 🥈      │ [Nome 2]      │ [N]          │ [X.X]          │
+│ 🥉      │ [Nome 3]      │ [N]          │ [X.X]          │
+│                                                         │
+│ Produtividade semanal (última semana):                  │
+│ [Nome 1]: [N] | [Nome 2]: [N] | [Nome 3]: [N]           │
+├─────────────────────────────────────────────────────────┤
+│ GRÁFICO: EVOLUÇÃO MENSAL                                │
+│ ─────────────────────────────────────────────────────── │
+│ [Gráfico de linha: % conformidade últimos 6 meses]      │
+│                                                         │
+│ 100%│                                                   │
+│  90%│              ___────────────────                  │
+│  80%│     ___─────/                                     │
+│  70%│────/                                              │
+│     └────────────────────────────────────               │
+│      [Mês-6] [Mês-5] [Mês-4] [Mês-3] [Mês-2] [Mês-1]    │
+├─────────────────────────────────────────────────────────┤
+│ RODAPÉ                                                  │
+│ Gerado por ARDEN FVS em [DD/MM/AAAA] às [HH:MM]         │
+│ Página [X] de [Y]                                       │
+└─────────────────────────────────────────────────────────┘
+```
+
+**Excel Anexo:**
+Planilha com dados brutos organizados para análise própria do cliente:
+- Aba 1: Resumo por Obra (colunas: Obra, Progresso, NCs Abertas, IRS, Taxa Conformidade)
+- Aba 2: Detalhamento de NCs (colunas: ID, Obra, Unidade, Serviço, Item, Data, Status, Dias Aberta)
+- Aba 3: Verificações do Período (colunas: ID, Obra, Unidade, Serviço, Inspetor, Data, Status)
+- Aba 4: Produtividade Inspetores (colunas: Inspetor, Obra, Verificações Mês, Média Diária)
+
+---
+
+### 10.3.4 Eficiência de Correção
+
+**Propósito:** Monitorar velocidade de resolução de NCs e identificar gargalos.
+
+**Público:** Engenheiro, Mestre de obras
+
+**Formato:** PDF
+
+**Geração:** Automático semanal (sexta-feira, 16h)
+
+**Estrutura do PDF:**
+
+```
+┌─────────────────────────────────────────────────────────┐
+│ RELATÓRIO DE EFICIÊNCIA DE CORREÇÃO                     │
+│ Obra: [Nome da Obra]                                    │
+│ Semana: [DD/MM/AAAA] a [DD/MM/AAAA]                     │
+│ Gerado em: [DD/MM/AAAA] às [HH:MM]                      │
+├─────────────────────────────────────────────────────────┤
+│ INDICADORES DA SEMANA                                   │
+│ ─────────────────────────────────────────────────────── │
+│ NCs abertas no período: [N]                             │
+│ NCs resolvidas no período: [N]                          │
+│ Saldo: [+/-N] ([Reduzindo/Aumentando] backlog)          │
+│                                                         │
+│ Tempo médio de resolução: [X.X] dias                    │
+│ Meta: 7 dias | Status: [✅ Dentro / ⚠️ Acima] da meta   │
+├─────────────────────────────────────────────────────────┤
+│ TEMPO DE RESOLUÇÃO POR SERVIÇO                          │
+│ ─────────────────────────────────────────────────────── │
+│ Serviço              │ Média (dias) │ Status            │
+│ ─────────────────────┼──────────────┼───────────────────│
+│ [Serviço 1]          │ [X.X]        │ 🟢 Excelente      │
+│ [Serviço 2]          │ [X.X]        │ 🟢 OK             │
+│ [Serviço 3]          │ [X.X]        │ 🟡 Atenção        │
+│ [Serviço 4]          │ [X.X]        │ 🔴 Crítico        │
+│                                                         │
+│ Legenda:                                                │
+│ 🟢 Excelente (< 3 dias) | 🟢 OK (3-7 dias)              │
+│ 🟡 Atenção (7-14 dias)  | 🔴 Crítico (> 14 dias)        │
+├─────────────────────────────────────────────────────────┤
+│ NCs CRÔNICAS (abertas > 15 dias)                        │
+│ ─────────────────────────────────────────────────────── │
+│ ⚠️ NC #[ID] - [N] dias - [Serviço] - [Unidade]          │
+│    [Observação sobre o problema ou histórico]           │
+│                                                         │
+│ ⚠️ NC #[ID] - [N] dias - [Serviço] - [Unidade]          │
+│    [Observação sobre o problema ou histórico]           │
+│                                                         │
+│ [Lista de NCs crônicas]                                 │
+├─────────────────────────────────────────────────────────┤
+│ TAXA DE REINCIDÊNCIA                                    │
+│ ─────────────────────────────────────────────────────── │
+│ NCs que precisaram de 2+ retrabalhos: [N] ([X]%)        │
+│                                                         │
+│ Detalhamento:                                           │
+│ - NC #[ID] ([Serviço]): [N] retrabalhos, [status]       │
+│ - NC #[ID] ([Serviço]): [N] retrabalhos, [status]       │
+│ - NC #[ID] ([Serviço]): [N] retrabalhos, [status]       │
+├─────────────────────────────────────────────────────────┤
+│ RESOLUÇÃO POR TIPO                                      │
+│ ─────────────────────────────────────────────────────── │
+│ Retrabalho.................. [N] ([X]%)                 │
+│ Conforme após reinspeção.... [N] ([X]%) ← Falsos posit. │
+│ Aprovado com concessão...... [N] ([X]%)                 │
+├─────────────────────────────────────────────────────────┤
+│ RODAPÉ                                                  │
+│ Gerado por ARDEN FVS em [DD/MM/AAAA] às [HH:MM]         │
+│ Página [X] de [Y]                                       │
+└─────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 10.4 Relatórios Fase 2
+
+### 10.4.1 Relatório de Tendências
+
+**Propósito:** Análise longitudinal para identificar padrões recorrentes e melhoria contínua.
+
+**Público:** Engenheiro, Proprietário
+
+**Formato:** PDF
+
+**Geração:**
+- Sob demanda
+- Automático trimestral (opcional)
+
+**Tipo de análise:** Estatística simples (sem IA), baseada em queries SQL dos dados históricos.
+
+**Conteúdo planejado:**
+- Top 5 serviços problemáticos recorrentes (últimos 3 meses)
+- Comparativo mensal de IRS por serviço
+- Identificação de padrões sazonais
+- Evolução da taxa de conformidade
+- Comparativo entre obras
+
+**Queries base (exemplo):**
+```sql
+-- Top 5 serviços com mais NCs (últimos 3 meses)
+SELECT servico, COUNT(*) as total_ncs
+FROM verificacoes
+WHERE status = 'NC' AND data > NOW() - INTERVAL '3 months'
+GROUP BY servico
+ORDER BY total_ncs DESC
+LIMIT 5;
+```
+
+---
+
+## 10.5 Relatórios Plano PRO (IA)
+
+### 10.5.1 Análise Preditiva de NCs
+
+**Propósito:** Machine Learning para prever onde problemas vão ocorrer antes que aconteçam.
+
+**Público:** Engenheiro
+
+**Formato:** PDF com insights
+
+**Geração:** Sob demanda
+
+**Funcionalidades planejadas:**
+- Previsão de probabilidade de NC por unidade/serviço
+- Identificação de correlações (ex: solo argiloso → mais NCs em fundação)
+- Recomendações automatizadas
+- Alertas proativos
+
+**Nota:** Requer volume significativo de dados históricos para treinar modelo. Disponível apenas para clientes com 6+ meses de uso.
+
+---
+
+## 10.6 Configurações de Agendamento
+
+### 10.6.1 Tela de Configuração (Portal Admin)
+
+**Localização:** Configurações > Relatórios Automáticos
+
+**Campos por relatório:**
+- **Ativo:** Toggle (sim/não)
+- **Frequência:** Dropdown (Diário / Semanal / Mensal)
+- **Dia:**
+  - Se semanal: Dropdown (Segunda a Domingo)
+  - Se mensal: Dropdown (Dia 1 a 28)
+- **Horário:** Dropdown (00:00 a 23:00, incrementos de 1h)
+- **Destinatários:** Lista de emails (adicionar/remover)
+
+**Configuração padrão (sugerida no primeiro acesso):**
+
+| Relatório | Frequência | Dia | Horário | Destinatários Padrão |
+|-----------|------------|-----|---------|---------------------|
+| RNC | Semanal | Segunda | 07:00 | Engenheiro da obra |
+| Dashboard Executivo | Mensal | Dia 1 | 08:00 | Admin |
+| Eficiência de Correção | Semanal | Sexta | 16:00 | Engenheiro da obra |
+
+### 10.6.2 Funcionalidades da Tela
+
+**Ações disponíveis:**
+- Editar configuração de cada relatório
+- Adicionar/remover destinatários por email
+- Testar envio (gera e envia imediatamente para o admin)
+- Ver histórico de envios (últimos 30 dias)
+- Pausar/retomar agendamento
+
+**Validações:**
+- Email deve ser válido
+- Pelo menos 1 destinatário se relatório ativo
+- Limite de 10 destinatários por relatório
+
+### 10.6.3 Log de Envios
+
+**Campos do log:**
+- Data/hora do envio
+- Relatório enviado
+- Destinatários
+- Status (Sucesso / Falha)
+- Tamanho do arquivo
+- Link para download (expira em 7 dias)
+
+**Retenção:** 90 dias
+
+---
+
+## 10.7 Implementação Técnica
+
+### 10.7.1 Geração de PDFs
+
+**Tecnologia:** Edge Function (Deno) + biblioteca de geração de PDF
+
+**Edge Functions necessárias:**
+- `gerar-pdf-fvs` - FVS por Grupo de Unidades
+- `gerar-pdf-rnc` - Relatório de Não Conformidades
+- `gerar-pdf-dashboard` - Dashboard Executivo
+- `gerar-pdf-eficiencia` - Eficiência de Correção
+- `gerar-excel-dashboard` - Excel do Dashboard Executivo
+
+### 10.7.2 Processamento de Fotos
+
+**Watermark automático (aplicado no upload):**
+- Nome da Obra
+- Data e Hora (timestamp da foto)
+- Nome do Inspetor
+- Coordenadas GPS
+
+**Compressão:**
+- Quality: 0.8
+- Tamanho alvo: ~800KB por foto
+- Formato: JPEG
+
+### 10.7.3 Agendamento
+
+**Tecnologia:** Supabase Scheduled Functions (cron)
+
+**Jobs configurados:**
+- `relatorio-rnc-semanal`: Segundas 07:00 (timezone Brasil)
+- `relatorio-dashboard-mensal`: Dia 1, 08:00
+- `relatorio-eficiencia-semanal`: Sextas 16:00
+
+**Fluxo:**
+1. Cron dispara Edge Function
+2. Edge Function consulta configurações ativas
+3. Para cada cliente com agendamento ativo:
+   - Gera PDF/Excel
+   - Salva no Storage (temporário, 7 dias)
+   - Envia email com link de download
+   - Registra no log
+
+### 10.7.4 Envio de Emails
+
+**Tecnologia:** Supabase + provedor de email (Resend ou similar)
+
+**Template de email:**
+- Assunto: "[ARDEN FVS] [Nome do Relatório] - [Obra/Construtora] - [Data]"
+- Corpo: Resumo breve + link para download
+- Anexo: Não (apenas link para evitar limite de tamanho)
+
+**Expiração do link:** 7 dias
+
+---
+
+## 10.8 Resumo de Relatórios
+
+| Relatório | Formato | Geração | Público | Fase |
+|-----------|---------|---------|---------|------|
+| FVS por Grupo de Unidades | PDF | Sob demanda | Auditor, Engenheiro | MVP |
+| RNC | PDF | Sob demanda + Semanal (seg 7h) | Engenheiro, Mestre | MVP |
+| Dashboard Executivo | PDF + Excel | Sob demanda + Mensal (dia 1, 8h) | Diretoria | MVP |
+| Eficiência de Correção | PDF | Semanal (sex 16h) | Engenheiro | MVP |
+| Tendências | PDF | Sob demanda + Trimestral | Engenheiro, Proprietário | Fase 2 |
+| Análise Preditiva de NCs | PDF | Sob demanda | Engenheiro | PRO |
 
 ---
 

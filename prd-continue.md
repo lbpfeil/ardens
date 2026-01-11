@@ -322,13 +322,51 @@ Item 3 permanece "Conforme" (primeiro que subiu)
 
 ---
 
-## ⏳ O QUE FALTA DEFINIR (PRÓXIMAS SESSÕES)
+## ✅ SESSÃO 2 CONCLUÍDA: RELATÓRIOS E AUTOMAÇÕES
 
-### **Seção 10: Relatórios e Automações**
-- [ ] Estrutura de cada tipo de relatório (FVS individual, RNC, Consolidado, IRS)
-- [ ] Diferenças PDF vs Excel
-- [ ] Priorização por fase (MVP vs Fase 2)
-- [ ] Lógica de agendamento automático
+### **Seção 10: Relatórios e Automações** ✅
+
+**Modelo de Status definido:**
+
+| Status Primeira Inspeção | Descrição |
+|--------------------------|-----------|
+| Não Verificado | Estado inicial |
+| Conforme | Atende critérios |
+| Não Conforme | Problema → foto + observação |
+| Exceção | Não se aplica |
+
+| Status Reinspeção | Descrição | Impacta IRS? |
+|-------------------|-----------|--------------|
+| Conforme após reinspeção | Não havia problema real | Não |
+| Retrabalho | Correção executada | **Sim** |
+| Aprovado com concessão | Defeito tolerável aceito | Não |
+| Reprovado após retrabalho | Correção insuficiente | Não |
+
+**Fórmula IRS:** `(Itens com "Retrabalho" / Total Verificados) × 100`
+
+**Relatórios MVP (4):**
+| Relatório | Formato | Geração |
+|-----------|---------|---------|
+| FVS por Grupo de Unidades | PDF | Sob demanda |
+| RNC | PDF | Sob demanda + Semanal (seg 7h) |
+| Dashboard Executivo | PDF + Excel | Sob demanda + Mensal (dia 1, 8h) |
+| Eficiência de Correção | PDF | Semanal (sex 16h) |
+
+**Relatórios Fase 2:** Tendências (análise estatística)
+
+**Relatórios PRO:** Análise Preditiva de NCs (Machine Learning)
+
+**Watermark nas fotos:** Obra, Data/Hora, Inspetor, GPS
+
+**Configurações de agendamento:**
+- Frequência, dia, horário configuráveis
+- Destinatários por email (até 10)
+- Log de envios (90 dias retenção)
+- Link expira em 7 dias
+
+---
+
+## ⏳ O QUE FALTA DEFINIR (PRÓXIMAS SESSÕES)
 
 ### **Seção 11: Permissões e Segurança**
 - [ ] RLS Policies detalhadas (SQL completo)
@@ -428,10 +466,11 @@ Item 3 permanece "Conforme" (primeiro que subiu)
 
 ## 🎯 ESTADO ATUAL DO PRD
 
-**Arquivo:** `ARDEN_FVS_PRD.md` (1.800+ linhas)
+**Arquivo:** `ARDEN_FVS_PRD.md` (2.000+ linhas)
 
 **Concluído:**
 - ✅ Seções 1-9: Produto completo (funcionalidades, fluxos, usuários)
+- ✅ Seção 10: Relatórios e Automações (4 relatórios MVP + agendamento)
 - ✅ Seção 13.1: Database
 - ✅ Seção 13.2: Backend
 - ✅ Seção 13.3: Frontend Web
@@ -439,7 +478,6 @@ Item 3 permanece "Conforme" (primeiro que subiu)
 - ✅ Seção 13.5: Autenticação (Supabase Auth)
 
 **Pendente:**
-- ⏳ Seção 10: Relatórios e Automações
 - ⏳ Seção 11: Permissões e Segurança
 - ⏳ Seção 12: Design System
 - ⏳ Seção 13.6: Schema do Banco
@@ -456,13 +494,13 @@ Item 3 permanece "Conforme" (primeiro que subiu)
 3. **Princípios fundamentais:** Zero ambiguidade, praticidade, consistência total
 4. **Abordagem:** Fazer perguntas estratégicas antes de apresentar opções técnicas
 5. **Foco:** Simplicidade e facilidade de gestão (não over-engineering)
-6. **Continue de onde parou:** Próximos blocos são Seções 10-12 e 13.6
+6. **Continue de onde parou:** Próximos blocos são Seções 11, 12, 13.6 e 14
 
 **Para o usuário:**
 
 1. Compartilhe este arquivo com a próxima IA
 2. Diga: "Leia @prd-continue.md para entender todo o contexto do projeto"
-3. Indique qual seção quer continuar (Seção 10, 11, 12 ou 13.6)
+3. Indique qual seção quer continuar (Seção 11, 12, 13.6 ou 14)
 4. A IA terá todo o contexto sem precisar ler o PRD completo
 
 ---
@@ -488,6 +526,6 @@ Item 3 permanece "Conforme" (primeiro que subiu)
 
 ---
 
-**Arquivo gerado em:** 2025-01-10
-**Última sessão concluída:** Sessão 1 - Stack Técnica (Blocos 1-4)
-**Próxima sessão:** Seção 10 (Relatórios) ou Seção 11 (Segurança) ou Seção 12 (Design System)
+**Arquivo atualizado em:** 2026-01-10
+**Última sessão concluída:** Sessão 2 - Relatórios e Automações (Seção 10)
+**Próxima sessão:** Seção 11 (Segurança) ou Seção 12 (Design System) ou Seção 13.6 (Schema DB)
