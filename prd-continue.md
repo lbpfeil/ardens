@@ -366,6 +366,53 @@ Item 3 permanece "Conforme" (primeiro que subiu)
 
 ---
 
+## ✅ SESSÃO 3 CONCLUÍDA: SCHEMA DO BANCO DE DADOS
+
+### **Seção 13.6: Schema do Banco** ✅
+
+**Arquivo:** `database/schema.sql`
+
+**Estrutura:**
+- 9 tipos ENUM
+- 22 tabelas
+- Indexes para performance
+- Triggers para updated_at e contadores
+- RLS habilitado em todas tabelas
+
+**Tabelas principais:**
+
+| Categoria | Tabelas |
+|-----------|---------|
+| Multi-tenancy | `clientes` |
+| Usuários | `usuarios`, `usuario_clientes`, `usuario_obras` |
+| Obras | `obras`, `agrupamentos`, `unidades`, `empreendimentos`, `tags` |
+| Biblioteca FVS | `servicos`, `itens_servico`, `fotos_referencia`, `condicoes_inicio` |
+| Verificações | `verificacoes`, `itens_verificacao`, `fotos_nc` |
+| Feed | `notificacoes`, `sync_conflitos` |
+| Relatórios | `relatorios_agendados`, `log_relatorios` |
+| Auditoria | `audit_log` (triggers Fase 2) |
+
+**Decisões de modelagem:**
+- Usuário pode pertencer a múltiplos clientes (N:N)
+- Permissão por obra é binária (tem ou não tem)
+- Obras/unidades: hard delete permitido
+- Serviços: soft delete (arquivar)
+- Fotos NC: 1-5 por item, GPS opcional
+- Reinspeção não exige foto
+- Categorias de serviço: ENUM fixo (11 categorias)
+- Notificações persistidas (feed é core feature)
+
+**Diagrama simplificado:**
+```
+Cliente → Obras → Agrupamentos → Unidades
+                                    ↓
+Serviços → Verificações (1 por unidade+serviço)
+    ↓              ↓
+Itens Serviço → Itens Verificação → Fotos NC
+```
+
+---
+
 ## ⏳ O QUE FALTA DEFINIR (PRÓXIMAS SESSÕES)
 
 ### **Seção 11: Permissões e Segurança**
@@ -382,13 +429,6 @@ Item 3 permanece "Conforme" (primeiro que subiu)
 - [ ] Portal web funciona em mobile? (ou só desktop?)
 - [ ] Acessibilidade: padrão WCAG (A, AA, AAA)?
 - [ ] Animações essenciais
-
-### **Seção 13.6: Schema do Banco de Dados**
-- [ ] SQL completo de TODAS as tabelas
-- [ ] Relacionamentos (foreign keys)
-- [ ] Indexes para performance
-- [ ] Triggers necessários
-- [ ] Migrations strategy
 
 ### **Seção 14: Roadmap**
 - [ ] Timeline MVP (quantos meses?)
@@ -476,11 +516,11 @@ Item 3 permanece "Conforme" (primeiro que subiu)
 - ✅ Seção 13.3: Frontend Web
 - ✅ Seção 13.4: Mobile (incluindo sync offline COMPLETA)
 - ✅ Seção 13.5: Autenticação (Supabase Auth)
+- ✅ Seção 13.6: Schema do Banco (22 tabelas, 9 ENUMs, indexes, triggers)
 
 **Pendente:**
 - ⏳ Seção 11: Permissões e Segurança
 - ⏳ Seção 12: Design System
-- ⏳ Seção 13.6: Schema do Banco
 - ⏳ Seção 14: Roadmap
 
 ---
@@ -494,13 +534,13 @@ Item 3 permanece "Conforme" (primeiro que subiu)
 3. **Princípios fundamentais:** Zero ambiguidade, praticidade, consistência total
 4. **Abordagem:** Fazer perguntas estratégicas antes de apresentar opções técnicas
 5. **Foco:** Simplicidade e facilidade de gestão (não over-engineering)
-6. **Continue de onde parou:** Próximos blocos são Seções 11, 12, 13.6 e 14
+6. **Continue de onde parou:** Próximos blocos são Seções 11, 12 e 14
 
 **Para o usuário:**
 
 1. Compartilhe este arquivo com a próxima IA
 2. Diga: "Leia @prd-continue.md para entender todo o contexto do projeto"
-3. Indique qual seção quer continuar (Seção 11, 12, 13.6 ou 14)
+3. Indique qual seção quer continuar (Seção 11, 12 ou 14)
 4. A IA terá todo o contexto sem precisar ler o PRD completo
 
 ---
@@ -526,6 +566,6 @@ Item 3 permanece "Conforme" (primeiro que subiu)
 
 ---
 
-**Arquivo atualizado em:** 2026-01-10
-**Última sessão concluída:** Sessão 2 - Relatórios e Automações (Seção 10)
-**Próxima sessão:** Seção 11 (Segurança) ou Seção 12 (Design System) ou Seção 13.6 (Schema DB)
+**Arquivo atualizado em:** 2026-01-11
+**Última sessão concluída:** Sessão 3 - Schema do Banco de Dados (Seção 13.6)
+**Próxima sessão:** Seção 11 (Segurança) ou Seção 12 (Design System) ou Seção 14 (Roadmap)

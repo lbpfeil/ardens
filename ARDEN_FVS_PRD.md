@@ -3057,37 +3057,140 @@ CREATE POLICY "Engenheiro vê suas obras" ON verificacoes
 
 ## 13.6 Schema de Banco de Dados
 
-### **⏳ PENDENTE DE DEFINIÇÃO COMPLETA**
+### **✅ CONCLUÍDO** - Arquivo: `database/schema.sql`
 
-**Status:** Estrutura conceitual definida (Seção 5), schema SQL detalhado será criado em sessão específica.
+**Status:** Schema SQL completo definido.
 
-**Tabelas principais (conceitual):**
-- `clientes` (construtoras)
-- `usuarios` (admin, engenheiro, inspetor, almoxarife)
-- `usuarios_obras` (relação N:N)
-- `obras`
-- `agrupamentos`
-- `unidades`
-- `servicos` (biblioteca FVS)
-- `obras_servicos` (serviços ativos por obra)
-- `verificacoes`
-- `itens_verificacao`
-- `fotos_nc`
-- `condicoes_inicio`
+---
 
-**Relacionamentos chave:**
-- Cliente 1:N Obras
-- Obra 1:N Agrupamentos 1:N Unidades
-- Verificação → Obra + Unidade + Serviço + Inspetor
-- Verificação 1:N Itens
-- Item NC 1:N Fotos
+### 13.6.1 Tipos ENUM
 
-**Índices críticos (performance):**
-- `verificacoes(obra_id, created_at)`
-- `itens_verificacao(verificacao_id, status)`
-- `fotos_nc(item_id)`
+| Tipo | Valores | Uso |
+|------|---------|-----|
+| `perfil_usuario` | admin, engenheiro, inspetor, almoxarife | Perfis de acesso |
+| `tipologia_obra` | residencial_horizontal, residencial_vertical, comercial, retrofit, misto | Classificação de obras |
+| `categoria_servico` | fundacao, estrutura, alvenaria, revestimento, acabamento, instalacoes, cobertura, esquadrias, pintura, impermeabilizacao, outros | Categorias fixas FVS |
+| `status_inspecao` | nao_verificado, conforme, nao_conforme, excecao | Status primeira inspeção |
+| `status_reinspecao` | conforme_apos_reinspecao, retrabalho, aprovado_com_concessao, reprovado_apos_retrabalho | Status reinspeção (impacta IRS) |
+| `status_verificacao` | pendente, em_andamento, concluida, com_nc | Status geral da verificação |
+| `tipo_notificacao` | conflito_sync, nova_obra_atribuida, nova_unidade, novo_servico, nc_aberta, nc_fechada, relatorio_gerado, permissao_revogada, sistema | Tipos de notificação no feed |
+| `frequencia_relatorio` | diario, semanal, quinzenal, mensal | Agendamento de relatórios |
+| `tipo_relatorio` | fvs_grupo_unidades, rnc, dashboard_executivo, eficiencia_correcao | Relatórios MVP |
 
-**Será detalhado em sessão específica de modelagem.**
+---
+
+### 13.6.2 Diagrama de Entidades
+
+```
+┌─────────────┐
+│   clientes  │ (construtoras/tenants)
+└──────┬──────┘
+       │ 1:N
+       ▼
+┌─────────────────┐     N:N     ┌───────────────┐
+│ usuario_clientes│◄───────────►│   usuarios    │
+└─────────────────┘             └───────────────┘
+       │                               │
+       ▼                               │ N:N (usuario_obras)
+┌─────────────┐                        │
+│    obras    │◄───────────────────────┘
+└──────┬──────┘
+       │ 1:N
+       ▼
+┌─────────────┐     1:N     ┌───────────────┐
+│ agrupamentos│────────────►│   unidades    │
+└─────────────┘             └───────┬───────┘
+                                    │
+                                    │ 1:1 (por serviço)
+                                    ▼
+┌─────────────┐     1:N     ┌───────────────┐
+│  servicos   │────────────►│ verificacoes  │
+└──────┬──────┘             └───────┬───────┘
+       │ 1:N                        │ 1:N
+       ▼                            ▼
+┌─────────────┐             ┌───────────────────┐     1:N     ┌──────────┐
+│itens_servico│────────────►│ itens_verificacao │────────────►│ fotos_nc │
+└─────────────┘             └───────────────────┘             └──────────┘
+```
+
+---
+
+### 13.6.3 Tabelas (22 total)
+
+| Categoria | Tabelas |
+|-----------|---------|
+| **Multi-tenancy** | `clientes` |
+| **Usuários** | `usuarios`, `usuario_clientes`, `usuario_obras` |
+| **Obras** | `obras`, `empreendimentos`, `obra_empreendimentos`, `agrupamentos`, `unidades`, `tags`, `agrupamento_tags` |
+| **Biblioteca FVS** | `servicos`, `itens_servico`, `fotos_referencia`, `condicoes_inicio`, `sugestoes_observacao`, `obra_servicos` |
+| **Verificações** | `verificacoes`, `itens_verificacao`, `fotos_nc` |
+| **Feed/Notificações** | `notificacoes`, `sync_conflitos` |
+| **Relatórios** | `relatorios_agendados`, `log_relatorios` |
+| **Auditoria** | `audit_log` (estrutura pronta, triggers Fase 2) |
+
+---
+
+### 13.6.4 Decisões de Modelagem
+
+| Decisão | Escolha | Justificativa |
+|---------|---------|---------------|
+| Usuário multi-cliente | Sim (N:N) | Engenheiro consultor pode atender 2+ construtoras |
+| Permissão por obra | Binária | Simplifica: tem ou não tem acesso |
+| Deleção obras/unidades | Hard delete | Usuário pode excluir |
+| Deleção serviços | Soft delete (arquivar) | Preserva histórico de verificações |
+| Endereço obra | Apenas coordenadas | GPS para validar fotos |
+| Fotos NC | 1-5 por item | Limite razoável sem impactar storage |
+| GPS nas fotos | Opcional | Salva se disponível, não bloqueia |
+| Reinspeção | Sem foto | Apenas muda status |
+| Biblioteca | Template editável | Não há dados globais read-only |
+| Categorias serviço | ENUM fixo | 11 categorias pré-definidas |
+| Notificações | Persistir tudo | Feed é core feature |
+| Auditoria | Estrutura pronta | Triggers implementados na Fase 2 |
+
+---
+
+### 13.6.5 Contadores Denormalizados
+
+A tabela `verificacoes` mantém contadores atualizados via trigger:
+- `total_itens`
+- `itens_verificados`
+- `itens_conformes`
+- `itens_nc`
+- `itens_excecao`
+
+Evita queries pesadas para dashboards.
+
+---
+
+### 13.6.6 Sincronização Offline
+
+Campos de suporte na tabela `itens_verificacao`:
+- `sync_id` - UUID gerado no device para detectar conflitos
+- `sync_timestamp` - Timestamp do device quando foi preenchido
+
+Tabela `sync_conflitos` armazena itens rejeitados para exibir no feed.
+
+---
+
+### 13.6.7 Indexes Críticos (Performance)
+
+| Tabela | Index | Uso |
+|--------|-------|-----|
+| `verificacoes` | `obra_id`, `status`, `inspetor_id` | Listagem por obra, filtros |
+| `itens_verificacao` | `verificacao_id`, `status`, `sync_id` | NC abertas, sync |
+| `notificacoes` | `usuario_id + lida`, `created_at DESC` | Feed não lidas |
+| `servicos` | `cliente_id`, `categoria`, `ativo` | Biblioteca, filtros |
+
+---
+
+### 13.6.8 RLS (Row Level Security)
+
+RLS habilitado em todas as tabelas. Políticas detalhadas na Seção 11.
+
+Padrão básico:
+- Usuário só vê dados dos clientes aos quais pertence (`usuario_clientes`)
+- Usuário só vê obras às quais tem permissão (`usuario_obras`)
+- Cascata: agrupamentos, unidades, verificações seguem obra
 
 ---
 
