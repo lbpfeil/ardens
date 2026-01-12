@@ -49,7 +49,7 @@ Este documento serve como indice central para toda a documentacao do projeto ARD
 | Arquivo | Conteudo | SSOT para |
 |---------|----------|-----------|
 | [README.md](design/README.md) | Indice do design system | Navegacao |
-| `DESIGN-SYSTEM.md` (raiz) | Design system completo | UI/UX (SSOT principal) |
+| [DESIGN-SYSTEM.md](design/DESIGN-SYSTEM.md) | Design system completo | UI/UX (SSOT principal) |
 
 ### Processo (`docs/process/`)
 
@@ -66,7 +66,6 @@ Este documento serve como indice central para toda a documentacao do projeto ARD
 | Arquivo | Proposito |
 |---------|-----------|
 | `ARDEN_FVS_PRD.md` | PRD original (referencia legada, use os docs fragmentados) |
-| `DESIGN-SYSTEM.md` | **SSOT** de UI/UX |
 | `DOCUMENTACAO_REFERENCIA.md` | Guia de fragmentacao (este plano) |
 | `prd-continue.md` | Contexto rapido do projeto |
 | `WARP.md` | Guia para IAs (Warp) |
@@ -96,4 +95,4 @@ Este documento serve como indice central para toda a documentacao do projeto ARD
 
 ---
 
-*Atualizado em: 2026-01-11*
+*Atualizado em: 2026-01-12*

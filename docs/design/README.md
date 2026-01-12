@@ -2,7 +2,7 @@
 
 ## SSOT
 
-O arquivo **`DESIGN-SYSTEM.md`** na raiz do projeto e a fonte de verdade para UI/UX.
+O arquivo **`DESIGN-SYSTEM.md`** nesta pasta e a fonte de verdade para UI/UX.
 
 ---
 
@@ -59,6 +59,6 @@ Se `DESIGN-SYSTEM.md` ficar muito grande (>500 linhas), considerar split em:
 
 ## Referencias
 
-- Design System: `DESIGN-SYSTEM.md` (raiz)
+- Design System: [DESIGN-SYSTEM.md](DESIGN-SYSTEM.md)
 - Navegacao: [../product/04_NAVIGATION.md](../product/04_NAVIGATION.md)
 - Stack Web: [../tech/05_FRONTEND_WEB.md](../tech/05_FRONTEND_WEB.md)

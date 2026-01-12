@@ -111,7 +111,7 @@ const { data } = await supabase.functions.invoke('gerar-pdf-fvs', {
 
 | Fase | Plano | Custo |
 |------|-------|-------|
-| MVP | Supabase Pro | $25/mes |
+| MVP | Supabase Pro | $29/mes |
 | Ano 1 (100 construtoras) | Pro + Storage | ~$29/mes |
 
 **Volumetria calculada (100 construtoras/ano):**

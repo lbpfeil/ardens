@@ -173,5 +173,5 @@ Configurar dependencias entre servicos (feature opcional).
 ## Referencias
 
 - Navegacao: [04_NAVIGATION.md](04_NAVIGATION.md)
-- Design System: `DESIGN-SYSTEM.md` (raiz)
+- Design System: [../design/DESIGN-SYSTEM.md](../design/DESIGN-SYSTEM.md)
 - Relatorios: [09_REPORTS.md](09_REPORTS.md)

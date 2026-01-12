@@ -196,5 +196,5 @@ function GraficoConformidade({ data }) {
 
 ## Referencias
 
-- Design System: `DESIGN-SYSTEM.md` (raiz)
+- Design System: [../design/DESIGN-SYSTEM.md](../design/DESIGN-SYSTEM.md)
 - Arquitetura: [01_ARCHITECTURE.md](01_ARCHITECTURE.md)

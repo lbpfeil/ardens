@@ -106,5 +106,5 @@ Portal **ultra simplificado**, apenas:
 
 ## Referencias
 
-- Design System: `DESIGN-SYSTEM.md` (raiz)
+- Design System: [../design/DESIGN-SYSTEM.md](../design/DESIGN-SYSTEM.md)
 - Portal Web detalhado: [07_WEB_PORTAL.md](07_WEB_PORTAL.md)
