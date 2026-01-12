@@ -413,15 +413,40 @@ Itens Serviço → Itens Verificação → Fotos NC
 
 ---
 
-## ⏳ O QUE FALTA DEFINIR (PRÓXIMAS SESSÕES)
+## ✅ SESSÃO 4 CONCLUÍDA: PERMISSÕES E SEGURANÇA
 
-### **Seção 11: Permissões e Segurança**
-- [ ] RLS Policies detalhadas (SQL completo)
-- [ ] Matriz de permissões granular
-- [ ] 2FA: quando implementar?
-- [ ] SSO (Google, Microsoft): quando?
-- [ ] LGPD: políticas, DPO, termos de uso
-- [ ] Auditoria: quais eventos logar, retenção
+### **Seção 11: Permissões e Segurança** ✅
+
+**Arquivo:** `database/rls-policies.sql`
+
+**Matriz de Permissões:**
+- Admin: tudo (incluindo editar verificações concluídas)
+- Engenheiro: só adiciona serviços à obra (não edita biblioteca)
+- Inspetor: só vê as próprias verificações
+
+**Autenticação:**
+- Supabase Auth (email + senha)
+- Sessão: 30 dias de inatividade
+- 2FA e SSO: Fase 2
+
+**LGPD:**
+- Base legal: execução de contrato + interesse legítimo + obrigação regulatória
+- Retenção: enquanto ativo + 90 dias após cancelamento
+- Exclusão de conta: self-service
+
+**Auditoria:**
+- Log de ações críticas (excluir verificação, editar concluída, excluir usuário)
+- Retenção: mesmo período da conta
+- Super Admin: log automático obrigatório
+
+**RLS Policies:**
+- 4 funções auxiliares (get_user_cliente_id, get_user_perfil, etc)
+- Políticas para todas 22 tabelas
+- Inspetor só vê próprias verificações (decisão importante!)
+
+---
+
+## ⏳ O QUE FALTA DEFINIR (PRÓXIMAS SESSÕES)
 
 ### **Seção 12: Design System e UI/UX**
 - [ ] Integrar DESIGN-SYSTEM.md no PRD
@@ -517,9 +542,9 @@ Itens Serviço → Itens Verificação → Fotos NC
 - ✅ Seção 13.4: Mobile (incluindo sync offline COMPLETA)
 - ✅ Seção 13.5: Autenticação (Supabase Auth)
 - ✅ Seção 13.6: Schema do Banco (22 tabelas, 9 ENUMs, indexes, triggers)
+- ✅ Seção 11: Permissões e Segurança (RLS completo, LGPD, auditoria)
 
 **Pendente:**
-- ⏳ Seção 11: Permissões e Segurança
 - ⏳ Seção 12: Design System
 - ⏳ Seção 14: Roadmap
 
@@ -534,13 +559,13 @@ Itens Serviço → Itens Verificação → Fotos NC
 3. **Princípios fundamentais:** Zero ambiguidade, praticidade, consistência total
 4. **Abordagem:** Fazer perguntas estratégicas antes de apresentar opções técnicas
 5. **Foco:** Simplicidade e facilidade de gestão (não over-engineering)
-6. **Continue de onde parou:** Próximos blocos são Seções 11, 12 e 14
+6. **Continue de onde parou:** Próximos blocos são Seções 12 e 14
 
 **Para o usuário:**
 
 1. Compartilhe este arquivo com a próxima IA
 2. Diga: "Leia @prd-continue.md para entender todo o contexto do projeto"
-3. Indique qual seção quer continuar (Seção 11, 12 ou 14)
+3. Indique qual seção quer continuar (Seção 12 ou 14)
 4. A IA terá todo o contexto sem precisar ler o PRD completo
 
 ---
@@ -567,5 +592,5 @@ Itens Serviço → Itens Verificação → Fotos NC
 ---
 
 **Arquivo atualizado em:** 2026-01-11
-**Última sessão concluída:** Sessão 3 - Schema do Banco de Dados (Seção 13.6)
-**Próxima sessão:** Seção 11 (Segurança) ou Seção 12 (Design System) ou Seção 14 (Roadmap)
+**Última sessão concluída:** Sessão 4 - Permissões e Segurança (Seção 11)
+**Próxima sessão:** Seção 12 (Design System) ou Seção 14 (Roadmap)

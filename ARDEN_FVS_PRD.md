@@ -1835,47 +1835,315 @@ LIMIT 5;
 
 # 11. PERMISSÕES E SEGURANÇA
 
-## ⏳ SEÇÃO PENDENTE DE DETALHAMENTO
+## **✅ SEÇÃO CONCLUÍDA** - Arquivo: `database/rls-policies.sql`
 
-### O que já sabemos:
+---
 
-**Matriz Básica de Permissões:**
-- **Admin:** Tudo (incluindo deletar verificações com justificativa)
-- **Engenheiro:** Verificações + dashboards + relatórios das obras dele
-- **Inspetor:** Apenas app mobile
-- **Almoxarife:** Apenas portal de CIs
-- **Super Admin (Arden):** Acesso todas contas (com log)
+## 11.1 Matriz de Permissões
 
-**Autenticação:**
-- E-mail + Senha
-- Recuperação de senha via e-mail
+### Visão Geral por Perfil
 
-**Multi-tenancy:**
-- Isolamento completo entre construtoras
+| Recurso | Admin | Engenheiro | Inspetor | Almoxarife |
+|---------|-------|------------|----------|------------|
+| **Portal Web** | ✅ Completo | ✅ Obras dele | ❌ | ✅ Simplificado |
+| **App Mobile** | ❌ | ✅ | ✅ | ❌ |
+| **Visão Global** | ✅ | ❌ | ❌ | ❌ |
 
-### O que precisa ser discutido:
+### Permissões Detalhadas
 
-**🔐 Autenticação e Sessões:**
-- [ ] Estratégia de tokens (JWT? OAuth? Outro?)
-- [ ] Duração de sessões
-- [ ] 2FA será implementado? Quando?
-- [ ] SSO (Google, Microsoft) será implementado? Quando?
+| Ação | Admin | Engenheiro | Inspetor |
+|------|-------|------------|----------|
+| **CLIENTES** |
+| Editar dados da construtora | ✅ | ❌ | ❌ |
+| Ver plano/faturamento | ✅ | ❌ | ❌ |
+| **USUÁRIOS** |
+| Criar/convidar usuários | ✅ | ❌ | ❌ |
+| Editar perfil de outros | ✅ | ❌ | ❌ |
+| Remover usuários | ✅ | ❌ | ❌ |
+| Editar próprio perfil | ✅ | ✅ | ✅ |
+| **OBRAS** |
+| Criar obras | ✅ | ❌ | ❌ |
+| Editar obras | ✅ | ❌ | ❌ |
+| Excluir obras | ✅ | ❌ | ❌ |
+| Ver todas obras | ✅ | ❌ (só atribuídas) | ❌ (só atribuídas) |
+| Atribuir usuários a obras | ✅ | ❌ | ❌ |
+| **ESTRUTURA (Agrup./Unidades)** |
+| Criar agrupamentos/unidades | ✅ | ❌ | ❌ |
+| Editar agrupamentos/unidades | ✅ | ❌ | ❌ |
+| Excluir agrupamentos/unidades | ✅ | ❌ | ❌ |
+| **BIBLIOTECA FVS** |
+| Criar serviços | ✅ | ❌ | ❌ |
+| Editar serviços | ✅ | ❌ | ❌ |
+| Arquivar serviços | ✅ | ❌ | ❌ |
+| Adicionar serviço à obra | ✅ | ✅ | ❌ |
+| Remover serviço da obra | ✅ | ✅ | ❌ |
+| **VERIFICAÇÕES** |
+| Criar verificações | ✅ | ✅ | ✅ |
+| Ver verificações (todas da obra) | ✅ | ✅ | ❌ (só as dele) |
+| Editar verificações concluídas | ✅ | ❌ | ❌ |
+| Excluir verificações | ✅ | ❌ | ❌ |
+| **RELATÓRIOS** |
+| Gerar relatórios | ✅ | ✅ | ❌ |
+| Configurar agendamentos | ✅ | ❌ | ❌ |
+| **CONFIGURAÇÕES** |
+| Configurações globais | ✅ | ❌ | ❌ |
+| Configurações da obra | ✅ | ❌ | ❌ |
+| **AUDITORIA** |
+| Ver logs de auditoria | ✅ | ❌ | ❌ |
 
-**🛡️ Segurança de Dados:**
-- [ ] Criptografia: o que criptografar e como?
-- [ ] Backup: frequência, retenção, onde armazenar?
-- [ ] LGPD: políticas de privacidade, termos de uso, DPO?
-- [ ] Auditoria: quais eventos logar? Por quanto tempo manter logs?
+### Super Admin (Equipe Arden)
 
-**👥 Permissões Granulares:**
-- [ ] Níveis intermediários de permissão (ex: Engenheiro Sênior vs Júnior)?
-- [ ] Permissões customizáveis por cliente?
-- [ ] Como lidar com múltiplos papéis? (ex: alguém que é Admin e Engenheiro)
+| Ação | Permitido | Observação |
+|------|-----------|------------|
+| Criar/suspender contas | ✅ | Via dashboard interno |
+| Acessar conta de cliente | ✅ | Log automático obrigatório |
+| Alterar dados de verificação | ❌ | **NUNCA** (compliance) |
+| Ver logs de auditoria | ✅ | Todas as contas |
+| Gerenciar templates FVS | ✅ | Biblioteca global |
 
-**🔍 Auditoria e Compliance:**
-- [ ] Formato dos logs de auditoria
-- [ ] Quem pode acessar logs?
-- [ ] Certificações necessárias (ISO 27001, etc)?
+---
+
+## 11.2 Autenticação
+
+### Estratégia
+
+| Aspecto | Decisão |
+|---------|---------|
+| Provider | Supabase Auth |
+| Método primário | Email + Senha |
+| Tokens | JWT (gerenciado pelo Supabase) |
+| Duração sessão | 30 dias de inatividade |
+| Refresh token | Automático pelo Supabase |
+
+### Fluxos
+
+**Login:**
+1. Usuário informa email + senha
+2. Supabase valida e retorna JWT
+3. JWT armazenado no cliente (httpOnly cookie no web, SecureStore no mobile)
+4. Requisições incluem JWT no header Authorization
+
+**Recuperação de senha:**
+1. Usuário solicita reset
+2. Supabase envia email com magic link
+3. Usuário clica e define nova senha
+4. Todas sessões anteriores são invalidadas
+
+**Logout:**
+1. Remove JWT do cliente
+2. Invalida refresh token no Supabase
+
+### Roadmap de Autenticação
+
+| Feature | Fase | Descrição |
+|---------|------|-----------|
+| Email + Senha | MVP | Login básico |
+| Recuperação senha | MVP | Via email |
+| 2FA (TOTP) | Fase 2 | Opcional para todos |
+| SSO Google | Fase 2 | "Entrar com Google" |
+| SSO Microsoft | Fase 2 | Para clientes enterprise |
+
+---
+
+## 11.3 Row Level Security (RLS)
+
+### Filosofia
+
+Toda segurança de dados é implementada no nível do banco (PostgreSQL RLS), não na aplicação. Isso garante que mesmo com bugs no código, os dados ficam protegidos.
+
+### Funções Auxiliares
+
+```sql
+-- Retorna cliente_id do usuário atual
+get_user_cliente_id() → UUID
+
+-- Retorna perfil do usuário no cliente atual
+get_user_perfil() → perfil_usuario
+
+-- Verifica acesso a obra específica
+user_has_obra_access(obra_id) → BOOLEAN
+
+-- Atalhos
+is_admin() → BOOLEAN
+is_admin_or_engenheiro() → BOOLEAN
+```
+
+### Regras Principais
+
+| Tabela | SELECT | INSERT | UPDATE | DELETE |
+|--------|--------|--------|--------|--------|
+| `clientes` | Seus clientes | - | Admin | - |
+| `usuarios` | Mesmo cliente | - | Próprio | - |
+| `obras` | Admin: todas / Outros: atribuídas | Admin | Admin | Admin |
+| `servicos` | Todos do cliente | Admin | Admin | Admin |
+| `obra_servicos` | Acesso à obra | Admin/Eng | - | Admin/Eng |
+| `verificacoes` | Admin/Eng: todas / Insp: próprias | Todos | Admin: todas / Outros: próprias | Admin |
+| `itens_verificacao` | Segue verificação | Todos | Admin: todas / Outros: próprias | Admin |
+| `notificacoes` | Próprias | Sistema | Próprias (lida) | Sistema |
+| `audit_log` | Admin | Sistema | - | - |
+
+### Arquivo SQL
+
+Políticas completas em: `database/rls-policies.sql`
+
+---
+
+## 11.4 LGPD e Privacidade
+
+### Bases Legais
+
+| Dados | Base Legal (Art. 7º) |
+|-------|---------------------|
+| Cadastro usuário | Execução de contrato (V) |
+| Verificações | Interesse legítimo (IX) + Obrigação regulatória (II) |
+| Fotos de NC | Interesse legítimo (IX) |
+| Logs de auditoria | Obrigação regulatória (II) |
+
+### Direitos do Titular
+
+| Direito LGPD | Implementação |
+|--------------|---------------|
+| Acesso aos dados | Via suporte (solicitação por email) |
+| Correção | Self-service no perfil |
+| Exclusão | Self-service (botão "Excluir conta") |
+| Portabilidade | Via suporte (exporta em JSON) |
+
+### Política de Retenção
+
+| Situação | Retenção |
+|----------|----------|
+| Cliente ativo | Dados mantidos indefinidamente |
+| Cliente cancelou assinatura | 90 dias para exportar, depois exclusão |
+| Usuário excluiu conta | Dados pessoais removidos imediatamente, verificações anonimizadas |
+| Logs de auditoria | Mesmo período da conta |
+
+### Exclusão de Conta (Self-Service)
+
+**Fluxo:**
+1. Usuário acessa Perfil → "Excluir minha conta"
+2. Modal de confirmação explica consequências
+3. Usuário digita "EXCLUIR" para confirmar
+4. Sistema:
+   - Remove dados pessoais (nome, email, telefone)
+   - Anonimiza verificações (`inspetor_id = null`, mantém dados técnicos)
+   - Remove da tabela `usuarios`
+   - Exclui de `auth.users`
+5. Email de confirmação enviado
+
+**Restrição:** Admin não pode excluir própria conta se for o único admin do cliente.
+
+---
+
+## 11.5 Auditoria
+
+### Eventos Logados (Críticos)
+
+| Evento | Dados Capturados |
+|--------|------------------|
+| Excluir verificação | usuario_id, verificacao_id, dados completos |
+| Editar verificação concluída | usuario_id, verificacao_id, antes/depois |
+| Excluir usuário | admin_id, usuario_excluido_id, dados |
+| Alterar permissões | admin_id, usuario_id, perfil anterior/novo |
+| Super Admin acessou conta | super_admin_id, cliente_id, timestamp |
+
+### Estrutura do Log
+
+```sql
+audit_log (
+  id UUID,
+  usuario_id UUID,        -- Quem fez
+  cliente_id UUID,        -- Contexto
+  obra_id UUID,           -- Contexto (opcional)
+  tabela VARCHAR,         -- Ex: 'verificacoes'
+  operacao VARCHAR,       -- INSERT, UPDATE, DELETE
+  registro_id UUID,       -- ID do registro afetado
+  dados_anteriores JSONB, -- Snapshot antes
+  dados_novos JSONB,      -- Snapshot depois
+  ip_address INET,
+  user_agent TEXT,
+  created_at TIMESTAMPTZ
+)
+```
+
+### Retenção de Logs
+
+- **Período:** Mesmo da conta (enquanto ativo + 90 dias após cancelamento)
+- **Acesso:** Apenas Admin do cliente
+- **Imutabilidade:** Logs não podem ser editados ou excluídos via app
+
+### Implementação
+
+- **MVP:** Estrutura pronta, triggers manuais para ações críticas
+- **Fase 2:** Triggers automáticos para todas operações críticas
+
+---
+
+## 11.6 Segurança de Infraestrutura
+
+### Criptografia
+
+| Dado | Em Trânsito | Em Repouso |
+|------|-------------|------------|
+| API requests | TLS 1.3 (Supabase) | - |
+| Banco de dados | TLS | AES-256 (Supabase) |
+| Fotos (Storage) | TLS | AES-256 (Supabase) |
+| Senhas | - | bcrypt (Supabase Auth) |
+
+### Backup
+
+| Aspecto | Configuração |
+|---------|--------------|
+| Frequência | Diário automático (Supabase) |
+| Retenção | 7 dias (Plano Pro) |
+| Point-in-time recovery | Suportado |
+| Teste de restore | Trimestral (manual) |
+
+### Rate Limiting
+
+| Endpoint | Limite |
+|----------|--------|
+| Login | 5 tentativas/minuto por IP |
+| API geral | 100 req/minuto por usuário |
+| Upload fotos | 20/minuto por usuário |
+
+### Headers de Segurança (Web)
+
+```
+X-Frame-Options: DENY
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Content-Security-Policy: default-src 'self'
+Strict-Transport-Security: max-age=31536000
+```
+
+---
+
+## 11.7 Checklist de Segurança
+
+### MVP
+
+- [x] RLS em todas tabelas
+- [x] Autenticação via Supabase Auth
+- [x] HTTPS obrigatório
+- [x] Senhas com bcrypt
+- [x] JWT com expiração
+- [x] Logs de ações críticas
+- [x] Política de retenção definida
+
+### Fase 2
+
+- [ ] 2FA opcional
+- [ ] SSO (Google/Microsoft)
+- [ ] Triggers automáticos de auditoria
+- [ ] Dashboard de logs para Admin
+- [ ] Tela de sessões ativas
+- [ ] Rate limiting customizável
+
+### Não Planejado (Complexidade vs Valor)
+
+- ISO 27001 (custo proibitivo para MVP)
+- SOC 2 (avaliar após 100+ clientes)
+- Criptografia client-side (desnecessário com TLS + AES)
 
 ---
 
