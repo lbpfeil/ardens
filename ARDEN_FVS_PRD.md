@@ -3635,185 +3635,335 @@ Padrão básico:
 
 ---
 
-# 14. PRÓXIMOS PASSOS E ROADMAP
+# 14. ROADMAP E ESTRATÉGIA DE LANÇAMENTO
 
-## ⏳ SEÇÃO PENDENTE DE DISCUSSÃO COMPLETA
+## 14.1 Fases do Produto
 
-### O que já sabemos:
+### Fase MVP (3 meses)
 
-**Clientes Iniciais:** 2 construtoras mapeadas
+**Objetivo:** Produto funcional para validação com clientes reais.
 
-**Fases Mencionadas:**
-- **MVP:** Android, relatórios básicos, funcionalidades core
-- **Fase 2:** iOS, relatórios avançados (IRS, Mapa Calor)
-- **Fase 3:** Dashboard (Telão), IA avançada
+**Plataformas:**
+- Portal Web (Next.js) - Admin e Engenheiro
+- App Mobile Android (Expo) - Inspetores
 
-**Trial:** 30 dias grátis sem cartão
+**Funcionalidades Core:**
+- Gestão de obras, unidades, agrupamentos
+- Biblioteca FVS (serviços e itens de verificação)
+- Verificações com fotos de NC
+- Sincronização offline completa
+- Reinspeção de não-conformidades
+- 4 relatórios MVP (FVS, RNC, Dashboard Executivo, Eficiência de Correção)
+- Agendamento automático de relatórios
+- Multi-tenancy com RLS
+- Autenticação Supabase (email + senha)
 
-### O que precisa ser discutido:
-
-**📅 Cronograma Realista:**
-- [ ] Quanto tempo para MVP completo?
-- [ ] Quanto tempo para Fase 2?
-- [ ] Quanto tempo para Fase 3?
-- [ ] Quando lançar versão beta?
-- [ ] Quando lançar versão pública?
-
-**🎯 Definição de MVP Mínimo Viável:**
-- [ ] Quais funcionalidades são REALMENTE essenciais para MVP?
-- [ ] O que pode ser deixado para Fase 2 sem prejudicar validação?
-- [ ] Relatórios: quantos e quais no MVP?
-- [ ] Dashboard (telão): MVP ou só PRO?
-
-**🏆 Critérios de Sucesso:**
-- [ ] Métricas de produto (quantas obras, usuários, verificações)?
-- [ ] Métricas de negócio (MRR, churn, CAC, LTV)?
-- [ ] Métricas de qualidade (uptime, bugs, performance)?
-- [ ] Como medir satisfação do cliente (NPS)?
-
-**🧪 Plano de Beta Testing:**
-- [ ] Beta fechado: quantos clientes? Por quanto tempo?
-- [ ] Beta aberto: como selecionar participantes?
-- [ ] Incentivos para beta testers?
-- [ ] Processo de coleta de feedback
-
-**📚 Documentação Necessária:**
-- [ ] Documentação técnica (API, arquitetura, deploy)
-- [ ] Documentação de usuário (manuais, tutoriais)
-- [ ] Documentação de negócio (pitch deck, playbook de vendas)
-
-**🎓 Onboarding:**
-- [ ] Tour guiado no primeiro acesso?
-- [ ] Tutoriais em vídeo: quais tópicos?
-- [ ] Central de ajuda: estrutura de conteúdo?
-- [ ] Suporte: canais (chat, e-mail, telefone)?
-
-**🤖 Dashboard (Telão) - Feature PRO:**
-- [ ] Conceito detalhado: o que mostra?
-- [ ] Tipos de visualização (slides, mapa interativo, gráficos tempo real)?
-- [ ] Como configurar (Admin escolhe o que mostrar)?
-- [ ] Atualização em tempo real ou periódica?
-- [ ] Funciona em qualquer tela ou precisa hardware específico?
-
-**🧠 IA e Análise Avançada - Feature PRO:**
-- [ ] Casos de uso específicos da IA
-- [ ] Dados necessários para treinar modelos
-- [ ] Algoritmos/modelos (regressão, clustering, redes neurais)?
-- [ ] Interface de apresentação dos insights
-- [ ] Como validar precisão das projeções?
-
-**🔗 Integrações Futuras:**
-- [ ] Quais ERPs integrar? (TOTVS, SAP, outros?)
-- [ ] Gestão de projetos (MS Project, Primavera)?
-- [ ] Webhooks: quais eventos disponibilizar?
-- [ ] API pública: documentação, rate limits, pricing?
-
-**⚖️ Aspectos Regulatórios:**
-- [ ] Certificação PBQP-H do próprio sistema (necessário)?
-- [ ] Conformidade com normas específicas
-- [ ] Auditoria externa antes do lançamento?
-- [ ] Termos de uso e política de privacidade (quem redigir?)
+**O que NÃO entra no MVP:**
+- iOS
+- Condições de Início (CIs)
+- 2FA / SSO
+- Dashboard Telão
+- Relatórios com IA
+- Integrações externas (ERPs)
 
 ---
 
-# APÊNDICE A: LISTA DE DEFINIÇÕES PENDENTES
+### Fase Beta (1-2 meses após MVP)
 
-## Prioridade Alta (Bloqueantes para Desenvolvimento)
+**Objetivo:** Validação intensiva com construtoras parceiras.
 
-- [ ] **Stack técnica completa** (banco, backend framework, ORM, hosting)
-- [ ] **Schema de banco de dados** (tabelas, relacionamentos, índices)
-- [ ] **Estrutura detalhada dos relatórios MVP**
-- [ ] **Paleta de cores e tipografia exatas**
-- [ ] **Cronograma realista de desenvolvimento**
+**Quantidade:** 1-2 construtoras parceiras
+- Feedback intenso e próximo
+- Ajustes rápidos baseados em uso real
+- Identificar bugs e melhorias de UX
+
+**Critérios de Seleção:**
+- Construtora com certificação PBQP-H ativa
+- Mínimo 2 obras simultâneas
+- Disposição para dar feedback constante
+- Relacionamento prévio (parceria)
+
+**Duração:** 4-8 semanas antes do lançamento público
+
+**Incentivo:** Uso gratuito durante beta + desconto no primeiro ano
+
+---
+
+### Fase 2 (Pós-Lançamento)
+
+**Prioridades em ordem:**
+
+1. **Relatórios com IA**
+   - Análise preditiva de NCs
+   - Projeções de conclusão
+   - Identificação de padrões problemáticos
+   - Maior imersão de modelos de IA nos dados de verificação
+
+2. **iOS**
+   - React Native/Expo já compila para iOS
+   - Custo: $99/ano Apple Developer
+   - EAS Build já suporta iOS
+   - Baixo esforço técnico adicional
+
+3. **Condições de Início (CIs)**
+   - Bloquear serviços até CIs atendidas
+   - Integração com almoxarifado
+   - Liberação de materiais
+
+4. **Segurança Avançada**
+   - 2FA (autenticação em dois fatores)
+   - SSO (Single Sign-On) para construtoras maiores
+
+---
+
+### Fase 3 (Futuro)
+
+**Features PRO:**
+- Dashboard Telão (TV na obra)
+- Integrações com ERPs (TOTVS, SAP)
+- API pública com webhooks
+- White-label para grandes construtoras
+
+---
+
+## 14.2 Estratégia de Onboarding
+
+### Modelo Híbrido
+
+**Self-Service (Padrão):**
+- Construtora cria conta sozinha
+- Tour guiado no primeiro acesso
+- Central de ajuda com tutoriais
+- Vídeos curtos por funcionalidade
+- **Vantagem competitiva:** Inovador no ramo, permite escalar vendas online
+
+**White-Glove (Contas Estratégicas):**
+- Para construtoras grandes e parcerias-chave
+- Venda presencial/consultiva
+- Setup completo feito pelo Arden
+- Treinamento presencial ou por call
+- Acompanhamento no primeiro mês
+
+### Fluxo Self-Service
+
+```
+1. Construtora acessa site → Clica "Começar Grátis"
+2. Cria conta (email + senha)
+3. Tour guiado mostra funcionalidades principais
+4. Cria primeira obra
+5. Configura unidades e serviços
+6. Convida inspetores (email)
+7. Inspetores baixam app e começam verificações
+8. Trial 30 dias → Conversão para plano pago
+```
+
+### Suporte
+
+**Canais:**
+- Central de ajuda (artigos + vídeos)
+- Email (resposta em 24h úteis)
+- Chat in-app (horário comercial)
+
+**Sem telefone no MVP** (escala melhor com chat/email)
+
+---
+
+## 14.3 Metas e Métricas
+
+### Meta Ano 1 (Pós-Lançamento)
+
+**Clientes:** 10-20 construtoras pagantes
+- Meta conservadora
+- Foco em qualidade sobre quantidade
+- Construir base sólida de casos de sucesso
+
+### Métricas de Produto
+
+| Métrica | Meta Ano 1 |
+|---------|-----------|
+| Obras ativas | 50-100 |
+| Usuários ativos | 200-500 |
+| Verificações/mês | 10.000-25.000 |
+| Uptime | 99.5% |
+
+### Métricas de Negócio
+
+| Métrica | Meta Ano 1 |
+|---------|-----------|
+| MRR | R$ 5.000-15.000 |
+| Churn mensal | < 5% |
+| NPS | > 40 |
+| Trial → Pago | > 20% |
+
+---
+
+## 14.4 Cronograma Macro
+
+```
+MÊS 1-3: Desenvolvimento MVP
+├── Mês 1: Setup + Schema + Auth + Portal básico
+├── Mês 2: Verificações + Sync offline + App mobile
+└── Mês 3: Relatórios + Polimento + Testes
+
+MÊS 4-5: Beta Fechado
+├── Mês 4: Deploy + Onboarding beta testers
+└── Mês 5: Coleta feedback + Correções + Melhorias
+
+MÊS 6: Lançamento Público
+├── Self-service ativo
+├── Marketing inicial
+└── Primeiros clientes pagantes
+
+MÊS 7-12: Crescimento + Fase 2
+├── Aquisição de clientes
+├── Desenvolvimento iOS
+├── Relatórios com IA
+└── Condições de Início
+```
+
+---
+
+## 14.5 Riscos e Mitigações
+
+| Risco | Probabilidade | Impacto | Mitigação |
+|-------|---------------|---------|-----------|
+| Atraso no MVP | Média | Alto | Buffer de 2-4 semanas no cronograma |
+| Bug crítico em produção | Média | Alto | Testes rigorosos + Monitoramento |
+| Churn alto no beta | Baixa | Médio | Feedback constante + Ajustes rápidos |
+| Sync offline com problemas | Média | Alto | Testes exaustivos de cenários edge |
+| Competidor lança similar | Baixa | Médio | Foco em UX superior + Self-service |
+
+---
+
+## 14.6 Checklist Pré-Lançamento
+
+### Técnico
+- [ ] Todos os testes passando
+- [ ] Performance validada (queries < 200ms)
+- [ ] Sync offline testada em cenários reais
+- [ ] Backup automático funcionando
+- [ ] Monitoramento e alertas configurados
+- [ ] SSL/HTTPS em produção
+
+### Legal
+- [ ] Termos de Uso redigidos
+- [ ] Política de Privacidade (LGPD)
+- [ ] Conta Google Play ativa
+- [ ] CNPJ e contrato de prestação de serviços
+
+### Marketing
+- [ ] Landing page pronta
+- [ ] Vídeo demo (2-3 minutos)
+- [ ] Casos de uso documentados
+- [ ] Preços publicados
+
+### Suporte
+- [ ] Central de ajuda com artigos básicos
+- [ ] Email de suporte configurado
+- [ ] Processo de onboarding documentado
+
+---
+
+# APÊNDICE A: STATUS DAS DEFINIÇÕES
+
+## Prioridade Alta (Bloqueantes para Desenvolvimento) ✅ CONCLUÍDO
+
+- [x] **Stack técnica completa** → Seção 13 (Supabase, Next.js, Expo, Zustand)
+- [x] **Schema de banco de dados** → `database/schema.sql` (22 tabelas, 9 ENUMs)
+- [x] **Estrutura detalhada dos relatórios MVP** → Seção 10 (4 relatórios)
+- [x] **Design System** → `DESIGN-SYSTEM.md` (2110 linhas, clone Supabase)
+- [x] **Cronograma realista de desenvolvimento** → Seção 14 (MVP 3 meses)
+- [x] **Permissões e Segurança** → Seção 11 + `database/rls-policies.sql`
 
 ## Prioridade Média (Importantes mas não Bloqueantes)
 
-- [ ] Detalhamento de relatórios Fase 2
+- [x] Plano de beta testing → Seção 14.1 (1-2 construtoras, 4-8 semanas)
+- [ ] Detalhamento de relatórios Fase 2 (análise estatística)
 - [ ] Dashboard (Telão) completo
-- [ ] Estratégias de segurança avançadas
-- [ ] Plano de beta testing detalhado
 - [ ] Documentação de usuário (manuais, tutoriais)
 
 ## Prioridade Baixa (Pode ser Definido Durante Desenvolvimento)
 
-- [ ] IA e análise avançada (Feature PRO)
-- [ ] Integrações futuras (ERPs, APIs)
+- [ ] IA e análise avançada (Feature PRO) - Prioridade Fase 2
+- [ ] Integrações futuras (ERPs, APIs) - Fase 3
 - [ ] Aspectos regulatórios (certificações)
-- [ ] Roadmap detalhado pós-MVP
+
+## Arquivos Técnicos Criados
+
+| Arquivo | Conteúdo |
+|---------|----------|
+| `database/schema.sql` | Schema completo PostgreSQL (22 tabelas) |
+| `database/rls-policies.sql` | Políticas RLS para multi-tenancy |
+| `DESIGN-SYSTEM.md` | Design System completo (clone Supabase) |
 
 ---
 
-# APÊNDICE B: PRÓXIMAS SESSÕES SUGERIDAS
+# APÊNDICE B: HISTÓRICO DE SESSÕES DE PLANEJAMENTO
 
-## Sessão 1: Stack Técnica e Arquitetura
+## Sessão 1: Stack Técnica (Blocos 1-4) ✅
 
-**Objetivo:** Definir completamente tecnologias e arquitetura
+**Concluída em:** Janeiro 2026
 
-**Tópicos:**
-- Banco de dados (qual? por quê?)
-- Backend (framework, ORM, autenticação)
-- Frontend (gerenciamento de estado, formulários)
-- Mobile (Expo vs Bare, bibliotecas essenciais)
-- Hospedagem (onde? como?)
-- Schema de banco completo
-
-**Duração estimada:** 2-3 horas
+**Decisões:**
+- Database: PostgreSQL via Supabase
+- Backend: Supabase-first (Edge Functions para 10%)
+- Frontend: Next.js 15+ com Zustand, RHF+Zod, Tailwind+Radix
+- Mobile: Expo (React Native) com SQLite offline
 
 ---
 
-## Sessão 2: Design System Completo
+## Sessão 2: Relatórios e Automações ✅
 
-**Objetivo:** Definir identidade visual e componentes
+**Concluída em:** Janeiro 2026
 
-**Tópicos:**
-- Paleta de cores exata (hex codes)
-- Tipografia completa
-- Biblioteca de componentes
-- Responsividade e breakpoints
-- Acessibilidade
-
-**Duração estimada:** 1-2 horas
+**Decisões:**
+- 4 relatórios MVP definidos (FVS, RNC, Dashboard Executivo, Eficiência)
+- Modelo de status com 4 estados primeira inspeção + 4 reinspeção
+- Fórmula IRS: (Retrabalhos / Verificados) × 100
+- Watermark nas fotos (Obra, Data, Inspetor, GPS)
 
 ---
 
-## Sessão 3: Relatórios Detalhados
+## Sessão 3: Schema do Banco ✅
 
-**Objetivo:** Estrutura exata de cada relatório
+**Concluída em:** Janeiro 2026
 
-**Tópicos:**
-- Conteúdo de cada tipo de relatório
-- Layout e seções
-- Diferenças PDF vs Excel
-- Priorização por fase (MVP vs Fase 2)
-
-**Duração estimada:** 1-2 horas
+**Decisões:**
+- 22 tabelas, 9 ENUMs
+- Arquivo: `database/schema.sql`
+- Multi-tenancy via cliente_id
+- Soft delete para serviços, hard delete para obras
 
 ---
 
-## Sessão 4: Dashboard (Telão) e IA
+## Sessão 4: Permissões e Segurança ✅
 
-**Objetivo:** Definir features PRO avançadas
+**Concluída em:** Janeiro 2026
 
-**Tópicos:**
-- Conceito completo do Dashboard
-- Visualizações e configurações
-- IA: casos de uso, algoritmos, interface
-- Análise preditiva
-
-**Duração estimada:** 1-2 horas
+**Decisões:**
+- RLS completo para todas tabelas
+- Arquivo: `database/rls-policies.sql`
+- Inspetor só vê próprias verificações
+- LGPD: ativo + 90 dias após cancelamento
 
 ---
 
-## Sessão 5: Roadmap e Execução
+## Sessão 5: Roadmap e Lançamento ✅
 
-**Objetivo:** Planejar desenvolvimento e lançamento
+**Concluída em:** Janeiro 2026
 
-**Tópicos:**
-- Cronograma realista
-- MVP mínimo viável
-- Critérios de sucesso
-- Plano de beta testing
-- Documentação necessária
+**Decisões:**
+- MVP: 3 meses
+- Beta: 1-2 construtoras, 4-8 semanas
+- Onboarding: Híbrido (self-service + white-glove)
+- Meta Ano 1: 10-20 construtoras
+- Fase 2: IA → iOS → CIs → 2FA/SSO
 
-**Duração estimada:** 1-2 horas
+---
+
+## PRD Completo
+
+**Status:** Todas as seções bloqueantes definidas.
+
+**Próximo passo:** Iniciar desenvolvimento do MVP.
 

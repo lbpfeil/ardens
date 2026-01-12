@@ -446,20 +446,45 @@ Itens Serviço → Itens Verificação → Fotos NC
 
 ---
 
-## ⏳ O QUE FALTA DEFINIR (PRÓXIMAS SESSÕES)
+## ✅ SESSÃO 5 CONCLUÍDA: ROADMAP E LANÇAMENTO
 
-### **Seção 12: Design System e UI/UX**
-- [ ] Integrar DESIGN-SYSTEM.md no PRD
-- [ ] Breakpoints exatos de responsividade
-- [ ] Portal web funciona em mobile? (ou só desktop?)
-- [ ] Acessibilidade: padrão WCAG (A, AA, AAA)?
-- [ ] Animações essenciais
+### **Seção 14: Roadmap** ✅
 
-### **Seção 14: Roadmap**
-- [ ] Timeline MVP (quantos meses?)
-- [ ] Fase Beta: quantos clientes? critérios?
-- [ ] Estratégia de onboarding (como construtora começa?)
-- [ ] Plano de crescimento (100 → 500 construtoras)
+**Timeline:**
+- **MVP:** 3 meses (ritmo intenso)
+- **Beta:** 1-2 construtoras parceiras, 4-8 semanas
+- **Lançamento Público:** Mês 6
+- **Fase 2:** Meses 7-12
+
+**Fases do Produto:**
+
+| Fase | Conteúdo |
+|------|----------|
+| **MVP** | Portal Web + App Android, 4 relatórios, sync offline, multi-tenancy |
+| **Fase 2** | Relatórios com IA → iOS → Condições de Início → 2FA/SSO |
+| **Fase 3** | Dashboard Telão, Integrações ERPs, API pública |
+
+**Onboarding Híbrido:**
+- **Self-service (padrão):** Construtora cria conta sozinha, tour guiado, central de ajuda
+- **White-glove (estratégico):** Venda presencial, setup completo, para contas grandes
+
+**Metas Ano 1:**
+- 10-20 construtoras pagantes
+- MRR: R$ 5.000-15.000
+- Churn: < 5%
+- NPS: > 40
+
+---
+
+## ❌ SEÇÃO REMOVIDA DO PRD
+
+### **Seção 12: Design System**
+- Design System é documento técnico separado: `DESIGN-SYSTEM.md` (2110 linhas)
+- PRD deve focar em requisitos de produto, não detalhes de implementação UI
+
+---
+
+## ✅ PRD COMPLETO - PRONTO PARA DESENVOLVIMENTO
 
 ---
 
@@ -544,9 +569,10 @@ Itens Serviço → Itens Verificação → Fotos NC
 - ✅ Seção 13.6: Schema do Banco (22 tabelas, 9 ENUMs, indexes, triggers)
 - ✅ Seção 11: Permissões e Segurança (RLS completo, LGPD, auditoria)
 
-**Pendente:**
-- ⏳ Seção 12: Design System
-- ⏳ Seção 14: Roadmap
+**Removido do PRD (documento separado):**
+- ❌ Seção 12: Design System → `DESIGN-SYSTEM.md`
+
+**Status:** ✅ PRD COMPLETO - Todas as seções bloqueantes definidas
 
 ---
 
@@ -592,5 +618,5 @@ Itens Serviço → Itens Verificação → Fotos NC
 ---
 
 **Arquivo atualizado em:** 2026-01-11
-**Última sessão concluída:** Sessão 4 - Permissões e Segurança (Seção 11)
-**Próxima sessão:** Seção 12 (Design System) ou Seção 14 (Roadmap)
+**Última sessão concluída:** Sessão 5 - Roadmap e Lançamento (Seção 14)
+**Status:** ✅ PRD COMPLETO - Pronto para iniciar desenvolvimento do MVP
