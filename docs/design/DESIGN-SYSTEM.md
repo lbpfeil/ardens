@@ -1,6 +1,11 @@
 # Arden FVS Design System (Supabase Clone)
 
-## 🔧 CSS Variables
+> **ANTES DE COMECAR**: Leia as regras de desenvolvimento em [README.md](README.md).
+> Contem instrucoes obrigatorias sobre uso de componentes shadcn, variaveis CSS e restricoes de criacao.
+
+---
+
+## CSS Variables
 
 Extracted from `themes/dark.css` (Supabase Default).
 
