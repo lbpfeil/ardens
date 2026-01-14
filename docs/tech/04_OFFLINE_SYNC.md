@@ -1,5 +1,8 @@
 # Sincronizacao Offline - ARDEN FVS
 
+> **IMPORTANTE:** Modo offline e exclusivo do app mobile (Android/iOS).
+> O portal web NAO tem suporte a offline - requer conexao com internet.
+
 ## Contexto
 
 - Tablets dos inspetores **NAO tem dados moveis** (so wifi)

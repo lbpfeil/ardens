@@ -10,27 +10,23 @@ Arquitetura **Supabase-first** sem backend tradicional.
 |               Supabase Client                    |
 +------------------------+-------------------------+
                          |
-                         v
-+--------------------------------------------------+
-|                   SUPABASE                       |
-|  +--------------------------------------------+  |
-|  |  PostgreSQL Database (dados estruturados)  |  |
-|  |  + Row Level Security (permissoes)         |  |
-|  +--------------------------------------------+  |
-|  +--------------------------------------------+  |
-|  |  Supabase Auth (autenticacao/sessoes)      |  |
-|  +--------------------------------------------+  |
-|  +--------------------------------------------+  |
-|  |  Supabase Storage (fotos)                  |  |
-|  +--------------------------------------------+  |
-|  +--------------------------------------------+  |
-|  |  Edge Functions (Deno) - logica complexa   |  |
-|  |  - Gerar PDFs                              |  |
-|  |  - Enviar emails                           |  |
-|  |  - Calculos IRS                            |  |
-|  |  - Processar imagens                       |  |
-|  +--------------------------------------------+  |
-+--------------------------------------------------+
+          +--------------+---------------+
+          v                              v
++---------------------+    +---------------------------+
+|      SUPABASE       |    |  GOOGLE CLOUD FUNCTIONS   |
+| +─────────────────+ |    | +───────────────────────+ |
+| | PostgreSQL + RLS| |    | | Puppeteer (PDFs)      | |
+| +─────────────────+ |    | +───────────────────────+ |
+| | Auth            | |    +---------------------------+
+| +─────────────────+ |
+| | Storage (fotos) | |
+| +─────────────────+ |
+| | Edge Functions  | |
+| | - Emails        | |
+| | - Calculos IRS  | |
+| | - Agendamentos  | |
+| +─────────────────+ |
++---------------------+
 ```
 
 ---
@@ -56,9 +52,18 @@ const { data, error } = await supabase
   })
 ```
 
-### 10% - Edge Functions
+### 10% - Funcoes Server-side
 
-Usadas quando necessario:
+#### Supabase Edge Functions (Deno)
+
+| Funcao | Proposito |
+|--------|-----------|
+| `enviar-relatorio-email` | Envio de relatorios agendados |
+| `processar-foto-nc` | Compressao + watermark |
+| `calcular-irs` | Calculos complexos |
+| `agendar-relatorios` | Cron que dispara geracao de PDFs |
+
+#### Google Cloud Functions (Node.js + Puppeteer)
 
 | Funcao | Proposito |
 |--------|-----------|
@@ -67,14 +72,16 @@ Usadas quando necessario:
 | `gerar-pdf-dashboard` | Dashboard Executivo |
 | `gerar-pdf-eficiencia` | Eficiencia de Correcao |
 | `gerar-excel-dashboard` | Excel do Dashboard |
-| `enviar-relatorio-email` | Envio de relatorios agendados |
-| `processar-foto-nc` | Compressao + watermark |
-| `calcular-irs` | Calculos complexos |
+
+> **Por que Cloud Functions para PDF?** Puppeteer requer Chromium que nao roda em Edge Functions (Deno).
+> Ver [07_REPORTING_PIPELINE.md](07_REPORTING_PIPELINE.md) para detalhes.
 
 ```typescript
-// Exemplo: Chamar Edge Function
-const { data } = await supabase.functions.invoke('gerar-pdf-fvs', {
-  body: { verificacao_id: '123' }
+// Exemplo: Chamar Cloud Function para PDF
+const response = await fetch('https://us-central1-arden-fvs.cloudfunctions.net/gerar-pdf-fvs', {
+  method: 'POST',
+  headers: { 'Authorization': `Bearer ${token}` },
+  body: JSON.stringify({ verificacao_id: '123' })
 })
 ```
 
@@ -133,7 +140,7 @@ const { data } = await supabase.functions.invoke('gerar-pdf-fvs', {
 
 | Aspecto | Limite |
 |---------|--------|
-| Por foto (antes compressao) | 5 MB |
+| Por foto (entrada) | Sem limite (comprime qualquer tamanho) |
 | Por foto (apos compressao) | 1 MB |
 | Fotos por NC | 5 |
 
@@ -167,9 +174,12 @@ CREATE POLICY "Isolamento por cliente" ON verificacoes
 |------|-----------|-------|
 | Supabase Pro | $29 | $348 |
 | Vercel (frontend) | $0-20 | $0-240 |
+| GCP Cloud Functions | $0-1 | $0-12 |
 | Google Play Store | - | $25 |
 | Dominio | $2 | $24 |
-| **Total Estimado** | **$31-51** | **$397-637** |
+| **Total Estimado** | **$31-52** | **$397-649** |
+
+> **GCP Cloud Functions:** Tier gratuito de 2M invocacoes/mes. Custo real ~$0 para MVP.
 
 ---
 

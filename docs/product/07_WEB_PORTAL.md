@@ -117,6 +117,40 @@ Configurar dependencias entre servicos (feature opcional).
 
 ---
 
+### Relatorios
+
+**Proposito:** Gerar e baixar relatorios da obra atual.
+
+**Localizacao:** Menu lateral (sidebar ja e contextual por obra)
+
+**Comportamento:**
+- PDF gerado **on-demand** (quando usuario clica)
+- Abre em **nova aba** do browser para preview
+- Usuario decide se baixa ou fecha
+
+**Tipos Disponiveis (MVP):**
+
+| Relatorio | Descricao | Filtros |
+|-----------|-----------|---------|
+| FVS por Grupo | Documento oficial para auditoria PBQP-H | Servico, Unidades |
+| RNC | Consolidado de Nao Conformidades | Periodo, Status, Servico |
+| Dashboard Executivo | Visao gerencial da obra | Periodo |
+| Eficiencia de Correcao | Velocidade de resolucao de NCs | Periodo |
+
+**Interface:**
+
+1. **Lista de Relatorios:** Cards com nome, descricao e botao [Gerar]
+2. **Ao clicar [Gerar]:**
+   - Modal com filtros especificos do relatorio
+   - Botao [Gerar PDF]
+   - Loading com progresso
+   - PDF abre em nova aba
+3. **Historico:** Lista dos ultimos relatorios gerados (links validos por 7 dias)
+
+**Agendamento:** Configuracao de relatorios automaticos fica em Configuracoes > Relatorios Automaticos (visao global).
+
+---
+
 ## Visao Global
 
 ### Home

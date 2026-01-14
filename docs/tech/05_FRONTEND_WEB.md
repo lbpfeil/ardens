@@ -1,5 +1,8 @@
 # Frontend Web - ARDEN FVS
 
+> **IMPORTANTE:** O portal web NAO tem suporte a modo offline.
+> Modo offline e exclusivo do app mobile. Ver [04_OFFLINE_SYNC.md](04_OFFLINE_SYNC.md).
+
 ## Stack Completa
 
 | Categoria | Tecnologia |

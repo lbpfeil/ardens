@@ -2,11 +2,45 @@
 
 ## Visao Geral
 
-Relatorios sao gerados via Edge Functions (Deno) e enviados por email ou disponibilizados para download.
+Relatorios sao gerados via **Google Cloud Function com Puppeteer** e disponibilizados no Supabase Storage para download ou visualizacao.
+
+> **Decisao:** Cloud Function + Puppeteer foi escolhido por permitir renderizacao HTML/CSS real,
+> resultando em relatorios com alta qualidade visual. Ver [DECISIONS.md](../process/DECISIONS.md).
 
 ---
 
-## Edge Functions
+## Arquitetura
+
+```
+┌─────────────────┐      ┌─────────────────────┐      ┌─────────────────┐
+│   Portal Web    │ ──── │  Cloud Function     │ ──── │ Supabase        │
+│   (Next.js)     │      │  (GCP + Puppeteer)  │      │ Storage         │
+└─────────────────┘      └─────────────────────┘      └─────────────────┘
+        │                         │                          │
+        │ 1. POST /gerar-pdf      │                          │
+        │ ───────────────────────>│                          │
+        │                         │ 2. Busca dados           │
+        │                         │ ───────────────────────> │
+        │                         │ <─────────────────────── │
+        │                         │                          │
+        │                         │ 3. Renderiza HTML        │
+        │                         │    (React + Recharts)    │
+        │                         │                          │
+        │                         │ 4. Puppeteer gera PDF    │
+        │                         │                          │
+        │                         │ 5. Upload PDF            │
+        │                         │ ───────────────────────> │
+        │                         │                          │
+        │ 6. Retorna URL signed   │                          │
+        │ <───────────────────────│                          │
+        │                         │                          │
+        │ 7. Abre PDF em nova aba │                          │
+        └─────────────────────────┴──────────────────────────┘
+```
+
+---
+
+## Cloud Functions
 
 | Funcao | Proposito |
 |--------|-----------|
@@ -15,6 +49,25 @@ Relatorios sao gerados via Edge Functions (Deno) e enviados por email ou disponi
 | `gerar-pdf-dashboard` | Dashboard Executivo |
 | `gerar-pdf-eficiencia` | Eficiencia de Correcao |
 | `gerar-excel-dashboard` | Excel do Dashboard Executivo |
+
+### Tecnologias
+
+| Componente | Tecnologia |
+|------------|------------|
+| Runtime | Node.js 20 (GCP Cloud Functions) |
+| Renderizador | Puppeteer |
+| Templates | React (server-side) |
+| Graficos | Recharts (renderizado como SVG) |
+| Excel | ExcelJS |
+
+### Performance
+
+| Metrica | Valor |
+|---------|-------|
+| Cold start | ~2-5 segundos |
+| Geracao PDF simples | ~3-5 segundos |
+| Geracao PDF com graficos | ~5-10 segundos |
+| Custo por execucao | ~$0.0001
 
 ---
 
@@ -41,7 +94,7 @@ Relatorios sao gerados via Edge Functions (Deno) e enviados por email ou disponi
 
 ### Tecnologia
 
-Supabase Scheduled Functions (cron)
+Supabase Scheduled Functions (cron) dispara Cloud Functions
 
 ### Jobs Configurados
 
@@ -54,12 +107,12 @@ Supabase Scheduled Functions (cron)
 ### Fluxo
 
 ```
-1. Cron dispara Edge Function
+1. Cron (Supabase) dispara Edge Function leve
 2. Edge Function consulta configuracoes ativas
 3. Para cada cliente com agendamento ativo:
-   - Gera PDF/Excel
-   - Salva no Storage (temporario, 7 dias)
-   - Envia email com link de download
+   - Chama Cloud Function (GCP) para gerar PDF
+   - Cloud Function salva no Storage (7 dias)
+   - Edge Function envia email com link
    - Registra no log
 ```
 
@@ -69,7 +122,10 @@ Supabase Scheduled Functions (cron)
 
 ### Tecnologia
 
-Supabase + provedor de email (Resend ou similar)
+Supabase Edge Functions + **Resend**
+
+> **Decisao:** Resend escolhido por DX excelente, React Email nativo e tier gratuito de 3k/mes.
+> Ver [DECISIONS.md](../process/DECISIONS.md).
 
 ### Template de Email
 
@@ -143,9 +199,14 @@ Configuracoes > Relatorios Automaticos
 
 ## Custo
 
-Incluido no Plano Pro:
-- 500K invocacoes/mes de Edge Functions
-- Storage para PDFs temporarios
+### Supabase (incluido no plano)
+- Edge Functions para agendamento (leves)
+- Storage para PDFs temporarios (7 dias)
+
+### Google Cloud Functions
+- Tier gratuito: 2M invocacoes/mes
+- Apos tier: ~$0.0001 por execucao
+- Estimativa 1000 relatorios/mes: ~$0.10
 
 ---
 

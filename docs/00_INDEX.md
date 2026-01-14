@@ -9,7 +9,7 @@ Este documento serve como indice central para toda a documentacao do projeto ARD
 ## Leitura Recomendada (Ordem)
 
 1. **Este arquivo** (`docs/00_INDEX.md`) - Mapa geral
-2. **Contexto rapido** - `prd-continue.md` (na raiz)
+2. **Visao geral** - [product/01_OVERVIEW.md](product/01_OVERVIEW.md)
 3. **SSOTs especificos** conforme o tema abaixo
 
 ---
@@ -66,8 +66,6 @@ Este documento serve como indice central para toda a documentacao do projeto ARD
 | Arquivo | Proposito |
 |---------|-----------|
 | `ARDEN_FVS_PRD.md` | PRD original (referencia legada, use os docs fragmentados) |
-| `DOCUMENTACAO_REFERENCIA.md` | Guia de fragmentacao (este plano) |
-| `prd-continue.md` | Contexto rapido do projeto |
 | `WARP.md` | Guia para IAs (Warp) |
 | `database/schema.sql` | **SSOT** do schema SQL |
 | `database/rls-policies.sql` | **SSOT** das politicas RLS |

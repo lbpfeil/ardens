@@ -27,7 +27,6 @@ docs/
 | `DESIGN-SYSTEM.md` | **SSOT** for UI/UX patterns |
 | `database/schema.sql` | **SSOT** for database schema |
 | `database/rls-policies.sql` | **SSOT** for RLS policies |
-| `prd-continue.md` | Quick context overview |
 | `PRD_INDEX.md` | Legacy PRD navigation |
 
 No application code, package manifests, or build tooling are present yet. All implementation guidance below is **forward-looking**.
@@ -35,7 +34,7 @@ No application code, package manifests, or build tooling are present yet. All im
 ### When you start working in this repo:
 
 1. **Read `docs/00_INDEX.md`** for the documentation map
-2. **Read `prd-continue.md`** for a fast overview of the product
+2. **Read `docs/product/01_OVERVIEW.md`** for product vision
 3. **Use `docs/product/`** for feature requirements and flows
 4. **Use `docs/tech/`** for technical implementation details
 5. **Use `DESIGN-SYSTEM.md`** as the **SSOT** for web UI
@@ -72,12 +71,13 @@ See `docs/tech/01_ARCHITECTURE.md` for full details.
 - **Auth:** Supabase Auth (email/password, sessions)
 - **Multi-tenancy:** Row Level Security (RLS) with `cliente_id`
 - **Storage:** Supabase Storage for photos
-- **Server logic:** Supabase Edge Functions (Deno) for ~10% of logic
+- **Server logic:** Supabase Edge Functions (Deno) + GCP Cloud Functions
 
 **Key principles:**
 - **No separate Node/Express backend**
 - 90%+ of CRUD via Supabase client libraries with RLS
-- Edge Functions for PDFs, emails, image processing, scheduled jobs
+- Edge Functions for emails, image processing, scheduled jobs
+- **GCP Cloud Functions + Puppeteer** for PDF generation (high visual quality)
 
 ### 2.3 Web portal
 
@@ -96,6 +96,8 @@ See `docs/tech/05_FRONTEND_WEB.md` for full details.
 **Navigation:** See `docs/product/04_NAVIGATION.md`
 
 ### 2.4 Mobile app (offline-first)
+
+> **Note:** Offline mode is **mobile-only**. Web portal requires internet connection.
 
 See `docs/tech/06_MOBILE_TECH.md` for full details.
 

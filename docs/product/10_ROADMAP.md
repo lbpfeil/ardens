@@ -16,6 +16,7 @@
 - Verificacoes com fotos de NC
 - Sincronizacao offline completa
 - Reinspecao de nao-conformidades
+- Condicoes de Inicio (CIs) com portal do Almoxarife
 - 4 relatorios MVP
 - Agendamento automatico de relatorios
 - Multi-tenancy com RLS
@@ -23,7 +24,6 @@
 
 **O que NAO entra no MVP:**
 - iOS
-- Condicoes de Inicio (CIs)
 - 2FA / SSO
 - Dashboard Telao
 - Relatorios com IA
@@ -63,11 +63,7 @@
    - Custo: $99/ano Apple Developer
    - Baixo esforco tecnico adicional
 
-3. **Condicoes de Inicio (CIs)**
-   - Bloquear servicos ate CIs atendidas
-   - Integracao com almoxarifado
-
-4. **Seguranca Avancada**
+3. **Seguranca Avancada**
    - 2FA (autenticacao em dois fatores)
    - SSO para construtoras maiores
 
@@ -135,8 +131,7 @@ MES 6: Lancamento Publico
 MES 7-12: Crescimento + Fase 2
 ├── Aquisicao de clientes
 ├── Desenvolvimento iOS
-├── Relatorios com IA
-└── Condicoes de Inicio
+└── Relatorios com IA
 ```
 
 ---
