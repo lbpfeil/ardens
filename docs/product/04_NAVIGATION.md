@@ -16,9 +16,35 @@ Baseado no design system do **Supabase** (ferramenta open-source de backend-as-a
 ## Estrutura de Navegacao
 
 ### Nivel 1: Barra Superior (56px, fixa)
-- Logo + **Seletor de Contexto** (alterna entre "Visao Global" e "Obra Especifica")
+- Logo + **Breadcrumb** (navegacao hierarquica)
 - **Command Palette** (Cmd+K / Ctrl+K) para busca universal
 - Ajuda, Configuracoes Rapidas, Perfil do Usuario
+
+---
+
+## Breadcrumb (Barra Superior)
+
+Estrutura visual igual ao Supabase (ex: `Pfeil / evoque / main [PRODUCTION]`).
+
+### Visao Global
+```
+[Logo] Empresa / Visao Global
+```
+
+### Obra Especifica
+```
+[Logo] Empresa / Nome da Obra / Secao Atual
+         |            |              |
+         |            |              +-- Dashboard, Verificacoes, etc (opcional)
+         |            +-- Ex: "Residencial Aurora - Etapa 1"
+         +-- Ex: "Pfeil Engenharia"
+```
+
+### Comportamento
+- Clique em "Empresa": volta para Visao Global
+- Clique em "Nome da Obra": vai para Home da obra
+- Secao Atual: apenas indicativo (nao clicavel)
+- Separador: `/` com espacamento (igual Supabase)
 
 ### Nivel 2: Sidebar Primaria (56px, icones apenas)
 - Sempre visivel
@@ -29,6 +55,61 @@ Baseado no design system do **Supabase** (ferramenta open-source de backend-as-a
 - Aparece quando modulo tem subdivisoes
 - Lista de subsecoes do modulo ativo
 - Fundo um tom mais claro que sidebar primaria
+
+---
+
+## Sidebar Primaria (Detalhes Visuais)
+
+Estrutura visual igual ao Supabase.
+
+### Estado Padrao
+- **Retraida** (collapsed): apenas icones, sem labels
+- Largura: 56px
+- Fundo: `bg-sidebar` (um tom mais escuro que o canvas)
+
+### Comportamento de Expansao
+- **Hover**: expande temporariamente mostrando labels (tooltip ou sidebar expandida)
+- **Click no icone de menu** (opcional): trava sidebar expandida (240px)
+- Transicao suave (150-200ms)
+
+### Estrutura Vertical
+```
+[Logo]
+─────────────────
+[Home]           ← Icone ativo com highlight (bg-accent)
+[Modulo 1]
+[Modulo 2]
+[Modulo 3]
+─────────────────  ← Separador sutil (border-muted)
+[Modulo 4]
+[Modulo 5]
+─────────────────
+[Indicador Status] ← Bolinha colorida (online/sync/etc)
+[Modulo 6]
+[Modulo 7]
+─────────────────
+[Configuracoes]  ← Sempre no final (engrenagem)
+```
+
+### Icone Ativo (Highlight)
+- Fundo: `bg-accent` ou `bg-surface-200`
+- Borda esquerda opcional: 2px `bg-brand` (verde)
+- Icone: `text-foreground` (mais claro que inativos)
+
+### Icones Inativos
+- Cor: `text-foreground-light` ou `text-foreground-lighter`
+- Hover: `text-foreground` + `bg-surface-100`
+
+### Separadores
+- Linha horizontal sutil: `border-muted` ou `border-secondary`
+- Agrupa modulos por categoria (ex: principais, secundarios, config)
+
+### Indicador de Status (Opcional)
+- Bolinha pequena (8px) indicando:
+  - Verde: online/sincronizado
+  - Amarelo: sincronizando
+  - Vermelho: offline/erro
+- Posicionado proximo ao final da sidebar
 
 ### Nivel 4: Area de Conteudo Principal
 - Flex, ocupando espaco restante
