@@ -16,7 +16,7 @@
 - Verificacoes com fotos de NC
 - Sincronizacao offline completa
 - Reinspecao de nao-conformidades
-- Condicoes de Inicio (CIs) com portal do Almoxarife
+- Condicoes de Inicio (CIs) com portal do Almoxarife (movido para fase 2)
 - 4 relatorios MVP
 - Agendamento automatico de relatorios
 - Multi-tenancy com RLS
