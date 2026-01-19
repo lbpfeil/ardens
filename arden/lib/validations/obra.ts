@@ -1,26 +1,45 @@
 import { z } from 'zod'
-import { requiredString, optionalString, dateString } from './common'
+import { requiredString, optionalString } from './common'
+
+/**
+ * Opcoes de tipologia de obra conforme enum do banco de dados.
+ */
+export const tipologiaOptions = [
+  { value: 'residencial_horizontal', label: 'Residencial Horizontal' },
+  { value: 'residencial_vertical', label: 'Residencial Vertical' },
+  { value: 'comercial', label: 'Comercial' },
+  { value: 'retrofit', label: 'Retrofit' },
+  { value: 'misto', label: 'Misto' },
+] as const
+
+export type TipologiaObra = typeof tipologiaOptions[number]['value']
 
 /**
  * Schema de validacao para formulario de obra.
+ * Alinhado com tabela obras no banco de dados.
  *
- * Campos:
- * - nome: Nome da obra (3-100 caracteres)
- * - codigo: Codigo interno opcional (max 20 caracteres)
- * - endereco: Endereco completo (min 5 caracteres)
- * - dataInicio: Data de inicio no formato YYYY-MM-DD
- * - responsavel: Nome do responsavel (min 2 caracteres)
+ * Campos obrigatorios: nome
+ * Campos opcionais: codigo, tipologia, cidade, estado, responsavel_tecnico
  */
-export const obraSchema = z.object({
-  nome: requiredString(3, 100, 'Nome'),
-  codigo: optionalString(20),
-  endereco: requiredString(5, 200, 'Endereço'),
-  dataInicio: dateString(),
-  responsavel: requiredString(2, 100, 'Responsável'),
+export const obraFormSchema = z.object({
+  nome: requiredString(3, 255, 'Nome'),
+  codigo: optionalString(50),
+  tipologia: z.enum([
+    'residencial_horizontal',
+    'residencial_vertical',
+    'comercial',
+    'retrofit',
+    'misto'
+  ]).optional(),
+  cidade: optionalString(100),
+  estado: z.string()
+    .length(2, 'Estado deve ter 2 caracteres (UF)')
+    .optional()
+    .or(z.literal('')),
+  responsavel_tecnico: optionalString(255),
 })
 
-/**
- * Tipo inferido do schema de obra.
- * Use este tipo para tipar dados de formulario e props de componentes.
- */
-export type ObraFormData = z.infer<typeof obraSchema>
+export type ObraFormData = z.infer<typeof obraFormSchema>
+
+// Keep old export for backwards compatibility with ObraForm example
+export const obraSchema = obraFormSchema

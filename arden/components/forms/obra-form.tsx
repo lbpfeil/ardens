@@ -2,10 +2,17 @@
 
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { obraSchema, type ObraFormData } from '@/lib/validations'
+import { obraFormSchema, type ObraFormData, tipologiaOptions } from '@/lib/validations'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 
 interface ObraFormProps {
   defaultValues?: Partial<ObraFormData>
@@ -22,29 +29,38 @@ interface ObraFormProps {
  * - Erros inline abaixo de cada campo
  * - Tipos TypeScript inferidos do schema
  * - defaultValues para todos os campos (previne warnings controlled/uncontrolled)
+ *
+ * Campos alinhados com tabela obras no banco de dados:
+ * - nome (obrigatorio)
+ * - codigo, tipologia, cidade, estado, responsavel_tecnico (opcionais)
  */
 export function ObraForm({ defaultValues, onSubmit, isEditing = false }: ObraFormProps) {
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
+    setValue,
+    watch,
   } = useForm<ObraFormData>({
-    resolver: zodResolver(obraSchema),
+    resolver: zodResolver(obraFormSchema),
     defaultValues: {
       nome: '',
       codigo: '',
-      endereco: '',
-      dataInicio: '',
-      responsavel: '',
+      tipologia: undefined,
+      cidade: '',
+      estado: '',
+      responsavel_tecnico: '',
       ...defaultValues,
     },
   })
+
+  const tipologia = watch('tipologia')
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       {/* Nome da Obra */}
       <div className="space-y-2">
-        <Label htmlFor="nome">Nome da Obra</Label>
+        <Label htmlFor="nome">Nome da Obra *</Label>
         <Input
           id="nome"
           {...register('nome')}
@@ -72,45 +88,68 @@ export function ObraForm({ defaultValues, onSubmit, isEditing = false }: ObraFor
         )}
       </div>
 
-      {/* Endereco */}
+      {/* Tipologia */}
       <div className="space-y-2">
-        <Label htmlFor="endereco">Endereco</Label>
-        <Input
-          id="endereco"
-          {...register('endereco')}
-          className={errors.endereco ? 'border-destructive' : ''}
-          placeholder="Ex: Rua das Flores, 123 - Centro"
-        />
-        {errors.endereco && (
-          <p className="text-destructive text-xs">{errors.endereco.message}</p>
-        )}
+        <Label htmlFor="tipologia">
+          Tipologia <span className="text-foreground-muted">(opcional)</span>
+        </Label>
+        <Select
+          value={tipologia}
+          onValueChange={(value) => setValue('tipologia', value as ObraFormData['tipologia'])}
+        >
+          <SelectTrigger>
+            <SelectValue placeholder="Selecione a tipologia" />
+          </SelectTrigger>
+          <SelectContent>
+            {tipologiaOptions.map((option) => (
+              <SelectItem key={option.value} value={option.value}>
+                {option.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
 
-      {/* Data de Inicio */}
-      <div className="space-y-2">
-        <Label htmlFor="dataInicio">Data de Inicio</Label>
-        <Input
-          id="dataInicio"
-          type="date"
-          {...register('dataInicio')}
-          className={errors.dataInicio ? 'border-destructive' : ''}
-        />
-        {errors.dataInicio && (
-          <p className="text-destructive text-xs">{errors.dataInicio.message}</p>
-        )}
+      {/* Cidade / Estado */}
+      <div className="grid grid-cols-3 gap-4">
+        <div className="col-span-2 space-y-2">
+          <Label htmlFor="cidade">
+            Cidade <span className="text-foreground-muted">(opcional)</span>
+          </Label>
+          <Input
+            id="cidade"
+            {...register('cidade')}
+            placeholder="Ex: Sao Paulo"
+          />
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="estado">UF</Label>
+          <Input
+            id="estado"
+            {...register('estado')}
+            maxLength={2}
+            className={errors.estado ? 'border-destructive' : ''}
+            placeholder="SP"
+          />
+          {errors.estado && (
+            <p className="text-destructive text-xs">{errors.estado.message}</p>
+          )}
+        </div>
       </div>
 
-      {/* Responsavel */}
+      {/* Responsavel Tecnico */}
       <div className="space-y-2">
-        <Label htmlFor="responsavel">Responsavel</Label>
+        <Label htmlFor="responsavel_tecnico">
+          Responsavel Tecnico <span className="text-foreground-muted">(opcional)</span>
+        </Label>
         <Input
-          id="responsavel"
-          {...register('responsavel')}
-          className={errors.responsavel ? 'border-destructive' : ''}
+          id="responsavel_tecnico"
+          {...register('responsavel_tecnico')}
+          className={errors.responsavel_tecnico ? 'border-destructive' : ''}
           placeholder="Ex: Eng. Maria Silva"
         />
-        {errors.responsavel && (
-          <p className="text-destructive text-xs">{errors.responsavel.message}</p>
+        {errors.responsavel_tecnico && (
+          <p className="text-destructive text-xs">{errors.responsavel_tecnico.message}</p>
         )}
       </div>
 

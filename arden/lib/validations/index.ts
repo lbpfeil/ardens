@@ -7,4 +7,10 @@ export {
 } from './common'
 
 // Re-export de schemas de dominio
-export { obraSchema, type ObraFormData } from './obra'
+export {
+  obraSchema,
+  obraFormSchema,
+  tipologiaOptions,
+  type ObraFormData,
+  type TipologiaObra,
+} from './obra'
