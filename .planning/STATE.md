@@ -10,28 +10,28 @@ See: .planning/PROJECT.md (updated 2026-01-19)
 ## Current Position
 
 Phase: 2 of 6 (Obras)
-Plan: 2 of 4 in current phase
+Plan: 3 of 4 in current phase
 Status: In progress
-Last activity: 2026-01-19 - Completed 02-02-PLAN.md (Obras List Page)
+Last activity: 2026-01-19 - Completed 02-03-PLAN.md (Edit and Archive Obras)
 
-Progress: [####------] 33% (4/12 plans)
+Progress: [#####-----] 42% (5/12 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 4
-- Average duration: 8 min
-- Total execution time: 31 min
+- Total plans completed: 5
+- Average duration: 7 min
+- Total execution time: 34 min
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01-foundation | 2 | 20 min | 10 min |
-| 02-obras | 2 | 11 min | 5.5 min |
+| 02-obras | 3 | 14 min | 4.7 min |
 
 **Recent Trend:**
-- Last 5 plans: 5 min, 15 min, 8 min, 3 min
+- Last 5 plans: 15 min, 5 min, 8 min, 3 min, 3 min
 - Trend: improving
 
 *Updated after each plan completion*
@@ -57,6 +57,8 @@ Recent decisions affecting current work:
 - [02-01]: obraFormSchema: nome required, codigo/tipologia/cidade/estado/responsavel_tecnico optional
 - [02-02]: Server Component + Client Wrapper pattern for pages with modals
 - [02-02]: Cidade/estado shown in form but not persisted to DB (ObraInsert lacks columns)
+- [02-03]: Modal mode prop pattern: single component handles both create and edit
+- [02-03]: AlertDialog variant based on action: destructive for archive, default for restore
 
 ### Pending Todos
 
@@ -69,5 +71,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-01-19
-Stopped at: Completed 02-02-PLAN.md (Obras List Page)
+Stopped at: Completed 02-03-PLAN.md (Edit and Archive Obras)
 Resume file: None
