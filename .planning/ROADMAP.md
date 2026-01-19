@@ -12,7 +12,7 @@ Este roadmap cobre o Mes 1 do MVP do Arden FVS, focando na gestao de entidades d
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Foundation** - Infraestrutura de state management e validacao de forms
+- [x] **Phase 1: Foundation** - Infraestrutura de state management e validacao de forms
 - [ ] **Phase 2: Obras** - CRUD completo de obras com listagem, criacao, edicao e arquivamento
 - [ ] **Phase 3: Agrupamentos** - Gestao de agrupamentos vinculados a obras
 - [ ] **Phase 4: Unidades** - Gestao de unidades vinculadas a agrupamentos
@@ -32,8 +32,8 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 2 plans
 
 Plans:
-- [ ] 01-01-PLAN.md — Zustand setup e primeiro store (app-store com UI state)
-- [ ] 01-02-PLAN.md — React Hook Form + Zod setup e form exemplo (ObraForm)
+- [x] 01-01-PLAN.md — Zustand setup e primeiro store (app-store com UI state)
+- [x] 01-02-PLAN.md — React Hook Form + Zod setup e form exemplo (ObraForm)
 
 ### Phase 2: Obras
 **Goal**: Usuario pode gerenciar o ciclo completo de obras (criar, visualizar, editar, arquivar)
@@ -133,7 +133,7 @@ Phases execute in numeric order: 1 > 2 > 3 > 4 > 5 > 6
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 0/2 | Planned | - |
+| 1. Foundation | 2/2 | Complete | 2026-01-19 |
 | 2. Obras | 0/4 | Not started | - |
 | 3. Agrupamentos | 0/3 | Not started | - |
 | 4. Unidades | 0/3 | Not started | - |

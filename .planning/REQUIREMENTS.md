@@ -53,8 +53,8 @@ Requirements para o Mes 1 do MVP. Cada um mapeia para fases do roadmap.
 
 ### Infraestrutura
 
-- [ ] **INFR-01**: Zustand configurado para state management
-- [ ] **INFR-02**: React Hook Form + Zod configurados para validacao
+- [x] **INFR-01**: Zustand configurado para state management
+- [x] **INFR-02**: React Hook Form + Zod configurados para validacao
 
 ## v2 Requirements
 
@@ -99,8 +99,8 @@ Explicitamente excluido do Mes 1.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| INFR-01 | Phase 1 | Pending |
-| INFR-02 | Phase 1 | Pending |
+| INFR-01 | Phase 1 | Complete |
+| INFR-02 | Phase 1 | Complete |
 | OBRA-01 | Phase 2 | Pending |
 | OBRA-02 | Phase 2 | Pending |
 | OBRA-03 | Phase 2 | Pending |
@@ -138,4 +138,4 @@ Explicitamente excluido do Mes 1.
 
 ---
 *Requirements defined: 2026-01-19*
-*Last updated: 2026-01-19 after roadmap creation*
+*Last updated: 2026-01-19 after phase 1 completion*
