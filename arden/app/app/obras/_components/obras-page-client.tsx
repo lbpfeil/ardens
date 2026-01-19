@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { ObrasTable } from './obras-table'
+import { ObraFormModal } from './obra-form-modal'
 import type { Obra } from '@/lib/supabase/queries/obras'
 
 interface ObrasPageClientProps {
@@ -25,8 +26,11 @@ export function ObrasPageClient({ initialObras }: ObrasPageClientProps) {
   return (
     <>
       <ObrasTable obras={initialObras} onCreateClick={handleCreateClick} />
-      {/* ObraFormModal will be added in Task 2 */}
-      {/* Placeholder for modal - controlled by isModalOpen state */}
+      <ObraFormModal
+        open={isModalOpen}
+        onOpenChange={setIsModalOpen}
+        onSuccess={handleModalSuccess}
+      />
     </>
   )
 }
