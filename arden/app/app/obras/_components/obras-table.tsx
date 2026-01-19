@@ -35,6 +35,7 @@ interface ObrasTableProps {
   obras: Obra[]
   onCreateClick: () => void
   onEditClick: (obra: Obra) => void
+  onArchiveClick: (obra: Obra) => void
   isLoading?: boolean
 }
 
@@ -49,7 +50,7 @@ function formatDate(dateString: string): string {
   })
 }
 
-export function ObrasTable({ obras, onCreateClick, onEditClick, isLoading = false }: ObrasTableProps) {
+export function ObrasTable({ obras, onCreateClick, onEditClick, onArchiveClick, isLoading = false }: ObrasTableProps) {
   const router = useRouter()
   const [searchQuery, setSearchQuery] = useState('')
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('ativas')
@@ -207,8 +208,14 @@ export function ObrasTable({ obras, onCreateClick, onEditClick, isLoading = fals
                           Editar
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem disabled variant="destructive">
-                          Arquivar
+                        <DropdownMenuItem
+                          variant={obra.arquivada ? 'default' : 'destructive'}
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            onArchiveClick(obra)
+                          }}
+                        >
+                          {obra.arquivada ? 'Restaurar' : 'Arquivar'}
                         </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
