@@ -1,3 +1,12 @@
 {
-  "outputStyle": "default"
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "supabase"
+  ],
+  "outputStyle": "default",
+  "permissions": {
+    "allow": [
+      "Bash(npm run dev:*)"
+    ]
+  }
 }
