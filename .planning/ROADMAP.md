@@ -13,7 +13,7 @@ Este roadmap cobre o Mes 1 do MVP do Arden FVS, focando na gestao de entidades d
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Foundation** - Infraestrutura de state management e validacao de forms
-- [ ] **Phase 2: Obras** - CRUD completo de obras com listagem, criacao, edicao e arquivamento
+- [x] **Phase 2: Obras** - CRUD completo de obras com listagem, criacao, edicao e arquivamento
 - [ ] **Phase 3: Agrupamentos** - Gestao de agrupamentos vinculados a obras
 - [ ] **Phase 4: Unidades** - Gestao de unidades vinculadas a agrupamentos
 - [ ] **Phase 5: Biblioteca FVS** - Gestao de servicos e itens de verificacao
@@ -48,10 +48,10 @@ Plans:
 **Plans**: 4 plans
 
 Plans:
-- [ ] 02-01-PLAN.md — Setup: shadcn components, obra schema, data access layer
-- [ ] 02-02-PLAN.md — List page with table and create obra modal
-- [ ] 02-03-PLAN.md — Edit and archive obra functionality
-- [ ] 02-04-PLAN.md — Obra detail page
+- [x] 02-01-PLAN.md — Setup: shadcn components, obra schema, data access layer
+- [x] 02-02-PLAN.md — List page with table and create obra modal
+- [x] 02-03-PLAN.md — Edit and archive obra functionality
+- [x] 02-04-PLAN.md — Obra detail page
 
 ### Phase 3: Agrupamentos
 **Goal**: Usuario pode gerenciar agrupamentos dentro de uma obra (blocos, torres, etc.)
@@ -134,7 +134,7 @@ Phases execute in numeric order: 1 > 2 > 3 > 4 > 5 > 6
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation | 2/2 | Complete | 2026-01-19 |
-| 2. Obras | 0/4 | Planned | - |
+| 2. Obras | 4/4 | Complete | 2026-01-19 |
 | 3. Agrupamentos | 0/3 | Not started | - |
 | 4. Unidades | 0/3 | Not started | - |
 | 5. Biblioteca FVS | 0/4 | Not started | - |

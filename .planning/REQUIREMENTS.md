@@ -9,11 +9,11 @@ Requirements para o Mes 1 do MVP. Cada um mapeia para fases do roadmap.
 
 ### Obras
 
-- [ ] **OBRA-01**: Usuario pode listar todas as obras do cliente
-- [ ] **OBRA-02**: Usuario pode criar nova obra (nome, codigo, tipologia, responsavel, coordenadas)
-- [ ] **OBRA-03**: Usuario pode editar dados de uma obra existente
-- [ ] **OBRA-04**: Usuario pode arquivar uma obra (soft delete)
-- [ ] **OBRA-05**: Usuario pode visualizar detalhes de uma obra
+- [x] **OBRA-01**: Usuario pode listar todas as obras do cliente
+- [x] **OBRA-02**: Usuario pode criar nova obra (nome, codigo, tipologia, responsavel, coordenadas)
+- [x] **OBRA-03**: Usuario pode editar dados de uma obra existente
+- [x] **OBRA-04**: Usuario pode arquivar uma obra (soft delete)
+- [x] **OBRA-05**: Usuario pode visualizar detalhes de uma obra
 
 ### Agrupamentos
 
@@ -101,11 +101,11 @@ Explicitamente excluido do Mes 1.
 |-------------|-------|--------|
 | INFR-01 | Phase 1 | Complete |
 | INFR-02 | Phase 1 | Complete |
-| OBRA-01 | Phase 2 | Pending |
-| OBRA-02 | Phase 2 | Pending |
-| OBRA-03 | Phase 2 | Pending |
-| OBRA-04 | Phase 2 | Pending |
-| OBRA-05 | Phase 2 | Pending |
+| OBRA-01 | Phase 2 | Complete |
+| OBRA-02 | Phase 2 | Complete |
+| OBRA-03 | Phase 2 | Complete |
+| OBRA-04 | Phase 2 | Complete |
+| OBRA-05 | Phase 2 | Complete |
 | AGRU-01 | Phase 3 | Pending |
 | AGRU-02 | Phase 3 | Pending |
 | AGRU-03 | Phase 3 | Pending |
@@ -138,4 +138,4 @@ Explicitamente excluido do Mes 1.
 
 ---
 *Requirements defined: 2026-01-19*
-*Last updated: 2026-01-19 after phase 1 completion*
+*Last updated: 2026-01-19 after phase 2 completion*
