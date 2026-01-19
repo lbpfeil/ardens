@@ -14,9 +14,9 @@ import { requiredString, optionalString, dateString } from './common'
 export const obraSchema = z.object({
   nome: requiredString(3, 100, 'Nome'),
   codigo: optionalString(20),
-  endereco: requiredString(5, 200, 'Endereco'),
+  endereco: requiredString(5, 200, 'Endereço'),
   dataInicio: dateString(),
-  responsavel: requiredString(2, 100, 'Responsavel'),
+  responsavel: requiredString(2, 100, 'Responsável'),
 })
 
 /**

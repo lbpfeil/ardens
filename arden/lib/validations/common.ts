@@ -13,9 +13,9 @@ import { z } from 'zod'
  */
 export function requiredString(min: number, max: number, field: string) {
   return z
-    .string({ required_error: `${field} e obrigatorio` })
-    .min(min, `${field} deve ter no minimo ${min} caracteres`)
-    .max(max, `${field} deve ter no maximo ${max} caracteres`)
+    .string({ required_error: `${field} é obrigatório` })
+    .min(min, `${field} deve ter no mínimo ${min} caracteres`)
+    .max(max, `${field} deve ter no máximo ${max} caracteres`)
 }
 
 /**
@@ -31,7 +31,7 @@ export function optionalString(max: number) {
  */
 export function dateString() {
   return z
-    .string({ required_error: 'Data e obrigatoria' })
+    .string({ required_error: 'Data é obrigatória' })
     .regex(/^\d{4}-\d{2}-\d{2}$/, 'Data deve estar no formato YYYY-MM-DD')
 }
 
@@ -41,5 +41,5 @@ export function dateString() {
 export function uuidString() {
   return z
     .string()
-    .uuid('ID deve ser um UUID valido')
+    .uuid('ID deve ser um UUID válido')
 }
