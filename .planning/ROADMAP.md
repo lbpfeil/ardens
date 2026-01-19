@@ -45,13 +45,13 @@ Plans:
   3. Usuario edita dados de obra existente e alteracoes persistem
   4. Usuario arquiva obra e ela desaparece da lista principal
   5. Usuario clica em obra e ve pagina de detalhes com todas informacoes
-**Plans**: TBD
+**Plans**: 4 plans
 
 Plans:
-- [ ] 02-01: Listagem de obras (pagina, fetch, tabela)
-- [ ] 02-02: Criar obra (form, validacao, submit)
-- [ ] 02-03: Editar e arquivar obra (modal/pagina, acoes)
-- [ ] 02-04: Detalhes da obra (pagina, layout)
+- [ ] 02-01-PLAN.md — Setup: shadcn components, obra schema, data access layer
+- [ ] 02-02-PLAN.md — List page with table and create obra modal
+- [ ] 02-03-PLAN.md — Edit and archive obra functionality
+- [ ] 02-04-PLAN.md — Obra detail page
 
 ### Phase 3: Agrupamentos
 **Goal**: Usuario pode gerenciar agrupamentos dentro de uma obra (blocos, torres, etc.)
@@ -134,7 +134,7 @@ Phases execute in numeric order: 1 > 2 > 3 > 4 > 5 > 6
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation | 2/2 | Complete | 2026-01-19 |
-| 2. Obras | 0/4 | Not started | - |
+| 2. Obras | 0/4 | Planned | - |
 | 3. Agrupamentos | 0/3 | Not started | - |
 | 4. Unidades | 0/3 | Not started | - |
 | 5. Biblioteca FVS | 0/4 | Not started | - |
@@ -143,5 +143,6 @@ Phases execute in numeric order: 1 > 2 > 3 > 4 > 5 > 6
 ---
 *Roadmap created: 2026-01-19*
 *Phase 1 planned: 2026-01-19*
+*Phase 2 planned: 2026-01-19*
 *Depth: standard (6 phases)*
 *Coverage: 31/31 v1 requirements mapped*
