@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { StoreProvider } from "@/lib/stores"
 import { Button } from "@/components/ui/button"
@@ -67,6 +67,11 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   const [showSecondary, setShowSecondary] = useState(false)
   const [secondaryItems, setSecondaryItems] = useState<typeof verificacoesSubmenu>([])
   const [sidebarExpanded, setSidebarExpanded] = useState(false)
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   const handleNavClick = (href: string, hasSubmenu?: boolean) => {
     setActiveItem(href)
@@ -126,31 +131,39 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             <HelpCircle className="w-4 h-4 text-foreground-light" />
           </Button>
 
-          {/* User Dropdown */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon-sm" className="rounded-full">
-                <div className="w-6 h-6 rounded-full bg-brand flex items-center justify-center text-xs font-medium text-foreground-contrast">
-                  U
-                </div>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-48">
-              <DropdownMenuItem>
-                <User className="w-4 h-4 mr-2" />
-                Meu Perfil
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Settings className="w-4 h-4 mr-2" />
-                Configurações
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={handleLogout} className="text-destructive">
-                <LogOut className="w-4 h-4 mr-2" />
-                Sair
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          {/* User Dropdown - render only after mount to avoid hydration mismatch */}
+          {mounted ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="icon-sm" className="rounded-full">
+                  <div className="w-6 h-6 rounded-full bg-brand flex items-center justify-center text-xs font-medium text-foreground-contrast">
+                    U
+                  </div>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-48">
+                <DropdownMenuItem>
+                  <User className="w-4 h-4 mr-2" />
+                  Meu Perfil
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Settings className="w-4 h-4 mr-2" />
+                  Configurações
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={handleLogout} className="text-destructive">
+                  <LogOut className="w-4 h-4 mr-2" />
+                  Sair
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <Button variant="ghost" size="icon-sm" className="rounded-full">
+              <div className="w-6 h-6 rounded-full bg-brand flex items-center justify-center text-xs font-medium text-foreground-contrast">
+                U
+              </div>
+            </Button>
+          )}
         </div>
       </header>
 
