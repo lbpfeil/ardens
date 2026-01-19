@@ -10,28 +10,29 @@ See: .planning/PROJECT.md (updated 2026-01-19)
 ## Current Position
 
 Phase: 2 of 6 (Obras)
-Plan: 0 of 4 in current phase
-Status: Ready to plan
-Last activity: 2026-01-19 - Phase 1 complete, goal verified
+Plan: 1 of 4 in current phase
+Status: In progress
+Last activity: 2026-01-19 - Completed 02-01-PLAN.md (Obras Infrastructure)
 
-Progress: [##--------] 17% (2/12 plans)
+Progress: [###-------] 25% (3/12 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 2
-- Average duration: 10 min
-- Total execution time: 20 min
+- Total plans completed: 3
+- Average duration: 9 min
+- Total execution time: 28 min
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01-foundation | 2 | 20 min | 10 min |
+| 02-obras | 1 | 8 min | 8 min |
 
 **Recent Trend:**
-- Last 5 plans: 5 min, 15 min
-- Trend: -
+- Last 5 plans: 5 min, 15 min, 8 min
+- Trend: stable
 
 *Updated after each plan completion*
 
@@ -51,6 +52,9 @@ Recent decisions affecting current work:
 - [01-02]: Use Zod v3.x (not v4.x) for RHF compatibility
 - [01-02]: Error messages in Portuguese for Brazilian users
 - [01-02]: defaultValues required for all form fields (prevent controlled/uncontrolled warnings)
+- [02-01]: Sonner Toaster uses dark theme by default (no next-themes dependency)
+- [02-01]: Data access layer pattern: lib/supabase/queries/{entity}.ts with typed interfaces
+- [02-01]: obraFormSchema: nome required, codigo/tipologia/cidade/estado/responsavel_tecnico optional
 
 ### Pending Todos
 
@@ -63,5 +67,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-01-19
-Stopped at: Phase 1 complete, ready to plan Phase 2
+Stopped at: Completed 02-01-PLAN.md (Obras Infrastructure)
 Resume file: None
