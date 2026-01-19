@@ -97,47 +97,45 @@ Explicitamente excluido do Mes 1.
 
 ## Traceability
 
-Preenchido apos criacao do roadmap.
-
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| OBRA-01 | - | Pending |
-| OBRA-02 | - | Pending |
-| OBRA-03 | - | Pending |
-| OBRA-04 | - | Pending |
-| OBRA-05 | - | Pending |
-| AGRU-01 | - | Pending |
-| AGRU-02 | - | Pending |
-| AGRU-03 | - | Pending |
-| AGRU-04 | - | Pending |
-| AGRU-05 | - | Pending |
-| UNID-01 | - | Pending |
-| UNID-02 | - | Pending |
-| UNID-03 | - | Pending |
-| UNID-04 | - | Pending |
-| UNID-05 | - | Pending |
-| SERV-01 | - | Pending |
-| SERV-02 | - | Pending |
-| SERV-03 | - | Pending |
-| SERV-04 | - | Pending |
-| SERV-05 | - | Pending |
-| SERV-06 | - | Pending |
-| SERV-07 | - | Pending |
-| SERV-08 | - | Pending |
-| DASH-01 | - | Pending |
-| DASH-02 | - | Pending |
-| DASH-03 | - | Pending |
-| DASH-04 | - | Pending |
-| DASH-05 | - | Pending |
-| DASH-06 | - | Pending |
-| INFR-01 | - | Pending |
-| INFR-02 | - | Pending |
+| INFR-01 | Phase 1 | Pending |
+| INFR-02 | Phase 1 | Pending |
+| OBRA-01 | Phase 2 | Pending |
+| OBRA-02 | Phase 2 | Pending |
+| OBRA-03 | Phase 2 | Pending |
+| OBRA-04 | Phase 2 | Pending |
+| OBRA-05 | Phase 2 | Pending |
+| AGRU-01 | Phase 3 | Pending |
+| AGRU-02 | Phase 3 | Pending |
+| AGRU-03 | Phase 3 | Pending |
+| AGRU-04 | Phase 3 | Pending |
+| AGRU-05 | Phase 3 | Pending |
+| UNID-01 | Phase 4 | Pending |
+| UNID-02 | Phase 4 | Pending |
+| UNID-03 | Phase 4 | Pending |
+| UNID-04 | Phase 4 | Pending |
+| UNID-05 | Phase 4 | Pending |
+| SERV-01 | Phase 5 | Pending |
+| SERV-02 | Phase 5 | Pending |
+| SERV-03 | Phase 5 | Pending |
+| SERV-04 | Phase 5 | Pending |
+| SERV-05 | Phase 5 | Pending |
+| SERV-06 | Phase 5 | Pending |
+| SERV-07 | Phase 5 | Pending |
+| SERV-08 | Phase 5 | Pending |
+| DASH-01 | Phase 6 | Pending |
+| DASH-02 | Phase 6 | Pending |
+| DASH-03 | Phase 6 | Pending |
+| DASH-04 | Phase 6 | Pending |
+| DASH-05 | Phase 6 | Pending |
+| DASH-06 | Phase 6 | Pending |
 
 **Coverage:**
 - v1 requirements: 31 total
-- Mapped to phases: 0
-- Unmapped: 31
+- Mapped to phases: 31
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-01-19*
-*Last updated: 2026-01-19 after initial definition*
+*Last updated: 2026-01-19 after roadmap creation*
