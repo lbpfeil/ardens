@@ -10,29 +10,29 @@ See: .planning/PROJECT.md (updated 2026-01-19)
 ## Current Position
 
 Phase: 2 of 6 (Obras)
-Plan: 1 of 4 in current phase
+Plan: 2 of 4 in current phase
 Status: In progress
-Last activity: 2026-01-19 - Completed 02-01-PLAN.md (Obras Infrastructure)
+Last activity: 2026-01-19 - Completed 02-02-PLAN.md (Obras List Page)
 
-Progress: [###-------] 25% (3/12 plans)
+Progress: [####------] 33% (4/12 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 3
-- Average duration: 9 min
-- Total execution time: 28 min
+- Total plans completed: 4
+- Average duration: 8 min
+- Total execution time: 31 min
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01-foundation | 2 | 20 min | 10 min |
-| 02-obras | 1 | 8 min | 8 min |
+| 02-obras | 2 | 11 min | 5.5 min |
 
 **Recent Trend:**
-- Last 5 plans: 5 min, 15 min, 8 min
-- Trend: stable
+- Last 5 plans: 5 min, 15 min, 8 min, 3 min
+- Trend: improving
 
 *Updated after each plan completion*
 
@@ -55,6 +55,8 @@ Recent decisions affecting current work:
 - [02-01]: Sonner Toaster uses dark theme by default (no next-themes dependency)
 - [02-01]: Data access layer pattern: lib/supabase/queries/{entity}.ts with typed interfaces
 - [02-01]: obraFormSchema: nome required, codigo/tipologia/cidade/estado/responsavel_tecnico optional
+- [02-02]: Server Component + Client Wrapper pattern for pages with modals
+- [02-02]: Cidade/estado shown in form but not persisted to DB (ObraInsert lacks columns)
 
 ### Pending Todos
 
@@ -67,5 +69,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-01-19
-Stopped at: Completed 02-01-PLAN.md (Obras Infrastructure)
+Stopped at: Completed 02-02-PLAN.md (Obras List Page)
 Resume file: None
