@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import { StoreProvider } from "@/lib/stores"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -85,8 +86,9 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <div className="h-screen bg-background flex flex-col overflow-hidden">
-      {/* Top Bar - 56px */}
+    <StoreProvider>
+      <div className="h-screen bg-background flex flex-col overflow-hidden">
+        {/* Top Bar - 56px */}
       <header className="h-14 min-h-14 border-b border-border bg-background flex items-center px-4 gap-4">
         {/* Left: Logo + Breadcrumb */}
         <div className="flex items-center gap-3">
@@ -254,6 +256,6 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           {children}
         </main>
       </div>
-    </div>
+    </StoreProvider>
   )
 }

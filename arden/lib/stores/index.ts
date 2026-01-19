@@ -8,3 +8,8 @@ export {
   type AppState,
   type AppStore,
 } from './app-store'
+
+export {
+  StoreProvider,
+  useAppStore,
+} from './store-provider'
