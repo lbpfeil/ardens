@@ -29,11 +29,11 @@ Decimal phases appear between their surrounding integers in numeric order.
   1. Zustand store existe e pode ser usado para gerenciar estado global da aplicacao
   2. Forms criados com React Hook Form validam dados automaticamente via schemas Zod
   3. Pattern de uso documentado em codigo exemplo funcional
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 01-01: Zustand setup e primeiro store (ex: UI state)
-- [ ] 01-02: React Hook Form + Zod setup e form exemplo
+- [ ] 01-01-PLAN.md — Zustand setup e primeiro store (app-store com UI state)
+- [ ] 01-02-PLAN.md — React Hook Form + Zod setup e form exemplo (ObraForm)
 
 ### Phase 2: Obras
 **Goal**: Usuario pode gerenciar o ciclo completo de obras (criar, visualizar, editar, arquivar)
@@ -133,7 +133,7 @@ Phases execute in numeric order: 1 > 2 > 3 > 4 > 5 > 6
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 0/2 | Not started | - |
+| 1. Foundation | 0/2 | Planned | - |
 | 2. Obras | 0/4 | Not started | - |
 | 3. Agrupamentos | 0/3 | Not started | - |
 | 4. Unidades | 0/3 | Not started | - |
@@ -142,5 +142,6 @@ Phases execute in numeric order: 1 > 2 > 3 > 4 > 5 > 6
 
 ---
 *Roadmap created: 2026-01-19*
+*Phase 1 planned: 2026-01-19*
 *Depth: standard (6 phases)*
 *Coverage: 31/31 v1 requirements mapped*
