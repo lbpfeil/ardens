@@ -13,23 +13,44 @@ interface ObrasPageClientProps {
 export function ObrasPageClient({ initialObras }: ObrasPageClientProps) {
   const router = useRouter()
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [editingObra, setEditingObra] = useState<Obra | null>(null)
 
   const handleCreateClick = () => {
+    setEditingObra(null)
     setIsModalOpen(true)
+  }
+
+  const handleEditClick = (obra: Obra) => {
+    setEditingObra(obra)
+    setIsModalOpen(true)
+  }
+
+  const handleModalClose = (open: boolean) => {
+    setIsModalOpen(open)
+    if (!open) {
+      setEditingObra(null)
+    }
   }
 
   const handleModalSuccess = () => {
     setIsModalOpen(false)
+    setEditingObra(null)
     router.refresh()
   }
 
   return (
     <>
-      <ObrasTable obras={initialObras} onCreateClick={handleCreateClick} />
+      <ObrasTable
+        obras={initialObras}
+        onCreateClick={handleCreateClick}
+        onEditClick={handleEditClick}
+      />
       <ObraFormModal
         open={isModalOpen}
-        onOpenChange={setIsModalOpen}
+        onOpenChange={handleModalClose}
         onSuccess={handleModalSuccess}
+        mode={editingObra ? 'edit' : 'create'}
+        obra={editingObra}
       />
     </>
   )

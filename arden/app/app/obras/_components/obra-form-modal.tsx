@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
@@ -8,7 +8,7 @@ import {
   type ObraFormData,
   tipologiaOptions,
 } from '@/lib/validations/obra'
-import { createObra } from '@/lib/supabase/queries/obras'
+import { createObra, updateObra, type Obra } from '@/lib/supabase/queries/obras'
 import {
   Dialog,
   DialogContent,
@@ -32,14 +32,27 @@ interface ObraFormModalProps {
   open: boolean
   onOpenChange: (open: boolean) => void
   onSuccess: () => void
+  mode?: 'create' | 'edit'
+  obra?: Obra | null
 }
 
 export function ObraFormModal({
   open,
   onOpenChange,
   onSuccess,
+  mode = 'create',
+  obra = null,
 }: ObraFormModalProps) {
   const [isSubmitting, setIsSubmitting] = useState(false)
+
+  const defaultValues = useMemo(() => ({
+    nome: obra?.nome ?? '',
+    codigo: obra?.codigo ?? '',
+    tipologia: obra?.tipologia ?? undefined,
+    cidade: '', // Not in DB, keep empty
+    estado: '', // Not in DB, keep empty
+    responsavel_tecnico: obra?.responsavel_tecnico ?? '',
+  }), [obra])
 
   const {
     register,
@@ -50,31 +63,15 @@ export function ObraFormModal({
     watch,
   } = useForm<ObraFormData>({
     resolver: zodResolver(obraFormSchema),
-    defaultValues: {
-      nome: '',
-      codigo: '',
-      tipologia: undefined,
-      cidade: '',
-      estado: '',
-      responsavel_tecnico: '',
-    },
+    defaultValues,
   })
 
   const tipologia = watch('tipologia')
 
-  // Reset form when modal opens
+  // Reset form when obra changes (switching between create/edit or editing different obra)
   useEffect(() => {
-    if (open) {
-      reset({
-        nome: '',
-        codigo: '',
-        tipologia: undefined,
-        cidade: '',
-        estado: '',
-        responsavel_tecnico: '',
-      })
-    }
-  }, [open, reset])
+    reset(defaultValues)
+  }, [obra?.id, reset, defaultValues])
 
   const onSubmit = async (data: ObraFormData) => {
     setIsSubmitting(true)
@@ -89,22 +86,29 @@ export function ObraFormModal({
         // They would need to be stored via coordinates or config in the future
       }
 
-      await createObra(cleanedData)
-      toast.success('Obra criada com sucesso')
+      if (mode === 'edit' && obra) {
+        await updateObra(obra.id, cleanedData)
+        toast.success('Obra atualizada com sucesso')
+      } else {
+        await createObra(cleanedData)
+        toast.success('Obra criada com sucesso')
+      }
       onSuccess()
     } catch (error) {
-      const message = error instanceof Error ? error.message : 'Erro ao criar obra'
+      const message = error instanceof Error ? error.message : (mode === 'edit' ? 'Erro ao atualizar obra' : 'Erro ao criar obra')
       toast.error(message)
     } finally {
       setIsSubmitting(false)
     }
   }
 
+  const isEditMode = mode === 'edit'
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Nova Obra</DialogTitle>
+          <DialogTitle>{isEditMode ? 'Editar Obra' : 'Nova Obra'}</DialogTitle>
         </DialogHeader>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -189,7 +193,10 @@ export function ObraFormModal({
               Cancelar
             </Button>
             <Button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? 'Criando...' : 'Criar Obra'}
+              {isSubmitting
+                ? (isEditMode ? 'Salvando...' : 'Criando...')
+                : (isEditMode ? 'Salvar' : 'Criar Obra')
+              }
             </Button>
           </DialogFooter>
         </form>

@@ -34,6 +34,7 @@ import type { Obra } from '@/lib/supabase/queries/obras'
 interface ObrasTableProps {
   obras: Obra[]
   onCreateClick: () => void
+  onEditClick: (obra: Obra) => void
   isLoading?: boolean
 }
 
@@ -48,7 +49,7 @@ function formatDate(dateString: string): string {
   })
 }
 
-export function ObrasTable({ obras, onCreateClick, isLoading = false }: ObrasTableProps) {
+export function ObrasTable({ obras, onCreateClick, onEditClick, isLoading = false }: ObrasTableProps) {
   const router = useRouter()
   const [searchQuery, setSearchQuery] = useState('')
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('ativas')
@@ -197,7 +198,12 @@ export function ObrasTable({ obras, onCreateClick, isLoading = false }: ObrasTab
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
-                        <DropdownMenuItem disabled>
+                        <DropdownMenuItem
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            onEditClick(obra)
+                          }}
+                        >
                           Editar
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
