@@ -10,29 +10,29 @@ See: .planning/PROJECT.md (updated 2026-01-19)
 ## Current Position
 
 Phase: 2 of 6 (Obras)
-Plan: 3 of 4 in current phase
-Status: In progress
-Last activity: 2026-01-19 - Completed 02-03-PLAN.md (Edit and Archive Obras)
+Plan: 4 of 4 in current phase
+Status: Phase complete
+Last activity: 2026-01-19 - Completed 02-04-PLAN.md (Obra Detail Page)
 
-Progress: [#####-----] 42% (5/12 plans)
+Progress: [######----] 50% (6/12 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 5
-- Average duration: 7 min
-- Total execution time: 34 min
+- Total plans completed: 6
+- Average duration: 6 min
+- Total execution time: 38 min
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01-foundation | 2 | 20 min | 10 min |
-| 02-obras | 3 | 14 min | 4.7 min |
+| 02-obras | 4 | 18 min | 4.5 min |
 
 **Recent Trend:**
-- Last 5 plans: 15 min, 5 min, 8 min, 3 min, 3 min
-- Trend: improving
+- Last 5 plans: 5 min, 8 min, 3 min, 3 min, 4 min
+- Trend: stable, fast
 
 *Updated after each plan completion*
 
@@ -59,6 +59,9 @@ Recent decisions affecting current work:
 - [02-02]: Cidade/estado shown in form but not persisted to DB (ObraInsert lacks columns)
 - [02-03]: Modal mode prop pattern: single component handles both create and edit
 - [02-03]: AlertDialog variant based on action: destructive for archive, default for restore
+- [02-04]: Next.js 15 async params pattern: await params to get route params
+- [02-04]: Use notFound() for invalid obra IDs rather than custom error page
+- [02-04]: Detail page pattern: Server Component fetches by ID, renders header + info cards
 
 ### Pending Todos
 
@@ -71,5 +74,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-01-19
-Stopped at: Completed 02-03-PLAN.md (Edit and Archive Obras)
+Stopped at: Completed 02-04-PLAN.md (Obra Detail Page) - Phase 2 complete
 Resume file: None
