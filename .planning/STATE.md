@@ -9,19 +9,19 @@ See: .planning/PROJECT.md (updated 2026-01-19)
 
 ## Current Position
 
-Phase: 5 of 6 (Biblioteca FVS)
-Plan: 0 of 4 in current phase
-Status: Ready to plan
-Last activity: 2026-01-20 - Phase 4 verified and complete
+Phase: 4 of 6 (Unidades - gap closure)
+Plan: 03 of 06 gap closure plans complete
+Status: Executing gap closure
+Last activity: 2026-01-20 - Completed 04-03-PLAN.md (RLS policies for unidades)
 
-Progress: [############] 86% (12/14 plans)
+Progress: [#############] 87% (13/15 plans including gap closure)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 12
-- Average duration: 5 min
-- Total execution time: 54 min
+- Total plans completed: 13
+- Average duration: 4.3 min
+- Total execution time: 56 min
 
 **By Phase:**
 
@@ -30,7 +30,7 @@ Progress: [############] 86% (12/14 plans)
 | 01-foundation | 2 | 20 min | 10 min |
 | 02-obras | 4 | 18 min | 4.5 min |
 | 03-agrupamentos | 4 | 10 min | 2.5 min |
-| 04-unidades | 2 | 6 min | 3 min |
+| 04-unidades | 3 | 8 min | 2.7 min |
 
 **Recent Trend:**
 - Last 5 plans: 2 min, 3 min, 3 min, 2 min, 4 min
@@ -83,6 +83,7 @@ Recent decisions affecting current work:
 - [04-02]: Selection highlight: bg-surface-200 + border-l-2 border-brand
 - [04-02]: Count display inline with name: "Bloco A (12)" format
 - [04-02]: RefreshKey state pattern to trigger unidades refetch after mutations
+- [04-03]: Use is_admin_or_engenheiro() for unidades RLS policies (consistent with agrupamentos)
 
 ### Pending Todos
 
@@ -95,5 +96,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-01-20
-Stopped at: Phase 4 verified and complete, ready to plan Phase 5
+Stopped at: Completed 04-03-PLAN.md, gap closure in progress (plans 04-06 remaining)
 Resume file: None
