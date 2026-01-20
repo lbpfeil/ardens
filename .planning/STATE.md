@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-01-19)
 
 **Core value:** Trazer extrema rapidez e praticidade na verificacao de servicos, tornando a qualidade uma aliada da obra.
-**Current focus:** Phase 3 - Agrupamentos
+**Current focus:** Phase 3 - Agrupamentos (Complete)
 
 ## Current Position
 
 Phase: 3 of 6 (Agrupamentos)
-Plan: 2 of 3 in current phase
-Status: In progress
-Last activity: 2026-01-20 - Completed 03-02-PLAN.md
+Plan: 3 of 3 in current phase
+Status: Phase complete
+Last activity: 2026-01-20 - Completed 03-03-PLAN.md
 
-Progress: [########--] 67% (8/12 plans)
+Progress: [#########-] 75% (9/12 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 8
+- Total plans completed: 9
 - Average duration: 5 min
-- Total execution time: 43 min
+- Total execution time: 46 min
 
 **By Phase:**
 
@@ -29,10 +29,10 @@ Progress: [########--] 67% (8/12 plans)
 |-------|-------|-------|----------|
 | 01-foundation | 2 | 20 min | 10 min |
 | 02-obras | 4 | 18 min | 4.5 min |
-| 03-agrupamentos | 2 | 5 min | 2.5 min |
+| 03-agrupamentos | 3 | 8 min | 2.7 min |
 
 **Recent Trend:**
-- Last 5 plans: 3 min, 3 min, 4 min, 2 min, 3 min
+- Last 5 plans: 3 min, 4 min, 2 min, 3 min, 3 min
 - Trend: stable, fast
 
 *Updated after each plan completion*
@@ -70,6 +70,9 @@ Recent decisions affecting current work:
 - [03-02]: Dual form pattern: separate useForm instances for single vs batch mode
 - [03-02]: Preview truncated at 5 items with '...' suffix for UX
 - [03-02]: Batch mode checkbox only visible in create mode (not edit)
+- [03-03]: Reorder button only visible when agrupamentos.length > 1
+- [03-03]: SortableAgrupamentoRow shows drag handle without actions dropdown
+- [03-03]: Delete confirmation varies description based on unidades_count
 
 ### Pending Todos
 
@@ -82,5 +85,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-01-20
-Stopped at: Completed 03-02-PLAN.md
+Stopped at: Completed 03-03-PLAN.md (Phase 03 complete)
 Resume file: None
