@@ -4,6 +4,7 @@ import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { GripVertical, MoreVertical } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { Checkbox } from '@/components/ui/checkbox'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,7 +18,9 @@ interface SortableAgrupamentoItemProps {
   id: string
   agrupamento: AgrupamentoWithCount
   isSelected: boolean
+  isChecked?: boolean
   onSelect: (id: string) => void
+  onCheck?: (id: string, checked: boolean) => void
   onEditClick: (agrupamento: AgrupamentoWithCount) => void
   onDeleteClick: (agrupamento: AgrupamentoWithCount) => void
   isReorderMode: boolean
@@ -27,7 +30,9 @@ export function SortableAgrupamentoItem({
   id,
   agrupamento,
   isSelected,
+  isChecked = false,
   onSelect,
+  onCheck,
   onEditClick,
   onDeleteClick,
   isReorderMode,
@@ -73,6 +78,16 @@ export function SortableAgrupamentoItem({
         >
           <GripVertical className="h-4 w-4" />
         </button>
+      )}
+
+      {!isReorderMode && onCheck && (
+        <Checkbox
+          checked={isChecked}
+          onCheckedChange={(checked) => onCheck(id, checked === true)}
+          onClick={(e) => e.stopPropagation()}
+          aria-label={`Selecionar ${agrupamento.nome}`}
+          className="mr-3"
+        />
       )}
 
       <div className="flex-1 min-w-0">

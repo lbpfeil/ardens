@@ -164,3 +164,21 @@ export async function deleteUnidade(id: string): Promise<void> {
     throw new Error(`Erro ao deletar unidade: ${error.message}`)
   }
 }
+
+/**
+ * Deleta multiplas unidades em lote (hard delete).
+ */
+export async function deleteUnidadesBatch(ids: string[]): Promise<void> {
+  if (ids.length === 0) return
+
+  const supabase = createClient()
+
+  const { error } = await supabase
+    .from('unidades')
+    .delete()
+    .in('id', ids)
+
+  if (error) {
+    throw new Error(`Erro ao deletar unidades: ${error.message}`)
+  }
+}

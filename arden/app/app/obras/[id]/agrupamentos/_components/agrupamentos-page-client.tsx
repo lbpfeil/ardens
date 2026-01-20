@@ -7,6 +7,7 @@ import { AgrupamentosPanel } from './agrupamentos-panel'
 import { UnidadesPanel } from './unidades-panel'
 import { AgrupamentoFormModal } from './agrupamento-form-modal'
 import { DeleteConfirmation } from './delete-confirmation'
+import { BulkDeleteConfirmation } from './bulk-delete-confirmation'
 import { UnidadeFormModal } from './unidade-form-modal'
 import { UnidadeDeleteConfirmation } from './unidade-delete-confirmation'
 import { updateAgrupamentosOrder } from '@/lib/supabase/queries/agrupamentos'
@@ -34,6 +35,9 @@ export function AgrupamentosPageClient({
   const [isDeleteOpen, setIsDeleteOpen] = useState(false)
   const [isReorderMode, setIsReorderMode] = useState(false)
   const [selectedAgrupamentoId, setSelectedAgrupamentoId] = useState<string | null>(null)
+  const [bulkDeleteIds, setBulkDeleteIds] = useState<string[]>([])
+  const [isBulkDeleteOpen, setIsBulkDeleteOpen] = useState(false)
+  const [bulkDeleteType, setBulkDeleteType] = useState<'agrupamentos' | 'unidades'>('agrupamentos')
 
   // Unidade state
   const [isUnidadeModalOpen, setIsUnidadeModalOpen] = useState(false)
@@ -116,6 +120,29 @@ export function AgrupamentosPageClient({
     setIsReorderMode(false)
   }
 
+  const handleBulkDeleteClick = (ids: string[]) => {
+    setBulkDeleteIds(ids)
+    setBulkDeleteType('agrupamentos')
+    setIsBulkDeleteOpen(true)
+  }
+
+  const handleBulkDeleteClose = (open: boolean) => {
+    setIsBulkDeleteOpen(open)
+    if (!open) {
+      setBulkDeleteIds([])
+    }
+  }
+
+  const handleBulkDeleteSuccess = () => {
+    setIsBulkDeleteOpen(false)
+    // Clear selection if any deleted agrupamento was selected
+    if (bulkDeleteIds.includes(selectedAgrupamentoId ?? '')) {
+      setSelectedAgrupamentoId(null)
+    }
+    setBulkDeleteIds([])
+    router.refresh()
+  }
+
   // Unidade handlers
   const handleUnidadeCreateClick = () => {
     setEditingUnidade(null)
@@ -160,6 +187,19 @@ export function AgrupamentosPageClient({
     router.refresh() // Also refresh to update unidades_count
   }
 
+  const handleUnidadesBulkDeleteClick = (ids: string[]) => {
+    setBulkDeleteIds(ids)
+    setBulkDeleteType('unidades')
+    setIsBulkDeleteOpen(true)
+  }
+
+  const handleUnidadesBulkDeleteSuccess = () => {
+    setIsBulkDeleteOpen(false)
+    setBulkDeleteIds([])
+    setUnidadesRefreshKey(k => k + 1)
+    router.refresh() // Also refresh to update unidades_count
+  }
+
   return (
     <>
       <SplitViewLayout
@@ -172,6 +212,7 @@ export function AgrupamentosPageClient({
             onCreateClick={handleCreateClick}
             onEditClick={handleEditClick}
             onDeleteClick={handleDeleteClick}
+            onBulkDeleteClick={handleBulkDeleteClick}
             isReorderMode={isReorderMode}
             onReorderStart={handleReorderStart}
             onReorderSave={handleReorderSave}
@@ -184,6 +225,7 @@ export function AgrupamentosPageClient({
             onCreateClick={handleUnidadeCreateClick}
             onEditClick={handleUnidadeEditClick}
             onDeleteClick={handleUnidadeDeleteClick}
+            onBulkDeleteClick={handleUnidadesBulkDeleteClick}
             refreshKey={unidadesRefreshKey}
           />
         }
@@ -215,6 +257,13 @@ export function AgrupamentosPageClient({
         onOpenChange={handleUnidadeDeleteClose}
         unidade={deletingUnidade}
         onSuccess={handleUnidadeDeleteSuccess}
+      />
+      <BulkDeleteConfirmation
+        open={isBulkDeleteOpen}
+        onOpenChange={handleBulkDeleteClose}
+        ids={bulkDeleteIds}
+        type={bulkDeleteType}
+        onSuccess={bulkDeleteType === 'agrupamentos' ? handleBulkDeleteSuccess : handleUnidadesBulkDeleteSuccess}
       />
     </>
   )

@@ -1,8 +1,9 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { Database, Plus, MoreVertical } from 'lucide-react'
+import { Database, Plus, MoreVertical, Trash2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { Checkbox } from '@/components/ui/checkbox'
 import {
   Table,
   TableBody,
@@ -27,6 +28,7 @@ interface UnidadesPanelProps {
   onCreateClick: () => void
   onEditClick: (unidade: Unidade) => void
   onDeleteClick: (unidade: Unidade) => void
+  onBulkDeleteClick: (ids: string[]) => void
   refreshKey?: number
 }
 
@@ -35,14 +37,17 @@ export function UnidadesPanel({
   onCreateClick,
   onEditClick,
   onDeleteClick,
+  onBulkDeleteClick,
   refreshKey = 0,
 }: UnidadesPanelProps) {
   const [unidades, setUnidades] = useState<Unidade[]>([])
   const [isLoading, setIsLoading] = useState(false)
+  const [checkedIds, setCheckedIds] = useState<Set<string>>(new Set())
 
   useEffect(() => {
     if (!agrupamento) {
       setUnidades([])
+      setCheckedIds(new Set())
       return
     }
 
@@ -52,6 +57,43 @@ export function UnidadesPanel({
       .catch((error) => toast.error(error instanceof Error ? error.message : 'Erro ao carregar unidades'))
       .finally(() => setIsLoading(false))
   }, [agrupamento?.id, refreshKey])
+
+  // Clear checked when unidades change
+  useEffect(() => {
+    setCheckedIds(prev => {
+      const validIds = new Set(unidades.map(u => u.id))
+      const next = new Set([...prev].filter(id => validIds.has(id)))
+      return next.size !== prev.size ? next : prev
+    })
+  }, [unidades])
+
+  // Selection handlers
+  const handleCheckAll = (checked: boolean) => {
+    if (checked) {
+      setCheckedIds(new Set(unidades.map(u => u.id)))
+    } else {
+      setCheckedIds(new Set())
+    }
+  }
+
+  const handleCheckOne = (id: string, checked: boolean) => {
+    setCheckedIds(prev => {
+      const next = new Set(prev)
+      if (checked) {
+        next.add(id)
+      } else {
+        next.delete(id)
+      }
+      return next
+    })
+  }
+
+  const handleBulkDelete = () => {
+    onBulkDeleteClick(Array.from(checkedIds))
+  }
+
+  const isAllChecked = unidades.length > 0 && checkedIds.size === unidades.length
+  const isSomeChecked = checkedIds.size > 0 && checkedIds.size < unidades.length
 
   // Empty state: no agrupamento selected
   if (!agrupamento) {
@@ -72,10 +114,16 @@ export function UnidadesPanel({
     <div className="space-y-4">
       {/* Panel Header */}
       <div className="flex items-center justify-between">
-        <div>
+        <div className="flex items-center gap-3">
           <h2 className="text-lg font-medium text-foreground">
             Unidades de {agrupamento.nome}
           </h2>
+          {checkedIds.size > 0 && (
+            <Button variant="destructive" size="sm" onClick={handleBulkDelete}>
+              <Trash2 className="h-4 w-4 mr-1.5" data-icon="inline-start" />
+              Excluir {checkedIds.size}
+            </Button>
+          )}
         </div>
         <Button onClick={onCreateClick}>
           <Plus className="h-4 w-4 mr-1.5" data-icon="inline-start" />
@@ -114,13 +162,27 @@ export function UnidadesPanel({
           <Table>
             <TableHeader>
               <TableRow>
+                <TableHead className="w-[40px]">
+                  <Checkbox
+                    checked={isSomeChecked ? 'indeterminate' : isAllChecked}
+                    onCheckedChange={handleCheckAll}
+                    aria-label="Selecionar todos"
+                  />
+                </TableHead>
                 <TableHead>Nome</TableHead>
-                <TableHead className="w-[50px]">Ações</TableHead>
+                <TableHead className="w-[50px]">Acoes</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {unidades.map((unidade) => (
                 <TableRow key={unidade.id}>
+                  <TableCell>
+                    <Checkbox
+                      checked={checkedIds.has(unidade.id)}
+                      onCheckedChange={(checked) => handleCheckOne(unidade.id, checked === true)}
+                      aria-label={`Selecionar ${unidade.nome}`}
+                    />
+                  </TableCell>
                   <TableCell className="font-medium">{unidade.nome}</TableCell>
                   <TableCell>
                     <DropdownMenu>

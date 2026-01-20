@@ -206,3 +206,22 @@ export async function deleteAgrupamento(id: string): Promise<void> {
     throw new Error(`Erro ao deletar agrupamento: ${error.message}`)
   }
 }
+
+/**
+ * Deleta multiplos agrupamentos em lote (hard delete).
+ * Cascade deletes unidades per DB schema.
+ */
+export async function deleteAgrupamentosBatch(ids: string[]): Promise<void> {
+  if (ids.length === 0) return
+
+  const supabase = createClient()
+
+  const { error } = await supabase
+    .from('agrupamentos')
+    .delete()
+    .in('id', ids)
+
+  if (error) {
+    throw new Error(`Erro ao deletar agrupamentos: ${error.message}`)
+  }
+}

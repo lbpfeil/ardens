@@ -32,7 +32,8 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
-import { ArrowUpDown, MoreVertical, Plus } from 'lucide-react'
+import { Checkbox } from '@/components/ui/checkbox'
+import { ArrowUpDown, MoreVertical, Plus, Trash2 } from 'lucide-react'
 import { SortableAgrupamentoRow } from './sortable-agrupamento-row'
 import type { AgrupamentoWithCount } from '@/lib/supabase/queries/agrupamentos'
 
@@ -42,6 +43,7 @@ interface AgrupamentosTableProps {
   onCreateClick: () => void
   onEditClick: (agrupamento: AgrupamentoWithCount) => void
   onDeleteClick: (agrupamento: AgrupamentoWithCount) => void
+  onBulkDeleteClick: (ids: string[]) => void
   isReorderMode: boolean
   onReorderStart: () => void
   onReorderSave: (orderedIds: string[]) => void
@@ -54,12 +56,14 @@ export function AgrupamentosTable({
   onCreateClick,
   onEditClick,
   onDeleteClick,
+  onBulkDeleteClick,
   isReorderMode,
   onReorderStart,
   onReorderSave,
   onReorderCancel,
 }: AgrupamentosTableProps) {
   const [pendingOrder, setPendingOrder] = useState<string[]>([])
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
 
   // Initialize pending order when entering reorder mode
   useEffect(() => {
@@ -92,6 +96,43 @@ export function AgrupamentosTable({
     onReorderSave(pendingOrder)
   }
 
+  // Selection handlers
+  const handleSelectAll = (checked: boolean) => {
+    if (checked) {
+      setSelectedIds(new Set(agrupamentos.map(a => a.id)))
+    } else {
+      setSelectedIds(new Set())
+    }
+  }
+
+  const handleSelectOne = (id: string, checked: boolean) => {
+    setSelectedIds(prev => {
+      const next = new Set(prev)
+      if (checked) {
+        next.add(id)
+      } else {
+        next.delete(id)
+      }
+      return next
+    })
+  }
+
+  const handleBulkDelete = () => {
+    onBulkDeleteClick(Array.from(selectedIds))
+  }
+
+  // Clear selection when agrupamentos change (after delete, etc.)
+  useEffect(() => {
+    setSelectedIds(prev => {
+      const validIds = new Set(agrupamentos.map(a => a.id))
+      const next = new Set([...prev].filter(id => validIds.has(id)))
+      return next.size !== prev.size ? next : prev
+    })
+  }, [agrupamentos])
+
+  const isAllSelected = agrupamentos.length > 0 && selectedIds.size === agrupamentos.length
+  const isSomeSelected = selectedIds.size > 0 && selectedIds.size < agrupamentos.length
+
   // Get agrupamentos in pending order
   const orderedAgrupamentos = isReorderMode
     ? pendingOrder
@@ -108,30 +149,40 @@ export function AgrupamentosTable({
       </div>
 
       {/* Toolbar */}
-      <div className="flex items-center justify-end gap-2">
-        {isReorderMode ? (
-          <>
-            <Button variant="outline" onClick={onReorderCancel}>
-              Cancelar
+      <div className="flex items-center justify-between gap-2">
+        <div>
+          {selectedIds.size > 0 && !isReorderMode && (
+            <Button variant="destructive" onClick={handleBulkDelete}>
+              <Trash2 className="h-4 w-4 mr-1.5" data-icon="inline-start" />
+              Excluir {selectedIds.size} selecionado{selectedIds.size > 1 ? 's' : ''}
             </Button>
-            <Button onClick={handleSave}>
-              Salvar Ordem
-            </Button>
-          </>
-        ) : (
-          <>
-            {agrupamentos.length > 1 && (
-              <Button variant="outline" onClick={onReorderStart}>
-                <ArrowUpDown className="h-4 w-4 mr-1.5" data-icon="inline-start" />
-                Reordenar
+          )}
+        </div>
+        <div className="flex items-center gap-2">
+          {isReorderMode ? (
+            <>
+              <Button variant="outline" onClick={onReorderCancel}>
+                Cancelar
               </Button>
-            )}
-            <Button onClick={onCreateClick}>
-              <Plus className="h-4 w-4 mr-1.5" data-icon="inline-start" />
-              Novo Agrupamento
-            </Button>
-          </>
-        )}
+              <Button onClick={handleSave}>
+                Salvar Ordem
+              </Button>
+            </>
+          ) : (
+            <>
+              {agrupamentos.length > 1 && (
+                <Button variant="outline" onClick={onReorderStart}>
+                  <ArrowUpDown className="h-4 w-4 mr-1.5" data-icon="inline-start" />
+                  Reordenar
+                </Button>
+              )}
+              <Button onClick={onCreateClick}>
+                <Plus className="h-4 w-4 mr-1.5" data-icon="inline-start" />
+                Novo Agrupamento
+              </Button>
+            </>
+          )}
+        </div>
       </div>
 
       {/* Table / Empty State */}
@@ -185,14 +236,28 @@ export function AgrupamentosTable({
           <Table>
             <TableHeader>
               <TableRow>
+                <TableHead className="w-[40px]">
+                  <Checkbox
+                    checked={isSomeSelected ? 'indeterminate' : isAllSelected}
+                    onCheckedChange={handleSelectAll}
+                    aria-label="Selecionar todos"
+                  />
+                </TableHead>
                 <TableHead>Nome</TableHead>
                 <TableHead className="w-[120px]">Unidades</TableHead>
-                <TableHead className="w-[50px]">Ações</TableHead>
+                <TableHead className="w-[50px]">Acoes</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {agrupamentos.map((agrupamento) => (
                 <TableRow key={agrupamento.id}>
+                  <TableCell>
+                    <Checkbox
+                      checked={selectedIds.has(agrupamento.id)}
+                      onCheckedChange={(checked) => handleSelectOne(agrupamento.id, checked === true)}
+                      aria-label={`Selecionar ${agrupamento.nome}`}
+                    />
+                  </TableCell>
                   <TableCell className="font-medium">{agrupamento.nome}</TableCell>
                   <TableCell className="text-foreground-light">
                     {agrupamento.unidades_count}
