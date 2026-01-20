@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { AgrupamentosTable } from './agrupamentos-table'
 import { AgrupamentoFormModal } from './agrupamento-form-modal'
+import { DeleteConfirmation } from './delete-confirmation'
 import type { AgrupamentoWithCount } from '@/lib/supabase/queries/agrupamentos'
 
 interface AgrupamentosPageClientProps {
@@ -20,6 +21,8 @@ export function AgrupamentosPageClient({
   const router = useRouter()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [editingAgrupamento, setEditingAgrupamento] = useState<AgrupamentoWithCount | null>(null)
+  const [deletingAgrupamento, setDeletingAgrupamento] = useState<AgrupamentoWithCount | null>(null)
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false)
 
   const handleCreateClick = () => {
     setEditingAgrupamento(null)
@@ -32,8 +35,8 @@ export function AgrupamentosPageClient({
   }
 
   const handleDeleteClick = (agrupamento: AgrupamentoWithCount) => {
-    // TODO: Implement delete confirmation in Plan 03
-    console.log('Delete requested for:', agrupamento.id)
+    setDeletingAgrupamento(agrupamento)
+    setIsDeleteOpen(true)
   }
 
   const handleModalClose = (open: boolean) => {
@@ -46,6 +49,19 @@ export function AgrupamentosPageClient({
   const handleModalSuccess = () => {
     setIsModalOpen(false)
     setEditingAgrupamento(null)
+    router.refresh()
+  }
+
+  const handleDeleteClose = (open: boolean) => {
+    setIsDeleteOpen(open)
+    if (!open) {
+      setDeletingAgrupamento(null)
+    }
+  }
+
+  const handleDeleteSuccess = () => {
+    setIsDeleteOpen(false)
+    setDeletingAgrupamento(null)
     router.refresh()
   }
 
@@ -65,6 +81,12 @@ export function AgrupamentosPageClient({
         mode={editingAgrupamento ? 'edit' : 'create'}
         agrupamento={editingAgrupamento}
         obraId={obraId}
+      />
+      <DeleteConfirmation
+        open={isDeleteOpen}
+        onOpenChange={handleDeleteClose}
+        agrupamento={deletingAgrupamento}
+        onSuccess={handleDeleteSuccess}
       />
     </>
   )
