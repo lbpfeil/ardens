@@ -64,7 +64,7 @@ Plans:
   4. Usuario exclui agrupamento (com confirmacao e aviso sobre unidades)
   5. Usuario cria multiplos agrupamentos de uma vez (ex: "Bloco 1-10")
   6. Usuario pode reordenar agrupamentos via drag-and-drop
-**Plans**: 3 plans
+**Plans**: 4 plans
 
 Plans:
 - [x] 03-01-PLAN.md — Setup: data access layer, Zod schema, @dnd-kit installation
@@ -82,12 +82,11 @@ Plans:
   3. Usuario edita nome/codigo/ordem de unidade existente
   4. Usuario exclui unidade sem verificacoes
   5. Usuario cria multiplas unidades de uma vez (ex: "Apto 101-110")
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 04-01: Listagem de unidades (componente em agrupamento)
-- [ ] 04-02: CRUD de unidade (criar, editar, excluir)
-- [ ] 04-03: Criacao em lote de unidades
+- [ ] 04-01-PLAN.md — Data access layer and validation schemas with numeric range batch
+- [ ] 04-02-PLAN.md — Split-view UI with unidades panel and CRUD modals
 
 ### Phase 5: Biblioteca FVS
 **Goal**: Usuario pode gerenciar biblioteca de servicos e ativar servicos por obra
@@ -138,7 +137,7 @@ Phases execute in numeric order: 1 > 2 > 3 > 4 > 5 > 6
 | 1. Foundation | 2/2 | Complete | 2026-01-19 |
 | 2. Obras | 4/4 | Complete | 2026-01-19 |
 | 3. Agrupamentos | 4/4 | Complete | 2026-01-20 |
-| 4. Unidades | 0/3 | Not started | - |
+| 4. Unidades | 0/2 | Planned | - |
 | 5. Biblioteca FVS | 0/4 | Not started | - |
 | 6. Dashboard | 0/3 | Not started | - |
 
@@ -147,5 +146,6 @@ Phases execute in numeric order: 1 > 2 > 3 > 4 > 5 > 6
 *Phase 1 planned: 2026-01-19*
 *Phase 2 planned: 2026-01-19*
 *Phase 3 planned: 2026-01-20*
+*Phase 4 planned: 2026-01-20*
 *Depth: standard (6 phases)*
 *Coverage: 31/31 v1 requirements mapped*
