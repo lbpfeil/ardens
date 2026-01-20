@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-01-19)
 ## Current Position
 
 Phase: 3 of 6 (Agrupamentos)
-Plan: 1 of 3 in current phase
+Plan: 2 of 3 in current phase
 Status: In progress
-Last activity: 2026-01-20 - Completed 03-01-PLAN.md
+Last activity: 2026-01-20 - Completed 03-02-PLAN.md
 
-Progress: [#######---] 58% (7/12 plans)
+Progress: [########--] 67% (8/12 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 7
-- Average duration: 6 min
-- Total execution time: 40 min
+- Total plans completed: 8
+- Average duration: 5 min
+- Total execution time: 43 min
 
 **By Phase:**
 
@@ -29,10 +29,10 @@ Progress: [#######---] 58% (7/12 plans)
 |-------|-------|-------|----------|
 | 01-foundation | 2 | 20 min | 10 min |
 | 02-obras | 4 | 18 min | 4.5 min |
-| 03-agrupamentos | 1 | 2 min | 2 min |
+| 03-agrupamentos | 2 | 5 min | 2.5 min |
 
 **Recent Trend:**
-- Last 5 plans: 8 min, 3 min, 3 min, 4 min, 2 min
+- Last 5 plans: 3 min, 3 min, 4 min, 2 min, 3 min
 - Trend: stable, fast
 
 *Updated after each plan completion*
@@ -67,6 +67,9 @@ Recent decisions affecting current work:
 - [03-01]: updateAgrupamentosOrder uses Promise.all for parallel updates
 - [03-01]: generateBatchNames produces 'Prefixo N' format
 - [03-01]: Batch limit set to 100 items maximum
+- [03-02]: Dual form pattern: separate useForm instances for single vs batch mode
+- [03-02]: Preview truncated at 5 items with '...' suffix for UX
+- [03-02]: Batch mode checkbox only visible in create mode (not edit)
 
 ### Pending Todos
 
@@ -79,5 +82,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-01-20
-Stopped at: Completed 03-01-PLAN.md
+Stopped at: Completed 03-02-PLAN.md
 Resume file: None
