@@ -35,7 +35,7 @@ export function UnidadeDeleteConfirmation({
     setIsLoading(true)
     try {
       await deleteUnidade(unidade.id)
-      toast.success('Unidade excluida com sucesso')
+      toast.success('Unidade excluída com sucesso')
       onSuccess()
       onOpenChange(false)
     } catch (error) {
@@ -51,7 +51,7 @@ export function UnidadeDeleteConfirmation({
         <AlertDialogHeader>
           <AlertDialogTitle>Excluir Unidade</AlertDialogTitle>
           <AlertDialogDescription>
-            Tem certeza que deseja excluir a unidade &quot;{unidade?.nome}&quot;? Esta acao nao pode ser desfeita.
+            Tem certeza que deseja excluir a unidade &quot;{unidade?.nome}&quot;? Esta ação não pode ser desfeita.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

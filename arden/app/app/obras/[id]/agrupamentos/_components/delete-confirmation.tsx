@@ -36,7 +36,7 @@ export function DeleteConfirmation({
     setIsLoading(true)
     try {
       await deleteAgrupamento(agrupamento.id)
-      toast.success('Agrupamento excluido com sucesso')
+      toast.success('Agrupamento excluído com sucesso')
       onSuccess()
       onOpenChange(false)
     } catch (error) {
@@ -53,7 +53,7 @@ export function DeleteConfirmation({
       return `Tem certeza que deseja excluir o agrupamento "${agrupamento.nome}"?`
     }
 
-    return `Tem certeza que deseja excluir o agrupamento "${agrupamento.nome}" e suas ${agrupamento.unidades_count} unidade(s)? Esta acao nao pode ser desfeita.`
+    return `Tem certeza que deseja excluir o agrupamento "${agrupamento.nome}" e suas ${agrupamento.unidades_count} unidade(s)? Esta ação não pode ser desfeita.`
   }
 
   return (

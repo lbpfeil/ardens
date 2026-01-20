@@ -251,7 +251,7 @@ export function AgrupamentoFormModal({
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="numeroInicial">Numero Inicial *</Label>
+                <Label htmlFor="numeroInicial">Número Inicial *</Label>
                 <Input
                   id="numeroInicial"
                   type="number"
@@ -270,7 +270,7 @@ export function AgrupamentoFormModal({
             {/* Preview */}
             {previewNames.length > 0 && (
               <div className="rounded-md bg-surface-100 p-3">
-                <p className="text-xs text-foreground-muted mb-1">Sera criado:</p>
+                <p className="text-xs text-foreground-muted mb-1">Será criado:</p>
                 <p className="text-sm text-foreground-light">{previewNames.join(', ')}</p>
               </div>
             )}

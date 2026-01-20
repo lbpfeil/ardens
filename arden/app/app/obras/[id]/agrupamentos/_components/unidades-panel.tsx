@@ -61,7 +61,7 @@ export function UnidadesPanel({
           <Database className="h-12 w-12 text-foreground-muted mb-4" />
           <p className="text-foreground-light mb-2">Selecione um agrupamento</p>
           <p className="text-sm text-foreground-muted">
-            Clique em um agrupamento a esquerda para ver suas unidades.
+            Clique em um agrupamento à esquerda para ver suas unidades.
           </p>
         </div>
       </div>
@@ -98,7 +98,7 @@ export function UnidadesPanel({
           <div className="flex flex-col items-center justify-center py-16 px-4 text-center">
             <p className="text-foreground-light mb-2">Nenhuma unidade cadastrada</p>
             <p className="text-sm text-foreground-muted mb-4">
-              Clique em &quot;Nova Unidade&quot; para comecar.
+              Clique em &quot;Nova Unidade&quot; para começar.
             </p>
             <Button onClick={onCreateClick} variant="outline" size="sm">
               <Plus className="h-4 w-4 mr-1.5" data-icon="inline-start" />
@@ -115,7 +115,7 @@ export function UnidadesPanel({
             <TableHeader>
               <TableRow>
                 <TableHead>Nome</TableHead>
-                <TableHead className="w-[50px]">Acoes</TableHead>
+                <TableHead className="w-[50px]">Ações</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>

@@ -129,7 +129,7 @@ export function AgrupamentosPanel({
           <div className="flex flex-col items-center justify-center py-16 px-4 text-center">
             <p className="text-foreground-light mb-2">Nenhum agrupamento cadastrado</p>
             <p className="text-sm text-foreground-muted mb-4">
-              Clique em &quot;Novo Agrupamento&quot; para comecar.
+              Clique em &quot;Novo Agrupamento&quot; para começar.
             </p>
             <Button onClick={onCreateClick} variant="outline" size="sm">
               <Plus className="h-4 w-4 mr-1.5" data-icon="inline-start" />

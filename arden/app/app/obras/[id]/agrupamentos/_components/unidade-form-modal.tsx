@@ -132,7 +132,7 @@ export function UnidadeFormModal({
     try {
       const parsed = parseNumericRange(data.rangeInput)
       if (!parsed) {
-        toast.error('Formato invalido')
+        toast.error('Formato inválido')
         return
       }
 
@@ -184,7 +184,7 @@ export function UnidadeFormModal({
               onCheckedChange={(checked) => setIsBatchMode(checked === true)}
             />
             <Label htmlFor="batch-mode" className="text-sm font-normal cursor-pointer">
-              Criar multiplas unidades
+              Criar múltiplas unidades
             </Label>
           </div>
         )}
@@ -247,7 +247,7 @@ export function UnidadeFormModal({
             {/* Preview */}
             {previewData && previewData.preview.length > 0 && (
               <div className="rounded-md bg-surface-100 p-3">
-                <p className="text-xs text-foreground-muted mb-1">Sera criado:</p>
+                <p className="text-xs text-foreground-muted mb-1">Será criado:</p>
                 <p className="text-sm text-foreground-light">
                   {previewData.preview.join(', ')}
                   {previewData.hasMore && `, ... (${previewData.total} unidades)`}
