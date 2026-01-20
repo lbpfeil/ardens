@@ -81,6 +81,10 @@ export async function getObra(id: string): Promise<Obra> {
   return data
 }
 
+// TODO: Replace with authenticated user's cliente_id from session
+// For development/testing, using hardcoded test cliente_id
+const DEV_CLIENTE_ID = 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11'
+
 /**
  * Cria uma nova obra.
  * Requer permissao de admin (RLS).
@@ -90,7 +94,10 @@ export async function createObra(obra: ObraInsert): Promise<Obra> {
 
   const { data, error } = await supabase
     .from('obras')
-    .insert(obra)
+    .insert({
+      ...obra,
+      cliente_id: DEV_CLIENTE_ID,
+    })
     .select()
     .single()
 

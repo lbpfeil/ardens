@@ -225,6 +225,36 @@ Portal Web → Cloud Function (GCP) → Puppeteer renderiza HTML → PDF → Sup
 
 ---
 
+### [2026-01] Cor Secondary: Cinza Neutro
+
+**Contexto:** A cor secondary original era roxa (hsl 248°), usada para badges de status inativo/arquivado. Visualmente, o roxo nao comunicava bem o conceito de "inativo" e destoava do restante da interface.
+
+**Decisao:** Mudar secondary de roxo para cinza neutro.
+
+**Valores anteriores:**
+```css
+--secondary: hsl(248 53.6% 11%);
+--secondary-foreground: hsl(247.8 100% 70%);
+```
+
+**Novos valores:**
+```css
+--secondary: hsl(0 0% 18%);
+--secondary-foreground: hsl(0 0% 65%);
+```
+
+**Alternativas consideradas:**
+- Slate/azul-acinzentado (hsl 215°): Tom frio, mas ainda colorido
+- Ambar/dourado (hsl 35°): Complementa verde, mas pode confundir com warning
+- Ciano suave (hsl 185°): Analogo ao brand, mas adiciona mais cor
+
+**Impacto:**
+- Badges de status "Arquivada" agora usam tom neutro
+- Botoes e elementos secondary ficam mais discretos
+- Melhor hierarquia visual entre primary (verde) e secondary (cinza)
+
+---
+
 ## Todas as Decisoes Tomadas
 
 Nenhuma questao pendente. Documentacao pronta para implementacao.
