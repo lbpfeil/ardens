@@ -149,7 +149,7 @@ export function AgrupamentosTable({
           </div>
         </div>
       ) : isReorderMode ? (
-        <div className="rounded-md border border-border">
+        <div className="rounded-md border border-border bg-surface-100">
           <DndContext
             sensors={sensors}
             collisionDetection={closestCenter}
@@ -181,7 +181,7 @@ export function AgrupamentosTable({
           </DndContext>
         </div>
       ) : (
-        <div className="rounded-md border border-border">
+        <div className="rounded-md border border-border bg-surface-100">
           <Table>
             <TableHeader>
               <TableRow>

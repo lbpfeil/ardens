@@ -75,10 +75,10 @@ Extracted from `themes/dark.css` (Supabase Default).
   --destructive-500: 7.9deg 71.6% 29%;
   --destructive-600: 9.7deg 85.2% 62.9%;
 
-  /* Secondary */
-  --secondary-default: 247.8deg 100% 70%;
-  --secondary-200: 248deg 53.6% 11%;
-  --secondary-400: 248.3deg 54.5% 25.9%;
+  /* Secondary (Neutral Gray) */
+  --secondary-default: 0deg 0% 65%;
+  --secondary-200: 0deg 0% 18%;
+  --secondary-400: 0deg 0% 28%;
 
   /* Component Specific */
   --sidebar-background: var(--background-dash-sidebar);
@@ -503,24 +503,37 @@ Used for searchable dropdowns, command palettes, and filters.
 ### 3. Data Display
 
 #### Table
-Supabase tables often use `react-data-grid` or standard HTML tables styled with `border-border`.
+Supabase tables use standard HTML tables with a slightly elevated background (`bg-surface-100`) to distinguish from the page canvas (`bg-background`).
 
+**Table Container Pattern:**
 ```tsx
-<div className="w-full overflow-auto border border-border rounded-md">
-  <table className="w-full caption-bottom text-sm">
-    <thead className="[&_tr]:border-b">
-      <tr className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-        <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">Header</th>
-      </tr>
-    </thead>
-    <tbody className="[&_tr:last-child]:border-0">
-      <tr className="border-b transition-colors hover:bg-muted/50">
-        <td className="p-4 align-middle">Cell Data</td>
-      </tr>
-    </tbody>
-  </table>
+<div className="rounded-md border border-border bg-surface-100">
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Header</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell>Cell Data</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
 </div>
 ```
+
+**Background Hierarchy:**
+| Layer | Variable | Value | Usage |
+|-------|----------|-------|-------|
+| Page canvas | `bg-background` | `#1C1C1C` | Page/app shell |
+| Table container | `bg-surface-100` | `#232323` | Tables, cards, panels |
+| Hover state | `bg-surface-200` | `#2a2a2a` | Row hover, selection |
+
+**Key points:**
+- Table wrapper uses `bg-surface-100` for visual separation from page
+- Empty states also use `bg-surface-100` for consistency
+- Row hover uses `hover:bg-muted/50` or `hover:bg-surface-200`
 
 #### Card / Panel
 Used for dashboard widgets.

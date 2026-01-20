@@ -159,7 +159,7 @@ export function ObrasTable({ obras, onCreateClick, onEditClick, onArchiveClick, 
           </div>
         </div>
       ) : (
-        <div className="rounded-md border border-border">
+        <div className="rounded-md border border-border bg-surface-100">
           <Table>
             <TableHeader>
               <TableRow>
