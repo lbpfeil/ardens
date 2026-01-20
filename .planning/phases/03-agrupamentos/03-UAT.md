@@ -1,5 +1,5 @@
 ---
-status: complete
+status: diagnosed
 phase: 03-agrupamentos
 source: [03-01-SUMMARY.md, 03-02-SUMMARY.md, 03-03-SUMMARY.md]
 started: 2026-01-20T16:15:00Z
@@ -73,7 +73,15 @@ skipped: 7
   reason: "User reported: Erro ao criar agrupamento: new row violates row-level security policy for table agrupamentos"
   severity: blocker
   test: 2
-  root_cause: ""
-  artifacts: []
-  missing: []
+  root_cause: "RLS policy agrupamentos_insert requires is_admin() but engenheiros also need access per PRD"
+  artifacts:
+    - path: "database/rls-policies.sql"
+      issue: "Lines 226-230: agrupamentos_insert uses is_admin() instead of is_admin_or_engenheiro()"
+  missing:
+    - "Change is_admin() to is_admin_or_engenheiro() for agrupamentos INSERT/UPDATE/DELETE policies"
   debug_session: ""
+
+## Enhancements (from UAT feedback)
+
+- Batch creation should support letters (A, B, C...) with limit 27
+- Batch creation with numbers should have limit 200 (currently 100)
