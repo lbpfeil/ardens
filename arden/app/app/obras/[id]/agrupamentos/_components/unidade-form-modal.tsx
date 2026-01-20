@@ -6,8 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import {
   unidadeFormSchema,
   unidadeBatchSchema,
-  parseNumericRange,
-  generateUnidadeNames,
+  generateBatchNames,
   type UnidadeFormData,
   type UnidadeBatchData,
 } from '@/lib/validations/unidade'
@@ -69,7 +68,9 @@ export function UnidadeFormModal({
   // Batch form
   const batchDefaultValues = useMemo(
     () => ({
-      rangeInput: '',
+      prefixo: '',
+      quantidade: 5,
+      numeroInicial: 1,
     }),
     []
   )
@@ -89,20 +90,19 @@ export function UnidadeFormModal({
   }, [open, unidade?.id, singleForm, batchForm, singleDefaultValues, batchDefaultValues])
 
   // Watch batch values for preview
-  const rangeInput = batchForm.watch('rangeInput')
+  const prefixo = batchForm.watch('prefixo')
+  const quantidade = batchForm.watch('quantidade')
+  const numeroInicial = batchForm.watch('numeroInicial')
 
   // Generate preview names
-  const previewData = useMemo((): { preview: string[]; total: number; hasMore: boolean } | null => {
-    if (!rangeInput) return null
-    const parsed = parseNumericRange(rangeInput)
-    if (!parsed) return null
-
-    const names = generateUnidadeNames(parsed)
-    const preview = names.slice(0, 5)
-    const hasMore = names.length > 5
-
-    return { preview, total: names.length, hasMore }
-  }, [rangeInput])
+  const previewNames = useMemo(() => {
+    if (!quantidade || numeroInicial === undefined) return []
+    const names = generateBatchNames(prefixo, Math.min(quantidade, 5), numeroInicial)
+    if (quantidade > 5) {
+      return [...names, '...']
+    }
+    return names
+  }, [prefixo, quantidade, numeroInicial])
 
   const onSingleSubmit = async (data: UnidadeFormData) => {
     setIsSubmitting(true)
@@ -131,15 +131,9 @@ export function UnidadeFormModal({
   const onBatchSubmit = async (data: UnidadeBatchData) => {
     setIsSubmitting(true)
     try {
-      const parsed = parseNumericRange(data.rangeInput)
-      if (!parsed) {
-        toast.error('Formato inválido')
-        return
-      }
-
-      const names = generateUnidadeNames(parsed)
+      const names = generateBatchNames(data.prefixo, data.quantidade, data.numeroInicial)
       await createUnidadesBatch(agrupamentoId, names)
-      toast.success(`${names.length} unidades criadas com sucesso`)
+      toast.success(`${data.quantidade} unidades criadas com sucesso`)
       onSuccess()
     } catch (error) {
       const message =
@@ -163,8 +157,8 @@ export function UnidadeFormModal({
       return isEditMode ? 'Salvando...' : 'Criando...'
     }
     if (isEditMode) return 'Salvar'
-    if (isBatchMode && previewData) {
-      return `Criar ${previewData.total} Unidades`
+    if (isBatchMode) {
+      return `Criar ${quantidade || 0} Unidades`
     }
     return 'Criar Unidade'
   }
@@ -231,31 +225,59 @@ export function UnidadeFormModal({
         {isBatchMode && (
           <form onSubmit={batchForm.handleSubmit(onBatchSubmit)} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="rangeInput">Intervalo *</Label>
+              <Label htmlFor="prefixo">Prefixo</Label>
               <Input
-                id="rangeInput"
-                placeholder="Apto 101-110"
-                {...batchForm.register('rangeInput')}
-                className={batchForm.formState.errors.rangeInput ? 'border-destructive' : ''}
+                id="prefixo"
+                placeholder="Ex: Apto"
+                {...batchForm.register('prefixo')}
+                className={batchForm.formState.errors.prefixo ? 'border-destructive' : ''}
               />
-              {batchForm.formState.errors.rangeInput && (
+              {batchForm.formState.errors.prefixo && (
                 <p className="text-destructive text-xs">
-                  {batchForm.formState.errors.rangeInput.message}
+                  {batchForm.formState.errors.prefixo.message}
                 </p>
               )}
-              <p className="text-xs text-foreground-muted">
-                Formato: &quot;Prefixo inicio-fim&quot; (ex: Apto 101-110) ou &quot;inicio-fim&quot; (ex: 101-110)
-              </p>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="quantidade">Quantidade *</Label>
+                <Input
+                  id="quantidade"
+                  type="number"
+                  placeholder="Ex: 10"
+                  {...batchForm.register('quantidade', { valueAsNumber: true })}
+                  className={batchForm.formState.errors.quantidade ? 'border-destructive' : ''}
+                />
+                {batchForm.formState.errors.quantidade && (
+                  <p className="text-destructive text-xs">
+                    {batchForm.formState.errors.quantidade.message}
+                  </p>
+                )}
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="numeroInicial">Numero Inicial *</Label>
+                <Input
+                  id="numeroInicial"
+                  type="number"
+                  placeholder="Ex: 101"
+                  {...batchForm.register('numeroInicial', { valueAsNumber: true })}
+                  className={batchForm.formState.errors.numeroInicial ? 'border-destructive' : ''}
+                />
+                {batchForm.formState.errors.numeroInicial && (
+                  <p className="text-destructive text-xs">
+                    {batchForm.formState.errors.numeroInicial.message}
+                  </p>
+                )}
+              </div>
             </div>
 
             {/* Preview */}
-            {previewData && previewData.preview.length > 0 && (
+            {previewNames.length > 0 && (
               <div className="rounded-md bg-surface-100 p-3">
-                <p className="text-xs text-foreground-muted mb-1">Será criado:</p>
-                <p className="text-sm text-foreground-light">
-                  {previewData.preview.join(', ')}
-                  {previewData.hasMore && `, ... (${previewData.total} unidades)`}
-                </p>
+                <p className="text-xs text-foreground-muted mb-1">Sera criado:</p>
+                <p className="text-sm text-foreground-light">{previewNames.join(', ')}</p>
               </div>
             )}
 

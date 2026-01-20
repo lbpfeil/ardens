@@ -91,16 +91,57 @@ export function generateUnidadeNames(parsed: ParsedNumericRange): string[] {
 
 /**
  * Schema de validacao para criacao em lote de unidades.
- * Formato: "Prefixo inicio-fim" (ex: "Apto 101-110") ou "inicio-fim" (ex: "101-110")
+ * Campos separados: prefixo (opcional), quantidade, numeroInicial
  */
 export const unidadeBatchSchema = z.object({
-  rangeInput: z
-    .string({ required_error: 'Intervalo e obrigatorio' })
-    .min(1, 'Intervalo e obrigatorio')
-    .refine(
-      (val) => parseNumericRange(val) !== null,
-      'Formato invalido. Use "Prefixo inicio-fim" (ex: Apto 101-110). Maximo 500 unidades.'
-    ),
+  prefixo: z
+    .string()
+    .max(50, 'Prefixo deve ter no maximo 50 caracteres')
+    .optional()
+    .default(''),
+  quantidade: z
+    .number({ required_error: 'Quantidade e obrigatoria' })
+    .min(1, 'Quantidade minima e 1')
+    .max(500, 'Quantidade maxima e 500'),
+  numeroInicial: z
+    .number({ required_error: 'Numero inicial e obrigatorio' })
+    .min(0, 'Numero inicial deve ser >= 0')
+    .max(99999, 'Numero inicial deve ser <= 99999'),
 })
 
 export type UnidadeBatchData = z.infer<typeof unidadeBatchSchema>
+
+/**
+ * Generates unidade names from batch parameters.
+ *
+ * @param prefixo Optional prefix (e.g., "Apto")
+ * @param quantidade Number of units to create
+ * @param numeroInicial Starting number
+ * @returns Array of generated names
+ *
+ * @example
+ * generateBatchNames("Apto", 3, 101)
+ * // ["Apto 101", "Apto 102", "Apto 103"]
+ *
+ * generateBatchNames("", 3, 1)
+ * // ["1", "2", "3"]
+ */
+export function generateBatchNames(
+  prefixo: string | undefined,
+  quantidade: number,
+  numeroInicial: number
+): string[] {
+  const names: string[] = []
+  const prefix = prefixo?.trim() || ''
+
+  for (let i = 0; i < quantidade; i++) {
+    const num = numeroInicial + i
+    if (prefix) {
+      names.push(`${prefix} ${num}`)
+    } else {
+      names.push(`${num}`)
+    }
+  }
+
+  return names
+}

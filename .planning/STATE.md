@@ -88,8 +88,7 @@ Recent decisions affecting current work:
 
 ### Pending Todos
 
-1. **Refatorar modal batch de unidades para formato prefixo/quantidade** (ui)
-   - `.planning/todos/pending/2026-01-20-unidade-batch-modal-refactor.md`
+None.
 
 ### Blockers/Concerns
 
