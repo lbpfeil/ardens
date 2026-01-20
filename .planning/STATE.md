@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-01-19)
 
 **Core value:** Trazer extrema rapidez e praticidade na verificacao de servicos, tornando a qualidade uma aliada da obra.
-**Current focus:** Phase 4 - Unidades
+**Current focus:** Phase 3 - Agrupamentos (gap closure)
 
 ## Current Position
 
-Phase: 4 of 6 (Unidades)
-Plan: 0 of 3 in current phase
-Status: Ready to plan
-Last activity: 2026-01-20 - Phase 3 complete, goal verified
+Phase: 3 of 6 (Agrupamentos)
+Plan: 4 of 4 in current phase
+Status: Phase complete
+Last activity: 2026-01-20 - Completed 03-04-PLAN.md (RLS fix)
 
-Progress: [#########-] 75% (9/12 plans)
+Progress: [##########] 77% (10/13 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 9
+- Total plans completed: 10
 - Average duration: 5 min
-- Total execution time: 46 min
+- Total execution time: 48 min
 
 **By Phase:**
 
@@ -29,7 +29,7 @@ Progress: [#########-] 75% (9/12 plans)
 |-------|-------|-------|----------|
 | 01-foundation | 2 | 20 min | 10 min |
 | 02-obras | 4 | 18 min | 4.5 min |
-| 03-agrupamentos | 3 | 8 min | 2.7 min |
+| 03-agrupamentos | 4 | 10 min | 2.5 min |
 
 **Recent Trend:**
 - Last 5 plans: 3 min, 4 min, 2 min, 3 min, 3 min
@@ -73,6 +73,7 @@ Recent decisions affecting current work:
 - [03-03]: Reorder button only visible when agrupamentos.length > 1
 - [03-03]: SortableAgrupamentoRow shows drag handle without actions dropdown
 - [03-03]: Delete confirmation varies description based on unidades_count
+- [03-04]: Use is_admin_or_engenheiro() for agrupamentos RLS policies (engenheiros configure obra structure)
 
 ### Pending Todos
 
@@ -85,5 +86,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-01-20
-Stopped at: Phase 3 complete, ready to plan Phase 4
+Stopped at: Completed 03-04-PLAN.md, Phase 3 complete (with RLS fix)
 Resume file: None
