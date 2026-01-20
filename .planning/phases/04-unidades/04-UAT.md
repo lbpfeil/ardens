@@ -1,5 +1,5 @@
 ---
-status: complete
+status: diagnosed
 phase: 04-unidades
 source: [04-01-SUMMARY.md, 04-02-SUMMARY.md]
 started: 2026-01-20T19:25:00Z
@@ -81,32 +81,48 @@ skipped: 0
 
 ## Gaps
 
-- truth: "Split-view layout with aligned panel headers"
+- truth: "Split-view layout with aligned panel headers and proper PT-BR accents"
   status: failed
   reason: "User reported: 1. Acentos pt-br faltando nas palavras. 2. Tabela de unidades não está na mesma altura da de agrupamentos."
   severity: minor
   test: 1
-  root_cause: ""
-  artifacts: []
-  missing: []
-  debug_session: ""
+  root_cause: "Missing PT-BR accents in multiple component files + unidades panel header smaller than agrupamentos panel header"
+  artifacts:
+    - path: "arden/app/app/obras/[id]/agrupamentos/_components/unidade-form-modal.tsx"
+      issue: "Missing accents: invalido, multiplas, Sera"
+    - path: "arden/app/app/obras/[id]/agrupamentos/_components/unidades-panel.tsx"
+      issue: "Missing accents: esquerda, comecar + header height mismatch"
+    - path: "arden/app/app/obras/[id]/agrupamentos/_components/agrupamento-form-modal.tsx"
+      issue: "Missing accents: Numero, Sera"
+    - path: "arden/app/app/obras/[id]/agrupamentos/_components/agrupamentos-panel.tsx"
+      issue: "Missing accents: comecar"
+  missing:
+    - "Add proper PT-BR accents to all UI strings"
+    - "Align panel headers at same visual height"
 
 - truth: "User can create a new unidade"
   status: failed
   reason: "User reported: Erro ao criar unidade: new row violates row-level security policy for table 'unidades'"
   severity: blocker
   test: 5
-  root_cause: ""
-  artifacts: []
-  missing: []
-  debug_session: ""
+  root_cause: "RLS policies for unidades table use is_admin() but should use is_admin_or_engenheiro() - same fix as agrupamentos in Phase 3"
+  artifacts:
+    - path: "database/rls-policies.sql"
+      issue: "Lines 264-292: unidades_insert, unidades_update, unidades_delete use is_admin() instead of is_admin_or_engenheiro()"
+  missing:
+    - "Change is_admin() to is_admin_or_engenheiro() in unidades RLS policies"
+    - "Apply migration to Supabase project"
 
 - truth: "Dialog modals should not show accessibility warnings"
   status: failed
   reason: "User reported: Console warning 'Missing Description or aria-describedby for DialogContent' when opening create modals"
   severity: minor
   test: 11
-  root_cause: ""
-  artifacts: []
-  missing: []
-  debug_session: ""
+  root_cause: "Form modals use DialogTitle but no DialogDescription - Radix UI requires both for accessibility"
+  artifacts:
+    - path: "arden/app/app/obras/[id]/agrupamentos/_components/unidade-form-modal.tsx"
+      issue: "Missing DialogDescription component"
+    - path: "arden/app/app/obras/[id]/agrupamentos/_components/agrupamento-form-modal.tsx"
+      issue: "Missing DialogDescription component"
+  missing:
+    - "Add DialogDescription (can be sr-only) to form modals"
