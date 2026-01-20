@@ -58,17 +58,18 @@ Plans:
 **Depends on**: Phase 2
 **Requirements**: AGRU-01, AGRU-02, AGRU-03, AGRU-04, AGRU-05
 **Success Criteria** (what must be TRUE):
-  1. Usuario ve lista de agrupamentos na pagina de detalhes da obra
+  1. Usuario ve lista de agrupamentos na pagina /app/obras/[id]/agrupamentos
   2. Usuario cria novo agrupamento e ele aparece na lista da obra
   3. Usuario edita nome/ordem de agrupamento existente
-  4. Usuario exclui agrupamento vazio (sem unidades)
+  4. Usuario exclui agrupamento (com confirmacao e aviso sobre unidades)
   5. Usuario cria multiplos agrupamentos de uma vez (ex: "Bloco 1-10")
-**Plans**: TBD
+  6. Usuario pode reordenar agrupamentos via drag-and-drop
+**Plans**: 3 plans
 
 Plans:
-- [ ] 03-01: Listagem de agrupamentos (componente na pagina de obra)
-- [ ] 03-02: CRUD de agrupamento (criar, editar, excluir)
-- [ ] 03-03: Criacao em lote de agrupamentos
+- [ ] 03-01-PLAN.md — Setup: data access layer, Zod schema, @dnd-kit installation
+- [ ] 03-02-PLAN.md — List page with table and create/edit modal with batch support
+- [ ] 03-03-PLAN.md — Delete confirmation and drag-and-drop reorder
 
 ### Phase 4: Unidades
 **Goal**: Usuario pode gerenciar unidades dentro de agrupamentos (apartamentos, casas, etc.)
@@ -135,7 +136,7 @@ Phases execute in numeric order: 1 > 2 > 3 > 4 > 5 > 6
 |-------|----------------|--------|-----------|
 | 1. Foundation | 2/2 | Complete | 2026-01-19 |
 | 2. Obras | 4/4 | Complete | 2026-01-19 |
-| 3. Agrupamentos | 0/3 | Not started | - |
+| 3. Agrupamentos | 0/3 | Planned | - |
 | 4. Unidades | 0/3 | Not started | - |
 | 5. Biblioteca FVS | 0/4 | Not started | - |
 | 6. Dashboard | 0/3 | Not started | - |
@@ -144,5 +145,6 @@ Phases execute in numeric order: 1 > 2 > 3 > 4 > 5 > 6
 *Roadmap created: 2026-01-19*
 *Phase 1 planned: 2026-01-19*
 *Phase 2 planned: 2026-01-19*
+*Phase 3 planned: 2026-01-20*
 *Depth: standard (6 phases)*
 *Coverage: 31/31 v1 requirements mapped*
