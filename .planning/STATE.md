@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-01-19)
 ## Current Position
 
 Phase: 3 of 6 (Agrupamentos)
-Plan: 0 of 3 in current phase
-Status: Ready to plan
-Last activity: 2026-01-19 - Phase 2 complete, goal verified
+Plan: 1 of 3 in current phase
+Status: In progress
+Last activity: 2026-01-20 - Completed 03-01-PLAN.md
 
-Progress: [######----] 50% (6/12 plans)
+Progress: [#######---] 58% (7/12 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 6
+- Total plans completed: 7
 - Average duration: 6 min
-- Total execution time: 38 min
+- Total execution time: 40 min
 
 **By Phase:**
 
@@ -29,9 +29,10 @@ Progress: [######----] 50% (6/12 plans)
 |-------|-------|-------|----------|
 | 01-foundation | 2 | 20 min | 10 min |
 | 02-obras | 4 | 18 min | 4.5 min |
+| 03-agrupamentos | 1 | 2 min | 2 min |
 
 **Recent Trend:**
-- Last 5 plans: 5 min, 8 min, 3 min, 3 min, 4 min
+- Last 5 plans: 8 min, 3 min, 3 min, 4 min, 2 min
 - Trend: stable, fast
 
 *Updated after each plan completion*
@@ -62,6 +63,10 @@ Recent decisions affecting current work:
 - [02-04]: Next.js 15 async params pattern: await params to get route params
 - [02-04]: Use notFound() for invalid obra IDs rather than custom error page
 - [02-04]: Detail page pattern: Server Component fetches by ID, renders header + info cards
+- [03-01]: AgrupamentoWithCount uses Supabase aggregation for unidades count
+- [03-01]: updateAgrupamentosOrder uses Promise.all for parallel updates
+- [03-01]: generateBatchNames produces 'Prefixo N' format
+- [03-01]: Batch limit set to 100 items maximum
 
 ### Pending Todos
 
@@ -73,6 +78,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-01-19
-Stopped at: Phase 2 complete, ready to plan Phase 3
+Last session: 2026-01-20
+Stopped at: Completed 03-01-PLAN.md
 Resume file: None
