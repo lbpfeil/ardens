@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-01-19)
 ## Current Position
 
 Phase: 4 of 6 (Unidades)
-Plan: 0 of 3 in current phase
-Status: Ready to plan
-Last activity: 2026-01-20 - Phase 3 verified and complete
+Plan: 1 of 3 in current phase
+Status: In progress
+Last activity: 2026-01-20 - Completed 04-01-PLAN.md
 
-Progress: [##########] 77% (10/13 plans)
+Progress: [###########] 85% (11/13 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 10
+- Total plans completed: 11
 - Average duration: 5 min
-- Total execution time: 48 min
+- Total execution time: 50 min
 
 **By Phase:**
 
@@ -30,9 +30,10 @@ Progress: [##########] 77% (10/13 plans)
 | 01-foundation | 2 | 20 min | 10 min |
 | 02-obras | 4 | 18 min | 4.5 min |
 | 03-agrupamentos | 4 | 10 min | 2.5 min |
+| 04-unidades | 1 | 2 min | 2 min |
 
 **Recent Trend:**
-- Last 5 plans: 3 min, 4 min, 2 min, 3 min, 3 min
+- Last 5 plans: 4 min, 2 min, 3 min, 3 min, 2 min
 - Trend: stable, fast
 
 *Updated after each plan completion*
@@ -74,6 +75,10 @@ Recent decisions affecting current work:
 - [03-03]: SortableAgrupamentoRow shows drag handle without actions dropdown
 - [03-03]: Delete confirmation varies description based on unidades_count
 - [03-04]: Use is_admin_or_engenheiro() for agrupamentos RLS policies (engenheiros configure obra structure)
+- [04-01]: Natural sort uses Intl.Collator with numeric: true for alphanumeric ordering
+- [04-01]: Batch schema uses single rangeInput field with refine validation
+- [04-01]: Max 500 units per batch (higher than agrupamentos' 100)
+- [04-01]: parseNumericRange + generateUnidadeNames pattern for numeric range batch
 
 ### Pending Todos
 
@@ -86,5 +91,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-01-20
-Stopped at: Phase 3 verified and complete, ready to plan Phase 4
+Stopped at: Completed 04-01-PLAN.md, ready for 04-02
 Resume file: None
