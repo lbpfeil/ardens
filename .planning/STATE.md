@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-01-19)
 ## Current Position
 
 Phase: 4 of 6 (Unidades)
-Plan: 1 of 3 in current phase
+Plan: 2 of 3 in current phase
 Status: In progress
-Last activity: 2026-01-20 - Completed 04-01-PLAN.md
+Last activity: 2026-01-20 - Completed 04-02-PLAN.md
 
-Progress: [###########] 85% (11/13 plans)
+Progress: [############] 92% (12/13 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 11
+- Total plans completed: 12
 - Average duration: 5 min
-- Total execution time: 50 min
+- Total execution time: 54 min
 
 **By Phase:**
 
@@ -30,10 +30,10 @@ Progress: [###########] 85% (11/13 plans)
 | 01-foundation | 2 | 20 min | 10 min |
 | 02-obras | 4 | 18 min | 4.5 min |
 | 03-agrupamentos | 4 | 10 min | 2.5 min |
-| 04-unidades | 1 | 2 min | 2 min |
+| 04-unidades | 2 | 6 min | 3 min |
 
 **Recent Trend:**
-- Last 5 plans: 4 min, 2 min, 3 min, 3 min, 2 min
+- Last 5 plans: 2 min, 3 min, 3 min, 2 min, 4 min
 - Trend: stable, fast
 
 *Updated after each plan completion*
@@ -79,6 +79,10 @@ Recent decisions affecting current work:
 - [04-01]: Batch schema uses single rangeInput field with refine validation
 - [04-01]: Max 500 units per batch (higher than agrupamentos' 100)
 - [04-01]: parseNumericRange + generateUnidadeNames pattern for numeric range batch
+- [04-02]: Split-view uses flex-col for mobile, lg:flex-row for desktop
+- [04-02]: Selection highlight: bg-surface-200 + border-l-2 border-brand
+- [04-02]: Count display inline with name: "Bloco A (12)" format
+- [04-02]: RefreshKey state pattern to trigger unidades refetch after mutations
 
 ### Pending Todos
 
@@ -91,5 +95,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-01-20
-Stopped at: Completed 04-01-PLAN.md, ready for 04-02
+Stopped at: Completed 04-02-PLAN.md, ready for 04-03
 Resume file: None
