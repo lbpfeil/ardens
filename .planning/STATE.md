@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-01-19)
 ## Current Position
 
 Phase: 4 of 6 (Unidades - gap closure)
-Plan: 03 of 06 gap closure plans complete
+Plan: 04 of 06 gap closure plans complete
 Status: Executing gap closure
-Last activity: 2026-01-20 - Completed 04-03-PLAN.md (RLS policies for unidades)
+Last activity: 2026-01-20 - Completed 04-04-PLAN.md (PT-BR accents + accessibility)
 
-Progress: [#############] 87% (13/15 plans including gap closure)
+Progress: [##############] 93% (14/15 plans including gap closure)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 13
-- Average duration: 4.3 min
-- Total execution time: 56 min
+- Total plans completed: 14
+- Average duration: 4.2 min
+- Total execution time: 59 min
 
 **By Phase:**
 
@@ -30,10 +30,10 @@ Progress: [#############] 87% (13/15 plans including gap closure)
 | 01-foundation | 2 | 20 min | 10 min |
 | 02-obras | 4 | 18 min | 4.5 min |
 | 03-agrupamentos | 4 | 10 min | 2.5 min |
-| 04-unidades | 3 | 8 min | 2.7 min |
+| 04-unidades | 4 | 11 min | 2.75 min |
 
 **Recent Trend:**
-- Last 5 plans: 2 min, 3 min, 3 min, 2 min, 4 min
+- Last 5 plans: 3 min, 3 min, 2 min, 4 min, 3 min
 - Trend: stable, fast
 
 *Updated after each plan completion*
@@ -84,6 +84,7 @@ Recent decisions affecting current work:
 - [04-02]: Count display inline with name: "Bloco A (12)" format
 - [04-02]: RefreshKey state pattern to trigger unidades refetch after mutations
 - [04-03]: Use is_admin_or_engenheiro() for unidades RLS policies (consistent with agrupamentos)
+- [04-04]: Use sr-only DialogDescription for form modals (accessibility without visual clutter)
 
 ### Pending Todos
 
@@ -96,5 +97,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-01-20
-Stopped at: Completed 04-03-PLAN.md, gap closure in progress (plans 04-06 remaining)
+Stopped at: Completed 04-04-PLAN.md, gap closure in progress (plans 05-06 remaining)
 Resume file: None
