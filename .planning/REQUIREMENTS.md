@@ -25,11 +25,11 @@ Requirements para o Mes 1 do MVP. Cada um mapeia para fases do roadmap.
 
 ### Unidades
 
-- [ ] **UNID-01**: Usuario pode listar unidades de um agrupamento
-- [ ] **UNID-02**: Usuario pode criar nova unidade (nome, codigo, ordem)
-- [ ] **UNID-03**: Usuario pode editar unidade existente
-- [ ] **UNID-04**: Usuario pode excluir unidade (se nao tiver verificacoes)
-- [ ] **UNID-05**: Usuario pode criar unidades em lote (ex: "Apto 101-110")
+- [x] **UNID-01**: Usuario pode listar unidades de um agrupamento
+- [x] **UNID-02**: Usuario pode criar nova unidade (nome, codigo, ordem)
+- [x] **UNID-03**: Usuario pode editar unidade existente
+- [x] **UNID-04**: Usuario pode excluir unidade (se nao tiver verificacoes)
+- [x] **UNID-05**: Usuario pode criar unidades em lote (ex: "Apto 101-110")
 
 ### Biblioteca FVS
 
@@ -111,11 +111,11 @@ Explicitamente excluido do Mes 1.
 | AGRU-03 | Phase 3 | Complete |
 | AGRU-04 | Phase 3 | Complete |
 | AGRU-05 | Phase 3 | Complete |
-| UNID-01 | Phase 4 | Pending |
-| UNID-02 | Phase 4 | Pending |
-| UNID-03 | Phase 4 | Pending |
-| UNID-04 | Phase 4 | Pending |
-| UNID-05 | Phase 4 | Pending |
+| UNID-01 | Phase 4 | Complete |
+| UNID-02 | Phase 4 | Complete |
+| UNID-03 | Phase 4 | Complete |
+| UNID-04 | Phase 4 | Complete |
+| UNID-05 | Phase 4 | Complete |
 | SERV-01 | Phase 5 | Pending |
 | SERV-02 | Phase 5 | Pending |
 | SERV-03 | Phase 5 | Pending |
@@ -138,4 +138,4 @@ Explicitamente excluido do Mes 1.
 
 ---
 *Requirements defined: 2026-01-19*
-*Last updated: 2026-01-20 after phase 3 completion*
+*Last updated: 2026-01-20 after phase 4 completion*
