@@ -17,11 +17,11 @@ Requirements para o Mes 1 do MVP. Cada um mapeia para fases do roadmap.
 
 ### Agrupamentos
 
-- [ ] **AGRU-01**: Usuario pode listar agrupamentos de uma obra
-- [ ] **AGRU-02**: Usuario pode criar novo agrupamento (nome, ordem)
-- [ ] **AGRU-03**: Usuario pode editar agrupamento existente
-- [ ] **AGRU-04**: Usuario pode excluir agrupamento (se nao tiver unidades)
-- [ ] **AGRU-05**: Usuario pode criar agrupamentos em lote (ex: "Bloco 1-38")
+- [x] **AGRU-01**: Usuario pode listar agrupamentos de uma obra
+- [x] **AGRU-02**: Usuario pode criar novo agrupamento (nome, ordem)
+- [x] **AGRU-03**: Usuario pode editar agrupamento existente
+- [x] **AGRU-04**: Usuario pode excluir agrupamento (se nao tiver unidades)
+- [x] **AGRU-05**: Usuario pode criar agrupamentos em lote (ex: "Bloco 1-38")
 
 ### Unidades
 
@@ -106,11 +106,11 @@ Explicitamente excluido do Mes 1.
 | OBRA-03 | Phase 2 | Complete |
 | OBRA-04 | Phase 2 | Complete |
 | OBRA-05 | Phase 2 | Complete |
-| AGRU-01 | Phase 3 | Pending |
-| AGRU-02 | Phase 3 | Pending |
-| AGRU-03 | Phase 3 | Pending |
-| AGRU-04 | Phase 3 | Pending |
-| AGRU-05 | Phase 3 | Pending |
+| AGRU-01 | Phase 3 | Complete |
+| AGRU-02 | Phase 3 | Complete |
+| AGRU-03 | Phase 3 | Complete |
+| AGRU-04 | Phase 3 | Complete |
+| AGRU-05 | Phase 3 | Complete |
 | UNID-01 | Phase 4 | Pending |
 | UNID-02 | Phase 4 | Pending |
 | UNID-03 | Phase 4 | Pending |
@@ -138,4 +138,4 @@ Explicitamente excluido do Mes 1.
 
 ---
 *Requirements defined: 2026-01-19*
-*Last updated: 2026-01-19 after phase 2 completion*
+*Last updated: 2026-01-20 after phase 3 completion*

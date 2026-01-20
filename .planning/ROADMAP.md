@@ -14,7 +14,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Foundation** - Infraestrutura de state management e validacao de forms
 - [x] **Phase 2: Obras** - CRUD completo de obras com listagem, criacao, edicao e arquivamento
-- [ ] **Phase 3: Agrupamentos** - Gestao de agrupamentos vinculados a obras
+- [x] **Phase 3: Agrupamentos** - Gestao de agrupamentos vinculados a obras
 - [ ] **Phase 4: Unidades** - Gestao de unidades vinculadas a agrupamentos
 - [ ] **Phase 5: Biblioteca FVS** - Gestao de servicos e itens de verificacao
 - [ ] **Phase 6: Dashboard** - Home do engenheiro com KPIs e feed de NCs
@@ -67,9 +67,9 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [ ] 03-01-PLAN.md — Setup: data access layer, Zod schema, @dnd-kit installation
-- [ ] 03-02-PLAN.md — List page with table and create/edit modal with batch support
-- [ ] 03-03-PLAN.md — Delete confirmation and drag-and-drop reorder
+- [x] 03-01-PLAN.md — Setup: data access layer, Zod schema, @dnd-kit installation
+- [x] 03-02-PLAN.md — List page with table and create/edit modal with batch support
+- [x] 03-03-PLAN.md — Delete confirmation and drag-and-drop reorder
 
 ### Phase 4: Unidades
 **Goal**: Usuario pode gerenciar unidades dentro de agrupamentos (apartamentos, casas, etc.)
@@ -136,7 +136,7 @@ Phases execute in numeric order: 1 > 2 > 3 > 4 > 5 > 6
 |-------|----------------|--------|-----------|
 | 1. Foundation | 2/2 | Complete | 2026-01-19 |
 | 2. Obras | 4/4 | Complete | 2026-01-19 |
-| 3. Agrupamentos | 0/3 | Planned | - |
+| 3. Agrupamentos | 3/3 | Complete | 2026-01-20 |
 | 4. Unidades | 0/3 | Not started | - |
 | 5. Biblioteca FVS | 0/4 | Not started | - |
 | 6. Dashboard | 0/3 | Not started | - |
