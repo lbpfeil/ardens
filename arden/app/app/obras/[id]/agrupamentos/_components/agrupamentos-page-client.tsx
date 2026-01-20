@@ -2,11 +2,16 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { AgrupamentosTable } from './agrupamentos-table'
+import { SplitViewLayout } from './split-view-layout'
+import { AgrupamentosPanel } from './agrupamentos-panel'
+import { UnidadesPanel } from './unidades-panel'
 import { AgrupamentoFormModal } from './agrupamento-form-modal'
 import { DeleteConfirmation } from './delete-confirmation'
+import { UnidadeFormModal } from './unidade-form-modal'
+import { UnidadeDeleteConfirmation } from './unidade-delete-confirmation'
 import { updateAgrupamentosOrder } from '@/lib/supabase/queries/agrupamentos'
 import type { AgrupamentoWithCount } from '@/lib/supabase/queries/agrupamentos'
+import type { Unidade } from '@/lib/supabase/queries/unidades'
 import { toast } from 'sonner'
 
 interface AgrupamentosPageClientProps {
@@ -21,11 +26,31 @@ export function AgrupamentosPageClient({
   initialAgrupamentos,
 }: AgrupamentosPageClientProps) {
   const router = useRouter()
+
+  // Agrupamento state
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [editingAgrupamento, setEditingAgrupamento] = useState<AgrupamentoWithCount | null>(null)
   const [deletingAgrupamento, setDeletingAgrupamento] = useState<AgrupamentoWithCount | null>(null)
   const [isDeleteOpen, setIsDeleteOpen] = useState(false)
   const [isReorderMode, setIsReorderMode] = useState(false)
+  const [selectedAgrupamentoId, setSelectedAgrupamentoId] = useState<string | null>(null)
+
+  // Unidade state
+  const [isUnidadeModalOpen, setIsUnidadeModalOpen] = useState(false)
+  const [editingUnidade, setEditingUnidade] = useState<Unidade | null>(null)
+  const [deletingUnidade, setDeletingUnidade] = useState<Unidade | null>(null)
+  const [isUnidadeDeleteOpen, setIsUnidadeDeleteOpen] = useState(false)
+  const [unidadesRefreshKey, setUnidadesRefreshKey] = useState(0)
+
+  // Get selected agrupamento object
+  const selectedAgrupamento = selectedAgrupamentoId
+    ? initialAgrupamentos.find(a => a.id === selectedAgrupamentoId) ?? null
+    : null
+
+  // Agrupamento handlers
+  const handleSelectAgrupamento = (id: string) => {
+    setSelectedAgrupamentoId(id)
+  }
 
   const handleCreateClick = () => {
     setEditingAgrupamento(null)
@@ -65,6 +90,10 @@ export function AgrupamentosPageClient({
   const handleDeleteSuccess = () => {
     setIsDeleteOpen(false)
     setDeletingAgrupamento(null)
+    // Clear selection if deleted agrupamento was selected
+    if (deletingAgrupamento?.id === selectedAgrupamentoId) {
+      setSelectedAgrupamentoId(null)
+    }
     router.refresh()
   }
 
@@ -87,18 +116,77 @@ export function AgrupamentosPageClient({
     setIsReorderMode(false)
   }
 
+  // Unidade handlers
+  const handleUnidadeCreateClick = () => {
+    setEditingUnidade(null)
+    setIsUnidadeModalOpen(true)
+  }
+
+  const handleUnidadeEditClick = (unidade: Unidade) => {
+    setEditingUnidade(unidade)
+    setIsUnidadeModalOpen(true)
+  }
+
+  const handleUnidadeDeleteClick = (unidade: Unidade) => {
+    setDeletingUnidade(unidade)
+    setIsUnidadeDeleteOpen(true)
+  }
+
+  const handleUnidadeModalClose = (open: boolean) => {
+    setIsUnidadeModalOpen(open)
+    if (!open) {
+      setEditingUnidade(null)
+    }
+  }
+
+  const handleUnidadeModalSuccess = () => {
+    setIsUnidadeModalOpen(false)
+    setEditingUnidade(null)
+    setUnidadesRefreshKey(k => k + 1)
+    router.refresh() // Also refresh to update unidades_count
+  }
+
+  const handleUnidadeDeleteClose = (open: boolean) => {
+    setIsUnidadeDeleteOpen(open)
+    if (!open) {
+      setDeletingUnidade(null)
+    }
+  }
+
+  const handleUnidadeDeleteSuccess = () => {
+    setIsUnidadeDeleteOpen(false)
+    setDeletingUnidade(null)
+    setUnidadesRefreshKey(k => k + 1)
+    router.refresh() // Also refresh to update unidades_count
+  }
+
   return (
     <>
-      <AgrupamentosTable
-        agrupamentos={initialAgrupamentos}
-        obraNome={obraNome}
-        onCreateClick={handleCreateClick}
-        onEditClick={handleEditClick}
-        onDeleteClick={handleDeleteClick}
-        isReorderMode={isReorderMode}
-        onReorderStart={handleReorderStart}
-        onReorderSave={handleReorderSave}
-        onReorderCancel={handleReorderCancel}
+      <SplitViewLayout
+        leftPanel={
+          <AgrupamentosPanel
+            agrupamentos={initialAgrupamentos}
+            obraNome={obraNome}
+            selectedId={selectedAgrupamentoId}
+            onSelect={handleSelectAgrupamento}
+            onCreateClick={handleCreateClick}
+            onEditClick={handleEditClick}
+            onDeleteClick={handleDeleteClick}
+            isReorderMode={isReorderMode}
+            onReorderStart={handleReorderStart}
+            onReorderSave={handleReorderSave}
+            onReorderCancel={handleReorderCancel}
+          />
+        }
+        rightPanel={
+          <UnidadesPanel
+            agrupamento={selectedAgrupamento}
+            onCreateClick={handleUnidadeCreateClick}
+            onEditClick={handleUnidadeEditClick}
+            onDeleteClick={handleUnidadeDeleteClick}
+            refreshKey={unidadesRefreshKey}
+          />
+        }
       />
       <AgrupamentoFormModal
         open={isModalOpen}
@@ -113,6 +201,20 @@ export function AgrupamentosPageClient({
         onOpenChange={handleDeleteClose}
         agrupamento={deletingAgrupamento}
         onSuccess={handleDeleteSuccess}
+      />
+      <UnidadeFormModal
+        open={isUnidadeModalOpen}
+        onOpenChange={handleUnidadeModalClose}
+        onSuccess={handleUnidadeModalSuccess}
+        mode={editingUnidade ? 'edit' : 'create'}
+        unidade={editingUnidade}
+        agrupamentoId={selectedAgrupamentoId ?? ''}
+      />
+      <UnidadeDeleteConfirmation
+        open={isUnidadeDeleteOpen}
+        onOpenChange={handleUnidadeDeleteClose}
+        unidade={deletingUnidade}
+        onSuccess={handleUnidadeDeleteSuccess}
       />
     </>
   )
