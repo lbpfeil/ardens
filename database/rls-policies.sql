@@ -260,14 +260,14 @@ CREATE POLICY "unidades_select" ON unidades
     )
   );
 
--- INSERT/UPDATE/DELETE: Apenas admin
+-- INSERT/UPDATE/DELETE: Admin ou engenheiro (engenheiro configura estrutura da obra)
 DROP POLICY IF EXISTS "unidades_insert" ON unidades;
 CREATE POLICY "unidades_insert" ON unidades
   FOR INSERT WITH CHECK (
     agrupamento_id IN (
       SELECT a.id FROM agrupamentos a
       JOIN obras o ON o.id = a.obra_id
-      WHERE o.cliente_id = get_user_cliente_id() AND is_admin()
+      WHERE o.cliente_id = get_user_cliente_id() AND is_admin_or_engenheiro()
     )
   );
 
@@ -277,7 +277,7 @@ CREATE POLICY "unidades_update" ON unidades
     agrupamento_id IN (
       SELECT a.id FROM agrupamentos a
       JOIN obras o ON o.id = a.obra_id
-      WHERE o.cliente_id = get_user_cliente_id() AND is_admin()
+      WHERE o.cliente_id = get_user_cliente_id() AND is_admin_or_engenheiro()
     )
   );
 
@@ -287,7 +287,7 @@ CREATE POLICY "unidades_delete" ON unidades
     agrupamento_id IN (
       SELECT a.id FROM agrupamentos a
       JOIN obras o ON o.id = a.obra_id
-      WHERE o.cliente_id = get_user_cliente_id() AND is_admin()
+      WHERE o.cliente_id = get_user_cliente_id() AND is_admin_or_engenheiro()
     )
   );
 
