@@ -19,6 +19,7 @@ import {
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogFooter,
@@ -165,6 +166,9 @@ export function AgrupamentoFormModal({
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>{getTitle()}</DialogTitle>
+          <DialogDescription className="sr-only">
+            {isEditMode ? 'Formulário para editar agrupamento' : 'Formulário para criar novo agrupamento'}
+          </DialogDescription>
         </DialogHeader>
 
         {/* Batch mode toggle (only in create mode) */}

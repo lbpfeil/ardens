@@ -20,6 +20,7 @@ import {
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogFooter,
@@ -173,6 +174,9 @@ export function UnidadeFormModal({
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>{getTitle()}</DialogTitle>
+          <DialogDescription className="sr-only">
+            {isEditMode ? 'Formulário para editar unidade' : 'Formulário para criar nova unidade'}
+          </DialogDescription>
         </DialogHeader>
 
         {/* Batch mode toggle (only in create mode) */}
