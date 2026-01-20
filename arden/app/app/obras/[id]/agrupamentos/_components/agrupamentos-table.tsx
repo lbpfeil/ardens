@@ -1,5 +1,21 @@
 'use client'
 
+import { useEffect, useState } from 'react'
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  type DragEndEvent,
+} from '@dnd-kit/core'
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
+} from '@dnd-kit/sortable'
 import {
   Table,
   TableBody,
@@ -16,7 +32,8 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
-import { MoreVertical, Plus } from 'lucide-react'
+import { ArrowUpDown, MoreVertical, Plus } from 'lucide-react'
+import { SortableAgrupamentoRow } from './sortable-agrupamento-row'
 import type { AgrupamentoWithCount } from '@/lib/supabase/queries/agrupamentos'
 
 interface AgrupamentosTableProps {
@@ -25,6 +42,10 @@ interface AgrupamentosTableProps {
   onCreateClick: () => void
   onEditClick: (agrupamento: AgrupamentoWithCount) => void
   onDeleteClick: (agrupamento: AgrupamentoWithCount) => void
+  isReorderMode: boolean
+  onReorderStart: () => void
+  onReorderSave: (orderedIds: string[]) => void
+  onReorderCancel: () => void
 }
 
 export function AgrupamentosTable({
@@ -33,7 +54,51 @@ export function AgrupamentosTable({
   onCreateClick,
   onEditClick,
   onDeleteClick,
+  isReorderMode,
+  onReorderStart,
+  onReorderSave,
+  onReorderCancel,
 }: AgrupamentosTableProps) {
+  const [pendingOrder, setPendingOrder] = useState<string[]>([])
+
+  // Initialize pending order when entering reorder mode
+  useEffect(() => {
+    if (isReorderMode) {
+      setPendingOrder(agrupamentos.map(a => a.id))
+    }
+  }, [isReorderMode, agrupamentos])
+
+  // Configure dnd-kit sensors
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  )
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event
+
+    if (over && active.id !== over.id) {
+      setPendingOrder((items) => {
+        const oldIndex = items.indexOf(active.id as string)
+        const newIndex = items.indexOf(over.id as string)
+        return arrayMove(items, oldIndex, newIndex)
+      })
+    }
+  }
+
+  const handleSave = () => {
+    onReorderSave(pendingOrder)
+  }
+
+  // Get agrupamentos in pending order
+  const orderedAgrupamentos = isReorderMode
+    ? pendingOrder
+        .map(id => agrupamentos.find(a => a.id === id))
+        .filter((a): a is AgrupamentoWithCount => a !== undefined)
+    : agrupamentos
+
   return (
     <div className="space-y-4">
       {/* Page Header */}
@@ -43,11 +108,30 @@ export function AgrupamentosTable({
       </div>
 
       {/* Toolbar */}
-      <div className="flex items-center justify-end">
-        <Button onClick={onCreateClick}>
-          <Plus className="h-4 w-4 mr-1.5" data-icon="inline-start" />
-          Novo Agrupamento
-        </Button>
+      <div className="flex items-center justify-end gap-2">
+        {isReorderMode ? (
+          <>
+            <Button variant="outline" onClick={onReorderCancel}>
+              Cancelar
+            </Button>
+            <Button onClick={handleSave}>
+              Salvar Ordem
+            </Button>
+          </>
+        ) : (
+          <>
+            {agrupamentos.length > 1 && (
+              <Button variant="outline" onClick={onReorderStart}>
+                <ArrowUpDown className="h-4 w-4 mr-1.5" data-icon="inline-start" />
+                Reordenar
+              </Button>
+            )}
+            <Button onClick={onCreateClick}>
+              <Plus className="h-4 w-4 mr-1.5" data-icon="inline-start" />
+              Novo Agrupamento
+            </Button>
+          </>
+        )}
       </div>
 
       {/* Table / Empty State */}
@@ -63,6 +147,38 @@ export function AgrupamentosTable({
               Criar primeiro agrupamento
             </Button>
           </div>
+        </div>
+      ) : isReorderMode ? (
+        <div className="rounded-md border border-border">
+          <DndContext
+            sensors={sensors}
+            collisionDetection={closestCenter}
+            onDragEnd={handleDragEnd}
+          >
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="w-[40px]"></TableHead>
+                  <TableHead>Nome</TableHead>
+                  <TableHead className="w-[120px]">Unidades</TableHead>
+                </TableRow>
+              </TableHeader>
+              <SortableContext
+                items={pendingOrder}
+                strategy={verticalListSortingStrategy}
+              >
+                <TableBody>
+                  {orderedAgrupamentos.map((agrupamento) => (
+                    <SortableAgrupamentoRow
+                      key={agrupamento.id}
+                      id={agrupamento.id}
+                      agrupamento={agrupamento}
+                    />
+                  ))}
+                </TableBody>
+              </SortableContext>
+            </Table>
+          </DndContext>
         </div>
       ) : (
         <div className="rounded-md border border-border">

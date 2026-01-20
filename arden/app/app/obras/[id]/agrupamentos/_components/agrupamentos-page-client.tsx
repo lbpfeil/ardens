@@ -5,7 +5,9 @@ import { useRouter } from 'next/navigation'
 import { AgrupamentosTable } from './agrupamentos-table'
 import { AgrupamentoFormModal } from './agrupamento-form-modal'
 import { DeleteConfirmation } from './delete-confirmation'
+import { updateAgrupamentosOrder } from '@/lib/supabase/queries/agrupamentos'
 import type { AgrupamentoWithCount } from '@/lib/supabase/queries/agrupamentos'
+import { toast } from 'sonner'
 
 interface AgrupamentosPageClientProps {
   obraId: string
@@ -23,6 +25,7 @@ export function AgrupamentosPageClient({
   const [editingAgrupamento, setEditingAgrupamento] = useState<AgrupamentoWithCount | null>(null)
   const [deletingAgrupamento, setDeletingAgrupamento] = useState<AgrupamentoWithCount | null>(null)
   const [isDeleteOpen, setIsDeleteOpen] = useState(false)
+  const [isReorderMode, setIsReorderMode] = useState(false)
 
   const handleCreateClick = () => {
     setEditingAgrupamento(null)
@@ -65,6 +68,25 @@ export function AgrupamentosPageClient({
     router.refresh()
   }
 
+  const handleReorderStart = () => {
+    setIsReorderMode(true)
+  }
+
+  const handleReorderSave = async (orderedIds: string[]) => {
+    try {
+      await updateAgrupamentosOrder(obraId, orderedIds)
+      toast.success('Ordem salva com sucesso')
+      setIsReorderMode(false)
+      router.refresh()
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Erro ao salvar ordem')
+    }
+  }
+
+  const handleReorderCancel = () => {
+    setIsReorderMode(false)
+  }
+
   return (
     <>
       <AgrupamentosTable
@@ -73,6 +95,10 @@ export function AgrupamentosPageClient({
         onCreateClick={handleCreateClick}
         onEditClick={handleEditClick}
         onDeleteClick={handleDeleteClick}
+        isReorderMode={isReorderMode}
+        onReorderStart={handleReorderStart}
+        onReorderSave={handleReorderSave}
+        onReorderCancel={handleReorderCancel}
       />
       <AgrupamentoFormModal
         open={isModalOpen}
