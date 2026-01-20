@@ -88,7 +88,8 @@ Recent decisions affecting current work:
 
 ### Pending Todos
 
-None.
+1. **Adicionar bulk delete para agrupamentos e unidades** (ui)
+   - `.planning/todos/pending/2026-01-20-bulk-delete-agrupamentos-unidades.md`
 
 ### Blockers/Concerns
 
