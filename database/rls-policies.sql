@@ -221,26 +221,26 @@ CREATE POLICY "agrupamentos_select" ON agrupamentos
     )
   );
 
--- INSERT/UPDATE/DELETE: Apenas admin
+-- INSERT/UPDATE/DELETE: Admin ou Engenheiro (engenheiro configura estrutura da obra)
 DROP POLICY IF EXISTS "agrupamentos_insert" ON agrupamentos;
 CREATE POLICY "agrupamentos_insert" ON agrupamentos
   FOR INSERT WITH CHECK (
     obra_id IN (SELECT id FROM obras WHERE cliente_id = get_user_cliente_id())
-    AND is_admin()
+    AND is_admin_or_engenheiro()
   );
 
 DROP POLICY IF EXISTS "agrupamentos_update" ON agrupamentos;
 CREATE POLICY "agrupamentos_update" ON agrupamentos
   FOR UPDATE USING (
     obra_id IN (SELECT id FROM obras WHERE cliente_id = get_user_cliente_id())
-    AND is_admin()
+    AND is_admin_or_engenheiro()
   );
 
 DROP POLICY IF EXISTS "agrupamentos_delete" ON agrupamentos;
 CREATE POLICY "agrupamentos_delete" ON agrupamentos
   FOR DELETE USING (
     obra_id IN (SELECT id FROM obras WHERE cliente_id = get_user_cliente_id())
-    AND is_admin()
+    AND is_admin_or_engenheiro()
   );
 
 
