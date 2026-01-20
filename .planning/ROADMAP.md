@@ -15,7 +15,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 1: Foundation** - Infraestrutura de state management e validacao de forms
 - [x] **Phase 2: Obras** - CRUD completo de obras com listagem, criacao, edicao e arquivamento
 - [x] **Phase 3: Agrupamentos** - Gestao de agrupamentos vinculados a obras
-- [ ] **Phase 4: Unidades** - Gestao de unidades vinculadas a agrupamentos (gap closure pending)
+- [x] **Phase 4: Unidades** - Gestao de unidades vinculadas a agrupamentos
 - [ ] **Phase 5: Biblioteca FVS** - Gestao de servicos e itens de verificacao
 - [ ] **Phase 6: Dashboard** - Home do engenheiro com KPIs e feed de NCs
 
@@ -87,8 +87,8 @@ Plans:
 Plans:
 - [x] 04-01-PLAN.md — Data access layer and validation schemas with numeric range batch
 - [x] 04-02-PLAN.md — Split-view UI with unidades panel and CRUD modals
-- [ ] 04-03-PLAN.md — Fix RLS policies for engenheiro access (gap closure)
-- [ ] 04-04-PLAN.md — Fix PT-BR accents and dialog accessibility (gap closure)
+- [x] 04-03-PLAN.md — Fix RLS policies for engenheiro access (gap closure)
+- [x] 04-04-PLAN.md — Fix PT-BR accents and dialog accessibility (gap closure)
 
 ### Phase 5: Biblioteca FVS
 **Goal**: Usuario pode gerenciar biblioteca de servicos e ativar servicos por obra
@@ -139,7 +139,7 @@ Phases execute in numeric order: 1 > 2 > 3 > 4 > 5 > 6
 | 1. Foundation | 2/2 | Complete | 2026-01-19 |
 | 2. Obras | 4/4 | Complete | 2026-01-19 |
 | 3. Agrupamentos | 4/4 | Complete | 2026-01-20 |
-| 4. Unidades | 2/4 | Gap closure pending | - |
+| 4. Unidades | 4/4 | Complete | 2026-01-20 |
 | 5. Biblioteca FVS | 0/4 | Not started | - |
 | 6. Dashboard | 0/3 | Not started | - |
 
