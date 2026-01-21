@@ -95,10 +95,22 @@ arden/components/ui/
 ├── input.tsx
 ├── input-group.tsx
 ├── label.tsx
+├── list-page-toolbar.tsx    # Toolbar para paginas de listagem
 ├── select.tsx
 ├── separator.tsx
+├── sortable-table-header.tsx # Headers ordenaveis para tabelas
+├── table.tsx
 └── textarea.tsx
 ```
+
+### Paginas de Listagem (Padrao Obrigatorio)
+
+Para paginas que listam entidades (obras, servicos, etc), usar:
+
+1. **ListPageToolbar** - Toolbar com busca, tabs de status, botao de acao
+2. **SortableTableHeader** - Headers ordenaveis (icone no hover)
+
+Ver `docs/design/DESIGN-SYSTEM.md` secao "List Page Components" para uso completo.
 
 ### Variaveis CSS Principais
 

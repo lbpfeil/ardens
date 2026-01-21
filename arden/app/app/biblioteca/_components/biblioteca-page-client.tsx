@@ -2,14 +2,15 @@
 
 import { useState, useMemo } from 'react'
 import { useRouter } from 'next/navigation'
-import { ServicosTable } from './servicos-table'
+import {
+  ServicosTable,
+  type StatusFilter,
+  type SortField,
+  type SortDirection,
+} from './servicos-table'
 import { ServicoFormModal } from './servico-form-modal'
 import { ArchiveConfirmation } from './archive-confirmation'
 import type { Servico } from '@/lib/supabase/queries/servicos'
-
-export type StatusFilter = 'ativos' | 'arquivados' | 'todos'
-export type SortField = 'codigo' | 'nome' | 'categoria' | 'created_at'
-export type SortDirection = 'asc' | 'desc'
 
 interface BibliotecaPageClientProps {
   initialServicos: Servico[]
@@ -145,7 +146,6 @@ export function BibliotecaPageClient({ initialServicos }: BibliotecaPageClientPr
         sortDirection={sortDirection}
         onSort={handleSort}
         totalCount={initialServicos.length}
-        hasActiveFilters={searchQuery.trim() !== '' || statusFilter !== 'ativos'}
       />
       <ServicoFormModal
         open={isModalOpen}

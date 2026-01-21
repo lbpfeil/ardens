@@ -557,6 +557,180 @@ Variants: `default`, `secondary`, `destructive`, `outline`, `warning`, `brand`.
 </div>
 ```
 
+### List Page Components
+
+Componentes padronizados para paginas de listagem (ex: Obras, Biblioteca FVS).
+
+**Arquivos:**
+- `components/ui/list-page-toolbar.tsx`
+- `components/ui/sortable-table-header.tsx`
+
+#### ListPageToolbar
+Toolbar padronizado para paginas de listagem com busca, filtro de status e acao primaria.
+
+```tsx
+import { ListPageToolbar, type StatusFilter } from '@/components/ui/list-page-toolbar'
+
+// Estado no componente pai
+const [searchQuery, setSearchQuery] = useState('')
+const [statusFilter, setStatusFilter] = useState<StatusFilter>('ativos')
+
+<ListPageToolbar
+  searchPlaceholder="Buscar por nome..."
+  searchQuery={searchQuery}
+  onSearchChange={setSearchQuery}
+  statusFilter={statusFilter}
+  onStatusFilterChange={setStatusFilter}
+  statusTabs={[
+    { value: 'ativos', label: 'Ativos' },
+    { value: 'arquivados', label: 'Arquivados' },
+    { value: 'todos', label: 'Todos' },
+  ]}
+  primaryActionLabel="Novo Item"
+  onPrimaryAction={handleCreate}
+  filteredCount={filteredItems.length}
+  totalCount={allItems.length}
+  itemLabel="item"
+/>
+```
+
+**Layout padrao:**
+```
+[🔍 Busca]  [Tabs: Ativos | Arquivados | Todos]  [+ Botao Acao]
+X de Y itens
+```
+
+**Props:**
+| Prop | Tipo | Descricao |
+|------|------|-----------|
+| `searchPlaceholder` | `string` | Placeholder do input de busca |
+| `searchQuery` | `string` | Valor atual da busca |
+| `onSearchChange` | `(query: string) => void` | Handler de mudanca de busca |
+| `statusFilter` | `StatusFilter` | Filtro ativo ('ativos' | 'arquivados' | 'todos') |
+| `onStatusFilterChange` | `(filter: StatusFilter) => void` | Handler de mudanca de filtro |
+| `statusTabs` | `StatusTab[]` | Customiza labels das tabs (opcional) |
+| `primaryActionLabel` | `string` | Label do botao primario |
+| `onPrimaryAction` | `() => void` | Handler do botao primario |
+| `filteredCount` | `number` | Qtd de itens filtrados |
+| `totalCount` | `number` | Qtd total de itens |
+| `itemLabel` | `string` | Label singular do item (ex: 'obra', 'servico') |
+
+#### SortableTableHeader
+Header de tabela com suporte a ordenacao. Icone aparece no hover, ativo mostra direcao.
+
+```tsx
+import {
+  SortableTableHeader,
+  useSortState,
+  type SortDirection
+} from '@/components/ui/sortable-table-header'
+
+// Usar hook para gerenciar estado
+const { sortField, sortDirection, handleSort } = useSortState<'nome' | 'data'>('nome', 'asc')
+
+<TableHeader>
+  <TableRow>
+    <SortableTableHeader
+      field="nome"
+      currentField={sortField}
+      currentDirection={sortDirection}
+      onSort={handleSort}
+    >
+      Nome
+    </SortableTableHeader>
+    <SortableTableHeader
+      field="data"
+      currentField={sortField}
+      currentDirection={sortDirection}
+      onSort={handleSort}
+      className="w-[120px]"
+    >
+      Data
+    </SortableTableHeader>
+    <TableHead className="w-[50px]">Acoes</TableHead>
+  </TableRow>
+</TableHeader>
+```
+
+**Comportamento:**
+- Click alterna asc/desc se coluna ja ativa
+- Click em outra coluna muda para ela com asc
+- Icone de setas visivel apenas no hover (opacity-0 -> group-hover:opacity-40)
+- Coluna ativa mostra seta direcional (opacity-100)
+
+**Helpers disponiveis:**
+- `useSortState<T>()` - Hook para gerenciar estado de ordenacao
+- `sortItems<T>()` - Funcao generica para ordenar arrays
+
+#### Padrao de Pagina de Listagem Completo
+
+```tsx
+// page.tsx (Server Component)
+export default async function ListPage() {
+  const items = await fetchAllItems() // incluir arquivados
+
+  return (
+    <div className="p-6 bg-background min-h-full">
+      <div className="max-w-6xl mx-auto">
+        <div className="mb-6">
+          <h1 className="text-2xl font-normal text-foreground">Titulo</h1>
+          <p className="text-sm text-foreground-light mt-1">Descricao</p>
+        </div>
+        <ListPageClient initialItems={items} />
+      </div>
+    </div>
+  )
+}
+
+// _components/list-page-client.tsx (Client Component)
+'use client'
+
+export function ListPageClient({ initialItems }) {
+  // Filter state
+  const [searchQuery, setSearchQuery] = useState('')
+  const [statusFilter, setStatusFilter] = useState<StatusFilter>('ativos')
+
+  // Sort state
+  const { sortField, sortDirection, handleSort } = useSortState('created_at', 'desc')
+
+  // Filter and sort
+  const filteredItems = useMemo(() => {
+    let result = [...initialItems]
+
+    // Status filter
+    if (statusFilter === 'ativos') {
+      result = result.filter(i => !i.arquivado)
+    } else if (statusFilter === 'arquivados') {
+      result = result.filter(i => i.arquivado)
+    }
+
+    // Search filter
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase()
+      result = result.filter(i => i.nome.toLowerCase().includes(q))
+    }
+
+    // Sort
+    return sortItems(result, sortField, sortDirection)
+  }, [initialItems, statusFilter, searchQuery, sortField, sortDirection])
+
+  return (
+    <div className="space-y-4">
+      <ListPageToolbar ... />
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <SortableTableHeader field="nome" ... >Nome</SortableTableHeader>
+            ...
+          </TableRow>
+        </TableHeader>
+        <TableBody>...</TableBody>
+      </Table>
+    </div>
+  )
+}
+```
+
 ### 4. Feedback & User Guidance
 
 #### Modal (`Dialog`)
