@@ -123,13 +123,13 @@ Plans:
   6. Usuario edita e exclui itens de verificacao
   7. Usuario ativa servicos especificos para uma obra na pagina de detalhes da obra
   8. Usuario desativa servicos de uma obra
-**Plans**: TBD
+**Plans**: 4 plans
 
 Plans:
-- [ ] 05-01: Listagem de servicos (pagina biblioteca)
-- [ ] 05-02: CRUD de servico (criar, editar, arquivar)
-- [ ] 05-03: Itens de verificacao (CRUD dentro de servico)
-- [ ] 05-04: Ativacao de servicos por obra (pagina obra, selecao)
+- [ ] 05-01-PLAN.md — Setup: data access layer, validation schemas, navigation update
+- [ ] 05-02-PLAN.md — Biblioteca page with servicos table and CRUD modals
+- [ ] 05-03-PLAN.md — Servico detail page with itens de verificacao CRUD
+- [ ] 05-04-PLAN.md — Obra servicos activation page
 
 ### Phase 6: Dashboard
 **Goal**: Engenheiro tem visao consolidada da qualidade com KPIs e feed de nao-conformidades
@@ -161,7 +161,7 @@ Phases execute in numeric order: 1 > 2 > 3 > 4 > 4.1 > 5 > 6
 | 3. Agrupamentos | 4/4 | Complete | 2026-01-20 |
 | 4. Unidades | 4/4 | Complete | 2026-01-20 |
 | 4.1. Navegacao Contextual | 4/4 | Complete | 2026-01-21 |
-| 5. Biblioteca FVS | 0/4 | Not started | - |
+| 5. Biblioteca FVS | 0/4 | Planned | - |
 | 6. Dashboard | 0/3 | Not started | - |
 
 ---
@@ -174,5 +174,6 @@ Phases execute in numeric order: 1 > 2 > 3 > 4 > 4.1 > 5 > 6
 *Phase 4.1 inserted: 2026-01-21 (navegacao contextual)*
 *Phase 4.1 planned: 2026-01-21*
 *Phase 4.1 complete: 2026-01-21*
+*Phase 5 planned: 2026-01-21*
 *Depth: standard (6 phases + 1 insertion)*
 *Coverage: 31/31 v1 requirements mapped*
