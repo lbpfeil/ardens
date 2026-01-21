@@ -2,12 +2,12 @@
 
 import Link from 'next/link'
 import { usePathname, useParams } from 'next/navigation'
-
-interface BreadcrumbProps {
-  obraName?: string | null
-}
+import { useState, useEffect } from 'react'
+import { getObra } from '@/lib/supabase/queries/obras'
 
 const sectionLabels: Record<string, string> = {
+  obras: 'Obras',
+  biblioteca: 'Biblioteca FVS',
   unidades: 'Unidades',
   servicos: 'Servicos',
   verificacoes: 'Verificacoes',
@@ -22,12 +22,24 @@ interface BreadcrumbItem {
   href?: string
 }
 
-export function Breadcrumb({ obraName }: BreadcrumbProps) {
+export function Breadcrumb() {
   const pathname = usePathname()
   const params = useParams<{ id?: string }>()
+  const [obraName, setObraName] = useState<string | null>(null)
 
   // TODO: Get construtora name from auth context
   const construtoraName = 'Pfeil'
+
+  // Fetch obra name when in obra context
+  useEffect(() => {
+    if (params.id) {
+      getObra(params.id)
+        .then((obra) => setObraName(obra.nome))
+        .catch(() => setObraName(null))
+    } else {
+      setObraName(null)
+    }
+  }, [params.id])
 
   const crumbs: BreadcrumbItem[] = []
 
@@ -37,23 +49,33 @@ export function Breadcrumb({ obraName }: BreadcrumbProps) {
     href: '/app',
   })
 
-  // If we're in an obra context
-  if (params.id && obraName) {
+  const pathSegments = pathname.split('/').filter(Boolean)
+  // pathSegments examples:
+  // /app -> ['app']
+  // /app/obras -> ['app', 'obras']
+  // /app/obras/123 -> ['app', 'obras', '123']
+  // /app/obras/123/unidades -> ['app', 'obras', '123', 'unidades']
+  // /app/biblioteca -> ['app', 'biblioteca']
+
+  // Check if we're in obras list or biblioteca (global sections)
+  if (pathSegments[1] === 'obras' && !params.id) {
+    crumbs.push({ label: 'Obras' })
+  } else if (pathSegments[1] === 'biblioteca') {
+    crumbs.push({ label: 'Biblioteca FVS' })
+  } else if (params.id) {
+    // We're in an obra context
     crumbs.push({
-      label: obraName,
+      label: obraName || 'Carregando...',
       href: `/app/obras/${params.id}`,
     })
 
-    // Check for section in pathname
-    const pathSegments = pathname.split('/').filter(Boolean)
-    // Expected: ['app', 'obras', '{id}', '{section}']
-    const sectionIndex = pathSegments.indexOf(params.id) + 1
-    const section = pathSegments[sectionIndex]
+    // Check for section in pathname (after obra id)
+    const idIndex = pathSegments.indexOf(params.id)
+    const section = pathSegments[idIndex + 1]
 
     if (section && sectionLabels[section]) {
       crumbs.push({
         label: sectionLabels[section],
-        // No href for current page (last crumb)
       })
     }
   }

@@ -62,7 +62,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
               ARDEN
             </Link>
             <ChevronRight className="w-4 h-4 text-foreground-muted" />
-            <Breadcrumb obraName={null} />
+            <Breadcrumb />
           </div>
 
           {/* Right: Search, Help, Avatar */}
