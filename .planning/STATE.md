@@ -92,6 +92,9 @@ Recent decisions affecting current work:
 - [04.1-01]: Hardcoded construtora name with TODO for auth integration
 - [04.1-02]: Route renamed from /agrupamentos to /unidades to match user terminology
 - [04.1-02]: Permanent redirect (301) for old URLs via next.config.ts
+- [04.1-03]: Context detection: pathname.startsWith('/app/obras/') && params.id !== undefined
+- [04.1-03]: Breadcrumb receives obraName={null} - enhanced later with context provider
+- [04.1-03]: Removed all mock nav arrays - sidebar components are self-contained
 - [04.1-04]: Obra detail page is now Dashboard (not cadastral info display)
 - [04.1-04]: ObraInfoCard moved to /configuracoes route for settings management
 - [04.1-04]: KPICard as inline component for dashboard metrics
