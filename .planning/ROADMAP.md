@@ -16,6 +16,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 2: Obras** - CRUD completo de obras com listagem, criacao, edicao e arquivamento
 - [x] **Phase 3: Agrupamentos** - Gestao de agrupamentos vinculados a obras
 - [x] **Phase 4: Unidades** - Gestao de unidades vinculadas a agrupamentos
+- [ ] **Phase 4.1: Navegacao Contextual** - Sidebar global vs sidebar de obra (INSERTED)
 - [ ] **Phase 5: Biblioteca FVS** - Gestao de servicos e itens de verificacao
 - [ ] **Phase 6: Dashboard** - Home do engenheiro com KPIs e feed de NCs
 
@@ -90,6 +91,22 @@ Plans:
 - [x] 04-03-PLAN.md — Fix RLS policies for engenheiro access (gap closure)
 - [x] 04-04-PLAN.md — Fix PT-BR accents and dialog accessibility (gap closure)
 
+### Phase 4.1: Navegacao Contextual (INSERTED)
+**Goal**: Implementar sistema de navegacao contextual com sidebar global (visao geral) e sidebar de obra (contexto especifico), atualizando documentacao e integrando com features existentes
+**Depends on**: Phase 4
+**Requirements**: Derivado de 04_NAVIGATION.md (arquitetura de navegacao)
+**Success Criteria** (what must be TRUE):
+  1. Sidebar global exibe: Home, Obras, Biblioteca FVS (com navegacao funcional)
+  2. Sidebar de obra exibe: Dashboard, Agrupamentos/Unidades, Servicos habilitados
+  3. Alternancia de contexto funciona (clicar em obra muda para sidebar de obra)
+  4. Botao "Voltar para Visao Global" na sidebar de obra
+  5. Documentacao 04_NAVIGATION.md atualizada com diretrizes MVP
+  6. Features existentes (obras, agrupamentos, unidades) acessiveis via sidebar
+**Plans**: TBD
+
+Plans:
+- [ ] 04.1-01: TBD (run /gsd:plan-phase 4.1 to break down)
+
 ### Phase 5: Biblioteca FVS
 **Goal**: Usuario pode gerenciar biblioteca de servicos e ativar servicos por obra
 **Depends on**: Phase 2 (precisa de obras para ativar servicos)
@@ -132,7 +149,7 @@ Plans:
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 > 2 > 3 > 4 > 5 > 6
+Phases execute in numeric order: 1 > 2 > 3 > 4 > 4.1 > 5 > 6
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
@@ -140,6 +157,7 @@ Phases execute in numeric order: 1 > 2 > 3 > 4 > 5 > 6
 | 2. Obras | 4/4 | Complete | 2026-01-19 |
 | 3. Agrupamentos | 4/4 | Complete | 2026-01-20 |
 | 4. Unidades | 4/4 | Complete | 2026-01-20 |
+| 4.1. Navegacao Contextual | 0/? | Not started | - |
 | 5. Biblioteca FVS | 0/4 | Not started | - |
 | 6. Dashboard | 0/3 | Not started | - |
 
@@ -150,5 +168,6 @@ Phases execute in numeric order: 1 > 2 > 3 > 4 > 5 > 6
 *Phase 3 planned: 2026-01-20*
 *Phase 4 planned: 2026-01-20*
 *Phase 4 gap closure: 2026-01-20*
-*Depth: standard (6 phases)*
+*Phase 4.1 inserted: 2026-01-21 (navegacao contextual)*
+*Depth: standard (6 phases + 1 insertion)*
 *Coverage: 31/31 v1 requirements mapped*

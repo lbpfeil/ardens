@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-01-19)
 
 **Core value:** Trazer extrema rapidez e praticidade na verificacao de servicos, tornando a qualidade uma aliada da obra.
-**Current focus:** Phase 5 - Biblioteca FVS
+**Current focus:** Phase 4.1 - Navegacao Contextual (INSERTED)
 
 ## Current Position
 
-Phase: 5 of 6 (Biblioteca FVS)
-Plan: 0 of 4 in current phase
+Phase: 4.1 of 6 (Navegacao Contextual)
+Plan: 0 of ? in current phase
 Status: Ready to plan
-Last activity: 2026-01-20 - Phase 4 complete (all gap closure plans executed)
+Last activity: 2026-01-21 - Phase 4.1 inserted (navegacao contextual urgente)
 
-Progress: [##############] 100% (14/14 plans)
+Progress: [##############] 100% (14/14 plans completed before insertion)
 
 ## Performance Metrics
 
@@ -94,8 +94,15 @@ None.
 
 None yet.
 
+### Roadmap Evolution
+
+- Phase 4.1 inserted after Phase 4: Navegacao Contextual (URGENT)
+  - Reason: Features implementadas (obras, agrupamentos, unidades) nao tem navegacao funcional
+  - Sidebar atual tem placeholders hardcoded sem navegacao real
+  - Necessario antes de criar mais features (Biblioteca FVS, Dashboard)
+
 ## Session Continuity
 
-Last session: 2026-01-20
-Stopped at: Phase 4 complete, ready to plan Phase 5
+Last session: 2026-01-21
+Stopped at: Phase 4.1 inserted, ready to plan
 Resume file: None
