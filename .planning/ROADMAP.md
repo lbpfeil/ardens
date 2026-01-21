@@ -102,10 +102,13 @@ Plans:
   4. Botao "Voltar para Visao Global" na sidebar de obra
   5. Documentacao 04_NAVIGATION.md atualizada com diretrizes MVP
   6. Features existentes (obras, agrupamentos, unidades) acessiveis via sidebar
-**Plans**: TBD
+**Plans**: 4 plans
 
 Plans:
-- [ ] 04.1-01: TBD (run /gsd:plan-phase 4.1 to break down)
+- [ ] 04.1-01-PLAN.md — Create navigation components (SidebarItem, SidebarGlobal, SidebarObra, Breadcrumb)
+- [ ] 04.1-02-PLAN.md — Rename route /agrupamentos to /unidades with redirect
+- [ ] 04.1-03-PLAN.md — Update layout for context-aware sidebar switching
+- [ ] 04.1-04-PLAN.md — Transform obra page to dashboard, create configuracoes page, update docs
 
 ### Phase 5: Biblioteca FVS
 **Goal**: Usuario pode gerenciar biblioteca de servicos e ativar servicos por obra
@@ -157,7 +160,7 @@ Phases execute in numeric order: 1 > 2 > 3 > 4 > 4.1 > 5 > 6
 | 2. Obras | 4/4 | Complete | 2026-01-19 |
 | 3. Agrupamentos | 4/4 | Complete | 2026-01-20 |
 | 4. Unidades | 4/4 | Complete | 2026-01-20 |
-| 4.1. Navegacao Contextual | 0/? | Not started | - |
+| 4.1. Navegacao Contextual | 0/4 | Planned | - |
 | 5. Biblioteca FVS | 0/4 | Not started | - |
 | 6. Dashboard | 0/3 | Not started | - |
 
@@ -169,5 +172,6 @@ Phases execute in numeric order: 1 > 2 > 3 > 4 > 4.1 > 5 > 6
 *Phase 4 planned: 2026-01-20*
 *Phase 4 gap closure: 2026-01-20*
 *Phase 4.1 inserted: 2026-01-21 (navegacao contextual)*
+*Phase 4.1 planned: 2026-01-21*
 *Depth: standard (6 phases + 1 insertion)*
 *Coverage: 31/31 v1 requirements mapped*
