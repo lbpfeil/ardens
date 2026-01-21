@@ -17,7 +17,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 3: Agrupamentos** - Gestao de agrupamentos vinculados a obras
 - [x] **Phase 4: Unidades** - Gestao de unidades vinculadas a agrupamentos
 - [x] **Phase 4.1: Navegacao Contextual** - Sidebar global vs sidebar de obra (INSERTED)
-- [ ] **Phase 5: Biblioteca FVS** - Gestao de servicos e itens de verificacao
+- [x] **Phase 5: Biblioteca FVS** - Gestao de servicos e itens de verificacao
 - [ ] **Phase 6: Dashboard** - Home do engenheiro com KPIs e feed de NCs
 
 ## Phase Details
@@ -126,10 +126,10 @@ Plans:
 **Plans**: 4 plans
 
 Plans:
-- [ ] 05-01-PLAN.md — Setup: data access layer, validation schemas, navigation update
-- [ ] 05-02-PLAN.md — Biblioteca page with servicos table and CRUD modals
-- [ ] 05-03-PLAN.md — Servico detail page with itens de verificacao CRUD
-- [ ] 05-04-PLAN.md — Obra servicos activation page
+- [x] 05-01-PLAN.md — Setup: data access layer, validation schemas, navigation update
+- [x] 05-02-PLAN.md — Biblioteca page with servicos table and CRUD modals
+- [x] 05-03-PLAN.md — Servico detail page with itens de verificacao CRUD
+- [x] 05-04-PLAN.md — Obra servicos activation page
 
 ### Phase 6: Dashboard
 **Goal**: Engenheiro tem visao consolidada da qualidade com KPIs e feed de nao-conformidades
@@ -161,7 +161,7 @@ Phases execute in numeric order: 1 > 2 > 3 > 4 > 4.1 > 5 > 6
 | 3. Agrupamentos | 4/4 | Complete | 2026-01-20 |
 | 4. Unidades | 4/4 | Complete | 2026-01-20 |
 | 4.1. Navegacao Contextual | 4/4 | Complete | 2026-01-21 |
-| 5. Biblioteca FVS | 0/4 | Planned | - |
+| 5. Biblioteca FVS | 4/4 | Complete | 2026-01-21 |
 | 6. Dashboard | 0/3 | Not started | - |
 
 ---

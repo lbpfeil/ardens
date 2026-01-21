@@ -33,14 +33,14 @@ Requirements para o Mes 1 do MVP. Cada um mapeia para fases do roadmap.
 
 ### Biblioteca FVS
 
-- [ ] **SERV-01**: Usuario pode listar todos os servicos do cliente
-- [ ] **SERV-02**: Usuario pode criar novo servico (codigo, nome, categoria)
-- [ ] **SERV-03**: Usuario pode editar servico existente
-- [ ] **SERV-04**: Usuario pode arquivar servico (soft delete)
-- [ ] **SERV-05**: Usuario pode adicionar itens de verificacao a um servico
-- [ ] **SERV-06**: Usuario pode editar/excluir itens de verificacao
-- [ ] **SERV-07**: Usuario pode ativar servicos em uma obra especifica
-- [ ] **SERV-08**: Usuario pode desativar servicos de uma obra
+- [x] **SERV-01**: Usuario pode listar todos os servicos do cliente
+- [x] **SERV-02**: Usuario pode criar novo servico (codigo, nome, categoria)
+- [x] **SERV-03**: Usuario pode editar servico existente
+- [x] **SERV-04**: Usuario pode arquivar servico (soft delete)
+- [x] **SERV-05**: Usuario pode adicionar itens de verificacao a um servico
+- [x] **SERV-06**: Usuario pode editar/excluir itens de verificacao
+- [x] **SERV-07**: Usuario pode ativar servicos em uma obra especifica
+- [x] **SERV-08**: Usuario pode desativar servicos de uma obra
 
 ### Dashboard
 
@@ -116,14 +116,14 @@ Explicitamente excluido do Mes 1.
 | UNID-03 | Phase 4 | Complete |
 | UNID-04 | Phase 4 | Complete |
 | UNID-05 | Phase 4 | Complete |
-| SERV-01 | Phase 5 | Pending |
-| SERV-02 | Phase 5 | Pending |
-| SERV-03 | Phase 5 | Pending |
-| SERV-04 | Phase 5 | Pending |
-| SERV-05 | Phase 5 | Pending |
-| SERV-06 | Phase 5 | Pending |
-| SERV-07 | Phase 5 | Pending |
-| SERV-08 | Phase 5 | Pending |
+| SERV-01 | Phase 5 | Complete |
+| SERV-02 | Phase 5 | Complete |
+| SERV-03 | Phase 5 | Complete |
+| SERV-04 | Phase 5 | Complete |
+| SERV-05 | Phase 5 | Complete |
+| SERV-06 | Phase 5 | Complete |
+| SERV-07 | Phase 5 | Complete |
+| SERV-08 | Phase 5 | Complete |
 | DASH-01 | Phase 6 | Pending |
 | DASH-02 | Phase 6 | Pending |
 | DASH-03 | Phase 6 | Pending |
@@ -138,4 +138,4 @@ Explicitamente excluido do Mes 1.
 
 ---
 *Requirements defined: 2026-01-19*
-*Last updated: 2026-01-20 after phase 4 completion*
+*Last updated: 2026-01-21 after phase 5 completion*
