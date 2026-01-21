@@ -74,15 +74,15 @@ export function ListPageToolbar({
             />
           </div>
 
-          {/* Status tabs */}
-          <div className="flex items-center gap-1 p-1 bg-surface-100 rounded-lg border border-border w-fit">
+          {/* Status tabs - h-8 to match input height */}
+          <div className="flex items-center gap-0.5 px-1 h-8 bg-surface-100 rounded-lg border border-border w-fit">
             {statusTabs.map((tab) => (
               <button
                 key={tab.value}
                 type="button"
                 onClick={() => onStatusFilterChange(tab.value)}
                 className={cn(
-                  'px-3 py-1.5 text-sm font-medium rounded-md transition-colors',
+                  'px-2.5 h-6 text-sm font-medium rounded-md transition-colors',
                   statusFilter === tab.value
                     ? 'bg-surface-200 text-foreground'
                     : 'text-foreground-light hover:text-foreground hover:bg-surface-200/50'
