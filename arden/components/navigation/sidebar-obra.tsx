@@ -26,7 +26,7 @@ function getObraNavItems(obraId: string) {
       { icon: LayoutDashboard, label: 'Dashboard', href: `/app/obras/${obraId}`, exact: true },
     ],
     operacao: [
-      { icon: Wrench, label: 'Servicos', href: `/app/obras/${obraId}/servicos`, badge: 'Em breve' },
+      { icon: Wrench, label: 'Servicos', href: `/app/obras/${obraId}/servicos` },
       { icon: Building2, label: 'Unidades', href: `/app/obras/${obraId}/unidades` },
       { icon: ClipboardCheck, label: 'Verificacoes', href: `/app/obras/${obraId}/verificacoes`, badge: 'Em breve' },
       { icon: AlertTriangle, label: 'NCs', href: `/app/obras/${obraId}/ncs`, badge: 'Em breve' },
