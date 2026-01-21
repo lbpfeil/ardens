@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-01-19)
 ## Current Position
 
 Phase: 5 of 6 (Biblioteca FVS)
-Plan: 4 of ? in current phase
-Status: In progress
-Last activity: 2026-01-21 - Completed 05-04-PLAN.md (obra servicos activation page)
+Plan: 4 of 4 in current phase
+Status: Phase complete
+Last activity: 2026-01-21 - Completed 05-03-PLAN.md (servico detail page with itens)
 
-Progress: [#####################] 100% (21/? plans completed)
+Progress: [#####################] 100% (22/22 plans completed)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 21
+- Total plans completed: 22
 - Average duration: 3.9 min
-- Total execution time: 82 min
+- Total execution time: 85 min
 
 **By Phase:**
 
@@ -32,10 +32,10 @@ Progress: [#####################] 100% (21/? plans completed)
 | 03-agrupamentos | 4 | 10 min | 2.5 min |
 | 04-unidades | 4 | 11 min | 2.75 min |
 | 04.1-navegacao-contextual | 4 | 13 min | 3.25 min |
-| 05-biblioteca-fvs | 3 | 10 min | 3.33 min |
+| 05-biblioteca-fvs | 4 | 13 min | 3.25 min |
 
 **Recent Trend:**
-- Last 5 plans: 3 min, 4 min, 4 min, 3 min, 3 min
+- Last 5 plans: 4 min, 4 min, 3 min, 3 min, 3 min
 - Trend: stable, fast
 
 *Updated after each plan completion*
@@ -110,6 +110,9 @@ Recent decisions affecting current work:
 - [05-04]: Separate queries merged client-side for activation status (Map-based merge)
 - [05-04]: deactivateServico uses obraId + servicoId for API consistency
 - [05-04]: Empty state links to Biblioteca FVS for service creation
+- [05-03]: Split view: lg:w-80 for info panel, flex-1 for itens panel
+- [05-03]: Item ordem displayed as 1-indexed (ordem + 1) for user friendliness
+- [05-03]: Truncated observacao in delete confirmation (100 chars max)
 
 ### Pending Todos
 
@@ -129,7 +132,7 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-01-21
-Stopped at: Completed 05-04-PLAN.md (obra servicos activation page)
+Stopped at: Completed 05-03-PLAN.md (servico detail page with itens)
 Resume file: None
 
 ## Completed Phases
@@ -146,3 +149,13 @@ Verification: 6/6 must-haves passed
 Report: .planning/phases/04.1-navegacao-contextual/04.1-VERIFICATION.md
 
 Ready for Phase 5: Biblioteca FVS
+
+### Phase 5: Biblioteca FVS (COMPLETE 2026-01-21)
+
+All 4 plans executed:
+- 05-01: Data access layer (servicos, itens-servico, obra-servicos)
+- 05-02: Biblioteca list page with servicos table
+- 05-03: Servico detail page with itens CRUD
+- 05-04: Obra servicos activation page
+
+Ready for Phase 6: Dashboard (or verification)
