@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-01-19)
 ## Current Position
 
 Phase: 4.1 of 6 (Navegacao Contextual)
-Plan: 0 of ? in current phase
-Status: Ready to plan
-Last activity: 2026-01-21 - Phase 4.1 inserted (navegacao contextual urgente)
+Plan: 1 of ? in current phase
+Status: In progress
+Last activity: 2026-01-21 - Completed 04.1-01-PLAN.md (navigation components)
 
-Progress: [##############] 100% (14/14 plans completed before insertion)
+Progress: [##############.] ~93% (14/15+ plans completed)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 14
-- Average duration: 4.2 min
-- Total execution time: 59 min
+- Total plans completed: 15
+- Average duration: 4.1 min
+- Total execution time: 61 min
 
 **By Phase:**
 
@@ -31,9 +31,10 @@ Progress: [##############] 100% (14/14 plans completed before insertion)
 | 02-obras | 4 | 18 min | 4.5 min |
 | 03-agrupamentos | 4 | 10 min | 2.5 min |
 | 04-unidades | 4 | 11 min | 2.75 min |
+| 04.1-navegacao-contextual | 1 | 2 min | 2 min |
 
 **Recent Trend:**
-- Last 5 plans: 3 min, 3 min, 2 min, 4 min, 3 min
+- Last 5 plans: 3 min, 2 min, 4 min, 3 min, 2 min
 - Trend: stable, fast
 
 *Updated after each plan completion*
@@ -85,6 +86,10 @@ Recent decisions affecting current work:
 - [04-02]: RefreshKey state pattern to trigger unidades refetch after mutations
 - [04-03]: Use is_admin_or_engenheiro() for unidades RLS policies (consistent with agrupamentos)
 - [04-04]: Use sr-only DialogDescription for form modals (accessibility without visual clutter)
+- [04.1-01]: usePathname for active detection with exact option for controlling match behavior
+- [04.1-01]: Badge component for placeholder features ("Em breve")
+- [04.1-01]: Section labels only visible when sidebar expanded
+- [04.1-01]: Hardcoded construtora name with TODO for auth integration
 
 ### Pending Todos
 
@@ -104,5 +109,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-01-21
-Stopped at: Phase 4.1 inserted, ready to plan
+Stopped at: Completed 04.1-01-PLAN.md (navigation components)
 Resume file: None
