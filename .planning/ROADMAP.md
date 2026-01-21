@@ -16,7 +16,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 2: Obras** - CRUD completo de obras com listagem, criacao, edicao e arquivamento
 - [x] **Phase 3: Agrupamentos** - Gestao de agrupamentos vinculados a obras
 - [x] **Phase 4: Unidades** - Gestao de unidades vinculadas a agrupamentos
-- [ ] **Phase 4.1: Navegacao Contextual** - Sidebar global vs sidebar de obra (INSERTED)
+- [x] **Phase 4.1: Navegacao Contextual** - Sidebar global vs sidebar de obra (INSERTED)
 - [ ] **Phase 5: Biblioteca FVS** - Gestao de servicos e itens de verificacao
 - [ ] **Phase 6: Dashboard** - Home do engenheiro com KPIs e feed de NCs
 
@@ -105,10 +105,10 @@ Plans:
 **Plans**: 4 plans
 
 Plans:
-- [ ] 04.1-01-PLAN.md — Create navigation components (SidebarItem, SidebarGlobal, SidebarObra, Breadcrumb)
-- [ ] 04.1-02-PLAN.md — Rename route /agrupamentos to /unidades with redirect
-- [ ] 04.1-03-PLAN.md — Update layout for context-aware sidebar switching
-- [ ] 04.1-04-PLAN.md — Transform obra page to dashboard, create configuracoes page, update docs
+- [x] 04.1-01-PLAN.md — Create navigation components (SidebarItem, SidebarGlobal, SidebarObra, Breadcrumb)
+- [x] 04.1-02-PLAN.md — Rename route /agrupamentos to /unidades with redirect
+- [x] 04.1-03-PLAN.md — Update layout for context-aware sidebar switching
+- [x] 04.1-04-PLAN.md — Transform obra page to dashboard, create configuracoes page, update docs
 
 ### Phase 5: Biblioteca FVS
 **Goal**: Usuario pode gerenciar biblioteca de servicos e ativar servicos por obra
@@ -160,7 +160,7 @@ Phases execute in numeric order: 1 > 2 > 3 > 4 > 4.1 > 5 > 6
 | 2. Obras | 4/4 | Complete | 2026-01-19 |
 | 3. Agrupamentos | 4/4 | Complete | 2026-01-20 |
 | 4. Unidades | 4/4 | Complete | 2026-01-20 |
-| 4.1. Navegacao Contextual | 0/4 | Planned | - |
+| 4.1. Navegacao Contextual | 4/4 | Complete | 2026-01-21 |
 | 5. Biblioteca FVS | 0/4 | Not started | - |
 | 6. Dashboard | 0/3 | Not started | - |
 
@@ -173,5 +173,6 @@ Phases execute in numeric order: 1 > 2 > 3 > 4 > 4.1 > 5 > 6
 *Phase 4 gap closure: 2026-01-20*
 *Phase 4.1 inserted: 2026-01-21 (navegacao contextual)*
 *Phase 4.1 planned: 2026-01-21*
+*Phase 4.1 complete: 2026-01-21*
 *Depth: standard (6 phases + 1 insertion)*
 *Coverage: 31/31 v1 requirements mapped*
