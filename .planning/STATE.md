@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-01-19)
 ## Current Position
 
 Phase: 5 of 6 (Biblioteca FVS)
-Plan: 2 of ? in current phase
+Plan: 4 of ? in current phase
 Status: In progress
-Last activity: 2026-01-21 - Completed 05-02-PLAN.md (biblioteca list page)
+Last activity: 2026-01-21 - Completed 05-04-PLAN.md (obra servicos activation page)
 
-Progress: [####################] 100% (20/? plans completed)
+Progress: [#####################] 100% (21/? plans completed)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 20
-- Average duration: 3.95 min
-- Total execution time: 79 min
+- Total plans completed: 21
+- Average duration: 3.9 min
+- Total execution time: 82 min
 
 **By Phase:**
 
@@ -32,10 +32,10 @@ Progress: [####################] 100% (20/? plans completed)
 | 03-agrupamentos | 4 | 10 min | 2.5 min |
 | 04-unidades | 4 | 11 min | 2.75 min |
 | 04.1-navegacao-contextual | 4 | 13 min | 3.25 min |
-| 05-biblioteca-fvs | 2 | 7 min | 3.5 min |
+| 05-biblioteca-fvs | 3 | 10 min | 3.33 min |
 
 **Recent Trend:**
-- Last 5 plans: 2 min, 3 min, 4 min, 4 min, 3 min
+- Last 5 plans: 3 min, 4 min, 4 min, 3 min, 3 min
 - Trend: stable, fast
 
 *Updated after each plan completion*
@@ -107,6 +107,9 @@ Recent decisions affecting current work:
 - [05-02]: getCategoryLabel helper maps categoria value to label using categoriaServicoOptions
 - [05-02]: Badge variant='secondary' for all categories (consistent styling)
 - [05-02]: Row click navigates to detail page (router.push to /app/biblioteca/{id})
+- [05-04]: Separate queries merged client-side for activation status (Map-based merge)
+- [05-04]: deactivateServico uses obraId + servicoId for API consistency
+- [05-04]: Empty state links to Biblioteca FVS for service creation
 
 ### Pending Todos
 
@@ -126,7 +129,7 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-01-21
-Stopped at: Completed 05-02-PLAN.md (biblioteca list page with CRUD)
+Stopped at: Completed 05-04-PLAN.md (obra servicos activation page)
 Resume file: None
 
 ## Completed Phases
