@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-01-19)
 
 **Core value:** Trazer extrema rapidez e praticidade na verificacao de servicos, tornando a qualidade uma aliada da obra.
-**Current focus:** Phase 5 - Biblioteca FVS (next)
+**Current focus:** Phase 5 - Biblioteca FVS (in progress)
 
 ## Current Position
 
 Phase: 5 of 6 (Biblioteca FVS)
-Plan: 0 of ? in current phase
-Status: Ready to plan
-Last activity: 2026-01-21 - Phase 4.1 complete (navegacao contextual verified)
+Plan: 1 of ? in current phase
+Status: In progress
+Last activity: 2026-01-21 - Completed 05-01-PLAN.md (data access layer)
 
-Progress: [##################] 100% (18/18 plans completed before Phase 5)
+Progress: [###################] 100% (19/? plans completed)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 18
+- Total plans completed: 19
 - Average duration: 4.0 min
-- Total execution time: 72 min
+- Total execution time: 76 min
 
 **By Phase:**
 
@@ -32,9 +32,10 @@ Progress: [##################] 100% (18/18 plans completed before Phase 5)
 | 03-agrupamentos | 4 | 10 min | 2.5 min |
 | 04-unidades | 4 | 11 min | 2.75 min |
 | 04.1-navegacao-contextual | 4 | 13 min | 3.25 min |
+| 05-biblioteca-fvs | 1 | 4 min | 4 min |
 
 **Recent Trend:**
-- Last 5 plans: 4 min, 3 min, 2 min, 3 min, 4 min
+- Last 5 plans: 3 min, 2 min, 3 min, 4 min, 4 min
 - Trend: stable, fast
 
 *Updated after each plan completion*
@@ -98,6 +99,11 @@ Recent decisions affecting current work:
 - [04.1-04]: Obra detail page is now Dashboard (not cadastral info display)
 - [04.1-04]: ObraInfoCard moved to /configuracoes route for settings management
 - [04.1-04]: KPICard as inline component for dashboard metrics
+- [05-01]: CategoriaServico as TypeScript type union (11 categories matching DB enum)
+- [05-01]: Error code 23505 (unique_violation) returns 'Ja existe um servico com este codigo'
+- [05-01]: Upsert pattern for activateServico (onConflict: obra_id,servico_id)
+- [05-01]: ServicoWithActivation type for listServicosForObra join query
+- [05-01]: syncObraServicos computes diff and bulk activates/deactivates
 
 ### Pending Todos
 
@@ -117,7 +123,7 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-01-21
-Stopped at: Phase 4.1 verified and complete
+Stopped at: Completed 05-01-PLAN.md (data access layer for Biblioteca FVS)
 Resume file: None
 
 ## Completed Phases
