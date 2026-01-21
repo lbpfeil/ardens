@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-01-19)
 ## Current Position
 
 Phase: 4.1 of 6 (Navegacao Contextual)
-Plan: 2 of 4 in current phase
-Status: In progress
-Last activity: 2026-01-21 - Completed 04.1-02-PLAN.md (rename route)
+Plan: 4 of 4 in current phase
+Status: Phase complete
+Last activity: 2026-01-21 - Completed 04.1-04-PLAN.md (obra dashboard and configuracoes)
 
-Progress: [################] ~89% (16/18 plans completed)
+Progress: [##################] 100% (18/18 plans completed)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 16
+- Total plans completed: 18
 - Average duration: 4.0 min
-- Total execution time: 64 min
+- Total execution time: 72 min
 
 **By Phase:**
 
@@ -31,10 +31,10 @@ Progress: [################] ~89% (16/18 plans completed)
 | 02-obras | 4 | 18 min | 4.5 min |
 | 03-agrupamentos | 4 | 10 min | 2.5 min |
 | 04-unidades | 4 | 11 min | 2.75 min |
-| 04.1-navegacao-contextual | 2 | 5 min | 2.5 min |
+| 04.1-navegacao-contextual | 4 | 13 min | 3.25 min |
 
 **Recent Trend:**
-- Last 5 plans: 2 min, 4 min, 3 min, 2 min, 3 min
+- Last 5 plans: 4 min, 3 min, 2 min, 3 min, 4 min
 - Trend: stable, fast
 
 *Updated after each plan completion*
@@ -92,6 +92,9 @@ Recent decisions affecting current work:
 - [04.1-01]: Hardcoded construtora name with TODO for auth integration
 - [04.1-02]: Route renamed from /agrupamentos to /unidades to match user terminology
 - [04.1-02]: Permanent redirect (301) for old URLs via next.config.ts
+- [04.1-04]: Obra detail page is now Dashboard (not cadastral info display)
+- [04.1-04]: ObraInfoCard moved to /configuracoes route for settings management
+- [04.1-04]: KPICard as inline component for dashboard metrics
 
 ### Pending Todos
 
@@ -111,5 +114,15 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-01-21
-Stopped at: Completed 04.1-02-PLAN.md (rename route)
+Stopped at: Completed 04.1-04-PLAN.md (obra dashboard and configuracoes)
 Resume file: None
+
+## Phase 4.1 Complete
+
+All 4 plans in Phase 4.1 (Navegacao Contextual) have been completed:
+- 04.1-01: Sidebar contextual navigation
+- 04.1-02: Route rename (/agrupamentos to /unidades)
+- 04.1-03: Layout refactoring
+- 04.1-04: Obra dashboard and configuracoes
+
+Ready for Phase 5: Biblioteca FVS
