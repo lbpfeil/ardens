@@ -1,5 +1,23 @@
 # Arquitetura de Navegacao - ARDEN FVS
 
+## Status MVP (Atualizado 2026-01-21)
+
+**Implementado:**
+- Sidebar primaria com navegacao contextual (obra especifica)
+- Breadcrumb mostrando: Construtora / Obra / Secao
+- Items implementados: Dashboard (basico), Unidades
+- Items placeholder com badge "Em breve"
+
+**Decisoes MVP:**
+- Rota renomeada de `/agrupamentos` para `/unidades` (terminologia do usuario)
+- Redirect 301 para URLs antigas
+- Obra detail page (`/app/obras/[id]`) agora e Dashboard
+- Informacoes cadastrais movidas para Configuracoes (`/app/obras/[id]/configuracoes`)
+- Sidebar secundaria adiada para versao futura
+- Lista rapida de obras para troca de contexto adiada
+
+---
+
 ## Inspiracao Visual
 
 Baseado no design system do **Supabase** (ferramenta open-source de backend-as-a-service).
@@ -51,7 +69,7 @@ Estrutura visual igual ao Supabase (ex: `Pfeil / evoque / main [PRODUCTION]`).
 - Modulos principais
 - Muda dinamicamente baseado no contexto
 
-### Nivel 3: Sidebar Secundaria (240px, condicional)
+### Nivel 3: Sidebar Secundaria (240px, condicional) - *Adiado para MVP futuro*
 - Aparece quando modulo tem subdivisoes
 - Lista de subsecoes do modulo ativo
 - Fundo um tom mais claro que sidebar primaria
@@ -124,15 +142,15 @@ Estrutura visual igual ao Supabase.
 Seletor mostra "Visao Global".
 
 **Sidebar Primaria:**
-- Home
-- Dashboard Geral (comparativo entre obras)
-- Gerenciar Obras
-- Biblioteca FVS (servicos globais da construtora)
-- Gerenciar Usuarios
-- Relatorios Consolidados
-- Configuracoes (empresa, integracoes, automacoes, alertas)
-- Plano e Faturamento
-- *Secao inferior:* lista rapida de obras para trocar contexto
+- Home - *Implementado*
+- Dashboard Geral (comparativo entre obras) - *Em breve*
+- Gerenciar Obras - *Implementado*
+- Biblioteca FVS (servicos globais da construtora) - *Em breve*
+- Gerenciar Usuarios - *Em breve*
+- Relatorios Consolidados - *Em breve*
+- Configuracoes (empresa, integracoes, automacoes, alertas) - *Em breve*
+- Plano e Faturamento - *Em breve*
+- *Secao inferior:* lista rapida de obras para trocar contexto - *Adiado (MVP futuro)*
 
 **Modulos com Sidebar Secundaria:**
 - **Gerenciar Obras:** Todas Obras, Nova Obra, Empreendimentos, Comparativo
@@ -146,16 +164,16 @@ Seletor mostra "Visao Global".
 Seletor mostra nome da obra (ex: "Residencial Aurora - Etapa 1").
 
 **Sidebar Primaria:**
-- Home (feed de NCs + KPIs)
-- Dashboard (graficos e analises)
-- Verificacoes (gestao de inspecoes)
-- Servicos (FVS ativos na obra)
-- Nao-Conformidades (central de NCs)
-- Relatorios (geracao e exportacao)
-- Almoxarifado (visualizacao de CIs, se feature ativa)
-- Equipe (quem tem acesso a esta obra)
-- Configuracoes (da obra: estrutura, tags, servicos, CIs)
-- *Secao inferior:* botao "Visao Global" para voltar
+- Dashboard (KPIs placeholder) - *Implementado (basico)*
+- Unidades (gestao de agrupamentos/unidades) - *Implementado*
+- Verificacoes (gestao de inspecoes) - *Em breve*
+- Servicos (FVS ativos na obra) - *Em breve*
+- Nao-Conformidades (central de NCs) - *Em breve*
+- Relatorios (geracao e exportacao) - *Em breve*
+- Almoxarifado (visualizacao de CIs, se feature ativa) - *Em breve*
+- Equipe (quem tem acesso a esta obra) - *Em breve*
+- Configuracoes (da obra: informacoes cadastrais, estrutura) - *Implementado (basico)*
+- *Secao inferior:* botao "Visao Global" para voltar - *Adiado (MVP futuro)*
 
 **Modulos com Sidebar Secundaria:**
 - **Verificacoes:** Visao Geral, Tabela (S x U), Inspecao em Massa, Historico, Enviar p/ Inspetores
