@@ -20,7 +20,7 @@ const globalNavItems = [
   { icon: Home, label: 'Home', href: '/app', exact: true },
   { icon: LayoutDashboard, label: 'Dashboard', href: '/app/dashboard', badge: 'Em breve' },
   { icon: Building2, label: 'Obras', href: '/app/obras' },
-  { icon: Library, label: 'Biblioteca FVS', href: '/app/biblioteca', badge: 'Em breve' },
+  { icon: Library, label: 'Biblioteca FVS', href: '/app/biblioteca' },
 ]
 
 const secondaryNavItems = [

@@ -14,3 +14,15 @@ export {
   type ObraFormData,
   type TipologiaObra,
 } from './obra'
+
+export {
+  servicoFormSchema,
+  categoriaServicoOptions,
+  type ServicoFormData,
+  type CategoriaServicoOption,
+} from './servico'
+
+export {
+  itemServicoFormSchema,
+  type ItemServicoFormData,
+} from './item-servico'
