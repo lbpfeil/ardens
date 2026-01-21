@@ -5,10 +5,10 @@ import type { Servico } from '@/lib/supabase/queries/servicos'
 export default async function BibliotecaPage() {
   const supabase = await createClient()
 
+  // Load all servicos (including archived) for client-side filtering
   const { data: servicos, error } = await supabase
     .from('servicos')
     .select('*')
-    .eq('arquivado', false)
     .order('created_at', { ascending: false })
 
   if (error) {

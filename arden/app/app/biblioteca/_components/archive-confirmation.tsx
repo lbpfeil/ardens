@@ -11,13 +11,13 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
-import { archiveServico } from '@/lib/supabase/queries/servicos'
+import { archiveServico, restoreServico } from '@/lib/supabase/queries/servicos'
 import { toast } from 'sonner'
 
 interface ArchiveConfirmationProps {
   open: boolean
   onOpenChange: (open: boolean) => void
-  servico: { id: string; nome: string } | null
+  servico: { id: string; nome: string; arquivado: boolean } | null
   onSuccess: () => void
 }
 
@@ -28,18 +28,25 @@ export function ArchiveConfirmation({
   onSuccess,
 }: ArchiveConfirmationProps) {
   const [isLoading, setIsLoading] = useState(false)
+  const isRestoring = servico?.arquivado ?? false
 
   const handleConfirm = async () => {
     if (!servico) return
 
     setIsLoading(true)
     try {
-      await archiveServico(servico.id)
-      toast.success('Servico arquivado com sucesso')
+      if (isRestoring) {
+        await restoreServico(servico.id)
+        toast.success('Servico restaurado com sucesso')
+      } else {
+        await archiveServico(servico.id)
+        toast.success('Servico arquivado com sucesso')
+      }
       onSuccess()
       onOpenChange(false)
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : 'Erro ao arquivar servico')
+      const action = isRestoring ? 'restaurar' : 'arquivar'
+      toast.error(error instanceof Error ? error.message : `Erro ao ${action} servico`)
     } finally {
       setIsLoading(false)
     }
@@ -49,9 +56,13 @@ export function ArchiveConfirmation({
     <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Arquivar servico?</AlertDialogTitle>
+          <AlertDialogTitle>
+            {isRestoring ? 'Restaurar servico?' : 'Arquivar servico?'}
+          </AlertDialogTitle>
           <AlertDialogDescription>
-            O servico &quot;{servico?.nome}&quot; sera arquivado e nao aparecera mais na lista ativa. Voce podera restaura-lo depois.
+            {isRestoring
+              ? `O servico "${servico?.nome}" sera restaurado e voltara a aparecer na lista ativa.`
+              : `O servico "${servico?.nome}" sera arquivado e nao aparecera mais na lista ativa. Voce podera restaura-lo depois.`}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
@@ -59,9 +70,15 @@ export function ArchiveConfirmation({
           <AlertDialogAction
             onClick={handleConfirm}
             disabled={isLoading}
-            variant="destructive"
+            variant={isRestoring ? 'default' : 'destructive'}
           >
-            {isLoading ? 'Arquivando...' : 'Arquivar'}
+            {isLoading
+              ? isRestoring
+                ? 'Restaurando...'
+                : 'Arquivando...'
+              : isRestoring
+                ? 'Restaurar'
+                : 'Arquivar'}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
