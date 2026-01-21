@@ -167,6 +167,35 @@ npx supabase gen types       # Gera tipos TypeScript
 
 ---
 
+## IMPORTANTE: Deteccao de Padroes Duplicados
+
+**Ao implementar qualquer feature, SEMPRE verifique:**
+
+1. **O padrao ja existe em outro lugar?** Busque implementacoes similares no codebase
+2. **Estou duplicando codigo?** Se sim, considere criar componente reutilizavel
+3. **Ha inconsistencias visuais?** Compare com paginas semelhantes
+
+**Se detectar duplicacao ou inconsistencia:**
+- PARE e informe o usuario antes de continuar
+- Liste os arquivos afetados
+- Proponha criacao de componente compartilhado
+- Aguarde aprovacao antes de implementar
+
+**Padroes comuns que devem ser componentes:**
+
+| Padrao | Componente | Quando Usar |
+|--------|------------|-------------|
+| Empty states | `EmptyState` | Listas/tabelas vazias |
+| Dialogs de confirmacao | `ConfirmationDialog` | Arquivar/excluir/restaurar |
+| Modais de formulario | `FormModal` | Criar/editar entidades |
+| Menu de acoes | `RowActionsMenu` | Dropdown com Editar/Arquivar |
+| Headers de pagina | `PageHeader` | Titulo + descricao de pagina |
+| Headers de painel | `PanelHeader` | Titulo + acoes de secao |
+| Toolbar de listagem | `ListPageToolbar` | Busca + filtros + acao |
+| Headers ordenaveis | `SortableTableHeader` | Colunas de tabela |
+
+---
+
 ## Checklist Antes de Implementar
 
 - [ ] Li a documentacao relevante para a tarefa?
@@ -174,6 +203,7 @@ npx supabase gen types       # Gera tipos TypeScript
 - [ ] Estou usando componentes existentes (`arden/components/ui/`)?
 - [ ] Estou usando variaveis CSS (nao valores hardcoded)?
 - [ ] Se criei algo novo, pedi permissao ao usuario?
+- [ ] **Verifiquei se ha padroes duplicados no codebase?**
 
 ---
 

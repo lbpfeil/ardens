@@ -116,7 +116,7 @@ Recent decisions affecting current work:
 
 ### Pending Todos
 
-None.
+1. **Standardize duplicated UI patterns** (ui) - EmptyState, ConfirmationDialog, FormModal, RowActionsMenu
 
 ### Blockers/Concerns
 
