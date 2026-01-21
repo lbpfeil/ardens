@@ -116,7 +116,7 @@ Recent decisions affecting current work:
 
 ### Pending Todos
 
-None.
+1. **Biblioteca FVS improvements discussion** (ui) - filtros de tabela, acesso a arquivados, melhorias UX
 
 ### Blockers/Concerns
 
