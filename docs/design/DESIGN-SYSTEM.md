@@ -1011,6 +1011,55 @@ Supabase uses Recharts for data visualization.
 </Card>
 ```
 
+### KPICard
+
+Componente padronizado para exibir metricas em dashboards. Versao simplificada do Metrics Card.
+
+**Arquivo:** `components/ui/kpi-card.tsx`
+
+```tsx
+import { KPICard } from '@/components/ui/kpi-card'
+
+// Basico
+<KPICard title="Taxa de Conformidade" value="87.2%" />
+
+// Com descricao
+<KPICard
+  title="Verificacoes Pendentes"
+  value={12}
+  description="Aguardando inspecao"
+/>
+
+// Loading state
+<KPICard title="IRS" value="--" loading />
+```
+
+**Props:**
+| Prop | Tipo | Obrigatorio | Descricao |
+|------|------|-------------|-----------|
+| `title` | `string` | Sim | Titulo da metrica (uppercase automatico) |
+| `value` | `string \| number` | Sim | Valor principal da metrica |
+| `description` | `string` | Nao | Texto secundario (ex: comparacao, periodo) |
+| `loading` | `boolean` | Nao | Exibe skeleton animado |
+| `className` | `string` | Nao | Classes CSS adicionais |
+
+**Grid de KPIs:**
+```tsx
+<div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+  <KPICard title="Conformidade" value="87.2%" description="+2.1% vs semana" />
+  <KPICard title="NCs Abertas" value={5} />
+  <KPICard title="Pendentes" value={12} />
+  <KPICard title="Concluidas" value={248} description="+15 hoje" />
+</div>
+```
+
+**Estilos aplicados:**
+- Background: `bg-surface-100`
+- Borda: `border-border`
+- Titulo: `text-xs text-foreground-muted uppercase tracking-wide`
+- Valor: `text-2xl font-semibold text-foreground`
+- Descricao: `text-xs text-foreground-muted`
+
 ### Status Indicators
 ```tsx
 // Status Badge

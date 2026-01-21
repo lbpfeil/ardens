@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation'
 import { getObra } from '@/lib/supabase/queries/obras'
 import { ObraHeader } from './_components/obra-header'
+import { KPICard } from '@/components/ui/kpi-card'
 
 interface ObraPageProps {
   params: Promise<{ id: string }>
@@ -59,17 +60,6 @@ export default async function ObraPage({ params }: ObraPageProps) {
           Links para unidades, servicos e verificacoes serao adicionados.
         </p>
       </div>
-    </div>
-  )
-}
-
-// Simple KPI card component (inline for now)
-function KPICard({ title, value, description }: { title: string; value: string; description: string }) {
-  return (
-    <div className="rounded-lg border border-border bg-surface-100 p-4">
-      <p className="text-xs text-foreground-muted uppercase tracking-wide">{title}</p>
-      <p className="text-2xl font-semibold text-foreground mt-1">{value}</p>
-      <p className="text-xs text-foreground-muted mt-1">{description}</p>
     </div>
   )
 }

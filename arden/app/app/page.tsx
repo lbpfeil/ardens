@@ -1,37 +1,5 @@
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
-import { AlertTriangle, CheckCircle2, Clock, TrendingUp } from "lucide-react"
-
-// Mock KPIs
-const mockKPIs = [
-  {
-    title: "Taxa de Conformidade",
-    value: "87.2%",
-    change: "+2.1%",
-    icon: TrendingUp,
-    color: "text-brand",
-  },
-  {
-    title: "NCs Abertas",
-    value: "5",
-    change: "-2",
-    icon: AlertTriangle,
-    color: "text-warning",
-  },
-  {
-    title: "Verificações Pendentes",
-    value: "12",
-    change: "",
-    icon: Clock,
-    color: "text-foreground-light",
-  },
-  {
-    title: "Verificações Concluídas",
-    value: "248",
-    change: "+15 hoje",
-    icon: CheckCircle2,
-    color: "text-brand",
-  },
-]
+import { KPICard } from "@/components/ui/kpi-card"
 
 // Mock recent NCs
 const mockRecentNCs = [
@@ -71,25 +39,10 @@ export default function AppHomePage() {
 
       {/* KPI Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        {mockKPIs.map((kpi) => {
-          const Icon = kpi.icon
-          return (
-            <Card key={kpi.title}>
-              <CardContent className="pt-4">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm text-foreground-light">{kpi.title}</span>
-                  <Icon className={`w-4 h-4 ${kpi.color}`} />
-                </div>
-                <div className="flex items-baseline gap-2">
-                  <span className="text-2xl font-medium text-foreground">{kpi.value}</span>
-                  {kpi.change && (
-                    <span className="text-xs text-foreground-lighter">{kpi.change}</span>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-          )
-        })}
+        <KPICard title="Taxa de Conformidade" value="87.2%" description="+2.1% vs semana passada" />
+        <KPICard title="NCs Abertas" value="5" description="-2 vs semana passada" />
+        <KPICard title="Verificacoes Pendentes" value="12" />
+        <KPICard title="Verificacoes Concluidas" value="248" description="+15 hoje" />
       </div>
 
       {/* Recent NCs */}
