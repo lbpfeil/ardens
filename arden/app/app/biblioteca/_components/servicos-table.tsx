@@ -158,6 +158,7 @@ export function ServicosTable({
                 >
                   Codigo
                 </SortableTableHeader>
+                <TableHead className="w-[80px]">Revisao</TableHead>
                 <SortableTableHeader
                   field="nome"
                   currentField={sortField}
@@ -189,6 +190,11 @@ export function ServicosTable({
                     <span className={servico.arquivado ? 'text-foreground-muted' : ''}>
                       {servico.codigo}
                     </span>
+                  </TableCell>
+                  <TableCell>
+                    <Badge variant="outline" className="font-mono text-xs">
+                      Rev. {servico.revisao || '00'}
+                    </Badge>
                   </TableCell>
                   <TableCell>
                     <div className="flex items-center gap-2">

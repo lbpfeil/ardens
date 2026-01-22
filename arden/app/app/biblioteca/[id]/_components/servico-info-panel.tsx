@@ -38,9 +38,14 @@ export function ServicoInfoPanel({ servico, onEditClick }: ServicoInfoPanelProps
       <Card className="bg-surface-100 border-border">
         <CardHeader className="flex flex-row items-start justify-between space-y-0 pb-2">
           <div className="space-y-1">
-            <Badge variant="outline" className="font-mono text-xs">
-              {servico.codigo}
-            </Badge>
+            <div className="flex items-center gap-2">
+              <Badge variant="outline" className="font-mono text-xs">
+                {servico.codigo}
+              </Badge>
+              <Badge variant="secondary" className="font-mono text-xs">
+                Rev. {servico.revisao || '00'}
+              </Badge>
+            </div>
             <CardTitle className="text-lg font-medium text-foreground">
               {servico.nome}
             </CardTitle>
@@ -66,6 +71,16 @@ export function ServicoInfoPanel({ servico, onEditClick }: ServicoInfoPanelProps
               <p className="text-xs text-foreground-muted">Referencia Normativa</p>
               <p className="text-sm text-foreground-light">
                 {servico.referencia_normativa}
+              </p>
+            </div>
+          )}
+
+          {/* Ultima Revisao */}
+          {servico.revisao_descricao && (
+            <div className="space-y-1">
+              <p className="text-xs text-foreground-muted">Ultima Alteracao</p>
+              <p className="text-sm text-foreground-light">
+                {servico.revisao_descricao}
               </p>
             </div>
           )}
