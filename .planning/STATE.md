@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-01-19)
 ## Current Position
 
 Phase: 5.1 of 7 (Revisoes de Servicos)
-Plan: 0 of 4 in current phase
-Status: Ready to plan
-Last activity: 2026-01-22 - Phase 5.1 inserted (revisoes de servicos)
+Plan: 1 of 4 in current phase
+Status: In progress
+Last activity: 2026-01-22 - Completed 05.1-01-PLAN.md (schema and data access layer)
 
-Progress: [##################---] 85% (22/26 plans completed)
+Progress: [###################--] 88% (23/26 plans completed)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 22
+- Total plans completed: 23
 - Average duration: 3.9 min
-- Total execution time: 85 min
+- Total execution time: 90 min
 
 **By Phase:**
 
@@ -33,9 +33,10 @@ Progress: [##################---] 85% (22/26 plans completed)
 | 04-unidades | 4 | 11 min | 2.75 min |
 | 04.1-navegacao-contextual | 4 | 13 min | 3.25 min |
 | 05-biblioteca-fvs | 4 | 13 min | 3.25 min |
+| 05.1-revisoes-servico | 1 | 5 min | 5 min |
 
 **Recent Trend:**
-- Last 5 plans: 4 min, 4 min, 3 min, 3 min, 3 min
+- Last 5 plans: 4 min, 3 min, 3 min, 3 min, 5 min
 - Trend: stable, fast
 
 *Updated after each plan completion*
@@ -113,6 +114,12 @@ Recent decisions affecting current work:
 - [05-03]: Split view: lg:w-80 for info panel, flex-1 for itens panel
 - [05-03]: Item ordem displayed as 1-indexed (ordem + 1) for user friendliness
 - [05-03]: Truncated observacao in delete confirmation (100 chars max)
+- [05.1-01]: Revision stored as VARCHAR(5) with zero-padding (00-99) for sortability
+- [05.1-01]: Snapshot pattern captures codigo, nome, categoria, referencia_normativa at each revision
+- [05.1-01]: createServico automatically creates initial revision record (rev 00)
+- [05.1-01]: updateServicoWithRevision requires descricao_mudanca for audit trail
+- [05.1-01]: activateServico captures current servico revision at activation time
+- [05.1-01]: has_newer_revision computed by comparing revisao_ativa vs revisao_atual
 
 ### Pending Todos
 
@@ -137,7 +144,7 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-01-22
-Stopped at: Phase 5.1 inserted, ready to plan
+Stopped at: Completed 05.1-01-PLAN.md
 Resume file: None
 
 ## Completed Phases
