@@ -47,3 +47,29 @@ export const servicoFormSchema = z.object({
 })
 
 export type ServicoFormData = z.infer<typeof servicoFormSchema>
+
+/**
+ * Schema de validacao para edicao de servico.
+ * Requer descricao da mudanca para controle de revisao.
+ */
+export const servicoEditFormSchema = z.object({
+  codigo: requiredString(1, 50, 'Codigo'),
+  nome: requiredString(3, 255, 'Nome'),
+  categoria: z.enum([
+    'fundacao',
+    'estrutura',
+    'alvenaria',
+    'revestimento',
+    'acabamento',
+    'instalacoes',
+    'cobertura',
+    'esquadrias',
+    'pintura',
+    'impermeabilizacao',
+    'outros',
+  ]).optional().nullable(),
+  referencia_normativa: optionalString(500),
+  descricao_mudanca: requiredString(3, 500, 'Descricao da mudanca'),
+})
+
+export type ServicoEditFormData = z.infer<typeof servicoEditFormSchema>
