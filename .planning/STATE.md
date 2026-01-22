@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-01-19)
 ## Current Position
 
 Phase: 5.1 of 7 (Revisoes de Servicos)
-Plan: 1 of 4 in current phase
+Plan: 3 of 4 in current phase
 Status: In progress
-Last activity: 2026-01-22 - Completed 05.1-01-PLAN.md (schema and data access layer)
+Last activity: 2026-01-22 - Completed 05.1-03-PLAN.md (revision history display)
 
-Progress: [###################--] 88% (23/26 plans completed)
+Progress: [######################-] 96% (25/26 plans completed)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 23
-- Average duration: 3.9 min
-- Total execution time: 90 min
+- Total plans completed: 25
+- Average duration: 3.8 min
+- Total execution time: 98 min
 
 **By Phase:**
 
@@ -33,10 +33,10 @@ Progress: [###################--] 88% (23/26 plans completed)
 | 04-unidades | 4 | 11 min | 2.75 min |
 | 04.1-navegacao-contextual | 4 | 13 min | 3.25 min |
 | 05-biblioteca-fvs | 4 | 13 min | 3.25 min |
-| 05.1-revisoes-servico | 1 | 5 min | 5 min |
+| 05.1-revisoes-servico | 3 | 13 min | 4.3 min |
 
 **Recent Trend:**
-- Last 5 plans: 4 min, 3 min, 3 min, 3 min, 5 min
+- Last 5 plans: 3 min, 3 min, 5 min, 4 min, 4 min
 - Trend: stable, fast
 
 *Updated after each plan completion*
@@ -120,6 +120,9 @@ Recent decisions affecting current work:
 - [05.1-01]: updateServicoWithRevision requires descricao_mudanca for audit trail
 - [05.1-01]: activateServico captures current servico revision at activation time
 - [05.1-01]: has_newer_revision computed by comparing revisao_ativa vs revisao_atual
+- [05.1-03]: History panel stacked below info panel in left column (space-y-6)
+- [05.1-03]: Client-side revision loading with useCallback/useEffect for refresh after edits
+- [05.1-03]: Latest revision uses secondary badge, older ones use outline variant
 
 ### Pending Todos
 
@@ -144,7 +147,7 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-01-22
-Stopped at: Completed 05.1-01-PLAN.md
+Stopped at: Completed 05.1-03-PLAN.md
 Resume file: None
 
 ## Completed Phases
