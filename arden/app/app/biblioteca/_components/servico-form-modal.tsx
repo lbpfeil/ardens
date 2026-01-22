@@ -5,10 +5,12 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
   servicoFormSchema,
+  servicoEditFormSchema,
   type ServicoFormData,
+  type ServicoEditFormData,
   categoriaServicoOptions,
 } from '@/lib/validations/servico'
-import { createServico, updateServico, type Servico } from '@/lib/supabase/queries/servicos'
+import { createServico, updateServicoWithRevision, type Servico } from '@/lib/supabase/queries/servicos'
 import {
   Dialog,
   DialogContent,
@@ -47,12 +49,18 @@ export function ServicoFormModal({
 }: ServicoFormModalProps) {
   const [isSubmitting, setIsSubmitting] = useState(false)
 
+  const isEditMode = mode === 'edit'
+
+  // Type for form data that works for both modes
+  type FormData = ServicoFormData | ServicoEditFormData
+
   const defaultValues = useMemo(() => ({
     codigo: servico?.codigo ?? '',
     nome: servico?.nome ?? '',
     categoria: servico?.categoria ?? undefined,
     referencia_normativa: servico?.referencia_normativa ?? '',
-  }), [servico])
+    ...(mode === 'edit' ? { descricao_mudanca: '' } : {}),
+  }), [servico, mode])
 
   const {
     register,
@@ -61,8 +69,8 @@ export function ServicoFormModal({
     reset,
     setValue,
     watch,
-  } = useForm<ServicoFormData>({
-    resolver: zodResolver(servicoFormSchema),
+  } = useForm<FormData>({
+    resolver: zodResolver(isEditMode ? servicoEditFormSchema : servicoFormSchema),
     defaultValues,
   })
 
@@ -70,37 +78,51 @@ export function ServicoFormModal({
 
   // Reset form when servico changes (switching between create/edit or editing different servico)
   useEffect(() => {
-    reset(defaultValues)
-  }, [servico?.id, reset, defaultValues])
+    const newDefaults = {
+      codigo: servico?.codigo ?? '',
+      nome: servico?.nome ?? '',
+      categoria: servico?.categoria ?? undefined,
+      referencia_normativa: servico?.referencia_normativa ?? '',
+      ...(mode === 'edit' ? { descricao_mudanca: '' } : {}),
+    }
+    reset(newDefaults)
+  }, [servico?.id, mode, reset])
 
-  const onSubmit = async (data: ServicoFormData) => {
+  const onSubmit = async (data: FormData) => {
     setIsSubmitting(true)
     try {
-      // Clean empty strings to null/undefined for optional fields
-      const cleanedData = {
-        codigo: data.codigo,
-        nome: data.nome,
-        categoria: data.categoria || null,
-        referencia_normativa: data.referencia_normativa || null,
-      }
-
       if (mode === 'edit' && servico) {
-        await updateServico(servico.id, cleanedData)
+        // Edit mode: use revision-aware update
+        const editData = data as ServicoEditFormData
+        await updateServicoWithRevision(servico.id, {
+          codigo: editData.codigo,
+          nome: editData.nome,
+          categoria: editData.categoria || null,
+          referencia_normativa: editData.referencia_normativa || null,
+          descricao_mudanca: editData.descricao_mudanca,
+        })
         toast.success('Servico atualizado com sucesso')
       } else {
-        await createServico(cleanedData)
+        // Create mode: normal create
+        const createData = data as ServicoFormData
+        await createServico({
+          codigo: createData.codigo,
+          nome: createData.nome,
+          categoria: createData.categoria || null,
+          referencia_normativa: createData.referencia_normativa || null,
+        })
         toast.success('Servico criado com sucesso')
       }
       onSuccess()
     } catch (error) {
-      const message = error instanceof Error ? error.message : (mode === 'edit' ? 'Erro ao atualizar servico' : 'Erro ao criar servico')
+      const message = error instanceof Error
+        ? error.message
+        : (mode === 'edit' ? 'Erro ao atualizar servico' : 'Erro ao criar servico')
       toast.error(message)
     } finally {
       setIsSubmitting(false)
     }
   }
-
-  const isEditMode = mode === 'edit'
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -172,6 +194,25 @@ export function ServicoFormModal({
               {...register('referencia_normativa')}
             />
           </div>
+
+          {/* Descricao da Mudanca (only in edit mode, required) */}
+          {isEditMode && (
+            <div className="space-y-2">
+              <Label htmlFor="descricao_mudanca">Descricao da Mudanca *</Label>
+              <Textarea
+                id="descricao_mudanca"
+                placeholder="Descreva o que foi alterado nesta revisao"
+                {...register('descricao_mudanca')}
+                className={errors.descricao_mudanca ? 'border-destructive' : ''}
+              />
+              {errors.descricao_mudanca && (
+                <p className="text-destructive text-xs">{errors.descricao_mudanca.message}</p>
+              )}
+              <p className="text-xs text-foreground-muted">
+                Uma nova revisao sera criada ao salvar
+              </p>
+            </div>
+          )}
 
           <DialogFooter>
             <Button
