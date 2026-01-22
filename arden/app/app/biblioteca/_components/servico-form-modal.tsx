@@ -202,11 +202,11 @@ export function ServicoFormModal({
               <Textarea
                 id="descricao_mudanca"
                 placeholder="Descreva o que foi alterado nesta revisao"
-                {...register('descricao_mudanca')}
-                className={errors.descricao_mudanca ? 'border-destructive' : ''}
+                {...register('descricao_mudanca' as keyof FormData)}
+                className={(errors as Record<string, { message?: string }>).descricao_mudanca ? 'border-destructive' : ''}
               />
-              {errors.descricao_mudanca && (
-                <p className="text-destructive text-xs">{errors.descricao_mudanca.message}</p>
+              {(errors as Record<string, { message?: string }>).descricao_mudanca && (
+                <p className="text-destructive text-xs">{(errors as Record<string, { message?: string }>).descricao_mudanca.message}</p>
               )}
               <p className="text-xs text-foreground-muted">
                 Uma nova revisao sera criada ao salvar

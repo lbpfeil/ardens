@@ -1,14 +1,16 @@
 'use client'
 
-import { useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { ServicoInfoPanel } from './servico-info-panel'
 import { ItensServicoPanel } from './itens-servico-panel'
 import { ItemServicoFormModal } from './item-servico-form-modal'
 import { ItemDeleteConfirmation } from './item-delete-confirmation'
+import { RevisionHistoryPanel } from './revision-history-panel'
 import { ServicoFormModal } from '../../_components/servico-form-modal'
 import type { Servico } from '@/lib/supabase/queries/servicos'
 import type { ItemServico } from '@/lib/supabase/queries/itens-servico'
+import { listServicoRevisoes, type ServicoRevisao } from '@/lib/supabase/queries/servico-revisoes'
 
 interface ServicoDetailClientProps {
   servico: Servico
@@ -17,6 +19,28 @@ interface ServicoDetailClientProps {
 
 export function ServicoDetailClient({ servico, initialItens }: ServicoDetailClientProps) {
   const router = useRouter()
+
+  // Revision history state
+  const [revisoes, setRevisoes] = useState<ServicoRevisao[]>([])
+  const [isLoadingRevisoes, setIsLoadingRevisoes] = useState(true)
+
+  // Load revision history
+  const loadRevisoes = useCallback(async () => {
+    setIsLoadingRevisoes(true)
+    try {
+      const data = await listServicoRevisoes(servico.id)
+      setRevisoes(data)
+    } catch (error) {
+      console.error('Error loading revisoes:', error)
+    } finally {
+      setIsLoadingRevisoes(false)
+    }
+  }, [servico.id])
+
+  // Load revisions on mount
+  useEffect(() => {
+    loadRevisoes()
+  }, [loadRevisoes])
 
   // Servico edit modal state
   const [isServicoModalOpen, setIsServicoModalOpen] = useState(false)
@@ -40,6 +64,8 @@ export function ServicoDetailClient({ servico, initialItens }: ServicoDetailClie
   const handleServicoModalSuccess = () => {
     setIsServicoModalOpen(false)
     router.refresh()
+    // Reload revisions to show new entry
+    loadRevisoes()
   }
 
   // Handlers for itens
@@ -85,9 +111,13 @@ export function ServicoDetailClient({ servico, initialItens }: ServicoDetailClie
     <>
       {/* Split view layout */}
       <div className="flex flex-col lg:flex-row gap-6">
-        {/* Left panel: Servico info */}
-        <div className="w-full lg:w-80 lg:flex-shrink-0">
+        {/* Left column: Info + History */}
+        <div className="w-full lg:w-80 lg:flex-shrink-0 space-y-6">
           <ServicoInfoPanel servico={servico} onEditClick={handleServicoEditClick} />
+          <RevisionHistoryPanel
+            revisoes={revisoes}
+            isLoading={isLoadingRevisoes}
+          />
         </div>
 
         {/* Right panel: Itens de verificacao */}
