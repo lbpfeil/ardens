@@ -1,6 +1,6 @@
 'use client'
 
-import { Library } from 'lucide-react'
+import { Library, RefreshCw } from 'lucide-react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -13,12 +13,13 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import type { ServicoWithActivation } from '@/lib/supabase/queries/obra-servicos'
+import type { ServicoWithRevisionStatus } from '@/lib/supabase/queries/obra-servicos'
 import { categoriaServicoOptions } from '@/lib/validations/servico'
 
 interface ServicosActivationTableProps {
-  servicos: ServicoWithActivation[]
-  onToggle: (servico: ServicoWithActivation, checked: boolean) => void
+  servicos: ServicoWithRevisionStatus[]
+  onToggle: (servico: ServicoWithRevisionStatus, checked: boolean) => void
+  onUpdateRevision: (servico: ServicoWithRevisionStatus) => void
   updatingId: string | null
 }
 
@@ -31,9 +32,11 @@ function getCategoryLabel(categoria: string | null): string {
 export function ServicosActivationTable({
   servicos,
   onToggle,
+  onUpdateRevision,
   updatingId,
 }: ServicosActivationTableProps) {
   const activeCount = servicos.filter(s => s.ativo_na_obra).length
+  const outdatedCount = servicos.filter(s => s.ativo_na_obra && s.has_newer_revision).length
 
   // Empty state: no servicos available
   if (servicos.length === 0) {
@@ -57,10 +60,15 @@ export function ServicosActivationTable({
 
   return (
     <div className="space-y-4">
-      {/* Active count summary */}
-      <p className="text-sm text-foreground-light">
-        {activeCount} de {servicos.length} servicos ativos nesta obra
-      </p>
+      {/* Summary */}
+      <div className="flex items-center gap-4 text-sm text-foreground-light">
+        <span>{activeCount} de {servicos.length} servicos ativos nesta obra</span>
+        {outdatedCount > 0 && (
+          <Badge className="text-xs bg-warning/20 text-warning border-warning/30">
+            {outdatedCount} com revisao desatualizada
+          </Badge>
+        )}
+      </div>
 
       {/* Servicos table */}
       <div className="rounded-md border border-border bg-surface-100">
@@ -68,36 +76,80 @@ export function ServicosActivationTable({
           <TableHeader>
             <TableRow>
               <TableHead className="w-[50px]">Ativo</TableHead>
-              <TableHead className="w-[120px]">Codigo</TableHead>
+              <TableHead className="w-[100px]">Codigo</TableHead>
               <TableHead>Nome</TableHead>
-              <TableHead className="w-[150px]">Categoria</TableHead>
+              <TableHead className="w-[130px]">Categoria</TableHead>
+              <TableHead className="w-[80px]">Rev. Obra</TableHead>
+              <TableHead className="w-[80px]">Rev. Atual</TableHead>
+              <TableHead className="w-[100px]">Acoes</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {servicos.map((servico) => (
-              <TableRow key={servico.id}>
-                <TableCell>
-                  <Checkbox
-                    checked={servico.ativo_na_obra}
-                    onCheckedChange={(checked) => onToggle(servico, checked === true)}
-                    disabled={updatingId === servico.id}
-                    aria-label={`Ativar ${servico.nome}`}
-                    className={updatingId === servico.id ? 'disabled:cursor-wait' : ''}
-                  />
-                </TableCell>
-                <TableCell className="font-mono text-sm text-foreground-light">
-                  {servico.codigo}
-                </TableCell>
-                <TableCell className="font-medium text-foreground">
-                  {servico.nome}
-                </TableCell>
-                <TableCell>
-                  <Badge variant="secondary">
-                    {getCategoryLabel(servico.categoria)}
-                  </Badge>
-                </TableCell>
-              </TableRow>
-            ))}
+            {servicos.map((servico) => {
+              const isUpdating = updatingId === servico.id
+              const showUpdateButton = servico.ativo_na_obra && servico.has_newer_revision
+
+              return (
+                <TableRow
+                  key={servico.id}
+                  className={servico.has_newer_revision && servico.ativo_na_obra ? 'bg-warning/5' : ''}
+                >
+                  <TableCell>
+                    <Checkbox
+                      checked={servico.ativo_na_obra}
+                      onCheckedChange={(checked) => onToggle(servico, checked === true)}
+                      disabled={isUpdating}
+                      aria-label={`Ativar ${servico.nome}`}
+                      className={isUpdating ? 'disabled:cursor-wait' : ''}
+                    />
+                  </TableCell>
+                  <TableCell className="font-mono text-sm text-foreground-light">
+                    {servico.codigo}
+                  </TableCell>
+                  <TableCell className="font-medium text-foreground">
+                    {servico.nome}
+                  </TableCell>
+                  <TableCell>
+                    <Badge variant="secondary" className="text-xs">
+                      {getCategoryLabel(servico.categoria)}
+                    </Badge>
+                  </TableCell>
+                  <TableCell>
+                    {servico.ativo_na_obra ? (
+                      <Badge
+                        variant={servico.has_newer_revision ? 'outline' : 'secondary'}
+                        className={`font-mono text-xs ${
+                          servico.has_newer_revision ? 'text-foreground-muted' : ''
+                        }`}
+                      >
+                        Rev. {servico.revisao_ativa || '00'}
+                      </Badge>
+                    ) : (
+                      <span className="text-xs text-foreground-muted">-</span>
+                    )}
+                  </TableCell>
+                  <TableCell>
+                    <Badge variant="secondary" className="font-mono text-xs">
+                      Rev. {servico.revisao_atual}
+                    </Badge>
+                  </TableCell>
+                  <TableCell>
+                    {showUpdateButton && (
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => onUpdateRevision(servico)}
+                        disabled={isUpdating}
+                        className="text-brand-link hover:text-brand h-7 px-2"
+                      >
+                        <RefreshCw className={`h-3.5 w-3.5 mr-1 ${isUpdating ? 'animate-spin' : ''}`} />
+                        Atualizar
+                      </Button>
+                    )}
+                  </TableCell>
+                </TableRow>
+              )
+            })}
           </TableBody>
         </Table>
       </div>
