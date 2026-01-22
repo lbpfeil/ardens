@@ -357,6 +357,12 @@ CREATE TABLE servicos (
   -- Referência técnica (opcional)
   referencia_normativa TEXT,  -- NBR, PBQP-H, etc
 
+  -- Controle de revisão (PBQP-H)
+  revisao VARCHAR(5) NOT NULL DEFAULT '00',
+  revisao_descricao TEXT,
+  revisao_updated_at TIMESTAMPTZ,
+  revisao_updated_by UUID REFERENCES auth.users(id),
+
   -- Status
   ativo BOOLEAN DEFAULT true,
   arquivado BOOLEAN DEFAULT false,  -- Soft delete
@@ -392,6 +398,33 @@ CREATE TABLE itens_servico (
 );
 
 CREATE INDEX idx_itens_servico_servico ON itens_servico(servico_id);
+
+
+-- Histórico de revisões de serviços (rastreabilidade PBQP-H)
+CREATE TABLE servico_revisoes (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  servico_id UUID NOT NULL REFERENCES servicos(id) ON DELETE CASCADE,
+
+  -- Identificação da revisão
+  revisao VARCHAR(5) NOT NULL,
+  descricao TEXT NOT NULL,
+
+  -- Snapshot dos campos do serviço nesta revisão
+  snapshot_codigo VARCHAR(50) NOT NULL,
+  snapshot_nome VARCHAR(255) NOT NULL,
+  snapshot_categoria categoria_servico,
+  snapshot_referencia_normativa TEXT,
+
+  -- Auditoria
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  created_by UUID REFERENCES auth.users(id),
+
+  -- Cada combinação serviço+revisão é única
+  UNIQUE(servico_id, revisao)
+);
+
+CREATE INDEX idx_servico_revisoes_servico ON servico_revisoes(servico_id);
+CREATE INDEX idx_servico_revisoes_created ON servico_revisoes(servico_id, created_at DESC);
 
 
 -- Fotos de referência do serviço (correto/incorreto)
@@ -460,6 +493,9 @@ CREATE TABLE obra_servicos (
 
   -- Status nesta obra
   ativo BOOLEAN DEFAULT true,
+
+  -- Controle de revisão (qual versão do serviço a obra está usando)
+  revisao_ativa VARCHAR(5) NOT NULL DEFAULT '00',
 
   created_at TIMESTAMPTZ DEFAULT NOW(),
 
@@ -856,6 +892,7 @@ ALTER TABLE agrupamento_tags ENABLE ROW LEVEL SECURITY;
 ALTER TABLE unidades ENABLE ROW LEVEL SECURITY;
 ALTER TABLE usuario_obras ENABLE ROW LEVEL SECURITY;
 ALTER TABLE servicos ENABLE ROW LEVEL SECURITY;
+ALTER TABLE servico_revisoes ENABLE ROW LEVEL SECURITY;
 ALTER TABLE itens_servico ENABLE ROW LEVEL SECURITY;
 ALTER TABLE fotos_referencia ENABLE ROW LEVEL SECURITY;
 ALTER TABLE condicoes_inicio ENABLE ROW LEVEL SECURITY;
