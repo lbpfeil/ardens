@@ -42,6 +42,14 @@ Requirements para o Mes 1 do MVP. Cada um mapeia para fases do roadmap.
 - [x] **SERV-07**: Usuario pode ativar servicos em uma obra especifica
 - [x] **SERV-08**: Usuario pode desativar servicos de uma obra
 
+### Revisoes de Servicos
+
+- [ ] **REV-01**: Servico armazena revisao atual, historico e descricao das mudancas
+- [ ] **REV-02**: Ao editar servico, sistema exige descricao e incrementa revisao automaticamente
+- [ ] **REV-03**: Usuario pode visualizar historico completo de revisoes de um servico
+- [ ] **REV-04**: Cada obra mantém registro de qual revisao de cada servico esta utilizando
+- [ ] **REV-05**: Usuario pode atualizar revisao de um servico na obra para versao mais recente
+
 ### Dashboard
 
 - [ ] **DASH-01**: Usuario ve card com Taxa de Conformidade Geral
@@ -74,6 +82,10 @@ Deferidos para fases posteriores. Nao estao no roadmap atual.
 - **SERV-09**: Import/Export Excel de servicos
 - **SERV-10**: Fotos de referencia (correto/incorreto)
 - **SERV-11**: Sugestoes rapidas de observacao
+
+### Revisoes de Servicos
+
+- **REV-06**: Usuario pode ver o que mudou entre revisoes (diff)
 
 ### Dashboard
 
@@ -124,6 +136,11 @@ Explicitamente excluido do Mes 1.
 | SERV-06 | Phase 5 | Complete |
 | SERV-07 | Phase 5 | Complete |
 | SERV-08 | Phase 5 | Complete |
+| REV-01 | Phase 5.1 | Pending |
+| REV-02 | Phase 5.1 | Pending |
+| REV-03 | Phase 5.1 | Pending |
+| REV-04 | Phase 5.1 | Pending |
+| REV-05 | Phase 5.1 | Pending |
 | DASH-01 | Phase 6 | Pending |
 | DASH-02 | Phase 6 | Pending |
 | DASH-03 | Phase 6 | Pending |
@@ -132,10 +149,10 @@ Explicitamente excluido do Mes 1.
 | DASH-06 | Phase 6 | Pending |
 
 **Coverage:**
-- v1 requirements: 31 total
-- Mapped to phases: 31
+- v1 requirements: 36 total
+- Mapped to phases: 36
 - Unmapped: 0
 
 ---
 *Requirements defined: 2026-01-19*
-*Last updated: 2026-01-21 after phase 5 completion*
+*Last updated: 2026-01-22 after phase 5.1 planning*
