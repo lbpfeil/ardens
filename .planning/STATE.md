@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-01-19)
 
 **Core value:** Trazer extrema rapidez e praticidade na verificacao de servicos, tornando a qualidade uma aliada da obra.
-**Current focus:** Phase 6 - Dashboard (next)
+**Current focus:** Phase 5.1 - Revisoes de Servicos (next)
 
 ## Current Position
 
-Phase: 6 of 6 (Dashboard)
-Plan: 0 of 3 in current phase
+Phase: 5.1 of 7 (Revisoes de Servicos)
+Plan: 0 of 4 in current phase
 Status: Ready to plan
-Last activity: 2026-01-21 - Phase 5 complete (biblioteca fvs verified)
+Last activity: 2026-01-22 - Phase 5.1 inserted (revisoes de servicos)
 
-Progress: [#####################] 100% (22/22 plans completed)
+Progress: [##################---] 85% (22/26 plans completed)
 
 ## Performance Metrics
 
@@ -116,7 +116,7 @@ Recent decisions affecting current work:
 
 ### Pending Todos
 
-1. **Standardize duplicated UI patterns** (ui) - EmptyState, ConfirmationDialog, FormModal, RowActionsMenu
+1. **Excluir servico permanentemente (admin only)** (biblioteca) - Cascade delete com confirmacao forte
 
 ### Blockers/Concerns
 
@@ -129,10 +129,15 @@ None yet.
   - Sidebar atual tem placeholders hardcoded sem navegacao real
   - Necessario antes de criar mais features (Biblioteca FVS, Dashboard)
 
+- Phase 5.1 inserted after Phase 5: Revisoes de Servicos
+  - Reason: Todo servico FVS precisa de controle de revisao (padrao PBQP-H)
+  - Revisao por obra deve ser independente da biblioteca
+  - Necessario para rastreabilidade de mudancas em auditorias
+
 ## Session Continuity
 
-Last session: 2026-01-21
-Stopped at: Phase 5 verified and complete
+Last session: 2026-01-22
+Stopped at: Phase 5.1 inserted, ready to plan
 Resume file: None
 
 ## Completed Phases
@@ -161,4 +166,4 @@ All 4 plans executed and verified:
 Verification: 8/8 must-haves passed
 Report: .planning/phases/05-biblioteca-fvs/05-VERIFICATION.md
 
-Ready for Phase 6: Dashboard
+Ready for Phase 5.1: Revisoes de Servicos

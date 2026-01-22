@@ -18,6 +18,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 4: Unidades** - Gestao de unidades vinculadas a agrupamentos
 - [x] **Phase 4.1: Navegacao Contextual** - Sidebar global vs sidebar de obra (INSERTED)
 - [x] **Phase 5: Biblioteca FVS** - Gestao de servicos e itens de verificacao
+- [ ] **Phase 5.1: Revisoes de Servicos** - Sistema de controle de revisoes FVS (INSERTED)
 - [ ] **Phase 6: Dashboard** - Home do engenheiro com KPIs e feed de NCs
 
 ## Phase Details
@@ -131,9 +132,28 @@ Plans:
 - [x] 05-03-PLAN.md — Servico detail page with itens de verificacao CRUD
 - [x] 05-04-PLAN.md — Obra servicos activation page
 
+### Phase 5.1: Revisoes de Servicos (INSERTED)
+**Goal**: Implementar sistema de controle de revisoes para servicos FVS, permitindo rastrear mudancas e gerenciar atualizacoes por obra
+**Depends on**: Phase 5
+**Requirements**: REV-01, REV-02, REV-03, REV-04, REV-05
+**Success Criteria** (what must be TRUE):
+  1. Servico mostra revisao atual na lista e detalhe (ex: "Rev. 02")
+  2. Ao editar servico, modal exige descricao da mudanca e incrementa revisao
+  3. Historico de revisoes acessivel na pagina de detalhe do servico
+  4. Obra mostra qual revisao esta usando de cada servico
+  5. Indicador visual quando ha revisao mais nova disponivel
+  6. Botao "Atualizar revisao" na pagina de servicos da obra
+**Plans**: 4 plans
+
+Plans:
+- [ ] 05.1-01-PLAN.md — Schema changes + data access layer for revisions
+- [ ] 05.1-02-PLAN.md — Service edit with revision increment and description
+- [ ] 05.1-03-PLAN.md — Revision history on service detail page
+- [ ] 05.1-04-PLAN.md — Obra revision tracking and update indicator
+
 ### Phase 6: Dashboard
 **Goal**: Engenheiro tem visao consolidada da qualidade com KPIs e feed de nao-conformidades
-**Depends on**: Phase 5 (precisa de todas entidades para calcular metricas)
+**Depends on**: Phase 5.1 (precisa de todas entidades para calcular metricas)
 **Requirements**: DASH-01, DASH-02, DASH-03, DASH-04, DASH-05, DASH-06
 **Success Criteria** (what must be TRUE):
   1. Usuario ve card com Taxa de Conformidade Geral (percentual)
@@ -152,7 +172,7 @@ Plans:
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 > 2 > 3 > 4 > 4.1 > 5 > 6
+Phases execute in numeric order: 1 > 2 > 3 > 4 > 4.1 > 5 > 5.1 > 6
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
@@ -162,6 +182,7 @@ Phases execute in numeric order: 1 > 2 > 3 > 4 > 4.1 > 5 > 6
 | 4. Unidades | 4/4 | Complete | 2026-01-20 |
 | 4.1. Navegacao Contextual | 4/4 | Complete | 2026-01-21 |
 | 5. Biblioteca FVS | 4/4 | Complete | 2026-01-21 |
+| 5.1. Revisoes de Servicos | 0/4 | Not started | - |
 | 6. Dashboard | 0/3 | Not started | - |
 
 ---
@@ -175,5 +196,6 @@ Phases execute in numeric order: 1 > 2 > 3 > 4 > 4.1 > 5 > 6
 *Phase 4.1 planned: 2026-01-21*
 *Phase 4.1 complete: 2026-01-21*
 *Phase 5 planned: 2026-01-21*
-*Depth: standard (6 phases + 1 insertion)*
-*Coverage: 31/31 v1 requirements mapped*
+*Phase 5.1 inserted: 2026-01-22 (revisoes de servicos)*
+*Depth: standard (6 phases + 2 insertions)*
+*Coverage: 31/31 v1 requirements mapped + 5 REV requirements*
