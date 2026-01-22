@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-01-19)
 
 **Core value:** Trazer extrema rapidez e praticidade na verificacao de servicos, tornando a qualidade uma aliada da obra.
-**Current focus:** Phase 5.1 - Revisoes de Servicos (next)
+**Current focus:** Phase 5.1 - Revisoes de Servicos (complete)
 
 ## Current Position
 
 Phase: 5.1 of 7 (Revisoes de Servicos)
-Plan: 2 of 4 in current phase
-Status: In progress
-Last activity: 2026-01-22 - Completed 05.1-02-PLAN.md (service edit with revision increment)
+Plan: 4 of 4 in current phase
+Status: Phase complete
+Last activity: 2026-01-22 - Completed 05.1-04-PLAN.md (obra revision tracking UI)
 
-Progress: [######################-] 92% (24/26 plans completed)
+Progress: [########################-] 96% (26/27 plans completed)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 24
+- Total plans completed: 26
 - Average duration: 3.9 min
-- Total execution time: 94 min
+- Total execution time: 103 min
 
 **By Phase:**
 
@@ -33,10 +33,10 @@ Progress: [######################-] 92% (24/26 plans completed)
 | 04-unidades | 4 | 11 min | 2.75 min |
 | 04.1-navegacao-contextual | 4 | 13 min | 3.25 min |
 | 05-biblioteca-fvs | 4 | 13 min | 3.25 min |
-| 05.1-revisoes-servico | 2 | 9 min | 4.5 min |
+| 05.1-revisoes-servico | 4 | 18 min | 4.5 min |
 
 **Recent Trend:**
-- Last 5 plans: 3 min, 3 min, 3 min, 5 min, 4 min
+- Last 5 plans: 3 min, 5 min, 4 min, 4 min, 5 min
 - Trend: stable, fast
 
 *Updated after each plan completion*
@@ -123,6 +123,9 @@ Recent decisions affecting current work:
 - [05.1-02]: servicoEditFormSchema extends base schema with descricao_mudanca
 - [05.1-02]: Conditional resolver: zodResolver(isEditMode ? servicoEditFormSchema : servicoFormSchema)
 - [05.1-02]: Badge variant='outline' for table revision, variant='secondary' for detail page
+- [05.1-04]: Use parseInt for revision comparison to handle 09 < 10 correctly
+- [05.1-04]: Custom warning badge styling using bg-warning/20 text-warning (no badge variant)
+- [05.1-04]: Widen container to max-w-5xl to accommodate extra revision columns
 
 ### Pending Todos
 
@@ -147,7 +150,7 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-01-22
-Stopped at: Completed 05.1-02-PLAN.md
+Stopped at: Completed 05.1-04-PLAN.md
 Resume file: None
 
 ## Completed Phases
@@ -177,3 +180,13 @@ Verification: 8/8 must-haves passed
 Report: .planning/phases/05-biblioteca-fvs/05-VERIFICATION.md
 
 Ready for Phase 5.1: Revisoes de Servicos
+
+### Phase 5.1: Revisoes de Servicos (COMPLETE 2026-01-22)
+
+All 4 plans executed:
+- 05.1-01: Schema and data access layer (revision tracking infrastructure)
+- 05.1-02: Form modal with revision increment
+- 05.1-03: Revision history panel
+- 05.1-04: Obra revision tracking UI
+
+Ready for phase verification
