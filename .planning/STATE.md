@@ -5,14 +5,14 @@
 See: .planning/PROJECT.md (updated 2026-01-19)
 
 **Core value:** Trazer extrema rapidez e praticidade na verificacao de servicos, tornando a qualidade uma aliada da obra.
-**Current focus:** Phase 5.1 - Revisoes de Servicos (complete)
+**Current focus:** Phase 6 - Dashboard (next)
 
 ## Current Position
 
-Phase: 5.1 of 7 (Revisoes de Servicos)
-Plan: 4 of 4 in current phase
-Status: Phase complete
-Last activity: 2026-01-22 - Completed 05.1-04-PLAN.md (obra revision tracking UI)
+Phase: 6 of 8 (Dashboard)
+Plan: 0 of 3 in current phase
+Status: Ready to plan
+Last activity: 2026-01-22 - Phase 5.1 verified
 
 Progress: [########################-] 96% (26/27 plans completed)
 
@@ -181,12 +181,15 @@ Report: .planning/phases/05-biblioteca-fvs/05-VERIFICATION.md
 
 Ready for Phase 5.1: Revisoes de Servicos
 
-### Phase 5.1: Revisoes de Servicos (COMPLETE 2026-01-22)
+### Phase 5.1: Revisoes de Servicos (VERIFIED 2026-01-22)
 
-All 4 plans executed:
+All 4 plans executed and verified:
 - 05.1-01: Schema and data access layer (revision tracking infrastructure)
 - 05.1-02: Form modal with revision increment
 - 05.1-03: Revision history panel
 - 05.1-04: Obra revision tracking UI
 
-Ready for phase verification
+Verification: 6/6 must-haves passed
+Report: .planning/phases/05.1-revisoes-servico/05.1-VERIFICATION.md
+
+Ready for Phase 6: Dashboard

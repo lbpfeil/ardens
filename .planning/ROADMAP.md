@@ -18,7 +18,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 4: Unidades** - Gestao de unidades vinculadas a agrupamentos
 - [x] **Phase 4.1: Navegacao Contextual** - Sidebar global vs sidebar de obra (INSERTED)
 - [x] **Phase 5: Biblioteca FVS** - Gestao de servicos e itens de verificacao
-- [ ] **Phase 5.1: Revisoes de Servicos** - Sistema de controle de revisoes FVS (INSERTED)
+- [x] **Phase 5.1: Revisoes de Servicos** - Sistema de controle de revisoes FVS (INSERTED)
 - [ ] **Phase 6: Dashboard** - Home do engenheiro com KPIs e feed de NCs
 
 ## Phase Details
@@ -146,10 +146,10 @@ Plans:
 **Plans**: 4 plans
 
 Plans:
-- [ ] 05.1-01-PLAN.md — Schema changes + data access layer for revisions
-- [ ] 05.1-02-PLAN.md — Service edit with revision increment and description
-- [ ] 05.1-03-PLAN.md — Revision history on service detail page
-- [ ] 05.1-04-PLAN.md — Obra revision tracking and update indicator
+- [x] 05.1-01-PLAN.md — Schema changes + data access layer for revisions
+- [x] 05.1-02-PLAN.md — Service edit with revision increment and description
+- [x] 05.1-03-PLAN.md — Revision history on service detail page
+- [x] 05.1-04-PLAN.md — Obra revision tracking and update indicator
 
 ### Phase 6: Dashboard
 **Goal**: Engenheiro tem visao consolidada da qualidade com KPIs e feed de nao-conformidades
@@ -182,7 +182,7 @@ Phases execute in numeric order: 1 > 2 > 3 > 4 > 4.1 > 5 > 5.1 > 6
 | 4. Unidades | 4/4 | Complete | 2026-01-20 |
 | 4.1. Navegacao Contextual | 4/4 | Complete | 2026-01-21 |
 | 5. Biblioteca FVS | 4/4 | Complete | 2026-01-21 |
-| 5.1. Revisoes de Servicos | 0/4 | Not started | - |
+| 5.1. Revisoes de Servicos | 4/4 | Complete | 2026-01-22 |
 | 6. Dashboard | 0/3 | Not started | - |
 
 ---
@@ -197,5 +197,6 @@ Phases execute in numeric order: 1 > 2 > 3 > 4 > 4.1 > 5 > 5.1 > 6
 *Phase 4.1 complete: 2026-01-21*
 *Phase 5 planned: 2026-01-21*
 *Phase 5.1 inserted: 2026-01-22 (revisoes de servicos)*
+*Phase 5.1 complete: 2026-01-22*
 *Depth: standard (6 phases + 2 insertions)*
 *Coverage: 31/31 v1 requirements mapped + 5 REV requirements*

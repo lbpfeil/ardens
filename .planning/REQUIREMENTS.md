@@ -44,11 +44,11 @@ Requirements para o Mes 1 do MVP. Cada um mapeia para fases do roadmap.
 
 ### Revisoes de Servicos
 
-- [ ] **REV-01**: Servico armazena revisao atual, historico e descricao das mudancas
-- [ ] **REV-02**: Ao editar servico, sistema exige descricao e incrementa revisao automaticamente
-- [ ] **REV-03**: Usuario pode visualizar historico completo de revisoes de um servico
-- [ ] **REV-04**: Cada obra mantém registro de qual revisao de cada servico esta utilizando
-- [ ] **REV-05**: Usuario pode atualizar revisao de um servico na obra para versao mais recente
+- [x] **REV-01**: Servico armazena revisao atual, historico e descricao das mudancas
+- [x] **REV-02**: Ao editar servico, sistema exige descricao e incrementa revisao automaticamente
+- [x] **REV-03**: Usuario pode visualizar historico completo de revisoes de um servico
+- [x] **REV-04**: Cada obra mantém registro de qual revisao de cada servico esta utilizando
+- [x] **REV-05**: Usuario pode atualizar revisao de um servico na obra para versao mais recente
 
 ### Dashboard
 
@@ -136,11 +136,11 @@ Explicitamente excluido do Mes 1.
 | SERV-06 | Phase 5 | Complete |
 | SERV-07 | Phase 5 | Complete |
 | SERV-08 | Phase 5 | Complete |
-| REV-01 | Phase 5.1 | Pending |
-| REV-02 | Phase 5.1 | Pending |
-| REV-03 | Phase 5.1 | Pending |
-| REV-04 | Phase 5.1 | Pending |
-| REV-05 | Phase 5.1 | Pending |
+| REV-01 | Phase 5.1 | Complete |
+| REV-02 | Phase 5.1 | Complete |
+| REV-03 | Phase 5.1 | Complete |
+| REV-04 | Phase 5.1 | Complete |
+| REV-05 | Phase 5.1 | Complete |
 | DASH-01 | Phase 6 | Pending |
 | DASH-02 | Phase 6 | Pending |
 | DASH-03 | Phase 6 | Pending |
@@ -155,4 +155,4 @@ Explicitamente excluido do Mes 1.
 
 ---
 *Requirements defined: 2026-01-19*
-*Last updated: 2026-01-22 after phase 5.1 planning*
+*Last updated: 2026-01-22 after phase 5.1 complete*
