@@ -82,6 +82,7 @@ export function ServicosActivationTable({
                     onCheckedChange={(checked) => onToggle(servico, checked === true)}
                     disabled={updatingId === servico.id}
                     aria-label={`Ativar ${servico.nome}`}
+                    className={updatingId === servico.id ? 'disabled:cursor-wait' : ''}
                   />
                 </TableCell>
                 <TableCell className="font-mono text-sm text-foreground-light">
