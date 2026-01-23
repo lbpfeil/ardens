@@ -630,5 +630,36 @@ CREATE POLICY "sync_conflitos_update" ON sync_conflitos
 
 
 -- ============================================================================
+-- POLÍTICAS: TAGS
+-- ============================================================================
+
+-- SELECT: Todos do cliente veem as tags (para seletor em itens)
+DROP POLICY IF EXISTS "tags_select" ON tags;
+CREATE POLICY "tags_select" ON tags
+  FOR SELECT USING (cliente_id = get_user_cliente_id());
+
+-- INSERT: Admin e engenheiro podem criar tags
+DROP POLICY IF EXISTS "tags_insert" ON tags;
+CREATE POLICY "tags_insert" ON tags
+  FOR INSERT WITH CHECK (
+    cliente_id = get_user_cliente_id() AND is_admin_or_engenheiro()
+  );
+
+-- UPDATE: Admin e engenheiro podem editar tags
+DROP POLICY IF EXISTS "tags_update" ON tags;
+CREATE POLICY "tags_update" ON tags
+  FOR UPDATE USING (
+    cliente_id = get_user_cliente_id() AND is_admin_or_engenheiro()
+  );
+
+-- DELETE: Apenas admin pode excluir tags
+DROP POLICY IF EXISTS "tags_delete" ON tags;
+CREATE POLICY "tags_delete" ON tags
+  FOR DELETE USING (
+    cliente_id = get_user_cliente_id() AND is_admin()
+  );
+
+
+-- ============================================================================
 -- FIM DAS POLÍTICAS RLS
 -- ============================================================================

@@ -61,14 +61,7 @@ export function TagsPageClient({ initialTags }: TagsPageClientProps) {
   // Empty state
   if (tags.length === 0) {
     return (
-      <div className="p-6 max-w-4xl">
-        <div className="mb-6">
-          <h1 className="text-2xl font-normal text-foreground">Tags</h1>
-          <p className="text-sm text-foreground-light mt-1">
-            Organize itens de verificação em grupos
-          </p>
-        </div>
-
+      <>
         <div className="rounded-md border border-border bg-surface-100">
           <div className="flex flex-col items-center justify-center py-16 px-4 text-center">
             <TagsIcon className="h-12 w-12 text-foreground-muted mb-4" />
@@ -89,20 +82,12 @@ export function TagsPageClient({ initialTags }: TagsPageClientProps) {
           onSuccess={handleCreateSuccess}
           mode="create"
         />
-      </div>
+      </>
     )
   }
 
   return (
-    <div className="p-6 max-w-4xl">
-      {/* Header */}
-      <div className="mb-6">
-        <h1 className="text-2xl font-normal text-foreground">Tags</h1>
-        <p className="text-sm text-foreground-light mt-1">
-          Organize itens de verificação em grupos
-        </p>
-      </div>
-
+    <>
       {/* Toolbar */}
       <div className="flex items-center justify-end gap-2 mb-4">
         {tags.length > 1 && (
@@ -181,6 +166,6 @@ export function TagsPageClient({ initialTags }: TagsPageClientProps) {
         tags={tags}
         onSave={handleReorderSave}
       />
-    </div>
+    </>
   )
 }
