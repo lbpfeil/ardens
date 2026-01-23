@@ -24,7 +24,15 @@ import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Input } from '@/components/ui/input'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { toast } from 'sonner'
+import type { Tag } from '@/lib/supabase/queries/tags'
 
 interface ItemServicoFormModalProps {
   open: boolean
@@ -33,6 +41,7 @@ interface ItemServicoFormModalProps {
   servicoId: string
   mode?: 'create' | 'edit'
   item?: ItemServico | null
+  tags: Tag[]
 }
 
 export function ItemServicoFormModal({
@@ -42,6 +51,7 @@ export function ItemServicoFormModal({
   servicoId,
   mode = 'create',
   item = null,
+  tags,
 }: ItemServicoFormModalProps) {
   const [isSubmitting, setIsSubmitting] = useState(false)
 
@@ -50,6 +60,7 @@ export function ItemServicoFormModal({
       observacao: item?.observacao ?? '',
       metodo: item?.metodo ?? '',
       tolerancia: item?.tolerancia ?? '',
+      tag_id: item?.tag_id ?? null,
     }),
     [item]
   )
@@ -59,10 +70,14 @@ export function ItemServicoFormModal({
     handleSubmit,
     formState: { errors },
     reset,
+    watch,
+    setValue,
   } = useForm<ItemServicoFormData>({
     resolver: zodResolver(itemServicoFormSchema),
     defaultValues,
   })
+
+  const tagId = watch('tag_id')
 
   // Reset form when item changes
   useEffect(() => {
@@ -77,6 +92,7 @@ export function ItemServicoFormModal({
         observacao: data.observacao,
         metodo: data.metodo || null,
         tolerancia: data.tolerancia || null,
+        tag_id: data.tag_id || null,
       }
 
       if (mode === 'edit' && item) {
@@ -154,6 +170,36 @@ export function ItemServicoFormModal({
               placeholder="Ex: +/- 5mm, nivelado, sem falhas"
               {...register('tolerancia')}
             />
+          </div>
+
+          {/* Tag Selector */}
+          <div className="space-y-2">
+            <Label htmlFor="tag_id">Tag</Label>
+            <Select
+              value={tagId ?? 'none'}
+              onValueChange={(value) => setValue('tag_id', value === 'none' ? null : value)}
+            >
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Sem tag" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="none">Sem tag</SelectItem>
+                {tags.map((tag) => (
+                  <SelectItem key={tag.id} value={tag.id}>
+                    <div className="flex items-center gap-2">
+                      <div
+                        className="h-3 w-3 rounded-sm flex-shrink-0"
+                        style={{ backgroundColor: tag.cor }}
+                      />
+                      {tag.nome}
+                    </div>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <p className="text-xs text-foreground-muted">
+              Tags agrupam itens na tabela de verificação
+            </p>
           </div>
 
           <DialogFooter>

@@ -12,6 +12,7 @@ export const itemServicoFormSchema = z.object({
   observacao: requiredString(3, 1000, 'Observação'),
   metodo: optionalString(1000),
   tolerancia: optionalString(500),
+  tag_id: z.string().uuid().nullable().optional(),
 })
 
 export type ItemServicoFormData = z.infer<typeof itemServicoFormSchema>
