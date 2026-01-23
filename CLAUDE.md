@@ -230,6 +230,34 @@ npx supabase gen types       # Gera tipos TypeScript
 
 ---
 
+## IMPORTANTE: Textos em Portugues Brasileiro
+
+**TODOS os textos visíveis ao usuário DEVEM usar acentuação PT-BR correta.**
+
+Isso inclui:
+- Labels de formulários (ex: "Descrição", não "Descricao")
+- Placeholders de inputs
+- Mensagens de erro e validação
+- Títulos e descrições de páginas
+- Textos em botões e menus
+- Mensagens de toast/notificação
+- Empty states e textos informativos
+
+**Exemplos corretos:**
+- "Descrição da mudança" ✓
+- "Código do serviço" ✓
+- "Não há itens cadastrados" ✓
+- "Ação concluída com sucesso" ✓
+
+**Exemplos incorretos:**
+- "Descricao da mudanca" ✗
+- "Codigo do servico" ✗
+- "Nao ha itens cadastrados" ✗
+
+**Ao criar ou editar componentes, SEMPRE verifique se os textos estão com acentuação correta.**
+
+---
+
 ## Convencoes de Codigo
 
 ### TypeScript
@@ -292,4 +320,4 @@ Auditor PBQP-H valida documentacao
 
 ---
 
-*Atualizado em: 2026-01-15*
+*Atualizado em: 2026-01-23*
