@@ -28,6 +28,8 @@ export interface Servico {
   revisao_descricao: string | null
   revisao_updated_at: string | null
   revisao_updated_by: string | null
+  // Conditional revision tracking
+  primeira_ativacao_em: string | null  // NULL = never activated, edits don't create revisions
   created_at: string
   updated_at: string
 }

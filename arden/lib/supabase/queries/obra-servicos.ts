@@ -113,18 +113,28 @@ export async function listActiveServicosForObra(obraId: string): Promise<Servico
  * Ativa um servico para uma obra.
  * Cria ou atualiza registro em obra_servicos.
  * Captura a revisao atual do servico no momento da ativacao.
+ * Sets primeira_ativacao_em on first-ever activation (for conditional revision).
  */
 export async function activateServico(obraId: string, servicoId: string): Promise<ObraServico> {
   const supabase = createClient()
 
-  // Get current revision of the servico
+  // Get current revision of the servico (and primeira_ativacao_em)
   const { data: servico, error: servicoError } = await supabase
     .from('servicos')
-    .select('revisao')
+    .select('revisao, primeira_ativacao_em')
     .eq('id', servicoId)
     .single()
 
   if (servicoError) throw new Error(`Erro ao buscar servico: ${servicoError.message}`)
+
+  // Set primeira_ativacao_em if not already set (first-ever activation)
+  if (!servico.primeira_ativacao_em) {
+    await supabase
+      .from('servicos')
+      .update({ primeira_ativacao_em: new Date().toISOString() })
+      .eq('id', servicoId)
+      .is('primeira_ativacao_em', null) // Race condition safety: only update if still null
+  }
 
   // Upsert: insert if not exists, update ativo=true if exists
   const { data, error } = await supabase
@@ -177,6 +187,7 @@ export async function deactivateServico(obraId: string, servicoId: string): Prom
 /**
  * Ativa multiplos servicos para uma obra em lote.
  * Captura a revisao atual de cada servico no momento da ativacao.
+ * Sets primeira_ativacao_em on first-ever activation for each servico.
  */
 export async function bulkActivateServicos(
   obraId: string,
@@ -186,16 +197,30 @@ export async function bulkActivateServicos(
 
   const supabase = createClient()
 
-  // Get current revisions for all servicos
+  // Get current revisions and primeira_ativacao_em for all servicos
   const { data: servicos, error: servicosError } = await supabase
     .from('servicos')
-    .select('id, revisao')
+    .select('id, revisao, primeira_ativacao_em')
     .in('id', servicoIds)
 
   if (servicosError) throw new Error(`Erro ao buscar servicos: ${servicosError.message}`)
 
   // Build revision map
   const revisionMap = new Map((servicos || []).map(s => [s.id, s.revisao]))
+
+  // Find servicos that need primeira_ativacao_em set (never activated before)
+  const needsFirstActivation = (servicos || [])
+    .filter(s => !s.primeira_ativacao_em)
+    .map(s => s.id)
+
+  // Set primeira_ativacao_em for servicos being activated for the first time
+  if (needsFirstActivation.length > 0) {
+    await supabase
+      .from('servicos')
+      .update({ primeira_ativacao_em: new Date().toISOString() })
+      .in('id', needsFirstActivation)
+      .is('primeira_ativacao_em', null) // Race condition safety
+  }
 
   const records = servicoIds.map(servicoId => ({
     obra_id: obraId,

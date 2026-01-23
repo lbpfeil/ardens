@@ -7,6 +7,7 @@ export interface ItemServico {
   observacao: string
   metodo: string | null
   tolerancia: string | null
+  tag_id: string | null  // Optional tag for categorization
   ordem: number
   created_at: string
   updated_at: string
@@ -17,6 +18,7 @@ export interface ItemServicoInsert {
   observacao: string
   metodo?: string | null
   tolerancia?: string | null
+  tag_id?: string | null
   ordem?: number
 }
 
@@ -24,6 +26,7 @@ export interface ItemServicoUpdate {
   observacao?: string
   metodo?: string | null
   tolerancia?: string | null
+  tag_id?: string | null
   ordem?: number
 }
 
@@ -90,6 +93,7 @@ export async function createItemServico(data: ItemServicoInsert): Promise<ItemSe
       observacao: data.observacao,
       metodo: data.metodo,
       tolerancia: data.tolerancia,
+      tag_id: data.tag_id,
       ordem: nextOrdem,
     })
     .select()
@@ -130,6 +134,7 @@ export async function createItensServicoBatch(
     observacao: item.observacao,
     metodo: item.metodo,
     tolerancia: item.tolerancia,
+    tag_id: item.tag_id,
     ordem: startOrdem + index,
   }))
 
