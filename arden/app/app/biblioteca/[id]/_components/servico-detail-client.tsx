@@ -9,7 +9,7 @@ import { ItemDeleteConfirmation } from './item-delete-confirmation'
 import { RevisionHistoryPanel } from './revision-history-panel'
 import { ServicoFormModal } from '../../_components/servico-form-modal'
 import type { Servico } from '@/lib/supabase/queries/servicos'
-import type { ItemServico } from '@/lib/supabase/queries/itens-servico'
+import { listItensServico, type ItemServico } from '@/lib/supabase/queries/itens-servico'
 import type { Tag } from '@/lib/supabase/queries/tags'
 import { listServicoRevisoes, type ServicoRevisao } from '@/lib/supabase/queries/servico-revisoes'
 
@@ -21,6 +21,9 @@ interface ServicoDetailClientProps {
 
 export function ServicoDetailClient({ servico, initialItens, tags }: ServicoDetailClientProps) {
   const router = useRouter()
+
+  // Itens state for refresh capability
+  const [itens, setItens] = useState<ItemServico[]>(initialItens)
 
   // Revision history state
   const [revisoes, setRevisoes] = useState<ServicoRevisao[]>([])
@@ -36,6 +39,16 @@ export function ServicoDetailClient({ servico, initialItens, tags }: ServicoDeta
       console.error('Error loading revisoes:', error)
     } finally {
       setIsLoadingRevisoes(false)
+    }
+  }, [servico.id])
+
+  // Refresh itens (used after drag-and-drop operations)
+  const refreshItens = useCallback(async () => {
+    try {
+      const updated = await listItensServico(servico.id)
+      setItens(updated)
+    } catch (error) {
+      console.error('Error refreshing itens:', error)
     }
   }, [servico.id])
 
@@ -92,10 +105,10 @@ export function ServicoDetailClient({ servico, initialItens, tags }: ServicoDeta
     }
   }
 
-  const handleItemModalSuccess = () => {
+  const handleItemModalSuccess = async () => {
     setIsItemModalOpen(false)
     setEditingItem(null)
-    router.refresh()
+    await refreshItens()
   }
 
   const handleDeleteConfirmationClose = (open: boolean) => {
@@ -104,9 +117,9 @@ export function ServicoDetailClient({ servico, initialItens, tags }: ServicoDeta
     }
   }
 
-  const handleDeleteSuccess = () => {
+  const handleDeleteSuccess = async () => {
     setDeletingItem(null)
-    router.refresh()
+    await refreshItens()
   }
 
   return (
@@ -125,11 +138,13 @@ export function ServicoDetailClient({ servico, initialItens, tags }: ServicoDeta
         {/* Right panel: Itens de verificação */}
         <div className="flex-1 min-w-0">
           <ItensServicoPanel
-            itens={initialItens}
+            itens={itens}
             tags={tags}
+            servicoId={servico.id}
             onCreateClick={handleCreateItemClick}
             onEditClick={handleEditItemClick}
             onDeleteClick={handleDeleteItemClick}
+            onRefresh={refreshItens}
           />
         </div>
       </div>
