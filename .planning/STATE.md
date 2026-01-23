@@ -3,6 +3,7 @@
 ## Project Reference
 
 See: .planning/PROJECT.md (updated 2026-01-19)
+See: .planning/CONVENTIONS.md (regras obrigatórias para novas páginas/tabelas)
 
 **Core value:** Trazer extrema rapidez e praticidade na verificacao de servicos, tornando a qualidade uma aliada da obra.
 **Current focus:** Phase 6 - Dashboard (next)

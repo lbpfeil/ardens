@@ -207,6 +207,59 @@ npx supabase gen types       # Gera tipos TypeScript
 
 ---
 
+## OBRIGATÓRIO: Novas Páginas
+
+**Ao criar qualquer nova página em `/app/app/`, DEVE seguir este padrão:**
+
+### 1. Estrutura de Página (Server Component)
+
+```tsx
+// arden/app/app/{feature}/page.tsx
+export default async function FeaturePage() {
+  const supabase = await createClient()
+
+  // Fetch com filtro de cliente
+  const { data, error } = await supabase
+    .from('tabela')
+    .select('*')
+    .eq('cliente_id', DEV_CLIENTE_ID)  // SEMPRE filtrar
+
+  return (
+    <div className="p-6 bg-background min-h-full">      {/* WRAPPER OBRIGATÓRIO */}
+      <div className="max-w-6xl mx-auto">              {/* CONTAINER CENTRALIZADO */}
+        <div className="mb-6">                          {/* HEADER */}
+          <h1 className="text-2xl font-normal text-foreground">Título</h1>
+          <p className="text-sm text-foreground-light mt-1">Descrição</p>
+        </div>
+        <FeaturePageClient initialData={data || []} />
+      </div>
+    </div>
+  )
+}
+```
+
+### 2. Página Template
+
+**SEMPRE copiar estrutura de:** `arden/app/app/biblioteca/page.tsx`
+
+### 3. Checklist Nova Página
+
+- [ ] Wrapper `bg-background min-h-full` no page.tsx
+- [ ] Header (h1 + descrição) no Server Component
+- [ ] Filtro `cliente_id` nas queries server-side
+- [ ] RLS policies adicionadas em `database/rls-policies.sql`
+- [ ] Constante `DEV_CLIENTE_ID` importada/declarada
+
+### 4. Checklist Nova Tabela
+
+Ao criar nova tabela no banco:
+
+- [ ] Schema adicionado em `database/schema.sql`
+- [ ] `ALTER TABLE ... ENABLE ROW LEVEL SECURITY` incluído
+- [ ] Políticas RLS em `database/rls-policies.sql` (SELECT, INSERT, UPDATE, DELETE)
+
+---
+
 ## IMPORTANTE: Atualizacao de Documentacao
 
 **Sempre recomende ao usuario atualizar a documentacao quando:**
