@@ -250,3 +250,68 @@ export async function updateServicoWithRevision(
 
   return data
 }
+
+/**
+ * Type for update without revision (draft mode).
+ */
+export interface ServicoUpdateDraft {
+  codigo?: string
+  nome?: string
+  categoria?: CategoriaServico | null
+  referencia_normativa?: string | null
+}
+
+/**
+ * Smart update that decides whether to increment revision.
+ * - If service has never been activated (primeira_ativacao_em is null): simple update, no revision
+ * - If service has been activated: requires descricao_mudanca, increments revision
+ *
+ * @param id - Service ID
+ * @param updates - Update data (with or without descricao_mudanca)
+ * @param forceRevision - If true, always increment revision regardless of activation status
+ */
+export async function updateServicoSmart(
+  id: string,
+  updates: ServicoUpdateDraft | ServicoUpdateWithRevision,
+  forceRevision = false
+): Promise<Servico> {
+  const supabase = createClient()
+
+  // Check if service has ever been activated
+  const { data: servico, error: fetchError } = await supabase
+    .from('servicos')
+    .select('primeira_ativacao_em')
+    .eq('id', id)
+    .single()
+
+  if (fetchError) throw new Error(`Erro ao buscar serviço: ${fetchError.message}`)
+
+  const needsRevision = forceRevision || !!servico?.primeira_ativacao_em
+
+  if (needsRevision) {
+    // Service has been activated - require revision
+    if (!('descricao_mudanca' in updates) || !updates.descricao_mudanca) {
+      throw new Error('Serviço já foi ativado em uma obra. Descrição da mudança é obrigatória.')
+    }
+    return updateServicoWithRevision(id, updates as ServicoUpdateWithRevision)
+  } else {
+    // Never activated - simple update, no revision
+    const { descricao_mudanca, ...cleanUpdates } = updates as ServicoUpdateWithRevision
+    return updateServico(id, cleanUpdates)
+  }
+}
+
+/**
+ * Check if a service has been activated (for UI decisions).
+ */
+export async function checkServicoActivated(id: string): Promise<boolean> {
+  const supabase = createClient()
+  const { data, error } = await supabase
+    .from('servicos')
+    .select('primeira_ativacao_em')
+    .eq('id', id)
+    .single()
+
+  if (error) return false // Fail safe: assume not activated
+  return !!data?.primeira_ativacao_em
+}
