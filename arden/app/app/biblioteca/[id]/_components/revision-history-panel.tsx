@@ -63,7 +63,7 @@ export function RevisionHistoryPanel({
                 }`}
               >
                 <Badge
-                  variant={index === 0 ? 'secondary' : 'outline'}
+                  variant={index === 0 ? 'default' : 'outline'}
                   className="font-mono text-xs shrink-0"
                 >
                   Rev. {rev.revisao}
