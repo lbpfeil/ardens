@@ -10,14 +10,16 @@ import { RevisionHistoryPanel } from './revision-history-panel'
 import { ServicoFormModal } from '../../_components/servico-form-modal'
 import type { Servico } from '@/lib/supabase/queries/servicos'
 import type { ItemServico } from '@/lib/supabase/queries/itens-servico'
+import type { Tag } from '@/lib/supabase/queries/tags'
 import { listServicoRevisoes, type ServicoRevisao } from '@/lib/supabase/queries/servico-revisoes'
 
 interface ServicoDetailClientProps {
   servico: Servico
   initialItens: ItemServico[]
+  tags: Tag[]
 }
 
-export function ServicoDetailClient({ servico, initialItens }: ServicoDetailClientProps) {
+export function ServicoDetailClient({ servico, initialItens, tags }: ServicoDetailClientProps) {
   const router = useRouter()
 
   // Revision history state
@@ -125,6 +127,7 @@ export function ServicoDetailClient({ servico, initialItens }: ServicoDetailClie
           <ItensServicoPanel
             servico={servico}
             itens={initialItens}
+            tags={tags}
             onCreateClick={handleCreateItemClick}
             onEditClick={handleEditItemClick}
             onDeleteClick={handleDeleteItemClick}
@@ -149,6 +152,7 @@ export function ServicoDetailClient({ servico, initialItens }: ServicoDetailClie
         servicoId={servico.id}
         mode={editingItem ? 'edit' : 'create'}
         item={editingItem}
+        tags={tags}
       />
 
       {/* Item delete confirmation */}

@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { ServicoDetailClient } from './_components/servico-detail-client'
+import { listTags } from '@/lib/supabase/queries/tags'
 
 interface PageProps {
   params: Promise<{ id: string }>
@@ -32,10 +33,13 @@ export default async function ServicoDetailPage({ params }: PageProps) {
     console.error('Error fetching itens:', itensError)
   }
 
+  // Fetch tags
+  const tags = await listTags()
+
   return (
     <div className="p-6 bg-background min-h-full">
       <div className="max-w-6xl mx-auto">
-        <ServicoDetailClient servico={servico} initialItens={itens || []} />
+        <ServicoDetailClient servico={servico} initialItens={itens || []} tags={tags} />
       </div>
     </div>
   )
