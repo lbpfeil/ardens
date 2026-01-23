@@ -164,14 +164,14 @@ Plans:
   5. Tabela de itens mostra agrupamento por tags com borda colorida
   6. Engenheiro arrasta item de uma tag para outra
   7. Engenheiro reordena sequencia de tags via modal
-**Plans**: TBD
+**Plans**: 5 plans
 
 Plans:
-- [ ] 05.2-01: Schema (tags table, primeira_ativacao_em, tag_id em itens) + data access
-- [ ] 05.2-02: Pagina de Tags com CRUD e reordenacao
-- [ ] 05.2-03: Revisao condicional (logica + UI adaptativa)
-- [ ] 05.2-04: Tags em itens (modal + tabela agrupada)
-- [ ] 05.2-05: Drag-and-drop de itens entre tags
+- [ ] 05.2-01-PLAN.md — Schema (tags table ordem, primeira_ativacao_em, tag_id em itens) + data access
+- [ ] 05.2-02-PLAN.md — Pagina de Tags com CRUD e reordenacao
+- [ ] 05.2-03-PLAN.md — Revisao condicional (logica + UI adaptativa)
+- [ ] 05.2-04-PLAN.md — Tags em itens (modal + tabela agrupada)
+- [ ] 05.2-05-PLAN.md — Drag-and-drop de itens entre tags
 
 ### Phase 6: Dashboard
 **Goal**: Engenheiro tem visao consolidada da qualidade com KPIs e feed de nao-conformidades
@@ -194,7 +194,7 @@ Plans:
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 > 2 > 3 > 4 > 4.1 > 5 > 5.1 > 6
+Phases execute in numeric order: 1 > 2 > 3 > 4 > 4.1 > 5 > 5.1 > 5.2 > 6
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
@@ -205,7 +205,7 @@ Phases execute in numeric order: 1 > 2 > 3 > 4 > 4.1 > 5 > 5.1 > 6
 | 4.1. Navegacao Contextual | 4/4 | Complete | 2026-01-21 |
 | 5. Biblioteca FVS | 4/4 | Complete | 2026-01-21 |
 | 5.1. Revisoes de Servicos | 4/4 | Complete | 2026-01-22 |
-| 5.2. Tags e Revisao Condicional | 0/5 | Not started | - |
+| 5.2. Tags e Revisao Condicional | 0/5 | Planned | - |
 | 6. Dashboard | 0/3 | Not started | - |
 
 ---
@@ -221,5 +221,7 @@ Phases execute in numeric order: 1 > 2 > 3 > 4 > 4.1 > 5 > 5.1 > 6
 *Phase 5 planned: 2026-01-21*
 *Phase 5.1 inserted: 2026-01-22 (revisoes de servicos)*
 *Phase 5.1 complete: 2026-01-22*
-*Depth: standard (6 phases + 2 insertions)*
-*Coverage: 31/31 v1 requirements mapped + 5 REV requirements*
+*Phase 5.2 inserted: 2026-01-23 (tags e revisao condicional)*
+*Phase 5.2 planned: 2026-01-23*
+*Depth: standard (6 phases + 3 insertions)*
+*Coverage: 31/31 v1 requirements mapped + 5 REV + 7 TAG requirements*
