@@ -130,6 +130,7 @@ Recent decisions affecting current work:
 ### Pending Todos
 
 1. **Excluir servico permanentemente (admin only)** (biblioteca) - Cascade delete com confirmacao forte
+2. **Auditoria de acentuação PT-BR na plataforma** (ui) - Verificar todos os textos sem acentuação correta
 
 ### Blockers/Concerns
 
