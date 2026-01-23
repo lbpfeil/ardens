@@ -202,6 +202,52 @@ export async function updateItensOrder(
 }
 
 /**
+ * Atualiza a tag de um item de servico.
+ * Usado quando arrastando item entre secoes de tags.
+ */
+export async function updateItemTag(id: string, tagId: string | null): Promise<ItemServico> {
+  const supabase = createClient()
+
+  const { data, error } = await supabase
+    .from('itens_servico')
+    .update({ tag_id: tagId })
+    .eq('id', id)
+    .select()
+    .single()
+
+  if (error) {
+    throw new Error(`Erro ao atualizar tag do item: ${error.message}`)
+  }
+
+  return data
+}
+
+/**
+ * Atualiza a tag e a ordem de um item de servico.
+ * Usado quando arrastando item entre secoes de tags com posicionamento especifico.
+ */
+export async function updateItemTagAndOrder(
+  id: string,
+  tagId: string | null,
+  ordem: number
+): Promise<ItemServico> {
+  const supabase = createClient()
+
+  const { data, error } = await supabase
+    .from('itens_servico')
+    .update({ tag_id: tagId, ordem })
+    .eq('id', id)
+    .select()
+    .single()
+
+  if (error) {
+    throw new Error(`Erro ao atualizar tag e ordem do item: ${error.message}`)
+  }
+
+  return data
+}
+
+/**
  * Deleta um item de servico (hard delete).
  */
 export async function deleteItemServico(id: string): Promise<void> {
