@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-01-19)
 ## Current Position
 
 Phase: 5.2 of 9 (Tags e Revisao Condicional)
-Plan: 3 of 5 in current phase
+Plan: 4 of 5 in current phase
 Status: In progress
-Last activity: 2026-01-23 - Completed 05.2-03-PLAN.md
+Last activity: 2026-01-23 - Completed 05.2-04-PLAN.md
 
-Progress: [#########################-] 91% (29/32 plans completed)
+Progress: [##########################] 94% (30/32 plans completed)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 29
+- Total plans completed: 30
 - Average duration: 4.0 min
-- Total execution time: 115 min
+- Total execution time: 119 min
 
 **By Phase:**
 
@@ -34,10 +34,10 @@ Progress: [#########################-] 91% (29/32 plans completed)
 | 04.1-navegacao-contextual | 4 | 13 min | 3.25 min |
 | 05-biblioteca-fvs | 4 | 13 min | 3.25 min |
 | 05.1-revisoes-servico | 4 | 18 min | 4.5 min |
-| 05.2-tags-revisao-condicional | 3 | 12 min | 4 min |
+| 05.2-tags-revisao-condicional | 4 | 16 min | 4 min |
 
 **Recent Trend:**
-- Last 5 plans: 4 min, 5 min, 4 min, 4 min, 4 min
+- Last 5 plans: 5 min, 4 min, 4 min, 4 min, 4 min
 - Trend: stable, fast
 
 *Updated after each plan completion*
@@ -136,6 +136,11 @@ Recent decisions affecting current work:
 - [05.2-03]: updateServicoSmart checks primeira_ativacao_em to decide revision behavior
 - [05.2-03]: Conditional form schema: zodResolver switches based on needsRevisionDescription
 - [05.2-03]: Draft mode indicator: gray dot with 'Modo rascunho' text for unactivated services
+- [05.2-04]: Tag selector uses value='none' for untagged items (Select doesn't accept null)
+- [05.2-04]: Untagged items appear first without header section
+- [05.2-04]: Tagged groups have 3px colored left border matching tag.cor
+- [05.2-04]: Table header only on first group to avoid repetition
+- [05.2-04]: Groups sorted by tag.ordem, items within by item.ordem
 
 ### Pending Todos
 
@@ -166,7 +171,7 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-01-23
-Stopped at: Completed 05.2-03-PLAN.md
+Stopped at: Completed 05.2-04-PLAN.md
 Resume file: None
 
 ## Completed Phases
