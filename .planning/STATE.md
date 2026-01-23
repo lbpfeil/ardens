@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-01-19)
 
 **Core value:** Trazer extrema rapidez e praticidade na verificacao de servicos, tornando a qualidade uma aliada da obra.
-**Current focus:** Phase 6 - Dashboard (next)
+**Current focus:** Phase 5.2 - Tags e Revisao Condicional (next)
 
 ## Current Position
 
-Phase: 6 of 8 (Dashboard)
-Plan: 0 of 3 in current phase
+Phase: 5.2 of 9 (Tags e Revisao Condicional)
+Plan: 0 of 5 in current phase
 Status: Ready to plan
-Last activity: 2026-01-22 - Phase 5.1 verified
+Last activity: 2026-01-23 - Phase 5.2 inserted
 
-Progress: [########################-] 96% (26/27 plans completed)
+Progress: [######################----] 81% (26/32 plans completed)
 
 ## Performance Metrics
 
@@ -148,6 +148,11 @@ None yet.
   - Revisao por obra deve ser independente da biblioteca
   - Necessario para rastreabilidade de mudancas em auditorias
 
+- Phase 5.2 inserted after Phase 5.1: Tags e Revisao Condicional
+  - Reason: Tags para organizar itens de verificacao por categoria/etapa
+  - Revisao condicional: so gera revisao se servico ja foi ativado em obra
+  - Servicos em "modo rascunho" podem ser editados livremente
+
 ## Session Continuity
 
 Last session: 2026-01-22
@@ -193,4 +198,4 @@ All 4 plans executed and verified:
 Verification: 6/6 must-haves passed
 Report: .planning/phases/05.1-revisoes-servico/05.1-VERIFICATION.md
 
-Ready for Phase 6: Dashboard
+Ready for Phase 5.2: Tags e Revisao Condicional

@@ -19,6 +19,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 4.1: Navegacao Contextual** - Sidebar global vs sidebar de obra (INSERTED)
 - [x] **Phase 5: Biblioteca FVS** - Gestao de servicos e itens de verificacao
 - [x] **Phase 5.1: Revisoes de Servicos** - Sistema de controle de revisoes FVS (INSERTED)
+- [ ] **Phase 5.2: Tags e Revisao Condicional** - Tags para itens e revisao apenas quando servico ja foi ativado (INSERTED)
 - [ ] **Phase 6: Dashboard** - Home do engenheiro com KPIs e feed de NCs
 
 ## Phase Details
@@ -151,6 +152,27 @@ Plans:
 - [x] 05.1-03-PLAN.md — Revision history on service detail page
 - [x] 05.1-04-PLAN.md — Obra revision tracking and update indicator
 
+### Phase 5.2: Tags e Revisao Condicional (INSERTED)
+**Goal**: Implementar tags para organizar itens de verificacao e tornar revisao condicional (apenas quando servico ja foi ativado)
+**Depends on**: Phase 5.1
+**Requirements**: REQ-01 a REQ-07 (ver REQUIREMENTS.md)
+**Success Criteria** (what must be TRUE):
+  1. Engenheiro edita servico nao-ativado sem gerar revisao
+  2. Engenheiro edita servico ja-ativado e revisao e incrementada
+  3. Engenheiro cria/edita tags na pagina /app/tags
+  4. Engenheiro associa tag a item de verificacao no modal
+  5. Tabela de itens mostra agrupamento por tags com borda colorida
+  6. Engenheiro arrasta item de uma tag para outra
+  7. Engenheiro reordena sequencia de tags via modal
+**Plans**: TBD
+
+Plans:
+- [ ] 05.2-01: Schema (tags table, primeira_ativacao_em, tag_id em itens) + data access
+- [ ] 05.2-02: Pagina de Tags com CRUD e reordenacao
+- [ ] 05.2-03: Revisao condicional (logica + UI adaptativa)
+- [ ] 05.2-04: Tags em itens (modal + tabela agrupada)
+- [ ] 05.2-05: Drag-and-drop de itens entre tags
+
 ### Phase 6: Dashboard
 **Goal**: Engenheiro tem visao consolidada da qualidade com KPIs e feed de nao-conformidades
 **Depends on**: Phase 5.1 (precisa de todas entidades para calcular metricas)
@@ -183,6 +205,7 @@ Phases execute in numeric order: 1 > 2 > 3 > 4 > 4.1 > 5 > 5.1 > 6
 | 4.1. Navegacao Contextual | 4/4 | Complete | 2026-01-21 |
 | 5. Biblioteca FVS | 4/4 | Complete | 2026-01-21 |
 | 5.1. Revisoes de Servicos | 4/4 | Complete | 2026-01-22 |
+| 5.2. Tags e Revisao Condicional | 0/5 | Not started | - |
 | 6. Dashboard | 0/3 | Not started | - |
 
 ---
