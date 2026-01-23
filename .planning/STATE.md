@@ -5,7 +5,7 @@
 See: .planning/PROJECT.md (updated 2026-01-19)
 
 **Core value:** Trazer extrema rapidez e praticidade na verificacao de servicos, tornando a qualidade uma aliada da obra.
-**Current focus:** Phase 5.2 - Tags e Revisao Condicional (complete)
+**Current focus:** Phase 6 - Dashboard (next)
 
 ## Current Position
 
@@ -218,13 +218,16 @@ Report: .planning/phases/05.1-revisoes-servico/05.1-VERIFICATION.md
 
 Ready for Phase 5.2: Tags e Revisao Condicional
 
-### Phase 5.2: Tags e Revisao Condicional (COMPLETE 2026-01-23)
+### Phase 5.2: Tags e Revisao Condicional (VERIFIED 2026-01-23)
 
-All 5 plans executed:
+All 5 plans executed and verified:
 - 05.2-01: Schema and data layer for tags + primeira_ativacao_em
 - 05.2-02: Tags management page with CRUD
 - 05.2-03: Smart edit with conditional revision
 - 05.2-04: Item tag selector in form
 - 05.2-05: Drag-and-drop for items between tags
 
-Ready for verification.
+Verification: 7/7 must-haves passed
+Report: .planning/phases/05.2-tags-revisao-condicional/05.2-VERIFICATION.md
+
+Ready for Phase 6: Dashboard

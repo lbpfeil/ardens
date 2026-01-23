@@ -19,7 +19,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 4.1: Navegacao Contextual** - Sidebar global vs sidebar de obra (INSERTED)
 - [x] **Phase 5: Biblioteca FVS** - Gestao de servicos e itens de verificacao
 - [x] **Phase 5.1: Revisoes de Servicos** - Sistema de controle de revisoes FVS (INSERTED)
-- [ ] **Phase 5.2: Tags e Revisao Condicional** - Tags para itens e revisao apenas quando servico ja foi ativado (INSERTED)
+- [x] **Phase 5.2: Tags e Revisao Condicional** - Tags para itens e revisao apenas quando servico ja foi ativado (INSERTED)
 - [ ] **Phase 6: Dashboard** - Home do engenheiro com KPIs e feed de NCs
 
 ## Phase Details
@@ -167,11 +167,11 @@ Plans:
 **Plans**: 5 plans
 
 Plans:
-- [ ] 05.2-01-PLAN.md — Schema (tags table ordem, primeira_ativacao_em, tag_id em itens) + data access
-- [ ] 05.2-02-PLAN.md — Pagina de Tags com CRUD e reordenacao
-- [ ] 05.2-03-PLAN.md — Revisao condicional (logica + UI adaptativa)
-- [ ] 05.2-04-PLAN.md — Tags em itens (modal + tabela agrupada)
-- [ ] 05.2-05-PLAN.md — Drag-and-drop de itens entre tags
+- [x] 05.2-01-PLAN.md — Schema (tags table ordem, primeira_ativacao_em, tag_id em itens) + data access
+- [x] 05.2-02-PLAN.md — Pagina de Tags com CRUD e reordenacao
+- [x] 05.2-03-PLAN.md — Revisao condicional (logica + UI adaptativa)
+- [x] 05.2-04-PLAN.md — Tags em itens (modal + tabela agrupada)
+- [x] 05.2-05-PLAN.md — Drag-and-drop de itens entre tags
 
 ### Phase 6: Dashboard
 **Goal**: Engenheiro tem visao consolidada da qualidade com KPIs e feed de nao-conformidades
@@ -205,7 +205,7 @@ Phases execute in numeric order: 1 > 2 > 3 > 4 > 4.1 > 5 > 5.1 > 5.2 > 6
 | 4.1. Navegacao Contextual | 4/4 | Complete | 2026-01-21 |
 | 5. Biblioteca FVS | 4/4 | Complete | 2026-01-21 |
 | 5.1. Revisoes de Servicos | 4/4 | Complete | 2026-01-22 |
-| 5.2. Tags e Revisao Condicional | 0/5 | Planned | - |
+| 5.2. Tags e Revisao Condicional | 5/5 | Complete | 2026-01-23 |
 | 6. Dashboard | 0/3 | Not started | - |
 
 ---
@@ -223,5 +223,6 @@ Phases execute in numeric order: 1 > 2 > 3 > 4 > 4.1 > 5 > 5.1 > 5.2 > 6
 *Phase 5.1 complete: 2026-01-22*
 *Phase 5.2 inserted: 2026-01-23 (tags e revisao condicional)*
 *Phase 5.2 planned: 2026-01-23*
+*Phase 5.2 complete: 2026-01-23*
 *Depth: standard (6 phases + 3 insertions)*
 *Coverage: 31/31 v1 requirements mapped + 5 REV + 7 TAG requirements*
