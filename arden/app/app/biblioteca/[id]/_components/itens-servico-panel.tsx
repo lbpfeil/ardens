@@ -19,7 +19,7 @@ import {
   useSortable,
 } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
-import { Plus, ListChecks, MoreVertical, Trash2, GripVertical, ArrowUpDown } from 'lucide-react'
+import { Plus, ListChecks, MoreVertical, Trash2, GripVertical, ArrowUpDown, Undo2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
   Table,
@@ -144,7 +144,7 @@ interface GroupedItems {
 }
 
 export function ItensServicoPanel({
-  itens,
+  itens: initialItens,
   tags,
   servicoId,
   onCreateClick,
@@ -155,6 +155,35 @@ export function ItensServicoPanel({
   const [isDragMode, setIsDragMode] = useState(false)
   const [isTagReorderModalOpen, setIsTagReorderModalOpen] = useState(false)
   const [activeId, setActiveId] = useState<string | null>(null)
+
+  // Local state for optimistic updates
+  const [localItens, setLocalItens] = useState<ItemServico[]>(initialItens)
+  const [originalItens, setOriginalItens] = useState<ItemServico[]>([])
+  const [hasChanges, setHasChanges] = useState(false)
+
+  // Sync local state when prop changes (but not during drag mode)
+  const itens = isDragMode ? localItens : initialItens
+
+  // Enter drag mode - save original state
+  const enterDragMode = () => {
+    setLocalItens([...initialItens])
+    setOriginalItens([...initialItens])
+    setHasChanges(false)
+    setIsDragMode(true)
+  }
+
+  // Exit drag mode - sync with server
+  const exitDragMode = () => {
+    setIsDragMode(false)
+    setHasChanges(false)
+    onRefresh() // Refresh to ensure consistency
+  }
+
+  // Revert changes
+  const revertChanges = () => {
+    setLocalItens([...originalItens])
+    setHasChanges(false)
+  }
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -251,29 +280,59 @@ export function ItensServicoPanel({
       newOrderedIds.splice(oldIndex, 1)
       newOrderedIds.splice(newIndex, 0, activeItemId)
 
+      // Optimistic update - update local state immediately
+      const updatedItens = localItens.map(item => {
+        const newOrdem = newOrderedIds.indexOf(item.id)
+        if (newOrdem !== -1) {
+          return { ...item, ordem: newOrdem }
+        }
+        return item
+      })
+      setLocalItens(updatedItens)
+      setHasChanges(true)
+
       try {
         await updateItensOrder(servicoId, newOrderedIds)
-        onRefresh()
       } catch (error) {
         toast.error('Erro ao reordenar itens')
+        // Revert on error
+        setLocalItens([...originalItens])
       }
     } else {
       // Different group - change tag
       const newTagId = destGroupId === 'untagged' ? null : destGroupId
 
+      // Optimistic update
+      const updatedItens = localItens.map(item =>
+        item.id === activeItemId ? { ...item, tag_id: newTagId } : item
+      )
+      setLocalItens(updatedItens)
+      setHasChanges(true)
+
       try {
         await updateItemTag(activeItemId, newTagId)
-        onRefresh()
         toast.success('Item movido para outra tag')
       } catch (error) {
         toast.error('Erro ao mover item')
+        // Revert on error
+        setLocalItens([...originalItens])
       }
     }
   }
 
-  const handleTagsReorderSave = async (orderedTagIds: string[]) => {
+  const handleTagsReorderSave = async (reorderedTagIds: string[]) => {
     try {
-      await updateTagsOrder(orderedTagIds)
+      // Build full ordered list: include ALL tags, not just reordered ones
+      // Tags not in the reordered list keep their relative positions
+      const reorderedSet = new Set(reorderedTagIds)
+      const tagsNotReordered = tags
+        .filter(t => !reorderedSet.has(t.id))
+        .sort((a, b) => a.ordem - b.ordem)
+
+      // Interleave: reordered tags first, then others
+      const fullOrderedIds = [...reorderedTagIds, ...tagsNotReordered.map(t => t.id)]
+
+      await updateTagsOrder(fullOrderedIds)
       setIsTagReorderModalOpen(false)
       onRefresh()
       toast.success('Ordem das tags atualizada')
@@ -326,9 +385,17 @@ export function ItensServicoPanel({
         </h2>
         <div className="flex items-center gap-2">
           {isDragMode ? (
-            <Button variant="outline" onClick={() => setIsDragMode(false)}>
-              Concluir
-            </Button>
+            <>
+              {hasChanges && (
+                <Button variant="ghost" onClick={revertChanges}>
+                  <Undo2 className="h-4 w-4 mr-1.5" data-icon="inline-start" />
+                  Reverter
+                </Button>
+              )}
+              <Button variant="outline" onClick={exitDragMode}>
+                Concluir
+              </Button>
+            </>
           ) : (
             <>
               {tags.length > 1 && (
@@ -338,7 +405,7 @@ export function ItensServicoPanel({
                 </Button>
               )}
               {itens.length > 1 && (
-                <Button variant="outline" onClick={() => setIsDragMode(true)}>
+                <Button variant="outline" onClick={enterDragMode}>
                   <GripVertical className="h-4 w-4 mr-1.5" data-icon="inline-start" />
                   Organizar
                 </Button>
@@ -385,9 +452,6 @@ export function ItensServicoPanel({
                   >
                     <span className="text-sm font-medium text-foreground">
                       {group.tag.nome}
-                    </span>
-                    <span className="text-xs text-foreground-muted">
-                      ({group.items.length} {group.items.length === 1 ? 'item' : 'itens'})
                     </span>
                   </div>
                 )}

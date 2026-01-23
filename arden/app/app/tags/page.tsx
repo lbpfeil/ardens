@@ -21,7 +21,7 @@ export default async function TagsPage() {
 
   return (
     <div className="p-6 bg-background min-h-full">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         <div className="mb-6">
           <h1 className="text-2xl font-normal text-foreground">Tags</h1>
           <p className="text-sm text-foreground-light mt-1">

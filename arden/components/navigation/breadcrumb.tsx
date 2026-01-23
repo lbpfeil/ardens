@@ -57,11 +57,13 @@ export function Breadcrumb() {
   // /app/obras/123/unidades -> ['app', 'obras', '123', 'unidades']
   // /app/biblioteca -> ['app', 'biblioteca']
 
-  // Check if we're in obras list or biblioteca (global sections)
+  // Check if we're in obras list or biblioteca or tags (global sections)
   if (pathSegments[1] === 'obras' && !params.id) {
     crumbs.push({ label: 'Obras' })
   } else if (pathSegments[1] === 'biblioteca') {
     crumbs.push({ label: 'Biblioteca FVS' })
+  } else if (pathSegments[1] === 'tags') {
+    crumbs.push({ label: 'Tags' })
   } else if (params.id) {
     // We're in an obra context
     crumbs.push({
