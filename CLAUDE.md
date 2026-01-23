@@ -73,6 +73,75 @@ ardens/
 
 ---
 
+## OBRIGATÓRIO: Alterações no Banco de Dados
+
+**SEMPRE use o MCP do Supabase para alterações no banco de dados.**
+
+### Ferramentas Disponíveis (MCP Supabase)
+
+| Ferramenta | Quando Usar |
+|------------|-------------|
+| `mcp__supabase__list_tables` | Ver tabelas existentes |
+| `mcp__supabase__list_extensions` | Ver extensões habilitadas |
+| `mcp__supabase__list_migrations` | Ver histórico de migrations |
+| `mcp__supabase__apply_migration` | **Aplicar DDL (CREATE, ALTER, DROP)** |
+| `mcp__supabase__execute_sql` | Queries de leitura ou DML simples |
+
+### Regras de Uso
+
+1. **DDL (schema changes)** → SEMPRE usar `apply_migration`
+   - CREATE TABLE, ALTER TABLE, DROP TABLE
+   - CREATE INDEX, CREATE POLICY
+   - Qualquer mudança estrutural
+
+2. **DML (data changes)** → Usar `execute_sql`
+   - INSERT, UPDATE, DELETE
+   - SELECT para debug/verificação
+
+3. **Nunca editar diretamente** `database/schema.sql` sem aplicar via MCP
+   - O arquivo é documentação, não fonte de verdade
+   - A fonte de verdade é o banco via migrations
+
+### Fluxo de Alteração de Schema
+
+```
+1. Verificar estado atual
+   → mcp__supabase__list_tables
+   → mcp__supabase__list_migrations
+
+2. Aplicar migration
+   → mcp__supabase__apply_migration
+     - name: "add_campo_x_to_tabela_y"
+     - query: "ALTER TABLE..."
+
+3. Atualizar documentação
+   → Editar database/schema.sql para refletir mudança
+   → Editar database/rls-policies.sql se necessário
+
+4. Verificar aplicação
+   → mcp__supabase__execute_sql (SELECT para confirmar)
+```
+
+### Exemplo de Migration
+
+```
+mcp__supabase__apply_migration(
+  project_id: "seu-project-id",
+  name: "add_ordem_to_tags",
+  query: "ALTER TABLE tags ADD COLUMN ordem INTEGER DEFAULT 0;"
+)
+```
+
+### Checklist Alteração de Banco
+
+- [ ] Verificou migrations existentes antes de criar nova?
+- [ ] Usou `apply_migration` para DDL (não `execute_sql`)?
+- [ ] Nome da migration é descritivo em snake_case?
+- [ ] Atualizou `database/schema.sql` após aplicar?
+- [ ] Adicionou RLS policies se criou nova tabela?
+
+---
+
 ## Regras de Desenvolvimento UI
 
 ### OBRIGATORIO

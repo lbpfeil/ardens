@@ -212,5 +212,62 @@ A página `/app/tags` foi criada sem:
 
 ---
 
+## Integração com MCP Tools
+
+Se o projeto usa ferramentas MCP (Model Context Protocol) para interagir com serviços externos, documente o uso obrigatório nas convenções.
+
+### Exemplo: Supabase MCP
+
+Para projetos com Supabase, adicione ao CLAUDE.md:
+
+```markdown
+## OBRIGATÓRIO: Alterações no Banco de Dados
+
+**SEMPRE use o MCP do Supabase para alterações no banco.**
+
+| Ferramenta | Quando Usar |
+|------------|-------------|
+| `mcp__supabase__apply_migration` | DDL (CREATE, ALTER, DROP) |
+| `mcp__supabase__execute_sql` | DML e queries de verificação |
+| `mcp__supabase__list_tables` | Verificar estado atual |
+| `mcp__supabase__list_migrations` | Ver histórico |
+
+### Regras
+
+1. **DDL** → SEMPRE usar `apply_migration` (não `execute_sql`)
+2. **Documentação** → Atualizar `database/schema.sql` após migration
+3. **RLS** → Adicionar policies para novas tabelas
+```
+
+E adicione ao CONVENTIONS.md para o planner:
+
+```markdown
+## Alterações de Schema
+
+**must_haves para planos com banco:**
+
+\`\`\`yaml
+must_haves:
+  truths:
+    - "Migration applied via mcp__supabase__apply_migration"
+    - "database/schema.sql updated to match migration"
+    - "RLS policies added for new tables"
+\`\`\`
+```
+
+### Outros MCPs Comuns
+
+| MCP | Documentar Para |
+|-----|-----------------|
+| GitHub | Criação de PRs, issues |
+| Slack | Notificações, webhooks |
+| Stripe | Pagamentos, subscriptions |
+| Vercel | Deploy, environment variables |
+
+**Princípio:** Se existe um MCP para a operação, use-o em vez de código/CLI manual.
+
+---
+
 *Documento criado: 2026-01-23*
+*Atualizado: 2026-01-23 (adicionado seção MCP)*
 *Baseado em: Inconsistência detectada na fase 5.2 do projeto Arden FVS*
