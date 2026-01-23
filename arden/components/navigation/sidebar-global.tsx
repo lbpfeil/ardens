@@ -5,6 +5,7 @@ import {
   LayoutDashboard,
   Building2,
   Library,
+  Tags,
   Users,
   Settings,
 } from 'lucide-react'
@@ -21,6 +22,7 @@ const globalNavItems = [
   { icon: LayoutDashboard, label: 'Dashboard', href: '/app/dashboard', badge: 'Em breve' },
   { icon: Building2, label: 'Obras', href: '/app/obras' },
   { icon: Library, label: 'Biblioteca FVS', href: '/app/biblioteca' },
+  { icon: Tags, label: 'Tags', href: '/app/tags' },
 ]
 
 const secondaryNavItems = [
