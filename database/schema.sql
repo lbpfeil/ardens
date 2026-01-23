@@ -280,13 +280,14 @@ CREATE TABLE agrupamentos (
 CREATE INDEX idx_agrupamentos_obra ON agrupamentos(obra_id);
 
 
--- Tags (aplicadas a agrupamentos)
+-- Tags (aplicadas a agrupamentos e itens de servico)
 CREATE TABLE tags (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   cliente_id UUID NOT NULL REFERENCES clientes(id) ON DELETE CASCADE,
 
   nome VARCHAR(100) NOT NULL,
   cor VARCHAR(7) DEFAULT '#3ecf8e',  -- Hex color
+  ordem INT DEFAULT 0,  -- Para ordenacao na UI
 
   created_at TIMESTAMPTZ DEFAULT NOW(),
 
@@ -363,6 +364,9 @@ CREATE TABLE servicos (
   revisao_updated_at TIMESTAMPTZ,
   revisao_updated_by UUID REFERENCES auth.users(id),
 
+  -- Rastreamento de primeira ativação (para revisão condicional)
+  primeira_ativacao_em TIMESTAMPTZ,  -- NULL = nunca foi ativado em nenhuma obra
+
   -- Status
   ativo BOOLEAN DEFAULT true,
   arquivado BOOLEAN DEFAULT false,  -- Soft delete
@@ -389,6 +393,9 @@ CREATE TABLE itens_servico (
   metodo TEXT,                -- Como verificar
   tolerancia TEXT,            -- Critério de aceitação
 
+  -- Tag (opcional - para agrupamento visual de itens)
+  tag_id UUID REFERENCES tags(id) ON DELETE SET NULL,
+
   -- Ordenação
   ordem INT DEFAULT 0,
 
@@ -398,6 +405,7 @@ CREATE TABLE itens_servico (
 );
 
 CREATE INDEX idx_itens_servico_servico ON itens_servico(servico_id);
+CREATE INDEX idx_itens_servico_tag ON itens_servico(tag_id);
 
 
 -- Histórico de revisões de serviços (rastreabilidade PBQP-H)
