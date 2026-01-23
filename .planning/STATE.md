@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-01-19)
 ## Current Position
 
 Phase: 5.2 of 9 (Tags e Revisao Condicional)
-Plan: 2 of 5 in current phase
+Plan: 3 of 5 in current phase
 Status: In progress
-Last activity: 2026-01-23 - Completed 05.2-02-PLAN.md
+Last activity: 2026-01-23 - Completed 05.2-03-PLAN.md
 
-Progress: [########################--] 88% (28/32 plans completed)
+Progress: [#########################-] 91% (29/32 plans completed)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 28
+- Total plans completed: 29
 - Average duration: 4.0 min
-- Total execution time: 111 min
+- Total execution time: 115 min
 
 **By Phase:**
 
@@ -34,10 +34,10 @@ Progress: [########################--] 88% (28/32 plans completed)
 | 04.1-navegacao-contextual | 4 | 13 min | 3.25 min |
 | 05-biblioteca-fvs | 4 | 13 min | 3.25 min |
 | 05.1-revisoes-servico | 4 | 18 min | 4.5 min |
-| 05.2-tags-revisao-condicional | 2 | 8 min | 4 min |
+| 05.2-tags-revisao-condicional | 3 | 12 min | 4 min |
 
 **Recent Trend:**
-- Last 5 plans: 4 min, 4 min, 5 min, 4 min, 4 min
+- Last 5 plans: 4 min, 5 min, 4 min, 4 min, 4 min
 - Trend: stable, fast
 
 *Updated after each plan completion*
@@ -133,6 +133,9 @@ Recent decisions affecting current work:
 - [05.2-02]: Color picker uses preset 8-color palette from TAG_COLORS constant
 - [05.2-02]: No delete option in UI per REQ-02 (tags cannot be deleted)
 - [05.2-02]: Reorder button only visible when tags.length > 1
+- [05.2-03]: updateServicoSmart checks primeira_ativacao_em to decide revision behavior
+- [05.2-03]: Conditional form schema: zodResolver switches based on needsRevisionDescription
+- [05.2-03]: Draft mode indicator: gray dot with 'Modo rascunho' text for unactivated services
 
 ### Pending Todos
 
@@ -163,7 +166,7 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-01-23
-Stopped at: Completed 05.2-02-PLAN.md
+Stopped at: Completed 05.2-03-PLAN.md
 Resume file: None
 
 ## Completed Phases
