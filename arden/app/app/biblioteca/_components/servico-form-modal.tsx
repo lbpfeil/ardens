@@ -10,7 +10,7 @@ import {
   type ServicoEditFormData,
   categoriaServicoOptions,
 } from '@/lib/validations/servico'
-import { createServico, updateServicoWithRevision, type Servico } from '@/lib/supabase/queries/servicos'
+import { createServico, updateServicoSmart, type Servico } from '@/lib/supabase/queries/servicos'
 import {
   Dialog,
   DialogContent,
@@ -50,6 +50,10 @@ export function ServicoFormModal({
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const isEditMode = mode === 'edit'
+  // Check if service has been activated (requires revision on edit)
+  const isActivated = !!servico?.primeira_ativacao_em
+  // Only require descricao_mudanca in edit mode AND if service was activated
+  const needsRevisionDescription = isEditMode && isActivated
 
   // Type for form data that works for both modes
   type FormData = ServicoFormData | ServicoEditFormData
@@ -59,8 +63,8 @@ export function ServicoFormModal({
     nome: servico?.nome ?? '',
     categoria: servico?.categoria ?? undefined,
     referencia_normativa: servico?.referencia_normativa ?? '',
-    ...(mode === 'edit' ? { descricao_mudanca: '' } : {}),
-  }), [servico, mode])
+    ...(needsRevisionDescription ? { descricao_mudanca: '' } : {}),
+  }), [servico, needsRevisionDescription])
 
   const {
     register,
@@ -70,7 +74,8 @@ export function ServicoFormModal({
     setValue,
     watch,
   } = useForm<FormData>({
-    resolver: zodResolver(isEditMode ? servicoEditFormSchema : servicoFormSchema),
+    // Use edit schema only if service was activated (needs revision description)
+    resolver: zodResolver(needsRevisionDescription ? servicoEditFormSchema : servicoFormSchema),
     defaultValues,
   })
 
@@ -83,23 +88,24 @@ export function ServicoFormModal({
       nome: servico?.nome ?? '',
       categoria: servico?.categoria ?? undefined,
       referencia_normativa: servico?.referencia_normativa ?? '',
-      ...(mode === 'edit' ? { descricao_mudanca: '' } : {}),
+      ...(needsRevisionDescription ? { descricao_mudanca: '' } : {}),
     }
     reset(newDefaults)
-  }, [servico?.id, mode, reset])
+  }, [servico?.id, needsRevisionDescription, reset])
 
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true)
     try {
       if (mode === 'edit' && servico) {
-        // Edit mode: use revision-aware update
-        const editData = data as ServicoEditFormData
-        await updateServicoWithRevision(servico.id, {
-          codigo: editData.codigo,
-          nome: editData.nome,
-          categoria: editData.categoria || null,
-          referencia_normativa: editData.referencia_normativa || null,
-          descricao_mudanca: editData.descricao_mudanca,
+        // Edit mode: use smart update that handles revision conditionally
+        await updateServicoSmart(servico.id, {
+          codigo: data.codigo,
+          nome: data.nome,
+          categoria: data.categoria || null,
+          referencia_normativa: data.referencia_normativa || null,
+          ...(needsRevisionDescription && 'descricao_mudanca' in data
+            ? { descricao_mudanca: (data as ServicoEditFormData).descricao_mudanca }
+            : {}),
         })
         toast.success('Serviço atualizado com sucesso')
       } else {
@@ -133,6 +139,16 @@ export function ServicoFormModal({
             {isEditMode ? 'Edite as informações do serviço' : 'Preencha as informações do novo serviço'}
           </DialogDescription>
         </DialogHeader>
+
+        {/* Draft mode indicator */}
+        {isEditMode && !isActivated && (
+          <div className="flex items-center gap-2 p-3 rounded-md bg-surface-100 border border-border">
+            <div className="h-2 w-2 rounded-full bg-foreground-muted" />
+            <span className="text-sm text-foreground-light">
+              Modo rascunho - edições não geram nova revisão
+            </span>
+          </div>
+        )}
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           {/* Codigo (required) */}
@@ -195,8 +211,8 @@ export function ServicoFormModal({
             />
           </div>
 
-          {/* Descricao da Mudanca (only in edit mode, required) */}
-          {isEditMode && (
+          {/* Descricao da Mudanca (only when service was activated - requires revision) */}
+          {needsRevisionDescription && (
             <div className="space-y-2">
               <Label htmlFor="descricao_mudanca">Descrição da Mudança *</Label>
               <Textarea
