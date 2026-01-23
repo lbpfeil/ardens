@@ -18,12 +18,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import type { Servico } from '@/lib/supabase/queries/servicos'
 import type { ItemServico } from '@/lib/supabase/queries/itens-servico'
 import type { Tag } from '@/lib/supabase/queries/tags'
 
 interface ItensServicoPanelProps {
-  servico: Servico
   itens: ItemServico[]
   tags: Tag[]
   onCreateClick: () => void
@@ -37,7 +35,6 @@ interface GroupedItems {
 }
 
 export function ItensServicoPanel({
-  servico,
   itens,
   tags,
   onCreateClick,
@@ -47,8 +44,6 @@ export function ItensServicoPanel({
 
   // Group items by tag
   const groupedItems = useMemo((): GroupedItems[] => {
-    // Build tag map for quick lookup
-    const tagMap = new Map(tags.map(t => [t.id, t]))
 
     // Group items
     const untagged: ItemServico[] = []

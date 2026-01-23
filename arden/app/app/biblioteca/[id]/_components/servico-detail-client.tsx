@@ -125,7 +125,6 @@ export function ServicoDetailClient({ servico, initialItens, tags }: ServicoDeta
         {/* Right panel: Itens de verificação */}
         <div className="flex-1 min-w-0">
           <ItensServicoPanel
-            servico={servico}
             itens={initialItens}
             tags={tags}
             onCreateClick={handleCreateItemClick}
