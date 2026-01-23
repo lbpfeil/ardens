@@ -131,6 +131,7 @@ Recent decisions affecting current work:
 
 1. **Excluir servico permanentemente (admin only)** (biblioteca) - Cascade delete com confirmacao forte
 2. **Auditoria de acentuação PT-BR na plataforma** (ui) - Verificar todos os textos sem acentuação correta
+3. **Melhorar contraste de textos muted/secundários** (ui) - Textos de ajuda com baixa visibilidade em fundo escuro
 
 ### Blockers/Concerns
 
