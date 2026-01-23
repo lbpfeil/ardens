@@ -25,7 +25,7 @@ export function ObraInfoCard({ obra }: ObraInfoCardProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Informacoes da Obra</CardTitle>
+        <CardTitle>Informações da Obra</CardTitle>
       </CardHeader>
       <CardContent>
         <dl className="grid grid-cols-1 gap-4 sm:grid-cols-2">

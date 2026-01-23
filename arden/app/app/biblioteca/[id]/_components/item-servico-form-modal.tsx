@@ -110,19 +110,19 @@ export function ItemServicoFormModal({
       <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>
           <DialogTitle>
-            {isEditMode ? 'Editar Item de Verificacao' : 'Novo Item de Verificacao'}
+            {isEditMode ? 'Editar Item de Verificação' : 'Novo Item de Verificação'}
           </DialogTitle>
           <DialogDescription className="sr-only">
             {isEditMode
-              ? 'Edite as informacoes do item de verificacao'
-              : 'Preencha as informacoes do novo item de verificacao'}
+              ? 'Edite as informações do item de verificação'
+              : 'Preencha as informações do novo item de verificação'}
           </DialogDescription>
         </DialogHeader>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           {/* Observacao (required) */}
           <div className="space-y-2">
-            <Label htmlFor="observacao">Observacao *</Label>
+            <Label htmlFor="observacao">Observação *</Label>
             <Textarea
               id="observacao"
               placeholder="O que deve ser verificado"
@@ -137,10 +137,10 @@ export function ItemServicoFormModal({
 
           {/* Metodo (optional) */}
           <div className="space-y-2">
-            <Label htmlFor="metodo">Metodo</Label>
+            <Label htmlFor="metodo">Método</Label>
             <Textarea
               id="metodo"
-              placeholder="Como verificar (medicao, visual, etc.)"
+              placeholder="Como verificar (medição, visual, etc.)"
               rows={2}
               {...register('metodo')}
             />
@@ -148,7 +148,7 @@ export function ItemServicoFormModal({
 
           {/* Tolerancia (optional) */}
           <div className="space-y-2">
-            <Label htmlFor="tolerancia">Criterio de Aceitacao</Label>
+            <Label htmlFor="tolerancia">Critério de Aceitação</Label>
             <Input
               id="tolerancia"
               placeholder="Ex: +/- 5mm, nivelado, sem falhas"

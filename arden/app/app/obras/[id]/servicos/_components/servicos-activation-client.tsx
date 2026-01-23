@@ -28,14 +28,14 @@ export function ServicosActivationClient({
     try {
       if (checked) {
         await activateServico(obraId, servico.id)
-        toast.success(`Servico "${servico.nome}" ativado (Rev. ${servico.revisao_atual})`)
+        toast.success(`Serviço "${servico.nome}" ativado (Rev. ${servico.revisao_atual})`)
       } else {
         await deactivateServico(obraId, servico.id)
-        toast.success(`Servico "${servico.nome}" desativado`)
+        toast.success(`Serviço "${servico.nome}" desativado`)
       }
       router.refresh()
     } catch (error) {
-      const message = error instanceof Error ? error.message : 'Erro ao atualizar servico'
+      const message = error instanceof Error ? error.message : 'Erro ao atualizar serviço'
       toast.error(message)
     } finally {
       setIsUpdating(null)
@@ -47,11 +47,11 @@ export function ServicosActivationClient({
     try {
       await updateObraServicoRevision(obraId, servico.id)
       toast.success(
-        `Servico "${servico.nome}" atualizado para Rev. ${servico.revisao_atual}`
+        `Serviço "${servico.nome}" atualizado para Rev. ${servico.revisao_atual}`
       )
       router.refresh()
     } catch (error) {
-      const message = error instanceof Error ? error.message : 'Erro ao atualizar revisao'
+      const message = error instanceof Error ? error.message : 'Erro ao atualizar revisão'
       toast.error(message)
     } finally {
       setIsUpdating(null)

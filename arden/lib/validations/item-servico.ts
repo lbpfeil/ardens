@@ -9,7 +9,7 @@ import { requiredString, optionalString } from './common'
  * Campos opcionais: metodo, tolerancia
  */
 export const itemServicoFormSchema = z.object({
-  observacao: requiredString(3, 1000, 'Observacao'),
+  observacao: requiredString(3, 1000, 'Observação'),
   metodo: optionalString(1000),
   tolerancia: optionalString(500),
 })

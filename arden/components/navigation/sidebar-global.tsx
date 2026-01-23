@@ -24,11 +24,11 @@ const globalNavItems = [
 ]
 
 const secondaryNavItems = [
-  { icon: Users, label: 'Usuarios', href: '/app/usuarios', badge: 'Em breve' },
+  { icon: Users, label: 'Usuários', href: '/app/usuarios', badge: 'Em breve' },
 ]
 
 const bottomNavItems = [
-  { icon: Settings, label: 'Configuracoes', href: '/app/configuracoes', badge: 'Em breve' },
+  { icon: Settings, label: 'Configurações', href: '/app/configuracoes', badge: 'Em breve' },
 ]
 
 export function SidebarGlobal({ expanded }: SidebarGlobalProps) {

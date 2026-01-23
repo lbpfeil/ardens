@@ -10,7 +10,7 @@ interface RevisionHistoryPanelProps {
 }
 
 /**
- * Formata data para exibicao: "15 jan 2026, 14:30"
+ * Formata data para exibição: "15 jan 2026, 14:30"
  */
 function formatDate(dateString: string): string {
   const date = new Date(dateString)
@@ -31,7 +31,7 @@ export function RevisionHistoryPanel({
     <Card className="bg-surface-100 border-border">
       <CardHeader className="pb-3">
         <CardTitle className="text-sm font-medium text-foreground">
-          Historico de Revisoes
+          Histórico de Revisões
         </CardTitle>
       </CardHeader>
       <CardContent>

@@ -37,16 +37,16 @@ export function ArchiveConfirmation({
     try {
       if (isRestoring) {
         await restoreServico(servico.id)
-        toast.success('Servico restaurado com sucesso')
+        toast.success('Serviço restaurado com sucesso')
       } else {
         await archiveServico(servico.id)
-        toast.success('Servico arquivado com sucesso')
+        toast.success('Serviço arquivado com sucesso')
       }
       onSuccess()
       onOpenChange(false)
     } catch (error) {
       const action = isRestoring ? 'restaurar' : 'arquivar'
-      toast.error(error instanceof Error ? error.message : `Erro ao ${action} servico`)
+      toast.error(error instanceof Error ? error.message : `Erro ao ${action} serviço`)
     } finally {
       setIsLoading(false)
     }
@@ -57,12 +57,12 @@ export function ArchiveConfirmation({
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
-            {isRestoring ? 'Restaurar servico?' : 'Arquivar servico?'}
+            {isRestoring ? 'Restaurar serviço?' : 'Arquivar serviço?'}
           </AlertDialogTitle>
           <AlertDialogDescription>
             {isRestoring
-              ? `O servico "${servico?.nome}" sera restaurado e voltara a aparecer na lista ativa.`
-              : `O servico "${servico?.nome}" sera arquivado e nao aparecera mais na lista ativa. Voce podera restaura-lo depois.`}
+              ? `O serviço "${servico?.nome}" será restaurado e voltará a aparecer na lista ativa.`
+              : `O serviço "${servico?.nome}" será arquivado e não aparecerá mais na lista ativa. Você poderá restaurá-lo depois.`}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

@@ -44,9 +44,9 @@ export function ServicosActivationTable({
       <div className="rounded-md border border-border bg-surface-100">
         <div className="flex flex-col items-center justify-center py-16 px-4 text-center">
           <Library className="h-12 w-12 text-foreground-muted mb-4" />
-          <p className="text-foreground-light mb-2">Nenhum servico disponivel</p>
+          <p className="text-foreground-light mb-2">Nenhum serviço disponível</p>
           <p className="text-sm text-foreground-muted mb-4">
-            Crie servicos na Biblioteca FVS primeiro.
+            Crie serviços na Biblioteca FVS primeiro.
           </p>
           <Button asChild variant="outline" size="sm">
             <Link href="/app/biblioteca">
@@ -62,10 +62,10 @@ export function ServicosActivationTable({
     <div className="space-y-4">
       {/* Summary */}
       <div className="flex items-center gap-4 text-sm text-foreground-light">
-        <span>{activeCount} de {servicos.length} servicos ativos nesta obra</span>
+        <span>{activeCount} de {servicos.length} serviços ativos nesta obra</span>
         {outdatedCount > 0 && (
           <Badge className="text-xs bg-warning/20 text-warning border-warning/30">
-            {outdatedCount} com revisao desatualizada
+            {outdatedCount} com revisão desatualizada
           </Badge>
         )}
       </div>
@@ -76,12 +76,12 @@ export function ServicosActivationTable({
           <TableHeader>
             <TableRow>
               <TableHead className="w-[50px]">Ativo</TableHead>
-              <TableHead className="w-[100px]">Codigo</TableHead>
+              <TableHead className="w-[100px]">Código</TableHead>
               <TableHead>Nome</TableHead>
               <TableHead className="w-[130px]">Categoria</TableHead>
               <TableHead className="w-[80px]">Rev. Obra</TableHead>
               <TableHead className="w-[80px]">Rev. Atual</TableHead>
-              <TableHead className="w-[100px]">Acoes</TableHead>
+              <TableHead className="w-[100px]">Ações</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>

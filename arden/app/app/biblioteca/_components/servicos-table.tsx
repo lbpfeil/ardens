@@ -89,16 +89,16 @@ export function ServicosTable({
     <div className="space-y-4">
       {/* Toolbar */}
       <ListPageToolbar
-        searchPlaceholder="Buscar por codigo ou nome..."
+        searchPlaceholder="Buscar por código ou nome..."
         searchQuery={searchQuery}
         onSearchChange={onSearchChange}
         statusFilter={statusFilter}
         onStatusFilterChange={onStatusFilterChange}
-        primaryActionLabel="Novo Servico"
+        primaryActionLabel="Novo Serviço"
         onPrimaryAction={onCreateClick}
         filteredCount={servicos.length}
         totalCount={totalCount}
-        itemLabel="servico"
+        itemLabel="serviço"
       />
 
       {/* Table */}
@@ -107,38 +107,38 @@ export function ServicosTable({
           <div className="flex flex-col items-center justify-center py-16 px-4 text-center">
             {searchQuery.trim() !== '' ? (
               <>
-                <p className="text-foreground-light mb-2">Nenhum servico encontrado</p>
+                <p className="text-foreground-light mb-2">Nenhum serviço encontrado</p>
                 <p className="text-sm text-foreground-muted">
                   Tente ajustar os filtros ou termos de busca
                 </p>
               </>
             ) : totalCount === 0 ? (
               <>
-                <p className="text-foreground-light mb-2">Nenhum servico cadastrado</p>
+                <p className="text-foreground-light mb-2">Nenhum serviço cadastrado</p>
                 <p className="text-sm text-foreground-muted mb-4">
-                  Clique em &apos;Novo Servico&apos; para comecar
+                  Clique em &apos;Novo Serviço&apos; para começar
                 </p>
                 <Button onClick={onCreateClick} variant="outline" size="sm">
                   <Plus className="h-4 w-4 mr-1.5" data-icon="inline-start" />
-                  Criar primeiro servico
+                  Criar primeiro serviço
                 </Button>
               </>
             ) : statusFilter === 'arquivados' ? (
               <>
-                <p className="text-foreground-light mb-2">Nenhum servico arquivado</p>
+                <p className="text-foreground-light mb-2">Nenhum serviço arquivado</p>
                 <p className="text-sm text-foreground-muted">
-                  Servicos arquivados aparecerao aqui
+                  Serviços arquivados aparecerão aqui
                 </p>
               </>
             ) : (
               <>
-                <p className="text-foreground-light mb-2">Nenhum servico ativo</p>
+                <p className="text-foreground-light mb-2">Nenhum serviço ativo</p>
                 <p className="text-sm text-foreground-muted mb-4">
-                  Clique em &apos;Novo Servico&apos; para comecar
+                  Clique em &apos;Novo Serviço&apos; para começar
                 </p>
                 <Button onClick={onCreateClick} variant="outline" size="sm">
                   <Plus className="h-4 w-4 mr-1.5" data-icon="inline-start" />
-                  Criar primeiro servico
+                  Criar primeiro serviço
                 </Button>
               </>
             )}
@@ -156,9 +156,9 @@ export function ServicosTable({
                   onSort={onSort}
                   className="w-[120px]"
                 >
-                  Codigo
+                  Código
                 </SortableTableHeader>
-                <TableHead className="w-[80px]">Revisao</TableHead>
+                <TableHead className="w-[80px]">Revisão</TableHead>
                 <SortableTableHeader
                   field="nome"
                   currentField={sortField}
@@ -176,7 +176,7 @@ export function ServicosTable({
                 >
                   Categoria
                 </SortableTableHeader>
-                <TableHead className="w-[50px]">Acoes</TableHead>
+                <TableHead className="w-[50px]">Ações</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>

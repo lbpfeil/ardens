@@ -5,9 +5,9 @@ import { z } from 'zod'
  */
 export const unidadeFormSchema = z.object({
   nome: z
-    .string({ required_error: 'Nome e obrigatorio' })
-    .min(1, 'Nome e obrigatorio')
-    .max(100, 'Nome deve ter no maximo 100 caracteres'),
+    .string({ required_error: 'Nome é obrigatório' })
+    .min(1, 'Nome é obrigatório')
+    .max(100, 'Nome deve ter no máximo 100 caracteres'),
 })
 
 export type UnidadeFormData = z.infer<typeof unidadeFormSchema>
@@ -96,17 +96,17 @@ export function generateUnidadeNames(parsed: ParsedNumericRange): string[] {
 export const unidadeBatchSchema = z.object({
   prefixo: z
     .string()
-    .max(50, 'Prefixo deve ter no maximo 50 caracteres')
+    .max(50, 'Prefixo deve ter no máximo 50 caracteres')
     .optional()
     .default(''),
   quantidade: z
-    .number({ required_error: 'Quantidade e obrigatoria' })
-    .min(1, 'Quantidade minima e 1')
-    .max(500, 'Quantidade maxima e 500'),
+    .number({ required_error: 'Quantidade é obrigatória' })
+    .min(1, 'Quantidade mínima é 1')
+    .max(500, 'Quantidade máxima é 500'),
   numeroInicial: z
-    .number({ required_error: 'Numero inicial e obrigatorio' })
-    .min(0, 'Numero inicial deve ser >= 0')
-    .max(99999, 'Numero inicial deve ser <= 99999'),
+    .number({ required_error: 'Número inicial é obrigatório' })
+    .min(0, 'Número inicial deve ser >= 0')
+    .max(99999, 'Número inicial deve ser <= 99999'),
 })
 
 export type UnidadeBatchData = z.infer<typeof unidadeBatchSchema>

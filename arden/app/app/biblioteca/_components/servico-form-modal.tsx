@@ -101,7 +101,7 @@ export function ServicoFormModal({
           referencia_normativa: editData.referencia_normativa || null,
           descricao_mudanca: editData.descricao_mudanca,
         })
-        toast.success('Servico atualizado com sucesso')
+        toast.success('Serviço atualizado com sucesso')
       } else {
         // Create mode: normal create
         const createData = data as ServicoFormData
@@ -111,13 +111,13 @@ export function ServicoFormModal({
           categoria: createData.categoria || null,
           referencia_normativa: createData.referencia_normativa || null,
         })
-        toast.success('Servico criado com sucesso')
+        toast.success('Serviço criado com sucesso')
       }
       onSuccess()
     } catch (error) {
       const message = error instanceof Error
         ? error.message
-        : (mode === 'edit' ? 'Erro ao atualizar servico' : 'Erro ao criar servico')
+        : (mode === 'edit' ? 'Erro ao atualizar serviço' : 'Erro ao criar serviço')
       toast.error(message)
     } finally {
       setIsSubmitting(false)
@@ -128,16 +128,16 @@ export function ServicoFormModal({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>{isEditMode ? 'Editar Servico' : 'Novo Servico'}</DialogTitle>
+          <DialogTitle>{isEditMode ? 'Editar Serviço' : 'Novo Serviço'}</DialogTitle>
           <DialogDescription className="sr-only">
-            {isEditMode ? 'Edite as informacoes do servico' : 'Preencha as informacoes do novo servico'}
+            {isEditMode ? 'Edite as informações do serviço' : 'Preencha as informações do novo serviço'}
           </DialogDescription>
         </DialogHeader>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           {/* Codigo (required) */}
           <div className="space-y-2">
-            <Label htmlFor="codigo">Codigo *</Label>
+            <Label htmlFor="codigo">Código *</Label>
             <Input
               id="codigo"
               placeholder="Ex: ALV-001"
@@ -154,7 +154,7 @@ export function ServicoFormModal({
             <Label htmlFor="nome">Nome *</Label>
             <Input
               id="nome"
-              placeholder="Ex: Execucao de Alvenaria de Vedacao"
+              placeholder="Ex: Execução de Alvenaria de Vedação"
               {...register('nome')}
               className={errors.nome ? 'border-destructive' : ''}
             />
@@ -187,7 +187,7 @@ export function ServicoFormModal({
 
           {/* Referencia Normativa (optional) */}
           <div className="space-y-2">
-            <Label htmlFor="referencia_normativa">Referencia Normativa</Label>
+            <Label htmlFor="referencia_normativa">Referência Normativa</Label>
             <Textarea
               id="referencia_normativa"
               placeholder="Ex: NBR 15575, PBQP-H SiAC"
@@ -198,10 +198,10 @@ export function ServicoFormModal({
           {/* Descricao da Mudanca (only in edit mode, required) */}
           {isEditMode && (
             <div className="space-y-2">
-              <Label htmlFor="descricao_mudanca">Descricao da Mudanca *</Label>
+              <Label htmlFor="descricao_mudanca">Descrição da Mudança *</Label>
               <Textarea
                 id="descricao_mudanca"
-                placeholder="Descreva o que foi alterado nesta revisao"
+                placeholder="Descreva o que foi alterado nesta revisão"
                 {...register('descricao_mudanca' as keyof FormData)}
                 className={(errors as Record<string, { message?: string }>).descricao_mudanca ? 'border-destructive' : ''}
               />
@@ -209,7 +209,7 @@ export function ServicoFormModal({
                 <p className="text-destructive text-xs">{(errors as Record<string, { message?: string }>).descricao_mudanca.message}</p>
               )}
               <p className="text-xs text-foreground-muted">
-                Uma nova revisao sera criada ao salvar
+                Uma nova revisão será criada ao salvar
               </p>
             </div>
           )}
@@ -226,7 +226,7 @@ export function ServicoFormModal({
             <Button type="submit" disabled={isSubmitting}>
               {isSubmitting
                 ? (isEditMode ? 'Salvando...' : 'Criando...')
-                : (isEditMode ? 'Salvar' : 'Criar Servico')
+                : (isEditMode ? 'Salvar' : 'Criar Serviço')
               }
             </Button>
           </DialogFooter>

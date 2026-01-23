@@ -42,7 +42,7 @@ export function ItensServicoPanel({
         {/* Panel header */}
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-medium text-foreground">
-            Itens de Verificacao
+            Itens de Verificação
           </h2>
           <Button onClick={onCreateClick}>
             <Plus className="h-4 w-4 mr-1.5" data-icon="inline-start" />
@@ -55,10 +55,10 @@ export function ItensServicoPanel({
           <div className="flex flex-col items-center justify-center py-16 px-4 text-center">
             <ListChecks className="h-12 w-12 text-foreground-muted mb-4" />
             <p className="text-foreground-light mb-2">
-              Nenhum item de verificacao cadastrado
+              Nenhum item de verificação cadastrado
             </p>
             <p className="text-sm text-foreground-muted mb-4">
-              Adicione itens que definem o que verificar neste servico.
+              Adicione itens que definem o que verificar neste serviço.
             </p>
             <Button onClick={onCreateClick} variant="outline" size="sm">
               <Plus className="h-4 w-4 mr-1.5" data-icon="inline-start" />
@@ -75,7 +75,7 @@ export function ItensServicoPanel({
       {/* Panel header */}
       <div className="flex items-center justify-between">
         <h2 className="text-lg font-medium text-foreground">
-          Itens de Verificacao
+          Itens de Verificação
         </h2>
         <Button onClick={onCreateClick}>
           <Plus className="h-4 w-4 mr-1.5" data-icon="inline-start" />

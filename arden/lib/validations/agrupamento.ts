@@ -5,9 +5,9 @@ import { z } from 'zod'
  */
 export const agrupamentoFormSchema = z.object({
   nome: z
-    .string({ required_error: 'Nome e obrigatorio' })
-    .min(1, 'Nome e obrigatorio')
-    .max(100, 'Nome deve ter no maximo 100 caracteres'),
+    .string({ required_error: 'Nome é obrigatório' })
+    .min(1, 'Nome é obrigatório')
+    .max(100, 'Nome deve ter no máximo 100 caracteres'),
 })
 
 export type AgrupamentoFormData = z.infer<typeof agrupamentoFormSchema>
@@ -17,18 +17,18 @@ export type AgrupamentoFormData = z.infer<typeof agrupamentoFormSchema>
  */
 export const agrupamentoBatchSchema = z.object({
   prefixo: z
-    .string({ required_error: 'Prefixo e obrigatorio' })
-    .min(1, 'Prefixo e obrigatorio')
-    .max(50, 'Prefixo deve ter no maximo 50 caracteres'),
+    .string({ required_error: 'Prefixo é obrigatório' })
+    .min(1, 'Prefixo é obrigatório')
+    .max(50, 'Prefixo deve ter no máximo 50 caracteres'),
   quantidade: z
-    .number({ required_error: 'Quantidade e obrigatoria' })
-    .int('Quantidade deve ser um numero inteiro')
-    .min(1, 'Quantidade minima e 1')
-    .max(100, 'Quantidade maxima e 100'),
+    .number({ required_error: 'Quantidade é obrigatória' })
+    .int('Quantidade deve ser um número inteiro')
+    .min(1, 'Quantidade mínima é 1')
+    .max(100, 'Quantidade máxima é 100'),
   numeroInicial: z
-    .number({ required_error: 'Numero inicial e obrigatorio' })
-    .int('Numero inicial deve ser um numero inteiro')
-    .min(0, 'Numero inicial deve ser 0 ou maior'),
+    .number({ required_error: 'Número inicial é obrigatório' })
+    .int('Número inicial deve ser um número inteiro')
+    .min(0, 'Número inicial deve ser 0 ou maior'),
 })
 
 export type AgrupamentoBatchData = z.infer<typeof agrupamentoBatchSchema>

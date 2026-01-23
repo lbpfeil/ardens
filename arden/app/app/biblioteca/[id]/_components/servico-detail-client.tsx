@@ -120,7 +120,7 @@ export function ServicoDetailClient({ servico, initialItens }: ServicoDetailClie
           />
         </div>
 
-        {/* Right panel: Itens de verificacao */}
+        {/* Right panel: Itens de verificação */}
         <div className="flex-1 min-w-0">
           <ItensServicoPanel
             servico={servico}

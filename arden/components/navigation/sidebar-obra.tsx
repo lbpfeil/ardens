@@ -26,15 +26,15 @@ function getObraNavItems(obraId: string) {
       { icon: LayoutDashboard, label: 'Dashboard', href: `/app/obras/${obraId}`, exact: true },
     ],
     operacao: [
-      { icon: Wrench, label: 'Servicos', href: `/app/obras/${obraId}/servicos` },
+      { icon: Wrench, label: 'Serviços', href: `/app/obras/${obraId}/servicos` },
       { icon: Building2, label: 'Unidades', href: `/app/obras/${obraId}/unidades` },
-      { icon: ClipboardCheck, label: 'Verificacoes', href: `/app/obras/${obraId}/verificacoes`, badge: 'Em breve' },
+      { icon: ClipboardCheck, label: 'Verificações', href: `/app/obras/${obraId}/verificacoes`, badge: 'Em breve' },
       { icon: AlertTriangle, label: 'NCs', href: `/app/obras/${obraId}/ncs`, badge: 'Em breve' },
     ],
     admin: [
-      { icon: FileText, label: 'Relatorios', href: `/app/obras/${obraId}/relatorios`, badge: 'Em breve' },
+      { icon: FileText, label: 'Relatórios', href: `/app/obras/${obraId}/relatorios`, badge: 'Em breve' },
       { icon: Users, label: 'Equipe', href: `/app/obras/${obraId}/equipe`, badge: 'Em breve' },
-      { icon: Settings, label: 'Configuracoes', href: `/app/obras/${obraId}/configuracoes`, badge: 'Em breve' },
+      { icon: Settings, label: 'Configurações', href: `/app/obras/${obraId}/configuracoes`, badge: 'Em breve' },
     ],
   }
 }
@@ -74,7 +74,7 @@ export function SidebarObra({ obraId, expanded }: SidebarObraProps) {
 
         {/* Operacao section */}
         <div className="px-2">
-          <SectionLabel label="Operacao" expanded={expanded} />
+          <SectionLabel label="Operação" expanded={expanded} />
         </div>
         <ul className="space-y-1 px-2">
           {navItems.operacao.map((item) => (
