@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-01-19)
 
 **Core value:** Trazer extrema rapidez e praticidade na verificacao de servicos, tornando a qualidade uma aliada da obra.
-**Current focus:** Phase 5.2 - Tags e Revisao Condicional (next)
+**Current focus:** Phase 5.2 - Tags e Revisao Condicional (in progress)
 
 ## Current Position
 
 Phase: 5.2 of 9 (Tags e Revisao Condicional)
-Plan: 0 of 5 in current phase
-Status: Ready to plan
-Last activity: 2026-01-23 - Phase 5.2 inserted
+Plan: 1 of 5 in current phase
+Status: In progress
+Last activity: 2026-01-23 - Completed 05.2-01-PLAN.md
 
-Progress: [######################----] 81% (26/32 plans completed)
+Progress: [#######################---] 84% (27/32 plans completed)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 26
+- Total plans completed: 27
 - Average duration: 3.9 min
-- Total execution time: 103 min
+- Total execution time: 107 min
 
 **By Phase:**
 
@@ -34,9 +34,10 @@ Progress: [######################----] 81% (26/32 plans completed)
 | 04.1-navegacao-contextual | 4 | 13 min | 3.25 min |
 | 05-biblioteca-fvs | 4 | 13 min | 3.25 min |
 | 05.1-revisoes-servico | 4 | 18 min | 4.5 min |
+| 05.2-tags-revisao-condicional | 1 | 4 min | 4 min |
 
 **Recent Trend:**
-- Last 5 plans: 3 min, 5 min, 4 min, 4 min, 5 min
+- Last 5 plans: 5 min, 4 min, 4 min, 5 min, 4 min
 - Trend: stable, fast
 
 *Updated after each plan completion*
@@ -126,6 +127,9 @@ Recent decisions affecting current work:
 - [05.1-04]: Use parseInt for revision comparison to handle 09 < 10 correctly
 - [05.1-04]: Custom warning badge styling using bg-warning/20 text-warning (no badge variant)
 - [05.1-04]: Widen container to max-w-5xl to accommodate extra revision columns
+- [05.2-01]: TAG_COLORS provides 8 preset hex colors for tag picker UI
+- [05.2-01]: primeira_ativacao_em NULL means service in draft mode (edits don't create revisions)
+- [05.2-01]: Race condition safety with .is('primeira_ativacao_em', null) guard on bulk activations
 
 ### Pending Todos
 
@@ -155,8 +159,8 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-01-22
-Stopped at: Completed 05.1-04-PLAN.md
+Last session: 2026-01-23
+Stopped at: Completed 05.2-01-PLAN.md
 Resume file: None
 
 ## Completed Phases
