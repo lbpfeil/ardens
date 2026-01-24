@@ -1,6 +1,17 @@
 import { createClient } from '@/lib/supabase/client'
 
 /**
+ * NC feed item for dashboard display.
+ */
+export interface NCFeedItem {
+  id: string
+  servicoNome: string
+  unidadeCodigo: string
+  observacao: string | null
+  createdAt: string  // ISO date string
+}
+
+/**
  * Dashboard KPI metrics with current and previous values for trend calculation.
  */
 export interface DashboardKPIs {
@@ -241,4 +252,69 @@ function calculateKPIs(current: RawMetrics, previous: RawMetrics): DashboardKPIs
       previous: previous.concluidas
     }
   }
+}
+
+/**
+ * Fetches recent non-conformances (NCs) for a specific obra.
+ *
+ * Returns open NCs (status = 'nao_conforme' AND status_reinspecao IS NULL)
+ * sorted by creation date descending.
+ *
+ * @param obraId - The obra ID to fetch NCs for
+ * @param limit - Maximum number of NCs to return (default: 5)
+ * @returns Array of NCFeedItem with servico name, unidade code, and timestamp
+ */
+export async function getRecentNCs(obraId: string, limit: number = 5): Promise<NCFeedItem[]> {
+  const supabase = createClient()
+
+  // Query itens_verificacao with joins to get servico nome and unidade codigo
+  // Join path: itens_verificacao -> verificacoes -> servicos/unidades
+  const { data, error } = await supabase
+    .from('itens_verificacao')
+    .select(`
+      id,
+      observacao,
+      created_at,
+      verificacao:verificacoes!inner(
+        obra_id,
+        servico:servicos(
+          nome
+        ),
+        unidade:unidades(
+          nome,
+          codigo
+        )
+      )
+    `)
+    .eq('verificacao.obra_id', obraId)
+    .eq('status', 'nao_conforme')
+    .is('status_reinspecao', null)
+    .order('created_at', { ascending: false })
+    .limit(limit)
+
+  if (error) {
+    console.error('Error fetching recent NCs:', error.message)
+    return []
+  }
+
+  if (!data) {
+    return []
+  }
+
+  // Map results to NCFeedItem format
+  return data.map(item => {
+    // Type assertion for nested joins (Supabase returns objects for singular relations)
+    const verificacao = item.verificacao as unknown as {
+      servico: { nome: string } | null
+      unidade: { nome: string; codigo: string | null } | null
+    }
+
+    return {
+      id: item.id,
+      servicoNome: verificacao.servico?.nome || 'Serviço desconhecido',
+      unidadeCodigo: verificacao.unidade?.codigo || verificacao.unidade?.nome || 'Unidade desconhecida',
+      observacao: item.observacao,
+      createdAt: item.created_at
+    }
+  })
 }
