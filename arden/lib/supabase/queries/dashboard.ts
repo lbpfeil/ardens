@@ -1,4 +1,13 @@
 import { createClient } from '@/lib/supabase/client'
+import { format, startOfDay } from 'date-fns'
+
+/**
+ * Data point for conformidade chart (time series).
+ */
+export interface ChartDataPoint {
+  date: string  // ISO date string (YYYY-MM-DD)
+  taxa: number  // Conformity rate percentage
+}
 
 /**
  * NC feed item for dashboard display.
@@ -317,4 +326,78 @@ export async function getRecentNCs(obraId: string, limit: number = 5): Promise<N
       createdAt: item.created_at
     }
   })
+}
+
+/**
+ * Fetches time series data for conformidade chart.
+ *
+ * Returns daily conformity rate for the specified number of days.
+ * Uses JavaScript grouping for MVP (avoids PostgreSQL function).
+ *
+ * @param obraId - The obra ID to fetch data for
+ * @param days - Number of days to include (default: 90 for 3 months)
+ * @returns Array of ChartDataPoint sorted oldest to newest
+ */
+export async function getConformidadeTimeSeries(
+  obraId: string,
+  days: number = 90
+): Promise<ChartDataPoint[]> {
+  const supabase = createClient()
+
+  // Calculate date threshold
+  const threshold = new Date()
+  threshold.setDate(threshold.getDate() - days)
+  const thresholdISO = threshold.toISOString()
+
+  // Fetch all verification items for this obra in date range
+  // Filter: status != 'nao_verificado' (only verified items)
+  const { data, error } = await supabase
+    .from('itens_verificacao')
+    .select(`
+      id,
+      status,
+      status_reinspecao,
+      created_at,
+      verificacao:verificacoes!inner(
+        obra_id
+      )
+    `)
+    .eq('verificacao.obra_id', obraId)
+    .neq('status', 'nao_verificado')
+    .gte('created_at', thresholdISO)
+
+  if (error) {
+    console.error('Error fetching conformidade time series:', error.message)
+    return []
+  }
+
+  if (!data || data.length === 0) {
+    return []
+  }
+
+  // Group items by date using JavaScript
+  const byDate = data.reduce((acc, item) => {
+    const dateKey = format(startOfDay(new Date(item.created_at)), 'yyyy-MM-dd')
+    if (!acc[dateKey]) acc[dateKey] = []
+    acc[dateKey].push(item)
+    return acc
+  }, {} as Record<string, typeof data>)
+
+  // Calculate taxa per day
+  const dataPoints: ChartDataPoint[] = Object.entries(byDate).map(([date, dayItems]) => {
+    const total = dayItems.length
+    const conformes = dayItems.filter(item =>
+      item.status === 'conforme' ||
+      item.status_reinspecao === 'conforme_apos_reinspecao' ||
+      item.status_reinspecao === 'aprovado_com_concessao'
+    ).length
+
+    return {
+      date,
+      taxa: total > 0 ? (conformes / total) * 100 : 0
+    }
+  })
+
+  // Sort by date (oldest to newest)
+  return dataPoints.sort((a, b) => a.date.localeCompare(b.date))
 }
