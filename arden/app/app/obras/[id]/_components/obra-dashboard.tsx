@@ -2,20 +2,20 @@
 
 import { KPISection } from './kpi-section'
 import { NCFeed } from './nc-feed'
-import type { DashboardKPIs, NCFeedItem } from '@/lib/supabase/queries/dashboard'
+import { ConformidadeChart } from './conformidade-chart'
+import type { DashboardKPIs, NCFeedItem, ChartDataPoint } from '@/lib/supabase/queries/dashboard'
 
 interface ObraDashboardProps {
   kpis: DashboardKPIs
   ncs: NCFeedItem[]
-  // Future props for chart data:
-  // chartData?: ChartDataPoint[]
+  chartData: ChartDataPoint[]
 }
 
 /**
  * Client component for the obra dashboard.
  * Receives pre-fetched data from Server Component and renders interactive UI.
  */
-export function ObraDashboard({ kpis, ncs }: ObraDashboardProps) {
+export function ObraDashboard({ kpis, ncs, chartData }: ObraDashboardProps) {
   return (
     <div className="space-y-6">
       {/* KPI Cards Grid */}
@@ -27,11 +27,8 @@ export function ObraDashboard({ kpis, ncs }: ObraDashboardProps) {
         <NCFeed ncs={ncs} />
       </div>
 
-      {/* Chart - Plan 06-03 */}
-      <div className="rounded-lg border border-dashed border-border p-6">
-        <h3 className="text-sm font-medium text-foreground mb-2">Evolução Temporal</h3>
-        <p className="text-sm text-foreground-muted">Em breve</p>
-      </div>
+      {/* Conformidade Chart */}
+      <ConformidadeChart data={chartData} />
     </div>
   )
 }
