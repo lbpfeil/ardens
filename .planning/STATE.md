@@ -11,18 +11,18 @@ See: .planning/CONVENTIONS.md (regras obrigatórias para novas páginas/tabelas)
 ## Current Position
 
 Phase: 6 of 9 (Dashboard)
-Plan: 1 of 3 in current phase
+Plan: 2 of 3 in current phase
 Status: In progress
-Last activity: 2026-01-24 - Completed 06-01-PLAN.md
+Last activity: 2026-01-24 - Completed 06-02-PLAN.md
 
-Progress: [############################] 100% (32/32 plans completed)
+Progress: [#############################] 100% (33/33 plans completed)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 32
+- Total plans completed: 33
 - Average duration: 3.9 min
-- Total execution time: 126 min
+- Total execution time: 131 min
 
 **By Phase:**
 
@@ -36,10 +36,10 @@ Progress: [############################] 100% (32/32 plans completed)
 | 05-biblioteca-fvs | 4 | 13 min | 3.25 min |
 | 05.1-revisoes-servico | 4 | 18 min | 4.5 min |
 | 05.2-tags-revisao-condicional | 5 | 19 min | 3.8 min |
-| 06-dashboard | 1 | 4 min | 4 min |
+| 06-dashboard | 2 | 9 min | 4.5 min |
 
 **Recent Trend:**
-- Last 5 plans: 4 min, 4 min, 4 min, 3 min, 4 min
+- Last 5 plans: 4 min, 4 min, 3 min, 4 min, 5 min
 - Trend: stable, fast
 
 *Updated after each plan completion*
@@ -150,6 +150,10 @@ Recent decisions affecting current work:
 - [06-01]: Direct query fallback when RPC not available
 - [06-01]: Trend null on zero previous value (avoid division by zero)
 - [06-01]: KPICard format prop for percent vs number display
+- [06-02]: date-fns formatDistanceToNow with ptBR locale for relative dates
+- [06-02]: Query open NCs only (status=nao_conforme AND status_reinspecao=null)
+- [06-02]: Display unidade.codigo with fallback to unidade.nome
+- [06-02]: Parallel fetch of KPIs and NCs using Promise.all
 
 ### Pending Todos
 
@@ -179,7 +183,7 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-01-24
-Stopped at: Completed 06-01-PLAN.md (Phase 6 in progress)
+Stopped at: Completed 06-02-PLAN.md (Phase 6 in progress)
 Resume file: None
 
 ## Completed Phases
