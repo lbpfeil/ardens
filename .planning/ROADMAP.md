@@ -184,12 +184,12 @@ Plans:
   4. Usuario ve card com contagem de Verificacoes Concluidas
   5. Usuario ve feed com ultimas NCs abertas (titulo, obra, data)
   6. Usuario ve grafico de linha mostrando evolucao temporal das metricas
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 06-01: Cards de KPIs (4 metricas principais)
-- [ ] 06-02: Feed de NCs abertas (lista com detalhes)
-- [ ] 06-03: Grafico de evolucao temporal (Recharts)
+- [ ] 06-01-PLAN.md — Data access layer + KPI cards with trend indicators
+- [ ] 06-02-PLAN.md — NC feed with relative dates (date-fns)
+- [ ] 06-03-PLAN.md — Temporal chart (Recharts LineChart)
 
 ## Progress
 
@@ -206,7 +206,7 @@ Phases execute in numeric order: 1 > 2 > 3 > 4 > 4.1 > 5 > 5.1 > 5.2 > 6
 | 5. Biblioteca FVS | 4/4 | Complete | 2026-01-21 |
 | 5.1. Revisoes de Servicos | 4/4 | Complete | 2026-01-22 |
 | 5.2. Tags e Revisao Condicional | 5/5 | Complete | 2026-01-23 |
-| 6. Dashboard | 0/3 | Not started | - |
+| 6. Dashboard | 0/3 | Planned | - |
 
 ---
 *Roadmap created: 2026-01-19*
@@ -224,5 +224,6 @@ Phases execute in numeric order: 1 > 2 > 3 > 4 > 4.1 > 5 > 5.1 > 5.2 > 6
 *Phase 5.2 inserted: 2026-01-23 (tags e revisao condicional)*
 *Phase 5.2 planned: 2026-01-23*
 *Phase 5.2 complete: 2026-01-23*
+*Phase 6 planned: 2026-01-24*
 *Depth: standard (6 phases + 3 insertions)*
-*Coverage: 31/31 v1 requirements mapped + 5 REV + 7 TAG requirements*
+*Coverage: 31/31 v1 requirements mapped + 5 REV + 7 TAG requirements + 6 DASH requirements*
