@@ -20,7 +20,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 5: Biblioteca FVS** - Gestao de servicos e itens de verificacao
 - [x] **Phase 5.1: Revisoes de Servicos** - Sistema de controle de revisoes FVS (INSERTED)
 - [x] **Phase 5.2: Tags e Revisao Condicional** - Tags para itens e revisao apenas quando servico ja foi ativado (INSERTED)
-- [ ] **Phase 6: Dashboard** - Home do engenheiro com KPIs e feed de NCs
+- [x] **Phase 6: Dashboard** - Home do engenheiro com KPIs e feed de NCs
 
 ## Phase Details
 
@@ -187,9 +187,9 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [ ] 06-01-PLAN.md — Data access layer + KPI cards with trend indicators
-- [ ] 06-02-PLAN.md — NC feed with relative dates (date-fns)
-- [ ] 06-03-PLAN.md — Temporal chart (Recharts LineChart)
+- [x] 06-01-PLAN.md — Data access layer + KPI cards with trend indicators
+- [x] 06-02-PLAN.md — NC feed with relative dates (date-fns)
+- [x] 06-03-PLAN.md — Temporal chart (Recharts LineChart)
 
 ## Progress
 
@@ -206,7 +206,7 @@ Phases execute in numeric order: 1 > 2 > 3 > 4 > 4.1 > 5 > 5.1 > 5.2 > 6
 | 5. Biblioteca FVS | 4/4 | Complete | 2026-01-21 |
 | 5.1. Revisoes de Servicos | 4/4 | Complete | 2026-01-22 |
 | 5.2. Tags e Revisao Condicional | 5/5 | Complete | 2026-01-23 |
-| 6. Dashboard | 0/3 | Planned | - |
+| 6. Dashboard | 3/3 | Complete | 2026-01-24 |
 
 ---
 *Roadmap created: 2026-01-19*

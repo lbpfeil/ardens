@@ -52,12 +52,12 @@ Requirements para o Mes 1 do MVP. Cada um mapeia para fases do roadmap.
 
 ### Dashboard
 
-- [ ] **DASH-01**: Usuario ve card com Taxa de Conformidade Geral
-- [ ] **DASH-02**: Usuario ve card com IRS (Indice de Retrabalho)
-- [ ] **DASH-03**: Usuario ve card com Verificacoes Pendentes
-- [ ] **DASH-04**: Usuario ve card com Verificacoes Concluidas
-- [ ] **DASH-05**: Usuario ve feed de ultimas NCs abertas
-- [ ] **DASH-06**: Usuario ve grafico de evolucao temporal (linha)
+- [x] **DASH-01**: Usuario ve card com Taxa de Conformidade Geral
+- [x] **DASH-02**: Usuario ve card com IRS (Indice de Retrabalho)
+- [x] **DASH-03**: Usuario ve card com Verificacoes Pendentes
+- [x] **DASH-04**: Usuario ve card com Verificacoes Concluidas
+- [x] **DASH-05**: Usuario ve feed de ultimas NCs abertas
+- [x] **DASH-06**: Usuario ve grafico de evolucao temporal (linha)
 
 ### Infraestrutura
 
@@ -141,18 +141,19 @@ Explicitamente excluido do Mes 1.
 | REV-03 | Phase 5.1 | Complete |
 | REV-04 | Phase 5.1 | Complete |
 | REV-05 | Phase 5.1 | Complete |
-| DASH-01 | Phase 6 | Pending |
-| DASH-02 | Phase 6 | Pending |
-| DASH-03 | Phase 6 | Pending |
-| DASH-04 | Phase 6 | Pending |
-| DASH-05 | Phase 6 | Pending |
-| DASH-06 | Phase 6 | Pending |
+| DASH-01 | Phase 6 | Complete |
+| DASH-02 | Phase 6 | Complete |
+| DASH-03 | Phase 6 | Complete |
+| DASH-04 | Phase 6 | Complete |
+| DASH-05 | Phase 6 | Complete |
+| DASH-06 | Phase 6 | Complete |
 
 **Coverage:**
 - v1 requirements: 36 total
 - Mapped to phases: 36
 - Unmapped: 0
+- Complete: 36/36 (100%)
 
 ---
 *Requirements defined: 2026-01-19*
-*Last updated: 2026-01-22 after phase 5.1 complete*
+*Last updated: 2026-01-24 after phase 6 complete*
