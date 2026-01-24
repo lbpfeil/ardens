@@ -1,7 +1,8 @@
 import { notFound } from 'next/navigation'
 import { getObra } from '@/lib/supabase/queries/obras'
+import { getDashboardKPIs } from '@/lib/supabase/queries/dashboard'
 import { ObraHeader } from './_components/obra-header'
-import { KPICard } from '@/components/ui/kpi-card'
+import { ObraDashboard } from './_components/obra-dashboard'
 
 interface ObraPageProps {
   params: Promise<{ id: string }>
@@ -17,48 +18,14 @@ export default async function ObraPage({ params }: ObraPageProps) {
     notFound()
   }
 
+  // Fetch dashboard KPIs
+  const kpis = await getDashboardKPIs(id)
+
   return (
-    <div className="space-y-6 p-6">
-      <ObraHeader obra={obra} />
-
-      {/* KPI Cards - Placeholders */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <KPICard
-          title="Taxa de Conformidade"
-          value="--"
-          description="Sera calculado com verificacoes"
-        />
-        <KPICard
-          title="IRS"
-          value="--"
-          description="Indice de Retrabalho"
-        />
-        <KPICard
-          title="Verificacoes Pendentes"
-          value="--"
-          description="Aguardando inspecao"
-        />
-        <KPICard
-          title="Verificacoes Concluidas"
-          value="--"
-          description="Ultimos 30 dias"
-        />
-      </div>
-
-      {/* Recent NCs placeholder */}
-      <div className="rounded-lg border border-dashed border-border p-6">
-        <h3 className="text-sm font-medium text-foreground mb-2">Ultimas NCs</h3>
-        <p className="text-sm text-foreground-muted">
-          Nenhuma nao-conformidade registrada ainda.
-        </p>
-      </div>
-
-      {/* Quick Actions */}
-      <div className="rounded-lg border border-dashed border-border p-6">
-        <h3 className="text-sm font-medium text-foreground mb-2">Acoes Rapidas</h3>
-        <p className="text-sm text-foreground-muted">
-          Links para unidades, servicos e verificacoes serao adicionados.
-        </p>
+    <div className="p-6 bg-background min-h-full">
+      <div className="max-w-6xl mx-auto space-y-6">
+        <ObraHeader obra={obra} />
+        <ObraDashboard kpis={kpis} />
       </div>
     </div>
   )
