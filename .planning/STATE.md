@@ -6,23 +6,23 @@ See: .planning/PROJECT.md (updated 2026-01-19)
 See: .planning/CONVENTIONS.md (regras obrigatórias para novas páginas/tabelas)
 
 **Core value:** Trazer extrema rapidez e praticidade na verificacao de servicos, tornando a qualidade uma aliada da obra.
-**Current focus:** Phase 6 - Dashboard (next)
+**Current focus:** Phase 6 - Dashboard (in progress)
 
 ## Current Position
 
-Phase: 5.2 of 9 (Tags e Revisao Condicional)
-Plan: 5 of 5 in current phase
-Status: Phase complete
-Last activity: 2026-01-23 - Completed 05.2-05-PLAN.md
+Phase: 6 of 9 (Dashboard)
+Plan: 1 of 3 in current phase
+Status: In progress
+Last activity: 2026-01-24 - Completed 06-01-PLAN.md
 
-Progress: [###########################] 97% (31/32 plans completed)
+Progress: [############################] 100% (32/32 plans completed)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 31
+- Total plans completed: 32
 - Average duration: 3.9 min
-- Total execution time: 122 min
+- Total execution time: 126 min
 
 **By Phase:**
 
@@ -36,9 +36,10 @@ Progress: [###########################] 97% (31/32 plans completed)
 | 05-biblioteca-fvs | 4 | 13 min | 3.25 min |
 | 05.1-revisoes-servico | 4 | 18 min | 4.5 min |
 | 05.2-tags-revisao-condicional | 5 | 19 min | 3.8 min |
+| 06-dashboard | 1 | 4 min | 4 min |
 
 **Recent Trend:**
-- Last 5 plans: 4 min, 4 min, 4 min, 4 min, 3 min
+- Last 5 plans: 4 min, 4 min, 4 min, 3 min, 4 min
 - Trend: stable, fast
 
 *Updated after each plan completion*
@@ -145,11 +146,14 @@ Recent decisions affecting current work:
 - [05.2-05]: Drag mode toggle with 'Organizar' button (hides actions, shows handles)
 - [05.2-05]: Cross-tag drag updates tag_id only, in-tag drag updates ordem
 - [05.2-05]: Tag sections reorder modal shows only tags with items in current service
+- [06-01]: DashboardKPIs type with { current, previous } for trend calculation
+- [06-01]: Direct query fallback when RPC not available
+- [06-01]: Trend null on zero previous value (avoid division by zero)
+- [06-01]: KPICard format prop for percent vs number display
 
 ### Pending Todos
 
 1. **Excluir servico permanentemente (admin only)** (biblioteca) - Cascade delete com confirmacao forte
-2. **Melhorar contraste de textos muted/secundários** (ui) - Textos de ajuda com baixa visibilidade em fundo escuro
 
 ### Blockers/Concerns
 
@@ -174,8 +178,8 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-01-23
-Stopped at: Completed 05.2-05-PLAN.md (Phase 5.2 complete)
+Last session: 2026-01-24
+Stopped at: Completed 06-01-PLAN.md (Phase 6 in progress)
 Resume file: None
 
 ## Completed Phases
