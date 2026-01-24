@@ -186,7 +186,7 @@
   /* === Foreground Scale (Text) === */
   --foreground-light: hsl(0 0% 70.6%);
   --foreground-lighter: hsl(0 0% 53.7%);
-  --foreground-muted: hsl(0 0% 30.2%);
+  --foreground-muted: hsl(0 0% 45%);
   --foreground-contrast: hsl(0 0% 8.6%);
 
   /* === Overlay === */
