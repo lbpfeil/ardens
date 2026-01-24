@@ -23,7 +23,7 @@ interface SidebarObraProps {
 function getObraNavItems(obraId: string) {
   return {
     overview: [
-      { icon: LayoutDashboard, label: 'Dashboard', href: `/app/obras/${obraId}`, exact: true },
+      { icon: LayoutDashboard, label: 'Painel Geral', href: `/app/obras/${obraId}`, exact: true },
     ],
     operacao: [
       { icon: Wrench, label: 'Serviços', href: `/app/obras/${obraId}/servicos` },

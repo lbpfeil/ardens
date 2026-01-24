@@ -9,12 +9,13 @@ const sectionLabels: Record<string, string> = {
   obras: 'Obras',
   biblioteca: 'Biblioteca FVS',
   unidades: 'Unidades',
-  servicos: 'Servicos',
-  verificacoes: 'Verificacoes',
-  ncs: 'Nao-Conformidades',
-  relatorios: 'Relatorios',
+  servicos: 'Serviços',
+  verificacoes: 'Verificações',
+  ncs: 'Não-Conformidades',
+  relatorios: 'Relatórios',
   equipe: 'Equipe',
-  configuracoes: 'Configuracoes',
+  configuracoes: 'Configurações',
+  tags: 'Tags',
 }
 
 interface BreadcrumbItem {
@@ -24,22 +25,28 @@ interface BreadcrumbItem {
 
 export function Breadcrumb() {
   const pathname = usePathname()
-  const params = useParams<{ id?: string }>()
+  const params = useParams()
   const [obraName, setObraName] = useState<string | null>(null)
+  const [currentObraId, setCurrentObraId] = useState<string | null>(null)
 
   // TODO: Get construtora name from auth context
   const construtoraName = 'Pfeil'
 
-  // Fetch obra name when in obra context
+  // Extract obra ID from params (can be string or string[])
+  const obraId = typeof params.id === 'string' ? params.id : params.id?.[0] ?? null
+
+  // Fetch obra name when obra ID changes
   useEffect(() => {
-    if (params.id) {
-      getObra(params.id)
+    if (obraId && obraId !== currentObraId) {
+      setCurrentObraId(obraId)
+      getObra(obraId)
         .then((obra) => setObraName(obra.nome))
         .catch(() => setObraName(null))
-    } else {
+    } else if (!obraId) {
+      setCurrentObraId(null)
       setObraName(null)
     }
-  }, [params.id])
+  }, [obraId, currentObraId])
 
   const crumbs: BreadcrumbItem[] = []
 
@@ -58,21 +65,21 @@ export function Breadcrumb() {
   // /app/biblioteca -> ['app', 'biblioteca']
 
   // Check if we're in obras list or biblioteca or tags (global sections)
-  if (pathSegments[1] === 'obras' && !params.id) {
+  if (pathSegments[1] === 'obras' && !obraId) {
     crumbs.push({ label: 'Obras' })
   } else if (pathSegments[1] === 'biblioteca') {
     crumbs.push({ label: 'Biblioteca FVS' })
   } else if (pathSegments[1] === 'tags') {
     crumbs.push({ label: 'Tags' })
-  } else if (params.id) {
+  } else if (obraId) {
     // We're in an obra context
     crumbs.push({
       label: obraName || 'Carregando...',
-      href: `/app/obras/${params.id}`,
+      href: `/app/obras/${obraId}`,
     })
 
     // Check for section in pathname (after obra id)
-    const idIndex = pathSegments.indexOf(params.id)
+    const idIndex = pathSegments.indexOf(obraId)
     const section = pathSegments[idIndex + 1]
 
     if (section && sectionLabels[section]) {
