@@ -158,6 +158,7 @@ Recent decisions affecting current work:
 ### Pending Todos
 
 1. **Excluir servico permanentemente (admin only)** (biblioteca) - Cascade delete com confirmacao forte
+2. **Sidebar flutuante com transição suave** (ui) - Overlay sobre conteúdo, ícones fixos, transição suave
 
 ### Blockers/Concerns
 
