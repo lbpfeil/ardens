@@ -6,16 +6,16 @@ See: .planning/PROJECT.md (updated 2026-01-26)
 See: .planning/CONVENTIONS.md (regras obrigatorias para novas paginas/tabelas)
 
 **Core value:** Trazer extrema rapidez e praticidade na verificacao de servicos, tornando a qualidade uma aliada da obra.
-**Current focus:** Planning next milestone
+**Current focus:** v1.1 Verificacoes no Portal Web
 
 ## Current Position
 
-Phase: Between milestones
+Phase: 7 - Fundacao de Dados e Server Actions
 Plan: Not started
-Status: v1.0 complete — ready for next milestone
-Last activity: 2026-01-26 — v1.0 milestone archived
+Status: Roadmap criado, aguardando planejamento da Fase 7
+Last activity: 2026-01-26 — Roadmap v1.1 criado
 
-Progress: Milestone v1.0 shipped (9 phases, 34 plans)
+Progress: [..........] 0/5 fases | 0/28 requisitos
 
 ## Performance Metrics
 
@@ -25,12 +25,22 @@ Progress: Milestone v1.0 shipped (9 phases, 34 plans)
 - Total execution time: 146 min
 - Timeline: 5 days (2026-01-19 to 2026-01-24)
 
+**v1.1 Summary:**
+- Total plans completed: 0
+- Started: 2026-01-26
+
 ## Accumulated Context
 
 ### Decisions
 
 All v1.0 decisions documented in PROJECT.md Key Decisions table.
-For full decision log, see archived STATE.md history in git.
+
+**v1.1 Decisions:**
+- CSS Grid customizado para matriz (nao usar AG Grid/TanStack Table) — controle total, economia de ~200KB bundle
+- Estado de selecao em useState/useRef local (nao Zustand global) — estado transiente de UI
+- Upload de fotos diferido para v1.2 — foco na verificacao sem fotos primeiro
+- Filtro por agrupamento como default na matriz — mitiga performance com muitas unidades
+- RPC PostgreSQL para bulk insert — atomicidade e eficiencia
 
 ### Pending Todos
 
@@ -44,12 +54,12 @@ None.
 ### Roadmap Evolution
 
 v1.0 roadmap archived to .planning/milestones/v1.0-ROADMAP.md
-Next milestone to be defined via /gsd:new-milestone
+v1.1 roadmap created: .planning/ROADMAP.md (Fases 7-11, 28 requisitos)
 
 ## Session Continuity
 
 Last session: 2026-01-26
-Stopped at: v1.0 milestone completion
+Stopped at: Roadmap v1.1 criado, pronto para /gsd:plan-phase 7
 Resume file: None
 
 ## Completed Milestones
