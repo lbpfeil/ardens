@@ -392,6 +392,11 @@ CREATE POLICY "obra_servicos_delete" ON obra_servicos
 -- ============================================================================
 -- POLÍTICAS: VERIFICACOES
 -- ============================================================================
+-- OTIMIZAÇÃO: Padrão initPlan - wrapping de funções em (SELECT fn())
+-- O PostgreSQL cacheia o resultado de (SELECT fn()) per-statement em vez de
+-- reavaliar per-row, resultando em melhoria de 10-100x em operações bulk.
+-- user_has_obra_access(obra_id) substituído por subselect direto para evitar
+-- reavaliar a função para cada linha (depende do valor da coluna obra_id).
 
 -- SELECT:
 -- - Admin/Engenheiro: todas da obra
@@ -400,13 +405,15 @@ DROP POLICY IF EXISTS "verificacoes_select" ON verificacoes;
 CREATE POLICY "verificacoes_select" ON verificacoes
   FOR SELECT USING (
     obra_id IN (
-      SELECT id FROM obras WHERE cliente_id = get_user_cliente_id()
+      SELECT id FROM obras WHERE cliente_id = (SELECT get_user_cliente_id())
     )
     AND (
-      is_admin_or_engenheiro()
-      OR inspetor_id = auth.uid()
+      (SELECT is_admin_or_engenheiro())
+      OR inspetor_id = (SELECT auth.uid())
     )
-    AND user_has_obra_access(obra_id)
+    AND obra_id IN (
+      SELECT obra_id FROM usuario_obras WHERE usuario_id = (SELECT auth.uid())
+    )
   );
 
 -- INSERT: Quem tem acesso à obra (admin, engenheiro, inspetor)
@@ -414,9 +421,11 @@ DROP POLICY IF EXISTS "verificacoes_insert" ON verificacoes;
 CREATE POLICY "verificacoes_insert" ON verificacoes
   FOR INSERT WITH CHECK (
     obra_id IN (
-      SELECT id FROM obras WHERE cliente_id = get_user_cliente_id()
+      SELECT id FROM obras WHERE cliente_id = (SELECT get_user_cliente_id())
     )
-    AND user_has_obra_access(obra_id)
+    AND obra_id IN (
+      SELECT obra_id FROM usuario_obras WHERE usuario_id = (SELECT auth.uid())
+    )
   );
 
 -- UPDATE: Admin pode editar tudo, outros só as próprias não concluídas
@@ -424,12 +433,14 @@ DROP POLICY IF EXISTS "verificacoes_update" ON verificacoes;
 CREATE POLICY "verificacoes_update" ON verificacoes
   FOR UPDATE USING (
     obra_id IN (
-      SELECT id FROM obras WHERE cliente_id = get_user_cliente_id()
+      SELECT id FROM obras WHERE cliente_id = (SELECT get_user_cliente_id())
     )
-    AND user_has_obra_access(obra_id)
+    AND obra_id IN (
+      SELECT obra_id FROM usuario_obras WHERE usuario_id = (SELECT auth.uid())
+    )
     AND (
-      is_admin()
-      OR (inspetor_id = auth.uid() AND status != 'concluida')
+      (SELECT is_admin())
+      OR (inspetor_id = (SELECT auth.uid()) AND status != 'concluida')
     )
   );
 
@@ -438,15 +449,17 @@ DROP POLICY IF EXISTS "verificacoes_delete" ON verificacoes;
 CREATE POLICY "verificacoes_delete" ON verificacoes
   FOR DELETE USING (
     obra_id IN (
-      SELECT id FROM obras WHERE cliente_id = get_user_cliente_id()
+      SELECT id FROM obras WHERE cliente_id = (SELECT get_user_cliente_id())
     )
-    AND is_admin()
+    AND (SELECT is_admin())
   );
 
 
 -- ============================================================================
 -- POLÍTICAS: ITENS_VERIFICACAO
 -- ============================================================================
+-- OTIMIZAÇÃO: Mesmo padrão initPlan aplicado. JOIN com verificacoes mantido
+-- mas funções auxiliares wrappadas em (SELECT fn()) para caching per-statement.
 
 -- SELECT: Segue verificação
 DROP POLICY IF EXISTS "itens_verificacao_select" ON itens_verificacao;
@@ -454,10 +467,16 @@ CREATE POLICY "itens_verificacao_select" ON itens_verificacao
   FOR SELECT USING (
     verificacao_id IN (
       SELECT v.id FROM verificacoes v
-      JOIN obras o ON o.id = v.obra_id
-      WHERE o.cliente_id = get_user_cliente_id()
-      AND user_has_obra_access(v.obra_id)
-      AND (is_admin_or_engenheiro() OR v.inspetor_id = auth.uid())
+      WHERE v.obra_id IN (
+        SELECT id FROM obras WHERE cliente_id = (SELECT get_user_cliente_id())
+      )
+      AND (
+        (SELECT is_admin_or_engenheiro())
+        OR v.inspetor_id = (SELECT auth.uid())
+      )
+      AND v.obra_id IN (
+        SELECT obra_id FROM usuario_obras WHERE usuario_id = (SELECT auth.uid())
+      )
     )
   );
 
@@ -467,9 +486,12 @@ CREATE POLICY "itens_verificacao_insert" ON itens_verificacao
   FOR INSERT WITH CHECK (
     verificacao_id IN (
       SELECT v.id FROM verificacoes v
-      JOIN obras o ON o.id = v.obra_id
-      WHERE o.cliente_id = get_user_cliente_id()
-      AND user_has_obra_access(v.obra_id)
+      WHERE v.obra_id IN (
+        SELECT id FROM obras WHERE cliente_id = (SELECT get_user_cliente_id())
+      )
+      AND v.obra_id IN (
+        SELECT obra_id FROM usuario_obras WHERE usuario_id = (SELECT auth.uid())
+      )
     )
   );
 
@@ -479,10 +501,16 @@ CREATE POLICY "itens_verificacao_update" ON itens_verificacao
   FOR UPDATE USING (
     verificacao_id IN (
       SELECT v.id FROM verificacoes v
-      JOIN obras o ON o.id = v.obra_id
-      WHERE o.cliente_id = get_user_cliente_id()
-      AND user_has_obra_access(v.obra_id)
-      AND (is_admin() OR v.inspetor_id = auth.uid())
+      WHERE v.obra_id IN (
+        SELECT id FROM obras WHERE cliente_id = (SELECT get_user_cliente_id())
+      )
+      AND v.obra_id IN (
+        SELECT obra_id FROM usuario_obras WHERE usuario_id = (SELECT auth.uid())
+      )
+      AND (
+        (SELECT is_admin())
+        OR v.inspetor_id = (SELECT auth.uid())
+      )
     )
   );
 
@@ -492,9 +520,10 @@ CREATE POLICY "itens_verificacao_delete" ON itens_verificacao
   FOR DELETE USING (
     verificacao_id IN (
       SELECT v.id FROM verificacoes v
-      JOIN obras o ON o.id = v.obra_id
-      WHERE o.cliente_id = get_user_cliente_id()
-      AND is_admin()
+      WHERE v.obra_id IN (
+        SELECT id FROM obras WHERE cliente_id = (SELECT get_user_cliente_id())
+      )
+      AND (SELECT is_admin())
     )
   );
 
