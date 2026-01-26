@@ -12,7 +12,7 @@ Siga as regras de desenvolvimento em @docs/design/README.md
 
 1. **DESIGN-SYSTEM.md e a fonte de verdade** - Consulte `@docs/design/DESIGN-SYSTEM.md` para cores, tipografia, espacamentos e padroes de componentes
 
-2. **Use APENAS componentes shadcn existentes** - Os componentes estao em `@arden/components/ui` (Button, Card, Input, Select, etc.). NAO crie novos componentes UI
+2. **Use APENAS componentes shadcn existentes** - Os componentes estao em `@arden/components/ui` (Button, Card, Input, Select, etc.). NAO crie novos componentes UI a não ser que autorizado
 
 3. **Use variaveis CSS do globals.css** - Prefira classes como `bg-surface-100`, `text-foreground-light`, `border-border` ao inves de valores hardcoded como `bg-gray-800`
 

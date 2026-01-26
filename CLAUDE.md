@@ -4,7 +4,7 @@
 
 ## O que e este projeto
 
-**Arden FVS** e uma plataforma SaaS para gestao de qualidade na construcao civil, focada em verificacoes de servicos (FVS) para certificacao PBQP-H.
+**Arden FVS** e uma plataforma SaaS para gestao de qualidade na construcao civil, focada em verificacoes de servicos (FVS) para elevar o nível de qualidade da construção civil mundial e gerar documentação necessária para certificações como a certificacao PBQP-H.
 
 **Missao:** Trazer extrema rapidez e praticidade na verificacao de servicos, tornando a qualidade uma aliada da obra.
 
