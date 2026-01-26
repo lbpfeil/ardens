@@ -7,10 +7,10 @@
 
 ### Dados e Infraestrutura
 
-- [ ] **DADOS-01**: Server Actions para CRUD de verificacoes (criar, atualizar resultado, atualizar status)
-- [ ] **DADOS-02**: Server Actions para CRUD de itens de verificacao (marcar C/NC/NA por item)
-- [ ] **DADOS-03**: RPC PostgreSQL para verificacao em massa (bulk insert atomico)
-- [ ] **DADOS-04**: Queries otimizadas para alimentar a matriz (servicos, unidades, verificacoes)
+- [x] **DADOS-01**: Server Actions para CRUD de verificações (criar, atualizar resultado, atualizar status)
+- [x] **DADOS-02**: Server Actions para CRUD de itens de verificação (marcar C/NC/NA por item)
+- [x] **DADOS-03**: RPC PostgreSQL para verificação em massa (bulk insert atômico)
+- [x] **DADOS-04**: Queries otimizadas para alimentar a matriz (serviços, unidades, verificações)
 
 ### Matriz de Verificacoes
 
@@ -84,10 +84,10 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| DADOS-01 | Phase 7 | Pending |
-| DADOS-02 | Phase 7 | Pending |
-| DADOS-03 | Phase 7 | Pending |
-| DADOS-04 | Phase 7 | Pending |
+| DADOS-01 | Phase 7 | Complete |
+| DADOS-02 | Phase 7 | Complete |
+| DADOS-03 | Phase 7 | Complete |
+| DADOS-04 | Phase 7 | Complete |
 | MATRZ-01 | Phase 9 | Pending |
 | MATRZ-02 | Phase 9 | Pending |
 | MATRZ-03 | Phase 9 | Pending |
@@ -120,4 +120,4 @@
 
 ---
 *Requirements defined: 2026-01-26*
-*Last updated: 2026-01-26 after roadmap creation*
+*Last updated: 2026-01-26 after Phase 7 completion*

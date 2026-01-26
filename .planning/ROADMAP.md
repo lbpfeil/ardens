@@ -22,9 +22,9 @@ Este milestone transforma o portal web de ferramenta de cadastro em ferramenta d
 **Plans:** 3 plans
 
 Plans:
-- [ ] 07-01-PLAN.md -- Server Actions para CRUD de verificacoes e itens (DADOS-01, DADOS-02)
-- [ ] 07-02-PLAN.md -- RPC PostgreSQL bulk_verificar + Server Action wrapper (DADOS-03)
-- [ ] 07-03-PLAN.md -- Query otimizada da matriz + otimizacao RLS (DADOS-04)
+- [x] 07-01-PLAN.md -- Server Actions para CRUD de verificações e itens (DADOS-01, DADOS-02)
+- [x] 07-02-PLAN.md -- RPC PostgreSQL bulk_verificar + Server Action wrapper (DADOS-03)
+- [x] 07-03-PLAN.md -- Query otimizada da matriz + otimização RLS (DADOS-04)
 
 **Criterios de Sucesso:**
 
@@ -120,7 +120,7 @@ Plans:
 
 | Fase | Nome | Requisitos | Status |
 |------|------|------------|--------|
-| 7 | Fundacao de Dados | DADOS-01, DADOS-02, DADOS-03, DADOS-04 | Planejado |
+| 7 | Fundação de Dados | DADOS-01, DADOS-02, DADOS-03, DADOS-04 | Completo ✓ |
 | 8 | Verificacao Individual | VERIF-01, VERIF-02, VERIF-03, VERIF-04, VERIF-05, VERIF-06 | Pendente |
 | 9 | Matriz de Verificacoes | MATRZ-01, MATRZ-02, MATRZ-03, MATRZ-04, MATRZ-05 | Pendente |
 | 10 | Selecao e Operacoes em Massa | BULK-01 a BULK-09 | Pendente |
