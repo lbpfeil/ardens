@@ -45,6 +45,12 @@ Plans:
 
 **Requisitos:** VERIF-01, VERIF-02, VERIF-03, VERIF-04, VERIF-05, VERIF-06
 
+**Plans:** 2 plans
+
+Plans:
+- [ ] 08-01-PLAN.md — Página + header + checklist com toggles C/NC/NA + modal NC
+- [ ] 08-02-PLAN.md — Modal de detalhes + descrição geral + Exceção + reinspeção + estado travado
+
 **Criterios de Sucesso:**
 
 1. O engenheiro acessa a pagina de verificacao individual (`/app/obras/[id]/verificacoes/[verificacaoId]`) e ve a lista completa de itens de verificacao do servico, cada um com toggle C/NC/NA
