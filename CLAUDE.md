@@ -352,31 +352,32 @@ Ao criar nova tabela no banco:
 
 ---
 
-## IMPORTANTE: Textos em Portugues Brasileiro
+## OBRIGATÓRIO: Português Brasileiro com Acentuação Correta
 
-**TODOS os textos visíveis ao usuário DEVEM usar acentuação PT-BR correta.**
+**TODO texto em português DEVE usar acentuação correta, sem exceção.**
 
-Isso inclui:
-- Labels de formulários (ex: "Descrição", não "Descricao")
-- Placeholders de inputs
-- Mensagens de erro e validação
-- Títulos e descrições de páginas
-- Textos em botões e menus
-- Mensagens de toast/notificação
-- Empty states e textos informativos
+Isso vale para QUALQUER contexto:
+- Código-fonte (labels, placeholders, mensagens, toasts, empty states)
+- Arquivos de documentação (`.md`, comentários, READMEs)
+- Arquivos de planning (`.planning/`, roadmaps, requirements, state)
+- Commits e mensagens git
+- Comunicação com o usuário no chat
 
 **Exemplos corretos:**
 - "Descrição da mudança" ✓
 - "Código do serviço" ✓
 - "Não há itens cadastrados" ✓
-- "Ação concluída com sucesso" ✓
+- "Gestão de obras" ✓
+- "Navegação contextual" ✓
+- "Verificações pendentes" ✓
 
 **Exemplos incorretos:**
 - "Descricao da mudanca" ✗
 - "Codigo do servico" ✗
-- "Nao ha itens cadastrados" ✗
+- "Gestao de obras" ✗
+- "Navegacao contextual" ✗
 
-**Ao criar ou editar componentes, SEMPRE verifique se os textos estão com acentuação correta.**
+**Não existe contexto onde omitir acentos seja aceitável ao escrever em português.**
 
 ---
 
