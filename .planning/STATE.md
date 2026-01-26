@@ -10,12 +10,12 @@ See: .planning/CONVENTIONS.md (regras obrigatorias para novas paginas/tabelas)
 
 ## Current Position
 
-Phase: 7 - Fundacao de Dados e Server Actions
-Plan: Not started
-Status: Roadmap criado, aguardando planejamento da Fase 7
-Last activity: 2026-01-26 — Roadmap v1.1 criado
+Phase: 7 - Fundação de Dados e Server Actions
+Plan: 1 of 3 in phase 7
+Status: In progress
+Last activity: 2026-01-26 — Completed 07-01-PLAN.md (Server Actions de Verificações)
 
-Progress: [..........] 0/5 fases | 0/28 requisitos
+Progress: [..........] 0/5 fases | 1/28 requisitos
 
 ## Performance Metrics
 
@@ -26,7 +26,7 @@ Progress: [..........] 0/5 fases | 0/28 requisitos
 - Timeline: 5 days (2026-01-19 to 2026-01-24)
 
 **v1.1 Summary:**
-- Total plans completed: 0
+- Total plans completed: 1
 - Started: 2026-01-26
 
 ## Accumulated Context
@@ -40,7 +40,11 @@ All v1.0 decisions documented in PROJECT.md Key Decisions table.
 - Estado de selecao em useState/useRef local (nao Zustand global) — estado transiente de UI
 - Upload de fotos diferido para v1.2 — foco na verificacao sem fotos primeiro
 - Filtro por agrupamento como default na matriz — mitiga performance com muitas unidades
-- RPC PostgreSQL para bulk insert — atomicidade e eficiencia
+- RPC PostgreSQL para bulk insert — atomicidade e eficiência
+- Padrão 'use server' em lib/supabase/actions/ — separa mutations de queries
+- ActionResult<T> com { data } ou { error } — nunca throw em Server Actions
+- Imutabilidade: verificação Conforme (concluída + todos itens conformes) é travada
+- UI "NA" (Não se Aplica) → enum 'excecao' no banco
 
 ### Pending Todos
 
@@ -59,7 +63,7 @@ v1.1 roadmap created: .planning/ROADMAP.md (Fases 7-11, 28 requisitos)
 ## Session Continuity
 
 Last session: 2026-01-26
-Stopped at: Roadmap v1.1 criado, pronto para /gsd:plan-phase 7
+Stopped at: Completed 07-01-PLAN.md (Server Actions de Verificações)
 Resume file: None
 
 ## Completed Milestones
