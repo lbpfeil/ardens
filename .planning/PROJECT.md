@@ -2,7 +2,7 @@
 
 ## What This Is
 
-Plataforma SaaS para gestao de qualidade na construcao civil, focada em verificacoes de servicos (FVS) para certificacao PBQP-H. O portal web permite que engenheiros gerenciem obras, agrupamentos, unidades, biblioteca de servicos FVS com revisoes e tags, e acompanhem KPIs de qualidade via dashboard com graficos.
+Plataforma SaaS para gestão de qualidade na construção civil, focada em verificações de serviços (FVS) para certificação PBQP-H. O portal web permite que engenheiros gerenciem obras, agrupamentos, unidades, biblioteca de serviços FVS com revisões e tags, executem verificações de serviços via matriz interativa, e acompanhem KPIs de qualidade via dashboard com gráficos.
 
 **Usuario:** Engenheiro Civil com expertise em gestao de qualidade e obras, sem conhecimento tecnico em programacao. Precisa de apoio detalhado em cada etapa de desenvolvimento.
 
@@ -60,16 +60,25 @@ Trazer extrema rapidez e praticidade na verificacao de servicos, tornando a qual
 
 ### Active
 
-<!-- Next milestone scope — to be defined in /gsd:new-milestone -->
+<!-- v1.1 — Verificações no Portal Web -->
 
-(Empty — define in next milestone)
+- [ ] Página de verificações na sidebar da obra (matriz serviço × unidade)
+- [ ] Matriz interativa com colunas agrupadas por agrupamento (colapsável)
+- [ ] Seleção estilo planilha: célula individual, header de coluna, header de linha
+- [ ] Verificação em massa via modal (Conforme / NC / Exceção + descrição por lote)
+- [ ] Verificação individual via página dedicada (itens C/NC/NA + fotos por item + descrição)
+- [ ] Resultado automático: qualquer item NC → verificação NC
+- [ ] Marcação automática de todos os itens na verificação em massa
+- [ ] Ciclo de vida: Pendente → Conforme | NC | Exceção → Reinspeção
+- [ ] Conflitos inteligentes na massa: pula Conformes, NCs viram "após Reinspeção"
+- [ ] Upload de fotos vinculadas a itens de verificação (Supabase Storage)
 
 ### Out of Scope
 
 <!-- Explicit boundaries -->
 
 - App Mobile (Expo) — Mes 2
-- Verificacoes no portal web — Mes 2
+- ~~Verificações no portal web~~ — **Movido para Active (v1.1)**
 - Sync offline — Mes 2
 - Relatorios PDF — Mes 3
 - Condicoes de Inicio (CI) — Fase 2
@@ -86,7 +95,11 @@ Trazer extrema rapidez e praticidade na verificacao de servicos, tornando a qual
 - Obra > Agrupamento > Unidade (hierarquia de 2 niveis)
 - Biblioteca FVS por construtora (nao compartilhada)
 - Servico tem itens de verificacao (observacao, metodo, tolerancia)
-- Verificacao = Servico + Unidade
+- Verificação = Serviço + Unidade
+- Verificação tem itens (um por item de verificação do serviço)
+- Cada item: Conforme / Não Conforme / Não Aplicável
+- Status da verificação: Pendente | Conforme | NC | Exceção | Conforme após Reinspeção | NC após Reinspeção
+- Exceção = serviço não se aplica àquela unidade (ex: serviço de lotes em ruas)
 
 **Volumetria tipica:**
 - Obra: 15-25 servicos ativos
@@ -125,5 +138,16 @@ Trazer extrema rapidez e praticidade na verificacao de servicos, tornando a qual
 | date-fns with ptBR locale | Relative dates in Portuguese | Good |
 | Recharts for charts | Lightweight, React-native integration | Good |
 
+## Current Milestone: v1.1 Verificações no Portal Web
+
+**Goal:** Permitir que engenheiros executem verificações de serviços FVS diretamente pelo portal web, com matriz interativa serviço × unidade, verificação em massa e individual com fotos.
+
+**Target features:**
+- Matriz de verificações (serviço × unidade) com seleção estilo planilha
+- Verificação em massa (Conforme/NC/Exceção) via modal com descrição
+- Verificação individual com itens C/NC/NA, fotos por item, descrição geral
+- Ciclo de vida completo: Pendente → Conforme/NC/Exceção → Reinspeção
+- Upload de fotos vinculadas a itens de verificação
+
 ---
-*Last updated: 2026-01-26 after v1.0 milestone*
+*Last updated: 2026-01-26 after v1.1 milestone start*
