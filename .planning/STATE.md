@@ -10,12 +10,12 @@ See: .planning/CONVENTIONS.md (regras obrigatorias para novas paginas/tabelas)
 
 ## Current Position
 
-Phase: 7 - Fundação de Dados e Server Actions
-Plan: 3 of 3 in phase 7 (01 e 03 completos, 02 pendente)
-Status: In progress
-Last activity: 2026-01-26 — Completed 07-03-PLAN.md (Query da Matriz e RLS Otimizadas)
+Phase: 7 - Fundação de Dados e Server Actions (COMPLETE)
+Plan: 3 of 3 in phase 7 (todos completos)
+Status: Phase complete
+Last activity: 2026-01-26 — Completed 07-02-PLAN.md (RPC Bulk Verificar)
 
-Progress: [█.........] 0/5 fases | 2/28 requisitos
+Progress: [██........] 1/5 fases | 3/28 requisitos
 
 ## Performance Metrics
 
@@ -26,7 +26,7 @@ Progress: [█.........] 0/5 fases | 2/28 requisitos
 - Timeline: 5 days (2026-01-19 to 2026-01-24)
 
 **v1.1 Summary:**
-- Total plans completed: 2
+- Total plans completed: 3
 - Started: 2026-01-26
 
 ## Accumulated Context
@@ -47,6 +47,8 @@ All v1.0 decisions documented in PROJECT.md Key Decisions table.
 - UI "NA" (Não se Aplica) → enum 'excecao' no banco
 - Nomes de colunas de itens_servico: observacao/metodo/tolerancia (não descricao/metodo_verificacao/criterio_aceitacao)
 - initPlan pattern em RLS policies de verificações — (SELECT fn()) para caching per-statement
+- SECURITY DEFINER com autorização interna para bulk_verificar — bypassa RLS, verifica permissões manualmente
+- Limite 500 pares por operação bulk — proteção contra timeout em operações em massa
 
 ### Pending Todos
 
@@ -56,6 +58,7 @@ All v1.0 decisions documented in PROJECT.md Key Decisions table.
 ### Blockers/Concerns
 
 - **Migration RLS pendente**: Policies otimizadas de verificações/itens_verificacao precisam ser aplicadas via `mcp__supabase__apply_migration` (07-03 documentou o SQL mas não aplicou por falta de MCP).
+- **Migration bulk_verificar pendente**: Função PL/pgSQL `bulk_verificar` precisa ser aplicada via `mcp__supabase__apply_migration` (07-02 documentou em schema.sql mas não aplicou por falta de MCP).
 
 ### Roadmap Evolution
 
@@ -65,7 +68,7 @@ v1.1 roadmap created: .planning/ROADMAP.md (Fases 7-11, 28 requisitos)
 ## Session Continuity
 
 Last session: 2026-01-26
-Stopped at: Completed 07-03-PLAN.md (Query da Matriz e RLS Otimizadas)
+Stopped at: Completed 07-02-PLAN.md (RPC Bulk Verificar) — Phase 7 complete
 Resume file: None
 
 ## Completed Milestones
