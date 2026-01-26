@@ -46,6 +46,7 @@
 - **Concorrentes conhecidos:**
   - **AutoDOC** — plataforma de gestão de qualidade usada por construtoras grandes. Posicionado como caro e complexo.
   - **QualitTAB FVS** — ferramenta de FVS usada por construtoras grandes. Posicionado como caro e complexo.
+  - **Calidad Cloud** (Chile) — benchmark regional importante. SaaS de qualidade/obras similar ao Arden.
   - Pesquisa aprofundada de concorrentes ainda não realizada.
 - **Posicionamento:** O Arden se diferencia por ser rápido, prático e acessível. Enquanto concorrentes exigem consultoria, treinamento extenso e são voltados a construtoras grandes, o Arden é self-service, intuitivo e focado em construtoras pequenas/médias que acham os concorrentes complexos e caros demais.
 
@@ -157,5 +158,5 @@
 - [ ] Plano financeiro (runway, investimento necessário, break-even)
 - [ ] Estratégia de pricing validada com clientes reais
 - [ ] Personas refinadas com dados de clientes reais (pós-piloto)
-- [ ] Plano de expansão geográfica ou de segmento
+- [ ] Plano de expansão geográfica (Estudo exploratório realizado: Foco em Portugal/ISO 9001)
 - [ ] Propriedade intelectual / proteção de marca
