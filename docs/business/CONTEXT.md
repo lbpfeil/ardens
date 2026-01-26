@@ -1,7 +1,7 @@
 # Arden FVS — Contexto de Negócio
 
 > Fonte de verdade sobre o Arden como empresa. Consumido por `/biz-research` e `/biz-sync`.
-> Última atualização: 2026-01-26
+> Última atualização: 2026-01-26 (pesquisa de concorrentes)
 
 ## Identidade
 
@@ -43,11 +43,14 @@
   - **PBQP-H** (Programa Brasileiro da Qualidade e Produtividade do Habitat) — certificação obrigatória para acesso a financiamento bancário e programas habitacionais
   - **FVS** (Ficha de Verificação de Serviços) — documento fundamental exigido em auditorias PBQP-H
   - Normas técnicas NBR (referências normativas de construção)
-- **Concorrentes conhecidos:**
-  - **AutoDOC** — plataforma de gestão de qualidade usada por construtoras grandes. Posicionado como caro e complexo.
-  - **QualitTAB FVS** — ferramenta de FVS usada por construtoras grandes. Posicionado como caro e complexo.
-  - **Calidad Cloud** (Chile) — benchmark regional importante. SaaS de qualidade/obras similar ao Arden.
-  - Pesquisa aprofundada de concorrentes ainda não realizada.
+- **Cenário competitivo:** (Pesquisa completa realizada em 2026-01-26 — ver `docs/business/research/`)
+  - **Concorrente real:** Excel + WhatsApp + Papel (~80% das PMEs usam; apenas 13% do setor se considera digitalmente maduro)
+  - **Diretos (Enterprise, FVS/qualidade):** AutoDOC (~1.200 clientes, R$ 76-100M aquisição pela Ambar), Mobuss, InMeta (+1.000 canteiros), Agilean, Stant, QualitTAB (+150 clientes)
+  - **Indiretos (ERPs):** Sienge + Construpoint, TOTVS Construção, Gestor Obras, Mais Controle
+  - **Genéricos (checklist):** Checklist Fácil, Produttivo, Inspeção Pro
+  - **Internacionais:** PlanRadar (escritório em SP, $69M captados — monitorar), Procore, Fieldwire (Hilti)
+  - **Benchmark LATAM:** Calidad Cloud (Chile) — SaaS de qualidade/obras similar ao Arden
+  - **Espaço vazio confirmado:** Nenhum concorrente combina FVS/PBQP-H + preço acessível/transparente + self-service + UX moderna
 - **Posicionamento:** O Arden se diferencia por ser rápido, prático e acessível. Enquanto concorrentes exigem consultoria, treinamento extenso e são voltados a construtoras grandes, o Arden é self-service, intuitivo e focado em construtoras pequenas/médias que acham os concorrentes complexos e caros demais.
 
 ## Modelo de negócio
@@ -145,13 +148,13 @@
 - **Atraso no MVP** — mitigação: buffer de 2-4 semanas
 - **Sync offline com problemas** — risco médio, impacto alto (feature core)
 - **Churn alto no beta** — mitigação: feedback constante
-- **Concorrente lança produto similar** — mitigação: UX superior + modelo self-service
+- **Concorrente lança produto similar** — mitigação: UX superior + modelo self-service. AutoDOC (Ambar, R$ 76M+) pode modernizar; PlanRadar ($69M, escritório em SP) pode localizar para PBQP-H
 - **Escala futura** — arquitetura precisa ser reavaliada em 500+ construtoras
 
 ## Lacunas identificadas
 
 - [ ] Visão formal de 1-3 anos (além de "elevar a qualidade da construção civil mundial")
-- [ ] Pesquisa estruturada de concorrentes (além de AutoDOC e QualitTAB)
+- [x] Pesquisa estruturada de concorrentes — realizada em 2026-01-26 (ver `docs/business/research/`)
 - [ ] Tamanho de mercado detalhado (TAM/SAM/SOM)
 - [ ] Estratégia de marketing e canais de aquisição definidos
 - [ ] Análise de unit economics (CAC, LTV, payback)

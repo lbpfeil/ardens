@@ -37,3 +37,4 @@ Lançar e validar o Arden no mercado brasileiro de construção civil (PMEs com 
 **Status:** Em análise
 - **Internacionalização:** Estudo de viabilidade para Portugal (ISO 9001).
 - **Automação:** Relatórios preditivos e IA.
+- **Marketing/SEO:** Páginas de comparação (Arden vs. Excel, Arden vs. AutoDOC), estratégia de conteúdo para "FVS digital" e "software PBQP-H". (Recomendações da pesquisa competitiva — em análise)
