@@ -19,11 +19,18 @@ Este milestone transforma o portal web de ferramenta de cadastro em ferramenta d
 
 **Requisitos:** DADOS-01, DADOS-02, DADOS-03, DADOS-04
 
+**Plans:** 3 plans
+
+Plans:
+- [ ] 07-01-PLAN.md -- Server Actions para CRUD de verificacoes e itens (DADOS-01, DADOS-02)
+- [ ] 07-02-PLAN.md -- RPC PostgreSQL bulk_verificar + Server Action wrapper (DADOS-03)
+- [ ] 07-03-PLAN.md -- Query otimizada da matriz + otimizacao RLS (DADOS-04)
+
 **Criterios de Sucesso:**
 
 1. Server Action cria uma verificacao para um par servico/unidade, atualiza seu resultado (Conforme/NC/Excecao), e altera seu status -- e os dados persistem no banco corretamente
 2. Server Action marca itens individuais de verificacao como C/NC/NA e o trigger de contadores do banco atualiza os totais na verificacao automaticamente
-3. RPC PostgreSQL `bulk_verificar_conforme` recebe uma lista de pares servico/unidade e cria todas as verificacoes + itens em transacao atomica, sem registros parciais em caso de erro
+3. RPC PostgreSQL `bulk_verificar` recebe uma lista de pares servico/unidade e cria todas as verificacoes + itens em transacao atomica, sem registros parciais em caso de erro
 4. Query da matriz retorna servicos ativos, unidades agrupadas por agrupamento, e verificacoes existentes em formato otimizado para lookup O(1) por chave `servico_id:unidade_id`
 
 **Armadilhas a evitar:** RLS lenta em operacoes bulk (aplicar initPlan pattern nas policies)
@@ -113,7 +120,7 @@ Este milestone transforma o portal web de ferramenta de cadastro em ferramenta d
 
 | Fase | Nome | Requisitos | Status |
 |------|------|------------|--------|
-| 7 | Fundacao de Dados | DADOS-01, DADOS-02, DADOS-03, DADOS-04 | Pendente |
+| 7 | Fundacao de Dados | DADOS-01, DADOS-02, DADOS-03, DADOS-04 | Planejado |
 | 8 | Verificacao Individual | VERIF-01, VERIF-02, VERIF-03, VERIF-04, VERIF-05, VERIF-06 | Pendente |
 | 9 | Matriz de Verificacoes | MATRZ-01, MATRZ-02, MATRZ-03, MATRZ-04, MATRZ-05 | Pendente |
 | 10 | Selecao e Operacoes em Massa | BULK-01 a BULK-09 | Pendente |
