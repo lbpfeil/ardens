@@ -37,6 +37,8 @@ interface MatrizGridProps {
   onToggleCell: (key: string) => void
   onSelectRow: (servicoId: string) => void
   onSelectColumn: (unidadeId: string) => void
+  highlightCell: string | null
+  onBeforeNavigate: () => void
 }
 
 export const MatrizGrid = memo(function MatrizGrid({
@@ -53,6 +55,8 @@ export const MatrizGrid = memo(function MatrizGrid({
   onToggleCell,
   onSelectRow,
   onSelectColumn,
+  highlightCell,
+  onBeforeNavigate,
 }: MatrizGridProps) {
   const router = useRouter()
 
@@ -85,17 +89,29 @@ export const MatrizGrid = memo(function MatrizGrid({
         onToggleCell(`${servicoId}:${unidadeId}`)
       } else {
         // Modo normal: navegação
+        // Save state before navigation
+        onBeforeNavigate()
+
         const key = `${servicoId}:${unidadeId}`
         const verificacao = verificacoesMap[key]
 
+        // Find servico/unidade names for breadcrumb
+        const servico = servicos.find(s => s.id === servicoId)
+        const unidade = visibleUnits.find(u => u.id === unidadeId)
+        const params = new URLSearchParams()
+        params.set('servicoId', servicoId)
+        params.set('unidadeId', unidadeId)
+        if (servico) params.set('servico', servico.nome)
+        if (unidade) params.set('unidade', unidade.codigo || unidade.nome)
+
         if (verificacao) {
-          router.push(`/app/obras/${obraId}/verificacoes/${verificacao.id}`)
+          router.push(`/app/obras/${obraId}/verificacoes/${verificacao.id}?${params.toString()}`)
         } else {
           router.push(`/app/obras/${obraId}/verificacoes/nova?servico=${servicoId}&unidade=${unidadeId}`)
         }
       }
     },
-    [isSelectionMode, verificacoesMap, obraId, router, onToggleCell, onSelectRow, onSelectColumn]
+    [isSelectionMode, verificacoesMap, obraId, router, onToggleCell, onSelectRow, onSelectColumn, servicos, visibleUnits]
   )
 
   return (
@@ -211,6 +227,7 @@ export const MatrizGrid = memo(function MatrizGrid({
                       const cellStatus = deriveMatrizCellStatus(verificacao)
                       const colorClass = STATUS_COLORS[cellStatus]
                       const isSelected = isSelectionMode && selectedCells.has(key)
+                      const isHighlighted = highlightCell === key
 
                       const cellDiv = (
                         <div
@@ -228,7 +245,8 @@ export const MatrizGrid = memo(function MatrizGrid({
                             className={cn(
                               "w-7 h-7 rounded-md relative",
                               colorClass,
-                              isSelected && "ring-2 ring-brand ring-offset-1 ring-offset-surface-100"
+                              isSelected && "ring-2 ring-brand ring-offset-1 ring-offset-surface-100",
+                              isHighlighted && "highlight-flash"
                             )}
                           >
                             {isSelected && (

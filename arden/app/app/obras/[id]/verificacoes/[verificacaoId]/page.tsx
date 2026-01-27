@@ -47,6 +47,7 @@ export default async function VerificacaoIndividualPage({ params }: PageProps) {
           servicoCodigo={servico?.codigo}
           unidadeNome={unidade?.nome}
           obraNome={obra?.nome}
+          obraId={obraId}
         />
       </div>
     </div>

@@ -26,6 +26,7 @@ interface VerificacaoIndividualClientProps {
   servicoCodigo?: string
   unidadeNome?: string
   obraNome?: string
+  obraId: string
 }
 
 export function VerificacaoIndividualClient({
@@ -34,6 +35,7 @@ export function VerificacaoIndividualClient({
   servicoCodigo,
   unidadeNome,
   obraNome,
+  obraId,
 }: VerificacaoIndividualClientProps) {
   const [itens, setItens] = useState<ItemVerificacao[]>(verificacao.itens)
   const [descricao, setDescricao] = useState<string>(verificacao.descricao || '')
@@ -213,6 +215,7 @@ export function VerificacaoIndividualClient({
         onExcecaoClick={() => setExcecaoModalOpen(true)}
         isExcecao={isExcecao}
         disabled={isLocked || isPending}
+        obraId={obraId}
       />
 
       <div className="space-y-6">

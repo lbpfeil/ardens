@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useCallback, useMemo, useEffect, useTransition } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { CheckSquare, Filter, Search } from 'lucide-react'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
@@ -25,6 +26,19 @@ interface MatrizClientProps {
 
 export function MatrizClient({ initialData, obraId }: MatrizClientProps) {
   const { servicos, agrupamentos, verificacoesMap } = initialData
+  const searchParams = useSearchParams()
+
+  // Read highlight param on mount
+  const highlightParam = searchParams.get('highlight')
+  const [highlightCell, setHighlightCell] = useState<string | null>(highlightParam)
+
+  // Clear highlight after animation
+  useEffect(() => {
+    if (highlightCell) {
+      const timer = setTimeout(() => setHighlightCell(null), 1500)
+      return () => clearTimeout(timer)
+    }
+  }, [highlightCell])
 
   // Filtro de agrupamentos — todos visíveis por padrão
   const [visibleGroupIds, setVisibleGroupIds] = useState<Set<string>>(() => {
@@ -78,6 +92,26 @@ export function MatrizClient({ initialData, obraId }: MatrizClientProps) {
     return new Set()
   })
 
+  // Restore state from sessionStorage on mount
+  useEffect(() => {
+    const key = `matriz-state-${obraId}`
+    const saved = sessionStorage.getItem(key)
+    if (saved) {
+      try {
+        const { scrollY, expandedGroups: savedGroups } = JSON.parse(saved)
+        if (savedGroups) {
+          setExpandedGroups(new Set(savedGroups))
+        }
+        if (typeof scrollY === 'number') {
+          setTimeout(() => window.scrollTo(0, scrollY), 0)
+        }
+      } catch {
+        // Ignore parse errors
+      }
+      sessionStorage.removeItem(key)
+    }
+  }, [obraId])
+
   const handleToggleGroup = useCallback((groupId: string) => {
     setExpandedGroups(prev => {
       const next = new Set(prev)
@@ -89,6 +123,15 @@ export function MatrizClient({ initialData, obraId }: MatrizClientProps) {
       return next
     })
   }, [])
+
+  // Save state callback
+  const saveMatrizState = useCallback(() => {
+    const key = `matriz-state-${obraId}`
+    sessionStorage.setItem(key, JSON.stringify({
+      scrollY: window.scrollY,
+      expandedGroups: Array.from(expandedGroups),
+    }))
+  }, [obraId, expandedGroups])
 
   // Unidades visíveis = unidades de agrupamentos filtrados e expandidos
   const visibleUnits = useMemo(() => {
@@ -348,6 +391,8 @@ export function MatrizClient({ initialData, obraId }: MatrizClientProps) {
         onToggleCell={handleToggleCell}
         onSelectRow={handleSelectRow}
         onSelectColumn={handleSelectColumn}
+        highlightCell={highlightCell}
+        onBeforeNavigate={saveMatrizState}
       />
 
       {/* Toolbar flutuante de seleção */}
