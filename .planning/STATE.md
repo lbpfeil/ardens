@@ -10,12 +10,12 @@ See: .planning/CONVENTIONS.md (regras obrigatórias para novas páginas/tabelas)
 
 ## Current Position
 
-Phase: 11 - Navegação e Integração — In Progress
-Plan: 1 of 3 complete (11-01)
-Status: Fase 11 iniciada — NC feed com navegação e contexto de agrupamento
-Last activity: 2026-01-27 — Completado 11-01-PLAN.md (NC feed clicável com agrupamento)
+Phase: 11 - Navegação e Integração — COMPLETE
+Plan: 2 of 2 complete (11-01, 11-02)
+Status: Fase 11 completa — Navegação bidirecional, state preservation, breadcrumb estendido
+Last activity: 2026-01-27 — Completado 11-02-PLAN.md (navegação matriz ↔ verificação individual)
 
-Progress: [████████░.] 4.3/5 fases | 26/28 requisitos
+Progress: [█████████.] 5/5 fases | 28/28 requisitos — v1.1 COMPLETE
 
 ## Performance Metrics
 
@@ -26,14 +26,15 @@ Progress: [████████░.] 4.3/5 fases | 26/28 requisitos
 - Timeline: 5 days (2026-01-19 to 2026-01-24)
 
 **v1.1 Summary:**
-- Total plans completed: 9
-- Average duration: 4.4 min (Phase 7-11)
+- Total plans completed: 10
+- Average duration: 4.5 min (Phase 7-11)
 - Started: 2026-01-26
+- Completed: 2026-01-27
 - Phase 7: 3 plans, 2 waves — COMPLETE
 - Phase 8: 2 plans — COMPLETE
 - Phase 9: 2 plans — COMPLETE
 - Phase 10: 2 plans — COMPLETE
-- Phase 11: 1 plan (in progress) — 1 of 3 complete
+- Phase 11: 2 plans — COMPLETE
 
 ## Accumulated Context
 
@@ -79,6 +80,10 @@ All v1.0 decisions documented in PROJECT.md Key Decisions table.
 - **Modal reset on close** (10-02) — resultado e descrição voltam ao default ao fechar
 - **NC feed display: "Agrupamento > Unidade"** (11-01) — hierarquia espacial na linha principal, serviço na linha secundária
 - **Click-through navigation with searchParams** (11-01) — from=dashboard + servico + unidade para contexto de breadcrumb
+- **sessionStorage para matriz state** (11-02) — scroll + expandedGroups salvos antes de navegação, auto-cleanup após restore
+- **highlight searchParam com auto-clear** (11-02) — visual feedback (1.5s brand pulse) após retornar da verificação individual
+- **from=dashboard searchParam** (11-02) — diferencia destino do back button (dashboard vs matriz)
+- **servico/unidade searchParams para breadcrumb** (11-02) — contexto rico na navegação sem query extra
 
 ### Pending Todos
 
@@ -99,8 +104,10 @@ v1.1 roadmap created: .planning/ROADMAP.md (Fases 7-11, 28 requisitos)
 ## Session Continuity
 
 Last session: 2026-01-27
-Stopped at: Completado 11-01-PLAN.md (NC feed clicável com agrupamento e navegação)
+Stopped at: Completado 11-02-PLAN.md (navegação bidirecional matriz ↔ verificação individual)
 Resume file: None
+
+**v1.1 milestone COMPLETE** — All 28 requirements implemented and verified.
 
 ## Completed Phases (v1.1)
 
@@ -151,10 +158,18 @@ Key artifacts:
 
 ## Active Phases (v1.1)
 
-### Phase 11: Navegação e Integração (IN PROGRESS 2026-01-27)
+**All phases complete — v1.1 ready for testing.**
 
-3 plans, 2 requisitos (NAVEG-01 a NAVEG-02) — 1 of 3 plans complete.
-Focus: Breadcrumb navigation, NC feed enhancement, matriz navigation.
+### Phase 11: Navegação e Integração (COMPLETE 2026-01-27)
+
+2 plans, 4 tasks, 5 requisitos (NAV-01 a NAV-05) — all implemented.
+Key artifacts:
+- arden/app/app/obras/[id]/_components/nc-feed.tsx (NC feed clicável)
+- arden/app/app/obras/[id]/verificacoes/_components/matriz-grid.tsx (cell click com context)
+- arden/app/app/obras/[id]/verificacoes/_components/matriz-client.tsx (state preservation)
+- arden/app/app/obras/[id]/verificacoes/[verificacaoId]/_components/verificacao-header.tsx (back button)
+- arden/components/navigation/breadcrumb.tsx (verification context)
+- arden/app/globals.css (highlight animation)
 
 **Plan 11-01 (COMPLETE 2026-01-27):** NC Feed Enhancement
 - 2 tasks, 2 commits (0198d42, 2ca885c), 3.6 min
@@ -164,7 +179,17 @@ Focus: Breadcrumb navigation, NC feed enhancement, matriz navigation.
 - Click-through navigation com router.push
 - SearchParams: from=dashboard, servico, unidade
 - Removido botão "Ver todas as NCs"
-- Requisito implementado: NAVEG-01 (parcial - NC feed clicável)
+- Requisito implementado: NAV-01 (parcial - NC feed clicável)
+
+**Plan 11-02 (COMPLETE 2026-01-27):** Navegação Bidirecional Matriz ↔ Verificação Individual
+- 2 tasks, 2 commits (5df650a, 26184ea), 5.2 min
+- Cell click passa servicoId/unidadeId/servico/unidade como searchParams
+- State preservation: sessionStorage para scroll + expandedGroups
+- Auto-restore on mount + auto-cleanup após restore
+- Back button contextual: "Voltar ao painel" (from dashboard) ou "Voltar à matriz"
+- Highlight animation: 1.5s brand pulse com auto-clear
+- Breadcrumb estendido: "Obra > Verificações > Serviço — Unidade"
+- Requisitos implementados: NAV-02, NAV-03, NAV-04, NAV-05
 
 ### Phase 10: Seleção e Operações em Massa (COMPLETE 2026-01-27)
 
