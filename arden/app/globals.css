@@ -363,3 +363,21 @@
     border-color: var(--border-stronger);
   }
 }
+
+/* ============================================
+   Animations
+   ============================================ */
+
+/* Highlight flash animation for matriz cell after returning from individual page */
+@keyframes highlight-flash {
+  0%, 100% {
+    box-shadow: none;
+  }
+  25%, 75% {
+    box-shadow: 0 0 0 2px hsl(var(--brand));
+  }
+}
+
+.highlight-flash {
+  animation: highlight-flash 1.5s ease-in-out;
+}

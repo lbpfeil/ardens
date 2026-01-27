@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { usePathname, useParams } from 'next/navigation'
+import { usePathname, useParams, useSearchParams } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import { getObra } from '@/lib/supabase/queries/obras'
 
@@ -26,6 +26,7 @@ interface BreadcrumbItem {
 export function Breadcrumb() {
   const pathname = usePathname()
   const params = useParams()
+  const searchParams = useSearchParams()
   const [obraName, setObraName] = useState<string | null>(null)
   const [currentObraId, setCurrentObraId] = useState<string | null>(null)
 
@@ -86,6 +87,31 @@ export function Breadcrumb() {
       crumbs.push({
         label: sectionLabels[section],
       })
+    }
+
+    // Handle verification individual route: /obras/[id]/verificacoes/[verificacaoId]
+    if (section === 'verificacoes') {
+      const verificacaoId = pathSegments[idIndex + 2]
+      if (verificacaoId && verificacaoId !== 'nova') {
+        // Make "Verificações" a link to the matriz
+        const lastCrumb = crumbs[crumbs.length - 1]
+        if (lastCrumb && lastCrumb.label === 'Verificações') {
+          lastCrumb.href = `/app/obras/${obraId}/verificacoes`
+        }
+
+        // Add context crumb from searchParams
+        const servicoName = searchParams.get('servico')
+        const unidadeName = searchParams.get('unidade')
+        if (servicoName && unidadeName) {
+          crumbs.push({
+            label: `${servicoName} — ${unidadeName}`,
+          })
+        } else {
+          crumbs.push({
+            label: 'Verificação',
+          })
+        }
+      }
     }
   }
 
