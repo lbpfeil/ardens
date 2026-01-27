@@ -3,6 +3,8 @@
 import { useState } from 'react'
 import { ToggleGroup as ToggleGroupPrimitive } from 'radix-ui'
 import { Check, X, Minus } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
 import { ItemNCModal } from './item-nc-modal'
 import { ItemDetailModal } from './item-detail-modal'
 import type { ItemVerificacao } from '@/lib/supabase/queries/verificacoes'
@@ -15,6 +17,7 @@ interface ItemChecklistProps {
     status: 'conforme' | 'nao_conforme' | 'excecao',
     observacao?: string
   ) => void
+  onReinspecionar?: (item: ItemVerificacao) => void
   disabled?: boolean
   onItemClick?: (item: ItemVerificacao) => void
 }
@@ -25,9 +28,21 @@ interface PendingNC {
   previousStatus: string
 }
 
+// Helper function to get label for status_reinspecao
+function getStatusReinspecaoLabel(status: string): string {
+  const labels: Record<string, string> = {
+    conforme_apos_reinspecao: 'Não havia problema',
+    retrabalho: 'Retrabalho executado',
+    aprovado_com_concessao: 'Aprovado com concessão',
+    reprovado_apos_retrabalho: 'Reprovado após retrabalho',
+  }
+  return labels[status] || status
+}
+
 export function ItemChecklist({
   itens,
   onItemMark,
+  onReinspecionar,
   disabled = false,
   onItemClick,
 }: ItemChecklistProps) {
@@ -82,6 +97,13 @@ export function ItemChecklist({
                   ? 'border-l-2 border-l-warning'
                   : ''
 
+          // Check if item needs reinspeção button (NC without status_reinspecao)
+          const needsReinspecao =
+            item.status === 'nao_conforme' && !item.status_reinspecao
+
+          // Check if item was reinspected
+          const wasReinspected = !!item.status_reinspecao
+
           return (
             <div
               key={item.id}
@@ -106,6 +128,26 @@ export function ItemChecklist({
                   {item.item_servico.observacao}
                 </button>
               </div>
+
+              {/* Reinspeção badge (if reinspected) */}
+              {wasReinspected && (
+                <Badge variant="secondary" className="text-xs">
+                  {getStatusReinspecaoLabel(item.status_reinspecao!)}
+                </Badge>
+              )}
+
+              {/* Reinspeção button (if NC and not yet reinspected) */}
+              {needsReinspecao && onReinspecionar && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => onReinspecionar(item)}
+                  disabled={disabled}
+                  className="text-xs"
+                >
+                  Reinspecionar
+                </Button>
+              )}
 
               {/* C/NC/NA Toggle */}
               <ToggleGroupPrimitive.Root
