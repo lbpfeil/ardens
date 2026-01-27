@@ -1,6 +1,6 @@
 # Arden — Status do Negócio
 
-**Última atualização:** 2026-01-26
+**Última atualização:** 2026-01-27
 
 ## Estágio atual
 **Pré-revenue / Validação Técnica.**
@@ -13,6 +13,13 @@ O MVP (v1.0) está entregue e funcional. O foco atual é refinar a experiência 
 - Portal Web MVP entregue.
 - Foco atual: Permitir verificações diretamente pelo Portal Web (v1.1).
 - Próximo grande marco: App Mobile (Android).
+
+### App Mobile — Preparação
+**Status:** Pesquisa em andamento
+- Decisão: Monorepo (Next.js + Expo) com compartilhamento de código.
+- Filosofia: O "Macintosh" dos engenheiros — UX excepcional + performance absurda.
+- Pilares definidos: UX de campo, performance extrema, offline-first, monorepo.
+- Pesquisa de melhores práticas iniciada em 2026-01-27 (4 ângulos), **incompleta — retomar**.
 
 ### Internacionalização
 **Status:** Estudo Exploratório
@@ -38,7 +45,8 @@ O MVP (v1.0) está entregue e funcional. O foco atual é refinar a experiência 
 
 ## Próximos passos
 - [ ] Concluir desenvolvimento da v1.1 (Verificações Web).
-- [ ] Iniciar planejamento do App Mobile.
+- [ ] **Retomar pesquisa de melhores práticas para app mobile** (`/biz-research`) — sessão interrompida em 2026-01-27. Temas: monorepo Expo+Next.js, offline-first+sync, UX de campo, performance extrema.
+- [ ] Iniciar planejamento do App Mobile com base na pesquisa.
 - [ ] Validar recomendações de posicionamento/marketing da pesquisa de concorrentes.
 - [ ] Definir estratégia de conteúdo para SEO ("FVS digital", "software PBQP-H").
 - [ ] Preparar pitch para cliente piloto (março 2026) — incorporar dados da pesquisa competitiva.
