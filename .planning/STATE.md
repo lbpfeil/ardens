@@ -10,12 +10,12 @@ See: .planning/CONVENTIONS.md (regras obrigatórias para novas páginas/tabelas)
 
 ## Current Position
 
-Phase: 8 - Verificação Individual — IN PROGRESS
-Plan: 1 of 3 complete (08-01)
-Status: Página individual criada, prosseguir para 08-02
-Last activity: 2026-01-27 — Completado 08-01-PLAN.md (página individual com checklist)
+Phase: 8 - Verificação Individual — COMPLETE
+Plan: 2 of 2 complete (08-02)
+Status: Verificação individual completa, todas features secundárias implementadas
+Last activity: 2026-01-27 — Completado 08-02-PLAN.md (modais + Exceção + reinspeção)
 
-Progress: [███.......] 2/5 fases | 6/28 requisitos
+Progress: [███.......] 2/5 fases | 10/28 requisitos
 
 ## Performance Metrics
 
@@ -26,11 +26,11 @@ Progress: [███.......] 2/5 fases | 6/28 requisitos
 - Timeline: 5 days (2026-01-19 to 2026-01-24)
 
 **v1.1 Summary:**
-- Total plans completed: 4
-- Average duration: 3.5 min (Phase 7-8)
+- Total plans completed: 5
+- Average duration: 4.2 min (Phase 7-8)
 - Started: 2026-01-26
 - Phase 7: 3 plans, 2 waves — COMPLETE
-- Phase 8: 1 of 3 plans complete
+- Phase 8: 2 plans — COMPLETE
 
 ## Accumulated Context
 
@@ -56,6 +56,10 @@ All v1.0 decisions documented in PROJECT.md Key Decisions table.
 - **NC modal interception com rollback automático** (08-01) — pendingNC não atualiza state, rollback é implícito
 - **Empty value guard em ToggleGroup** (08-01) — previne desmarcar itens já verificados
 - **Status indicator via left border color** (08-01) — feedback visual sutil sem badges extras
+- **Exceção bulk-updates all items** (08-02) — marcar verificação como Exceção atualiza todos os itens em lote
+- **Reinspeção outcome cards** (08-02) — 4 cards visuais com ícones para seleção de resultado
+- **Completion banners computed from items** (08-02) — banners locked/NC/Conforme derivados do estado dos itens
+- **isExcecao computed from item counts** (08-02) — verificação é Exceção quando todos itens são exceção
 
 ### Pending Todos
 
@@ -74,10 +78,25 @@ v1.1 roadmap created: .planning/ROADMAP.md (Fases 7-11, 28 requisitos)
 ## Session Continuity
 
 Last session: 2026-01-27
-Stopped at: Completado 08-01 (página individual de verificação com checklist)
+Stopped at: Completado Fase 8 (verificação individual completa)
 Resume file: None
 
 ## Completed Phases (v1.1)
+
+### Phase 8: Verificação Individual (COMPLETE 2026-01-27)
+
+2 plans, 4 tasks, 6 requisitos (VERIF-01 a VERIF-06) — all implemented.
+Key artifacts:
+- arden/app/app/obras/[id]/verificacoes/[verificacaoId]/page.tsx (página Server Component)
+- arden/app/app/obras/[id]/verificacoes/[verificacaoId]/_components/verificacao-individual-client.tsx (orquestrador)
+- arden/app/app/obras/[id]/verificacoes/[verificacaoId]/_components/item-checklist.tsx (toggles C/NC/NA)
+- arden/app/app/obras/[id]/verificacoes/[verificacaoId]/_components/item-nc-modal.tsx (modal NC)
+- arden/app/app/obras/[id]/verificacoes/[verificacaoId]/_components/item-detail-modal.tsx (detalhes do item)
+- arden/app/app/obras/[id]/verificacoes/[verificacaoId]/_components/excecao-modal.tsx (modal Exceção)
+- arden/app/app/obras/[id]/verificacoes/[verificacaoId]/_components/reinspecao-modal.tsx (modal reinspeção)
+- arden/app/app/obras/[id]/verificacoes/[verificacaoId]/_components/verificacao-header.tsx (header com botão Exceção)
+- atualizarDescricaoVerificacao Server Action
+- Bulk item update in atualizarResultadoVerificacao
 
 ### Phase 7: Fundação de Dados e Server Actions (COMPLETE 2026-01-26)
 
@@ -93,7 +112,7 @@ Key artifacts:
 
 ## Active Phases (v1.1)
 
-### Phase 8: Verificação Individual (IN PROGRESS)
+### Phase 8: Verificação Individual (COMPLETE 2026-01-27)
 
 **Plan 08-01 (COMPLETE 2026-01-27):** Página Individual de Verificação
 - 2 tasks, 2 commits (781a93e, 89b2293), 3.4 min
@@ -105,6 +124,18 @@ Key artifacts:
 - Status indicator via left border color
 - Imutabilidade de verificação Conforme travada
 - Requisitos implementados: VERIF-01, VERIF-02 (parcial)
+
+**Plan 08-02 (COMPLETE 2026-01-27):** Modal de Detalhes + Exceção + Reinspeção
+- 2 tasks, 2 commits (3622a80, f12434e), 6.1 min
+- ItemDetailModal com observação/método/tolerância
+- Campo descrição geral com botão salvar (aparece quando alterado)
+- ExcecaoModal com justificativa obrigatória (Zod validation)
+- Fluxo Exceção bulk-updates todos itens para exceção
+- ReinspecaoModal com 4 outcome cards (conforme/retrabalho/concessão/reprovado)
+- Botão "Reinspecionar" para itens NC pendentes
+- Badges de outcome para itens reinspecionados
+- 3 banners: locked (verde), NC result (vermelho), Conforme (verde)
+- Requisitos implementados: VERIF-03, VERIF-04, VERIF-05, VERIF-06
 
 ## Completed Milestones
 
