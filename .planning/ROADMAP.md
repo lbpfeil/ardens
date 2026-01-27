@@ -100,8 +100,8 @@ Plans:
 **Plans:** 2 plans
 
 Plans:
-- [ ] 10-01-PLAN.md — Modo de seleção: estado, dual-mode click, seleção por headers, feedback visual (BULK-01 a BULK-05)
-- [ ] 10-02-PLAN.md — Toolbar flutuante + modal de verificação em massa + integração com bulkVerificar (BULK-06 a BULK-09)
+- [x] 10-01-PLAN.md — Modo de seleção: estado, dual-mode click, seleção por headers, feedback visual (BULK-01 a BULK-05)
+- [x] 10-02-PLAN.md — Toolbar flutuante + modal de verificação em massa + integração com bulkVerificar (BULK-06 a BULK-09)
 
 **Criterios de Sucesso:**
 
@@ -141,7 +141,7 @@ Plans:
 | 7 | Fundação de Dados | DADOS-01, DADOS-02, DADOS-03, DADOS-04 | Completo ✓ |
 | 8 | Verificacao Individual | VERIF-01, VERIF-02, VERIF-03, VERIF-04, VERIF-05, VERIF-06 | Completo ✓ |
 | 9 | Matriz de Verificacoes | MATRZ-01, MATRZ-02, MATRZ-03, MATRZ-04, MATRZ-05 | Completo ✓ |
-| 10 | Selecao e Operacoes em Massa | BULK-01 a BULK-09 | Pendente |
+| 10 | Selecao e Operacoes em Massa | BULK-01 a BULK-09 | Completo ✓ |
 | 11 | Navegacao e Integracao | INTEG-01, INTEG-02, INTEG-03, INTEG-04 | Pendente |
 
 **Cobertura:** 28/28 requisitos v1.1 mapeados

@@ -22,15 +22,15 @@
 
 ### Selecao e Operacoes em Massa
 
-- [ ] **BULK-01**: Selecao de celulas individuais (Click)
-- [ ] **BULK-02**: Selecao de range (Shift+Click)
-- [ ] **BULK-03**: Selecao nao-adjacente (Ctrl+Click)
-- [ ] **BULK-04**: Selecao de linha inteira via header do servico
-- [ ] **BULK-05**: Selecao de coluna inteira via header da unidade
-- [ ] **BULK-06**: Toolbar flutuante contextual com contagem de selecionados e botao "Verificar"
-- [ ] **BULK-07**: Modal de verificacao em massa: resultado (Conforme/NC/Excecao) + descricao
-- [ ] **BULK-08**: Resolucao de conflitos: pular Conformes existentes, NCs viram "apos Reinspecao"
-- [ ] **BULK-09**: Marcacao automatica de todos os itens conforme resultado do lote
+- [x] **BULK-01**: Selecao de celulas individuais (Click)
+- [x] **BULK-02**: Selecao de range (Shift+Click)
+- [x] **BULK-03**: Selecao nao-adjacente (Ctrl+Click)
+- [x] **BULK-04**: Selecao de linha inteira via header do servico
+- [x] **BULK-05**: Selecao de coluna inteira via header da unidade
+- [x] **BULK-06**: Toolbar flutuante contextual com contagem de selecionados e botao "Verificar"
+- [x] **BULK-07**: Modal de verificacao em massa: resultado (Conforme/NC/Excecao) + descricao
+- [x] **BULK-08**: Resolucao de conflitos: pular Conformes existentes, NCs viram "apos Reinspecao"
+- [x] **BULK-09**: Marcacao automatica de todos os itens conforme resultado do lote
 
 ### Verificacao Individual
 
@@ -93,15 +93,15 @@
 | MATRZ-03 | Phase 9 | Complete |
 | MATRZ-04 | Phase 9 | Complete |
 | MATRZ-05 | Phase 9 | Complete |
-| BULK-01 | Phase 10 | Pending |
-| BULK-02 | Phase 10 | Pending |
-| BULK-03 | Phase 10 | Pending |
-| BULK-04 | Phase 10 | Pending |
-| BULK-05 | Phase 10 | Pending |
-| BULK-06 | Phase 10 | Pending |
-| BULK-07 | Phase 10 | Pending |
-| BULK-08 | Phase 10 | Pending |
-| BULK-09 | Phase 10 | Pending |
+| BULK-01 | Phase 10 | Complete |
+| BULK-02 | Phase 10 | Complete |
+| BULK-03 | Phase 10 | Complete |
+| BULK-04 | Phase 10 | Complete |
+| BULK-05 | Phase 10 | Complete |
+| BULK-06 | Phase 10 | Complete |
+| BULK-07 | Phase 10 | Complete |
+| BULK-08 | Phase 10 | Complete |
+| BULK-09 | Phase 10 | Complete |
 | VERIF-01 | Phase 8 | Complete |
 | VERIF-02 | Phase 8 | Complete |
 | VERIF-03 | Phase 8 | Complete |
@@ -120,4 +120,4 @@
 
 ---
 *Requirements defined: 2026-01-26*
-*Last updated: 2026-01-27 after Phase 9 completion*
+*Last updated: 2026-01-27 after Phase 10 completion*
