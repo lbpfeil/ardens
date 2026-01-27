@@ -97,6 +97,12 @@ Plans:
 
 **Requisitos:** BULK-01, BULK-02, BULK-03, BULK-04, BULK-05, BULK-06, BULK-07, BULK-08, BULK-09
 
+**Plans:** 2 plans
+
+Plans:
+- [ ] 10-01-PLAN.md — Modo de seleção: estado, dual-mode click, seleção por headers, feedback visual (BULK-01 a BULK-05)
+- [ ] 10-02-PLAN.md — Toolbar flutuante + modal de verificação em massa + integração com bulkVerificar (BULK-06 a BULK-09)
+
 **Criterios de Sucesso:**
 
 1. O engenheiro seleciona celulas na matriz via Click (individual), Shift+Click (range contiguos), e Ctrl+Click (celulas nao-adjacentes), com feedback visual claro nas celulas selecionadas
