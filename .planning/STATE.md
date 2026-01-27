@@ -10,12 +10,12 @@ See: .planning/CONVENTIONS.md (regras obrigatórias para novas páginas/tabelas)
 
 ## Current Position
 
-Phase: 7 - Fundação de Dados e Server Actions — COMPLETE ✓
-Plan: All 3 plans complete (07-01, 07-02, 07-03)
-Status: Fase 7 verificada, pronta para Fase 8
-Last activity: 2026-01-26 — Fase 7 executada e verificada
+Phase: 8 - Verificação Individual — IN PROGRESS
+Plan: 1 of 3 complete (08-01)
+Status: Página individual criada, prosseguir para 08-02
+Last activity: 2026-01-27 — Completado 08-01-PLAN.md (página individual com checklist)
 
-Progress: [██........] 1/5 fases | 4/28 requisitos
+Progress: [███.......] 2/5 fases | 6/28 requisitos
 
 ## Performance Metrics
 
@@ -26,9 +26,11 @@ Progress: [██........] 1/5 fases | 4/28 requisitos
 - Timeline: 5 days (2026-01-19 to 2026-01-24)
 
 **v1.1 Summary:**
-- Total plans completed: 3
+- Total plans completed: 4
+- Average duration: 3.5 min (Phase 7-8)
 - Started: 2026-01-26
-- Phase 7: 3 plans, 2 waves
+- Phase 7: 3 plans, 2 waves — COMPLETE
+- Phase 8: 1 of 3 plans complete
 
 ## Accumulated Context
 
@@ -51,6 +53,9 @@ All v1.0 decisions documented in PROJECT.md Key Decisions table.
 - SECURITY DEFINER com autorização interna para bulk_verificar — bypassa RLS, verifica permissões manualmente
 - Limite 500 pares por operação bulk — proteção contra timeout em operações em massa
 - SupabaseClient como parâmetro nas queries (não import direto) — flexibilidade server/client
+- **NC modal interception com rollback automático** (08-01) — pendingNC não atualiza state, rollback é implícito
+- **Empty value guard em ToggleGroup** (08-01) — previne desmarcar itens já verificados
+- **Status indicator via left border color** (08-01) — feedback visual sutil sem badges extras
 
 ### Pending Todos
 
@@ -68,8 +73,8 @@ v1.1 roadmap created: .planning/ROADMAP.md (Fases 7-11, 28 requisitos)
 
 ## Session Continuity
 
-Last session: 2026-01-26
-Stopped at: Fase 7 completa, pronto para /gsd:discuss-phase 8 ou /gsd:plan-phase 8
+Last session: 2026-01-27
+Stopped at: Completado 08-01 (página individual de verificação com checklist)
 Resume file: None
 
 ## Completed Phases (v1.1)
@@ -85,6 +90,21 @@ Key artifacts:
 - arden/lib/supabase/queries/verificacoes.ts (getMatrizData + getVerificacaoComItens)
 - RPC bulk_verificar aplicada ao banco
 - 10 RLS policies otimizadas com initPlan
+
+## Active Phases (v1.1)
+
+### Phase 8: Verificação Individual (IN PROGRESS)
+
+**Plan 08-01 (COMPLETE 2026-01-27):** Página Individual de Verificação
+- 2 tasks, 2 commits (781a93e, 89b2293), 3.4 min
+- Página em /app/obras/[id]/verificacoes/[verificacaoId]
+- Checklist de itens com toggles C/NC/NA (ToggleGroup do radix-ui)
+- Modal de NC com observação obrigatória (Zod validation)
+- Atualizações otimistas com rollback em erro
+- Empty value guard previne desmarcar itens
+- Status indicator via left border color
+- Imutabilidade de verificação Conforme travada
+- Requisitos implementados: VERIF-01, VERIF-02 (parcial)
 
 ## Completed Milestones
 
