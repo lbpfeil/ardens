@@ -542,6 +542,7 @@ CREATE TABLE verificacoes (
   itens_conformes INT DEFAULT 0,
   itens_nc INT DEFAULT 0,
   itens_excecao INT DEFAULT 0,
+  tem_reinspecao BOOLEAN DEFAULT FALSE,
 
   -- Auditoria
   created_at TIMESTAMPTZ DEFAULT NOW(),
@@ -1014,6 +1015,7 @@ BEGIN
     itens_conformes = (SELECT COUNT(*) FROM itens_verificacao WHERE verificacao_id = v.id AND status = 'conforme'),
     itens_nc = (SELECT COUNT(*) FROM itens_verificacao WHERE verificacao_id = v.id AND status = 'nao_conforme' AND status_reinspecao IS NULL),
     itens_excecao = (SELECT COUNT(*) FROM itens_verificacao WHERE verificacao_id = v.id AND status = 'excecao'),
+    tem_reinspecao = EXISTS(SELECT 1 FROM itens_verificacao WHERE verificacao_id = v.id AND status_reinspecao IS NOT NULL),
     -- Atualiza status geral
     status = CASE
       WHEN (SELECT COUNT(*) FROM itens_verificacao WHERE verificacao_id = v.id AND status = 'nao_verificado') =
