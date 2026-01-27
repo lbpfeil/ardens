@@ -10,12 +10,12 @@ See: .planning/CONVENTIONS.md (regras obrigatórias para novas páginas/tabelas)
 
 ## Current Position
 
-Phase: 9 - Matriz de Verificações — COMPLETE
-Plan: 2 of 2 complete (09-01, 09-02)
-Status: Fase 9 completa — Matriz de Verificações implementada
-Last activity: 2026-01-27 — Completado 09-02-PLAN.md (página da matriz com CSS Grid interativo)
+Phase: 10 - Seleção e Operações em Massa — In progress
+Plan: 1 of ? complete (10-01)
+Status: Plan 10-01 completo — Infraestrutura de seleção na matriz
+Last activity: 2026-01-27 — Completado 10-01-PLAN.md (modo de seleção com toggle, headers, feedback visual)
 
-Progress: [██████....] 3/5 fases | 15/28 requisitos
+Progress: [███████...] 3.5/5 fases | 20/28 requisitos
 
 ## Performance Metrics
 
@@ -26,12 +26,13 @@ Progress: [██████....] 3/5 fases | 15/28 requisitos
 - Timeline: 5 days (2026-01-19 to 2026-01-24)
 
 **v1.1 Summary:**
-- Total plans completed: 7
-- Average duration: 4.6 min (Phase 7-9)
+- Total plans completed: 8
+- Average duration: 4.5 min (Phase 7-10)
 - Started: 2026-01-26
 - Phase 7: 3 plans, 2 waves — COMPLETE
 - Phase 8: 2 plans — COMPLETE
 - Phase 9: 2 plans — COMPLETE
+- Phase 10: 1 plan complete (10-01) — IN PROGRESS
 
 ## Accumulated Context
 
@@ -66,6 +67,11 @@ All v1.0 decisions documented in PROJECT.md Key Decisions table.
 - **max-w-full para página da matriz** (09-02) — matriz precisa de largura total, não max-w-6xl
 - **Event delegation com data attributes** (09-02) — um onClick no container do grid, closest('[data-cell]') para performance
 - **Reduce funcional para posições de coluna** (09-02) — evita mutação durante render (React Compiler)
+- **Modo de seleção explícito via botão** (10-01) — preserva navegação normal, toggle com CheckSquare
+- **Set<string> "servicoId:unidadeId" para seleção** (10-01) — O(1) lookup por célula, updater form em useCallback
+- **Dual-mode event delegation** (10-01) — isSelectionMode branching no handleClick existente
+- **data-header-servico/unidade condicionais** (10-01) — só existem quando isSelectionMode=true
+- **ring-2 ring-brand para células selecionadas** (10-01) — feedback visual sem obscurecer heatmap
 
 ### Pending Todos
 
@@ -85,7 +91,7 @@ v1.1 roadmap created: .planning/ROADMAP.md (Fases 7-11, 28 requisitos)
 ## Session Continuity
 
 Last session: 2026-01-27
-Stopped at: Completado 09-02-PLAN.md (página da matriz com CSS Grid interativo)
+Stopped at: Completado 10-01-PLAN.md (infraestrutura de seleção na matriz)
 Resume file: None
 
 ## Completed Phases (v1.1)
@@ -129,7 +135,17 @@ Key artifacts:
 
 ## Active Phases (v1.1)
 
-None — Phase 9 complete. Next: Phase 10 (Relatórios).
+### Phase 10: Seleção e Operações em Massa (IN PROGRESS)
+
+**Plan 10-01 (COMPLETE 2026-01-27):** Infraestrutura de Seleção na Matriz
+- 2 tasks, 2 commits (a489e03, d37bdb9), 3.8 min
+- useState isSelectionMode e selectedCells (Set<string>) no orchestrador
+- Botão "Selecionar" na toolbar com toggle de modo
+- Dual-mode handleClick: navegação (normal) ou seleção (modo seleção)
+- Seleção por headers: data-header-servico (linha) e data-header-unidade (coluna)
+- Feedback visual: ring-2 ring-brand ring-offset-1 nas células selecionadas
+- Cursor-cell no modo de seleção, Esc key listener
+- Requisitos implementados: BULK-01 a BULK-05
 
 ### Phase 9: Matriz de Verificações (COMPLETE 2026-01-27)
 
