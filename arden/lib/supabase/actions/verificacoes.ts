@@ -6,9 +6,11 @@ import {
   criarVerificacaoSchema,
   atualizarResultadoSchema,
   atualizarStatusSchema,
+  atualizarDescricaoSchema,
   type CriarVerificacaoInput,
   type AtualizarResultadoInput,
   type AtualizarStatusInput,
+  type AtualizarDescricaoInput,
   type ActionResult,
 } from '@/lib/validations/verificacao'
 
@@ -142,7 +144,7 @@ export async function atualizarResultadoVerificacao(
   const updateData: Record<string, unknown> = {}
 
   if (resultado === 'excecao') {
-    // Exceção: armazenar descrição/observação
+    // Exceção: armazenar descrição/observação na verificação
     updateData.observacao = descricao || null
   }
 
@@ -158,7 +160,25 @@ export async function atualizarResultadoVerificacao(
     }
   }
 
-  // 6. Revalidar cache da obra
+  // 6. Se resultado é exceção, marcar todos os itens como exceção em lote
+  if (resultado === 'excecao') {
+    const { error: itensError } = await supabase
+      .from('itens_verificacao')
+      .update({
+        status: 'excecao',
+        observacao: descricao || null,
+        data_inspecao: new Date().toISOString(),
+      })
+      .eq('verificacao_id', verificacao_id)
+
+    if (itensError) {
+      return {
+        error: `Erro ao atualizar itens para exceção: ${itensError.message}`,
+      }
+    }
+  }
+
+  // 7. Revalidar cache da obra
   revalidatePath(`/app/obras/${verif.obra_id}`)
 
   return { data: { id: verificacao_id } }
@@ -204,6 +224,54 @@ export async function atualizarStatusVerificacao(
 
   if (updateError) {
     return { error: `Erro ao atualizar status: ${updateError.message}` }
+  }
+
+  // 5. Revalidar cache da obra
+  revalidatePath(`/app/obras/${verif.obra_id}`)
+
+  return { data: { id: verificacao_id } }
+}
+
+/**
+ * Atualiza a descrição geral de uma verificação.
+ * Verifica imutabilidade: verificação Conforme travada não pode ser alterada.
+ */
+export async function atualizarDescricaoVerificacao(
+  input: AtualizarDescricaoInput
+): Promise<ActionResult<{ id: string }>> {
+  // 1. Validar input
+  const parsed = atualizarDescricaoSchema.safeParse(input)
+  if (!parsed.success) {
+    return { error: 'Dados inválidos' }
+  }
+
+  const supabase = await createClient()
+  const { verificacao_id, descricao } = parsed.data
+
+  // 2. Buscar verificação atual para checar imutabilidade
+  const { data: verif, error: fetchError } = await supabase
+    .from('verificacoes')
+    .select('id, obra_id, status, itens_conformes, total_itens')
+    .eq('id', verificacao_id)
+    .single()
+
+  if (fetchError || !verif) {
+    return { error: 'Verificação não encontrada' }
+  }
+
+  // 3. Checar imutabilidade
+  if (isVerificacaoTravada(verif)) {
+    return { error: 'Verificação Conforme é travada e não pode ser alterada' }
+  }
+
+  // 4. Atualizar descrição
+  const { error: updateError } = await supabase
+    .from('verificacoes')
+    .update({ descricao: descricao || null })
+    .eq('id', verificacao_id)
+
+  if (updateError) {
+    return { error: `Erro ao atualizar descrição: ${updateError.message}` }
   }
 
   // 5. Revalidar cache da obra

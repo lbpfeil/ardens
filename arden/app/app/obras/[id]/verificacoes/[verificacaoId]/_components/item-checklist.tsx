@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { ToggleGroup as ToggleGroupPrimitive } from 'radix-ui'
 import { Check, X, Minus } from 'lucide-react'
 import { ItemNCModal } from './item-nc-modal'
+import { ItemDetailModal } from './item-detail-modal'
 import type { ItemVerificacao } from '@/lib/supabase/queries/verificacoes'
 import { cn } from '@/lib/utils'
 
@@ -31,6 +32,7 @@ export function ItemChecklist({
   onItemClick,
 }: ItemChecklistProps) {
   const [pendingNC, setPendingNC] = useState<PendingNC | null>(null)
+  const [selectedItem, setSelectedItem] = useState<ItemVerificacao | null>(null)
 
   const handleValueChange = (
     itemId: string,
@@ -97,7 +99,7 @@ export function ItemChecklist({
               <div className="flex-1 min-w-0">
                 <button
                   type="button"
-                  onClick={() => onItemClick?.(item)}
+                  onClick={() => setSelectedItem(item)}
                   className="text-sm text-foreground hover:text-brand-link transition-colors text-left w-full"
                   disabled={disabled}
                 >
@@ -176,6 +178,15 @@ export function ItemChecklist({
           onCancel={handleNCCancel}
         />
       )}
+
+      {/* Item Detail Modal */}
+      <ItemDetailModal
+        open={selectedItem !== null}
+        onOpenChange={(open) => {
+          if (!open) setSelectedItem(null)
+        }}
+        item={selectedItem}
+      />
     </>
   )
 }

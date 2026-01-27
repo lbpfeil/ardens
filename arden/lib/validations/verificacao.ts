@@ -55,6 +55,16 @@ export const atualizarStatusSchema = z.object({
 
 export type AtualizarStatusInput = z.infer<typeof atualizarStatusSchema>
 
+/**
+ * Schema para atualizar a descrição geral de uma verificação.
+ */
+export const atualizarDescricaoSchema = z.object({
+  verificacao_id: uuidString(),
+  descricao: optionalString(2000),
+})
+
+export type AtualizarDescricaoInput = z.infer<typeof atualizarDescricaoSchema>
+
 // ============================================================================
 // SCHEMAS DE ITENS DE VERIFICAÇÃO
 // ============================================================================

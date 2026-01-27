@@ -1,7 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import { getVerificacaoComItens } from '@/lib/supabase/queries/verificacoes'
 import { VerificacaoIndividualClient } from './_components/verificacao-individual-client'
-import { VerificacaoHeader } from './_components/verificacao-header'
 
 interface PageProps {
   params: Promise<{
@@ -42,13 +41,13 @@ export default async function VerificacaoIndividualPage({ params }: PageProps) {
   return (
     <div className="p-6 bg-background min-h-full">
       <div className="max-w-4xl mx-auto">
-        <VerificacaoHeader
+        <VerificacaoIndividualClient
+          verificacao={verificacao}
           servicoNome={servico?.nome}
           servicoCodigo={servico?.codigo}
           unidadeNome={unidade?.nome}
           obraNome={obra?.nome}
         />
-        <VerificacaoIndividualClient verificacao={verificacao} />
       </div>
     </div>
   )
