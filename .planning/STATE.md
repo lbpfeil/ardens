@@ -10,12 +10,12 @@ See: .planning/CONVENTIONS.md (regras obrigatórias para novas páginas/tabelas)
 
 ## Current Position
 
-Phase: 8 - Verificação Individual — COMPLETE
-Plan: 2 of 2 complete (08-02)
-Status: Verificação individual completa, todas features secundárias implementadas
-Last activity: 2026-01-27 — Completado 08-02-PLAN.md (modais + Exceção + reinspeção)
+Phase: 10 - Seleção e Operações em Massa — Complete
+Plan: 2 of 2 complete (10-01, 10-02)
+Status: Fase 10 completa — Seleção e operações em massa na matriz
+Last activity: 2026-01-27 — Completado 10-02-PLAN.md (toolbar flutuante, modal bulk, integração Server Action)
 
-Progress: [███.......] 2/5 fases | 10/28 requisitos
+Progress: [████████..] 4/5 fases | 24/28 requisitos
 
 ## Performance Metrics
 
@@ -26,11 +26,13 @@ Progress: [███.......] 2/5 fases | 10/28 requisitos
 - Timeline: 5 days (2026-01-19 to 2026-01-24)
 
 **v1.1 Summary:**
-- Total plans completed: 5
-- Average duration: 4.2 min (Phase 7-8)
+- Total plans completed: 8
+- Average duration: 4.5 min (Phase 7-10)
 - Started: 2026-01-26
 - Phase 7: 3 plans, 2 waves — COMPLETE
 - Phase 8: 2 plans — COMPLETE
+- Phase 9: 2 plans — COMPLETE
+- Phase 10: 2 plans — COMPLETE
 
 ## Accumulated Context
 
@@ -60,12 +62,27 @@ All v1.0 decisions documented in PROJECT.md Key Decisions table.
 - **Reinspeção outcome cards** (08-02) — 4 cards visuais com ícones para seleção de resultado
 - **Completion banners computed from items** (08-02) — banners locked/NC/Conforme derivados do estado dos itens
 - **isExcecao computed from item counts** (08-02) — verificação é Exceção quando todos itens são exceção
+- **6 estados visuais do heatmap** (09-01) — pendente/conforme/NC/exceção/conforme_reinspecao/nc_reinspecao derivados de status + tem_reinspecao
+- **CSS theme extension para cores -600** (09-01) — bg-brand-600 e bg-destructive-600 mapeados no @theme inline
+- **max-w-full para página da matriz** (09-02) — matriz precisa de largura total, não max-w-6xl
+- **Event delegation com data attributes** (09-02) — um onClick no container do grid, closest('[data-cell]') para performance
+- **Reduce funcional para posições de coluna** (09-02) — evita mutação durante render (React Compiler)
+- **Modo de seleção explícito via botão** (10-01) — preserva navegação normal, toggle com CheckSquare
+- **Set<string> "servicoId:unidadeId" para seleção** (10-01) — O(1) lookup por célula, updater form em useCallback
+- **Dual-mode event delegation** (10-01) — isSelectionMode branching no handleClick existente
+- **data-header-servico/unidade condicionais** (10-01) — só existem quando isSelectionMode=true
+- **ring-2 ring-brand para células selecionadas** (10-01) — feedback visual sem obscurecer heatmap
+- **useTransition para operações bulk** (10-02) — consistente com padrão de verificação individual
+- **computeBulkSummary com 4 categorias** (10-02) — pendentes/NC/conformesTravadas/excecoesTravadas
+- **Toast com contagens condicionais** (10-02) — mostra apenas partes relevantes (created/reinspected/skipped)
+- **Modal reset on close** (10-02) — resultado e descrição voltam ao default ao fechar
 
 ### Pending Todos
 
 1. **Excluir serviço permanentemente (admin only)** (biblioteca) - Cascade delete com confirmação forte
 2. **Sidebar flutuante com transição suave** (ui) - Overlay sobre conteúdo, ícones fixos, transição suave
 3. **Breadcrumb estilo Supabase com troca rápida de contexto** (ui) - Chevrons, badges, dropdown para trocar obra/seção
+4. **Trava: serviço sem itens não pode ser utilizado em obras** (validação) - Impedir que serviços com 0 itens_servico sejam associados a obras. Serviço sem itens não tem o que inspecionar.
 
 ### Blockers/Concerns
 
@@ -79,10 +96,28 @@ v1.1 roadmap created: .planning/ROADMAP.md (Fases 7-11, 28 requisitos)
 ## Session Continuity
 
 Last session: 2026-01-27
-Stopped at: Completado Fase 8 (verificação individual completa)
+Stopped at: Completado 10-02-PLAN.md (toolbar flutuante, modal bulk, integração bulkVerificar)
 Resume file: None
 
 ## Completed Phases (v1.1)
+
+### Phase 10: Seleção e Operações em Massa (COMPLETE 2026-01-27)
+
+2 plans, 4 tasks, 9 requisitos (BULK-01 a BULK-09) -- all implemented.
+Key artifacts:
+- arden/app/app/obras/[id]/verificacoes/_components/matriz-client.tsx (orchestrador com seleção + bulk)
+- arden/app/app/obras/[id]/verificacoes/_components/matriz-selection-toolbar.tsx (bottom bar flutuante)
+- arden/app/app/obras/[id]/verificacoes/_components/matriz-bulk-modal.tsx (modal com resumo de conflitos)
+
+### Phase 9: Matriz de Verificações (COMPLETE 2026-01-27)
+
+2 plans, 4 tasks, 5 requisitos (MATRZ-01 a MATRZ-05) — all implemented.
+Key artifacts:
+- arden/app/app/obras/[id]/verificacoes/page.tsx (página Server Component)
+- arden/app/app/obras/[id]/verificacoes/_components/matriz-client.tsx (orquestrador com colapso e legenda)
+- arden/app/app/obras/[id]/verificacoes/_components/matriz-grid.tsx (CSS Grid com sticky headers e heatmap)
+- arden/app/app/obras/[id]/verificacoes/_components/matriz-header.tsx (headers multinível colapsáveis)
+- arden/app/app/obras/[id]/verificacoes/_components/matriz-status.ts (6 estados visuais do heatmap)
 
 ### Phase 8: Verificação Individual (COMPLETE 2026-01-27)
 
@@ -112,6 +147,54 @@ Key artifacts:
 - 10 RLS policies otimizadas com initPlan
 
 ## Active Phases (v1.1)
+
+### Phase 10: Seleção e Operações em Massa (COMPLETE 2026-01-27)
+
+2 plans, 4 tasks, 9 requisitos (BULK-01 a BULK-09) -- all implemented.
+Key artifacts:
+- arden/app/app/obras/[id]/verificacoes/_components/matriz-client.tsx (orchestrador com seleção + bulk)
+- arden/app/app/obras/[id]/verificacoes/_components/matriz-selection-toolbar.tsx (bottom bar flutuante)
+- arden/app/app/obras/[id]/verificacoes/_components/matriz-bulk-modal.tsx (modal com resumo de conflitos)
+
+**Plan 10-01 (COMPLETE 2026-01-27):** Infraestrutura de Seleção na Matriz
+- 2 tasks, 2 commits (a489e03, d37bdb9), 3.8 min
+- useState isSelectionMode e selectedCells (Set<string>) no orchestrador
+- Botão "Selecionar" na toolbar com toggle de modo
+- Dual-mode handleClick: navegação (normal) ou seleção (modo seleção)
+- Seleção por headers: data-header-servico (linha) e data-header-unidade (coluna)
+- Feedback visual: ring-2 ring-brand ring-offset-1 nas células selecionadas
+- Cursor-cell no modo de seleção, Esc key listener
+- Requisitos implementados: BULK-01 a BULK-05
+
+**Plan 10-02 (COMPLETE 2026-01-27):** Toolbar Flutuante + Modal de Verificação em Massa
+- 2 tasks, 2 commits (4fdd224, 1c6c143), 2.4 min
+- SelectionToolbar: bottom bar fixa com contagem e botões Verificar/Exceção/Cancelar
+- BulkModal: Dialog com seleção Conforme/NC, resumo de conflitos, textarea, Progress
+- computeBulkSummary: classifica Set<string> em pendentes/NC/conformes/exceções
+- Integração: useTransition + bulkVerificar + toast com contagens + cleanup automático
+- Requisitos implementados: BULK-06 a BULK-09
+
+### Phase 9: Matriz de Verificações (COMPLETE 2026-01-27)
+
+**Plan 09-01 (COMPLETE 2026-01-27):** Camada de Dados e Utilitários da Matriz
+- 2 tasks, 2 commits (a37038a, c682860), 5.6 min
+- Campo tem_reinspecao BOOLEAN na tabela verificacoes (migration SQL pendente aplicação via MCP)
+- Trigger atualizar_contadores_verificacao atualizado com tem_reinspecao
+- MatrizVerificacao interface estendida com tem_reinspecao
+- getMatrizData query inclui tem_reinspecao no SELECT
+- Componente tooltip shadcn/ui instalado
+- Utilitário matriz-status.ts com 6 estados visuais e deriveMatrizCellStatus()
+- Mapeamento CSS bg-brand-600 e bg-destructive-600 no @theme inline
+
+**Plan 09-02 (COMPLETE 2026-01-27):** Página da Matriz de Verificações
+- 2 tasks, 2 commits (08afc05, e2e8d55), 6.3 min
+- Página Server Component em /app/obras/[id]/verificacoes
+- CSS Grid com sticky headers multinível (z-30/z-20/z-10)
+- Agrupamentos colapsáveis com primeiro expandido por padrão
+- Células heatmap com 6 cores + tooltips
+- Progresso por serviço (fração + mini barra Progress)
+- Event delegation para navegação por clique
+- Legenda de cores com 6 status
 
 ### Phase 8: Verificação Individual (COMPLETE 2026-01-27)
 

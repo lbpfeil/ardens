@@ -42,7 +42,7 @@ function getObraNavItems(obraId: string) {
 function SectionLabel({ label, expanded }: { label: string; expanded: boolean }) {
   if (!expanded) return null
   return (
-    <span className="px-2 py-1 text-[10px] font-medium text-foreground-muted uppercase tracking-wider">
+    <span className="px-2 py-1 text-xs font-medium text-foreground-muted uppercase tracking-wider">
       {label}
     </span>
   )

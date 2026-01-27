@@ -35,6 +35,7 @@ export interface MatrizVerificacao {
   itens_conformes: number
   itens_nc: number
   itens_excecao: number
+  tem_reinspecao: boolean
 }
 
 export interface MatrizData {
@@ -122,7 +123,7 @@ export async function getMatrizData(
       supabase
         .from('verificacoes')
         .select(
-          'id, unidade_id, servico_id, status, total_itens, itens_verificados, itens_conformes, itens_nc, itens_excecao'
+          'id, unidade_id, servico_id, status, total_itens, itens_verificados, itens_conformes, itens_nc, itens_excecao, tem_reinspecao'
         )
         .eq('obra_id', obraId),
     ])

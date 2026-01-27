@@ -1,6 +1,6 @@
 # Arden — Roadmap de Negócio
 
-**Última atualização:** 2026-01-26
+**Última atualização:** 2026-01-27
 
 ## Visão Geral
 Lançar e validar o Arden no mercado brasileiro de construção civil (PMEs com PBQP-H) em 2026, atingindo 10-20 clientes pagantes até o final do ano.
@@ -27,8 +27,13 @@ Lançar e validar o Arden no mercado brasileiro de construção civil (PMEs com 
 - [ ] Coleta de feedback intensiva
 
 ### Fase 2: Mobile & Expansão
-**Status:** Planejada
-**Objetivo:** Entregar a experiência "de campo" real.
+**Status:** Pesquisa em andamento
+**Objetivo:** Entregar a experiência "de campo" real — o "Macintosh" dos engenheiros.
+**Decisões tomadas:**
+- Monorepo (Next.js + Expo) com compartilhamento de código
+- Performance extrema como requisito (60fps em Android barato)
+- UX excepcional para canteiro de obra como diferencial central
+- [ ] Concluir pesquisa de melhores práticas (4 ângulos — sessão 2026-01-27 interrompida)
 - [ ] App Android (Offline-first)
 - [ ] App iOS
 - [ ] Condições de Início (CI)

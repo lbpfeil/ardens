@@ -145,7 +145,7 @@ export async function atualizarResultadoVerificacao(
 
   if (resultado === 'excecao') {
     // Exceção: armazenar descrição/observação na verificação
-    updateData.observacao = descricao || null
+    updateData.descricao = descricao || null
   }
 
   // 5. Atualizar verificação (se há dados para atualizar)

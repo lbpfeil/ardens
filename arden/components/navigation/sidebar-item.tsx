@@ -43,7 +43,7 @@ export function SidebarItem({
         <>
           <span className="truncate">{label}</span>
           {badge && (
-            <span className="text-[10px] bg-surface-200 px-1.5 py-0.5 rounded text-foreground-muted whitespace-nowrap ml-auto">
+            <span className="text-xs bg-surface-200 px-1.5 py-0.5 rounded text-foreground-muted whitespace-nowrap ml-auto">
               {badge}
             </span>
           )}

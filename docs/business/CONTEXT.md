@@ -1,7 +1,7 @@
 # Arden FVS — Contexto de Negócio
 
 > Fonte de verdade sobre o Arden como empresa. Consumido por `/biz-research` e `/biz-sync`.
-> Última atualização: 2026-01-26 (pesquisa de concorrentes)
+> Última atualização: 2026-01-27 (decisões app mobile)
 
 ## Identidade
 
@@ -132,6 +132,9 @@
 9. **Stack Supabase-first** — custo operacional mínimo (~$31-51/mês), ideal para bootstrapping
 10. **Fotos comprimidas automaticamente** — sem limite de entrada, saída ~800 KB (UX transparente)
 11. **Testes apenas em fluxos críticos no MVP** — E2E em 3 fluxos (login, verificação com foto, gerar PDF)
+12. **Monorepo para web + mobile** — Next.js e Expo no mesmo repositório, compartilhando tipos, lógica de negócio e Supabase client
+13. **App mobile como "Macintosh"** — UX excepcional é diferencial competitivo central; o app deve ser tão intuitivo que mude o padrão do setor
+14. **Performance absurda como requisito** — 60fps constante, startup rápido, fluidez extrema em Android de baixo/médio custo (Samsung A, Moto G)
 
 ## Roadmap do produto
 

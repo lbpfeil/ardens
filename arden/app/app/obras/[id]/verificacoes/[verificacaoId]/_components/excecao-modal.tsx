@@ -92,9 +92,12 @@ export function ExcecaoModal({
               Cancelar
             </AlertDialogCancel>
             <AlertDialogAction
-              type="submit"
               variant="default"
               disabled={isSubmitting}
+              onClick={(e) => {
+                e.preventDefault()
+                handleSubmit(onSubmit)()
+              }}
             >
               {isSubmitting ? 'Confirmando...' : 'Confirmar Exceção'}
             </AlertDialogAction>

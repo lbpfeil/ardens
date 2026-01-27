@@ -1,5 +1,22 @@
 # Arden — Changelog de Negócio
 
+## 2026-01-27 — Preparação App Mobile
+
+### Decisões
+- **Monorepo:** App mobile será desenvolvido em monorepo com o Next.js existente (Turborepo ou similar), compartilhando tipos, lógica de negócio e Supabase client entre web e mobile.
+- **Filosofia do app:** O app mobile deve ser o "Macintosh" dos engenheiros — UX excepcional como diferencial competitivo central.
+- **Performance como pilar:** Performance absurda definida como requisito não-negociável. O app precisa rodar com fluidez extrema em Android de baixo/médio custo (público-alvo: inspetores).
+
+### Definições
+- **Pilares do app mobile:** (1) UX excepcional para campo/canteiro, (2) Performance extrema, (3) Offline-first robusto, (4) Arquitetura compartilhada web/mobile via monorepo.
+- **Perfil técnico:** Fundador sem experiência prévia em React Native/Expo. Pesquisa focada em recomendações práticas para iniciantes.
+
+### Pesquisa iniciada (incompleta)
+- Lançados 4 agentes de pesquisa em paralelo, cobrindo: (1) Monorepo Expo+Next.js, (2) Offline-first + Sincronização, (3) UX de campo/canteiro, (4) Performance extrema em React Native.
+- **Sessão interrompida antes dos resultados.** Pesquisa precisa ser retomada com `/biz-research`.
+
+---
+
 ## 2026-01-26 (Sessão 2 — Pesquisa de Concorrentes)
 
 ### Descobertas

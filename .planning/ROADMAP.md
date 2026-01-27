@@ -70,6 +70,12 @@ Plans:
 
 **Requisitos:** MATRZ-01, MATRZ-02, MATRZ-03, MATRZ-04, MATRZ-05
 
+**Plans:** 2 plans
+
+Plans:
+- [x] 09-01-PLAN.md — Camada de dados: migration tem_reinspecao + extensão da query + utilitário de status + tooltip
+- [x] 09-02-PLAN.md — Página da matriz: grid CSS com sticky headers, heatmap 6 cores, tooltips, progresso e navegação
+
 **Criterios de Sucesso:**
 
 1. A pagina de verificacoes da obra exibe uma grade com servicos nas linhas e unidades nas colunas, onde cada celula mostra o status visual da verificacao (cor + icone) para aquele par
@@ -90,6 +96,12 @@ Plans:
 **Dependencias:** Fase 9 (matriz renderizada), Fase 7 (RPC de bulk insert)
 
 **Requisitos:** BULK-01, BULK-02, BULK-03, BULK-04, BULK-05, BULK-06, BULK-07, BULK-08, BULK-09
+
+**Plans:** 2 plans
+
+Plans:
+- [x] 10-01-PLAN.md — Modo de seleção: estado, dual-mode click, seleção por headers, feedback visual (BULK-01 a BULK-05)
+- [x] 10-02-PLAN.md — Toolbar flutuante + modal de verificação em massa + integração com bulkVerificar (BULK-06 a BULK-09)
 
 **Criterios de Sucesso:**
 
@@ -128,8 +140,8 @@ Plans:
 |------|------|------------|--------|
 | 7 | Fundação de Dados | DADOS-01, DADOS-02, DADOS-03, DADOS-04 | Completo ✓ |
 | 8 | Verificacao Individual | VERIF-01, VERIF-02, VERIF-03, VERIF-04, VERIF-05, VERIF-06 | Completo ✓ |
-| 9 | Matriz de Verificacoes | MATRZ-01, MATRZ-02, MATRZ-03, MATRZ-04, MATRZ-05 | Pendente |
-| 10 | Selecao e Operacoes em Massa | BULK-01 a BULK-09 | Pendente |
+| 9 | Matriz de Verificacoes | MATRZ-01, MATRZ-02, MATRZ-03, MATRZ-04, MATRZ-05 | Completo ✓ |
+| 10 | Selecao e Operacoes em Massa | BULK-01 a BULK-09 | Completo ✓ |
 | 11 | Navegacao e Integracao | INTEG-01, INTEG-02, INTEG-03, INTEG-04 | Pendente |
 
 **Cobertura:** 28/28 requisitos v1.1 mapeados
