@@ -75,7 +75,7 @@ All v1.0 decisions documented in PROJECT.md Key Decisions table.
 
 ### Blockers/Concerns
 
-- **Migration 002 pendente:** `database/migrations/002_add_tem_reinspecao_to_verificacoes.sql` precisa ser aplicada via MCP antes que a feature funcione em runtime.
+None.
 
 ### Roadmap Evolution
 

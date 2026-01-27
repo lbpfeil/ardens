@@ -14,11 +14,11 @@
 
 ### Matriz de Verificacoes
 
-- [ ] **MATRZ-01**: Pagina de verificacoes na sidebar da obra com matriz servico x unidade
-- [ ] **MATRZ-02**: Celulas com status visual (cor + icone) para cada par servico/unidade
-- [ ] **MATRZ-03**: Scroll horizontal com coluna de servico fixa e header fixo
-- [ ] **MATRZ-04**: Colunas agrupadas por agrupamento com headers multinivel
-- [ ] **MATRZ-05**: Indicador de progresso por servico (ex: 12/50 verificadas)
+- [x] **MATRZ-01**: Pagina de verificacoes na sidebar da obra com matriz servico x unidade
+- [x] **MATRZ-02**: Celulas com status visual (cor + icone) para cada par servico/unidade
+- [x] **MATRZ-03**: Scroll horizontal com coluna de servico fixa e header fixo
+- [x] **MATRZ-04**: Colunas agrupadas por agrupamento com headers multinivel
+- [x] **MATRZ-05**: Indicador de progresso por servico (ex: 12/50 verificadas)
 
 ### Selecao e Operacoes em Massa
 
@@ -34,12 +34,12 @@
 
 ### Verificacao Individual
 
-- [ ] **VERIF-01**: Pagina dedicada para verificacao de 1 servico x 1 unidade
-- [ ] **VERIF-02**: Lista de itens de verificacao com toggle C/NC/NA por item
-- [ ] **VERIF-03**: Resultado automatico: qualquer item NC -> verificacao NC
-- [ ] **VERIF-04**: Campo de descricao geral por verificacao
-- [ ] **VERIF-05**: Status Excecao para servico que nao se aplica a unidade
-- [ ] **VERIF-06**: Ciclo de reinspecao: NC -> Conforme apos Reinspecao | NC apos Reinspecao
+- [x] **VERIF-01**: Pagina dedicada para verificacao de 1 servico x 1 unidade
+- [x] **VERIF-02**: Lista de itens de verificacao com toggle C/NC/NA por item
+- [x] **VERIF-03**: Resultado automatico: qualquer item NC -> verificacao NC
+- [x] **VERIF-04**: Campo de descricao geral por verificacao
+- [x] **VERIF-05**: Status Excecao para servico que nao se aplica a unidade
+- [x] **VERIF-06**: Ciclo de reinspecao: NC -> Conforme apos Reinspecao | NC apos Reinspecao
 
 ### Integracao e Navegacao
 
@@ -88,11 +88,11 @@
 | DADOS-02 | Phase 7 | Complete |
 | DADOS-03 | Phase 7 | Complete |
 | DADOS-04 | Phase 7 | Complete |
-| MATRZ-01 | Phase 9 | Pending |
-| MATRZ-02 | Phase 9 | Pending |
-| MATRZ-03 | Phase 9 | Pending |
-| MATRZ-04 | Phase 9 | Pending |
-| MATRZ-05 | Phase 9 | Pending |
+| MATRZ-01 | Phase 9 | Complete |
+| MATRZ-02 | Phase 9 | Complete |
+| MATRZ-03 | Phase 9 | Complete |
+| MATRZ-04 | Phase 9 | Complete |
+| MATRZ-05 | Phase 9 | Complete |
 | BULK-01 | Phase 10 | Pending |
 | BULK-02 | Phase 10 | Pending |
 | BULK-03 | Phase 10 | Pending |
@@ -102,12 +102,12 @@
 | BULK-07 | Phase 10 | Pending |
 | BULK-08 | Phase 10 | Pending |
 | BULK-09 | Phase 10 | Pending |
-| VERIF-01 | Phase 8 | Pending |
-| VERIF-02 | Phase 8 | Pending |
-| VERIF-03 | Phase 8 | Pending |
-| VERIF-04 | Phase 8 | Pending |
-| VERIF-05 | Phase 8 | Pending |
-| VERIF-06 | Phase 8 | Pending |
+| VERIF-01 | Phase 8 | Complete |
+| VERIF-02 | Phase 8 | Complete |
+| VERIF-03 | Phase 8 | Complete |
+| VERIF-04 | Phase 8 | Complete |
+| VERIF-05 | Phase 8 | Complete |
+| VERIF-06 | Phase 8 | Complete |
 | INTEG-01 | Phase 11 | Pending |
 | INTEG-02 | Phase 11 | Pending |
 | INTEG-03 | Phase 11 | Pending |
@@ -120,4 +120,4 @@
 
 ---
 *Requirements defined: 2026-01-26*
-*Last updated: 2026-01-26 after Phase 7 completion*
+*Last updated: 2026-01-27 after Phase 9 completion*

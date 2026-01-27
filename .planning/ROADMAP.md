@@ -73,8 +73,8 @@ Plans:
 **Plans:** 2 plans
 
 Plans:
-- [ ] 09-01-PLAN.md — Camada de dados: migration tem_reinspecao + extensão da query + utilitário de status + tooltip
-- [ ] 09-02-PLAN.md — Página da matriz: grid CSS com sticky headers, heatmap 6 cores, tooltips, progresso e navegação
+- [x] 09-01-PLAN.md — Camada de dados: migration tem_reinspecao + extensão da query + utilitário de status + tooltip
+- [x] 09-02-PLAN.md — Página da matriz: grid CSS com sticky headers, heatmap 6 cores, tooltips, progresso e navegação
 
 **Criterios de Sucesso:**
 
@@ -134,7 +134,7 @@ Plans:
 |------|------|------------|--------|
 | 7 | Fundação de Dados | DADOS-01, DADOS-02, DADOS-03, DADOS-04 | Completo ✓ |
 | 8 | Verificacao Individual | VERIF-01, VERIF-02, VERIF-03, VERIF-04, VERIF-05, VERIF-06 | Completo ✓ |
-| 9 | Matriz de Verificacoes | MATRZ-01, MATRZ-02, MATRZ-03, MATRZ-04, MATRZ-05 | Em andamento |
+| 9 | Matriz de Verificacoes | MATRZ-01, MATRZ-02, MATRZ-03, MATRZ-04, MATRZ-05 | Completo ✓ |
 | 10 | Selecao e Operacoes em Massa | BULK-01 a BULK-09 | Pendente |
 | 11 | Navegacao e Integracao | INTEG-01, INTEG-02, INTEG-03, INTEG-04 | Pendente |
 
