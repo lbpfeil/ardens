@@ -29,7 +29,7 @@ export default async function ObraPage({ params }: ObraPageProps) {
     <div className="p-6 bg-background min-h-full">
       <div className="max-w-6xl mx-auto space-y-6">
         <ObraHeader obra={obra} />
-        <ObraDashboard kpis={kpis} ncs={ncs} chartData={chartData} />
+        <ObraDashboard obraId={id} kpis={kpis} ncs={ncs} chartData={chartData} />
       </div>
     </div>
   )
