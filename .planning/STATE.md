@@ -10,10 +10,10 @@ See: .planning/CONVENTIONS.md (regras obrigatórias para novas páginas/tabelas)
 
 ## Current Position
 
-Phase: 8 - Verificação Individual — COMPLETE
-Plan: 2 of 2 complete (08-02)
-Status: Verificação individual completa, todas features secundárias implementadas
-Last activity: 2026-01-27 — Completado 08-02-PLAN.md (modais + Exceção + reinspeção)
+Phase: 9 - Matriz de Verificações — In progress
+Plan: 1 of 2 complete (09-01)
+Status: Camada de dados e utilitários da matriz preparados
+Last activity: 2026-01-27 — Completado 09-01-PLAN.md (tem_reinspecao + query + tooltip + status utility)
 
 Progress: [███.......] 2/5 fases | 10/28 requisitos
 
@@ -26,11 +26,12 @@ Progress: [███.......] 2/5 fases | 10/28 requisitos
 - Timeline: 5 days (2026-01-19 to 2026-01-24)
 
 **v1.1 Summary:**
-- Total plans completed: 5
-- Average duration: 4.2 min (Phase 7-8)
+- Total plans completed: 6
+- Average duration: 4.4 min (Phase 7-9)
 - Started: 2026-01-26
 - Phase 7: 3 plans, 2 waves — COMPLETE
 - Phase 8: 2 plans — COMPLETE
+- Phase 9: 1/2 plans — IN PROGRESS
 
 ## Accumulated Context
 
@@ -60,6 +61,8 @@ All v1.0 decisions documented in PROJECT.md Key Decisions table.
 - **Reinspeção outcome cards** (08-02) — 4 cards visuais com ícones para seleção de resultado
 - **Completion banners computed from items** (08-02) — banners locked/NC/Conforme derivados do estado dos itens
 - **isExcecao computed from item counts** (08-02) — verificação é Exceção quando todos itens são exceção
+- **6 estados visuais do heatmap** (09-01) — pendente/conforme/NC/exceção/conforme_reinspecao/nc_reinspecao derivados de status + tem_reinspecao
+- **CSS theme extension para cores -600** (09-01) — bg-brand-600 e bg-destructive-600 mapeados no @theme inline
 
 ### Pending Todos
 
@@ -69,7 +72,7 @@ All v1.0 decisions documented in PROJECT.md Key Decisions table.
 
 ### Blockers/Concerns
 
-None.
+- **Migration 002 pendente:** `database/migrations/002_add_tem_reinspecao_to_verificacoes.sql` precisa ser aplicada via MCP antes que a feature funcione em runtime.
 
 ### Roadmap Evolution
 
@@ -79,7 +82,7 @@ v1.1 roadmap created: .planning/ROADMAP.md (Fases 7-11, 28 requisitos)
 ## Session Continuity
 
 Last session: 2026-01-27
-Stopped at: Completado Fase 8 (verificação individual completa)
+Stopped at: Completado 09-01-PLAN.md (camada de dados da matriz)
 Resume file: None
 
 ## Completed Phases (v1.1)
@@ -112,6 +115,18 @@ Key artifacts:
 - 10 RLS policies otimizadas com initPlan
 
 ## Active Phases (v1.1)
+
+### Phase 9: Matriz de Verificações (IN PROGRESS)
+
+**Plan 09-01 (COMPLETE 2026-01-27):** Camada de Dados e Utilitários da Matriz
+- 2 tasks, 2 commits (a37038a, c682860), 5.6 min
+- Campo tem_reinspecao BOOLEAN na tabela verificacoes (migration SQL pendente aplicação via MCP)
+- Trigger atualizar_contadores_verificacao atualizado com tem_reinspecao
+- MatrizVerificacao interface estendida com tem_reinspecao
+- getMatrizData query inclui tem_reinspecao no SELECT
+- Componente tooltip shadcn/ui instalado
+- Utilitário matriz-status.ts com 6 estados visuais e deriveMatrizCellStatus()
+- Mapeamento CSS bg-brand-600 e bg-destructive-600 no @theme inline
 
 ### Phase 8: Verificação Individual (COMPLETE 2026-01-27)
 
