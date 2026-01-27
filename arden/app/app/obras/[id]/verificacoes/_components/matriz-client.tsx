@@ -1,7 +1,8 @@
 'use client'
 
-import { useState, useCallback, useMemo, useEffect } from 'react'
+import { useState, useCallback, useMemo, useEffect, useTransition } from 'react'
 import { CheckSquare, Filter, Search } from 'lucide-react'
+import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -11,7 +12,10 @@ import {
   DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu'
 import type { MatrizData } from '@/lib/supabase/queries/verificacoes'
+import { bulkVerificar } from '@/lib/supabase/actions/bulk-verificar'
 import { MatrizGrid } from './matriz-grid'
+import { SelectionToolbar } from './matriz-selection-toolbar'
+import { BulkModal, computeBulkSummary } from './matriz-bulk-modal'
 import { STATUS_COLORS, STATUS_LABELS, type MatrizCellStatus } from './matriz-status'
 
 interface MatrizClientProps {
@@ -133,6 +137,59 @@ export function MatrizClient({ initialData, obraId }: MatrizClientProps) {
     setIsSelectionMode(false)
     setSelectedCells(new Set())
   }, [])
+
+  // ======== Estado bulk modal ========
+  const [bulkModalOpen, setBulkModalOpen] = useState(false)
+  const [bulkMode, setBulkMode] = useState<'verificar' | 'excecao'>('verificar')
+  const [isPending, startTransition] = useTransition()
+
+  const bulkSummary = useMemo(
+    () => computeBulkSummary(selectedCells, verificacoesMap),
+    [selectedCells, verificacoesMap]
+  )
+
+  const handleOpenVerificar = useCallback(() => {
+    setBulkMode('verificar')
+    setBulkModalOpen(true)
+  }, [])
+
+  const handleOpenExcecao = useCallback(() => {
+    setBulkMode('excecao')
+    setBulkModalOpen(true)
+  }, [])
+
+  const handleBulkConfirm = useCallback(
+    (resultado: 'conforme' | 'nao_conforme' | 'excecao', descricao?: string) => {
+      const pares = Array.from(selectedCells).map(key => {
+        const [servico_id, unidade_id] = key.split(':')
+        return { servico_id, unidade_id }
+      })
+
+      startTransition(async () => {
+        const result = await bulkVerificar({
+          obra_id: obraId,
+          resultado,
+          pares,
+          descricao,
+        })
+
+        if (result.error) {
+          toast.error(result.error)
+          // Seleção mantida para retry
+        } else {
+          const { created, skipped, reinspected } = result.data!
+          const parts: string[] = []
+          if (created > 0) parts.push(`${created} verificações criadas`)
+          if (reinspected > 0) parts.push(`${reinspected} reinspecionadas`)
+          if (skipped > 0) parts.push(`${skipped} ignoradas`)
+          toast.success(parts.join(', '))
+          setBulkModalOpen(false)
+          handleExitSelectionMode()
+        }
+      })
+    },
+    [selectedCells, obraId, handleExitSelectionMode]
+  )
 
   // Esc key listener
   useEffect(() => {
@@ -283,6 +340,26 @@ export function MatrizClient({ initialData, obraId }: MatrizClientProps) {
         onToggleCell={handleToggleCell}
         onSelectRow={handleSelectRow}
         onSelectColumn={handleSelectColumn}
+      />
+
+      {/* Toolbar flutuante de seleção */}
+      {isSelectionMode && (
+        <SelectionToolbar
+          selectedCount={selectedCells.size}
+          onVerificar={handleOpenVerificar}
+          onExcecao={handleOpenExcecao}
+          onCancel={handleExitSelectionMode}
+        />
+      )}
+
+      {/* Modal de verificação em massa */}
+      <BulkModal
+        open={bulkModalOpen}
+        onOpenChange={setBulkModalOpen}
+        summary={bulkSummary}
+        mode={bulkMode}
+        onConfirm={handleBulkConfirm}
+        isPending={isPending}
       />
     </>
   )
