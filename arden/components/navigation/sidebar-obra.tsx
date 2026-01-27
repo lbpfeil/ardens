@@ -28,7 +28,7 @@ function getObraNavItems(obraId: string) {
     operacao: [
       { icon: Wrench, label: 'Serviços', href: `/app/obras/${obraId}/servicos` },
       { icon: Building2, label: 'Unidades', href: `/app/obras/${obraId}/unidades` },
-      { icon: ClipboardCheck, label: 'Verificações', href: `/app/obras/${obraId}/verificacoes`, badge: 'Em breve' },
+      { icon: ClipboardCheck, label: 'Verificações', href: `/app/obras/${obraId}/verificacoes` },
       { icon: AlertTriangle, label: 'NCs', href: `/app/obras/${obraId}/ncs`, badge: 'Em breve' },
     ],
     admin: [
