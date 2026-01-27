@@ -111,6 +111,8 @@ export const MatrizGrid = memo(function MatrizGrid({
             display: 'grid',
             gridTemplateColumns,
             gridTemplateRows: `40px 32px repeat(${servicos.length}, 48px)`,
+            width: 'max-content',
+            minWidth: '100%',
           }}
         >
           {/* 1. CORNER CELL — z-30, sticky top+left */}
@@ -222,11 +224,23 @@ export const MatrizGrid = memo(function MatrizGrid({
                           )}
                           style={{ gridRow }}
                         >
-                          <div className={cn(
-                            "w-7 h-7 rounded-md",
-                            colorClass,
-                            isSelected && "ring-2 ring-brand ring-offset-1 ring-offset-surface-100"
-                          )} />
+                          <div
+                            className={cn(
+                              "w-7 h-7 rounded-md relative",
+                              colorClass,
+                              isSelected && "ring-2 ring-brand ring-offset-1 ring-offset-surface-100"
+                            )}
+                          >
+                            {isSelected && (
+                              <div
+                                className="absolute inset-0 rounded-md"
+                                style={{
+                                  backgroundImage:
+                                    'repeating-linear-gradient(45deg, transparent, transparent 3px, rgba(62,207,142,0.3) 3px, rgba(62,207,142,0.3) 6px)',
+                                }}
+                              />
+                            )}
+                          </div>
                         </div>
                       )
 

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Check, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
@@ -93,6 +93,14 @@ export function BulkModal({
 }: BulkModalProps) {
   const [resultado, setResultado] = useState<'conforme' | 'nao_conforme'>('conforme')
   const [descricao, setDescricao] = useState('')
+
+  // Reset state when modal opens
+  useEffect(() => {
+    if (open) {
+      setResultado('conforme')
+      setDescricao('')
+    }
+  }, [open])
 
   const actionable = summary.pendentes.length + summary.ncExistentes.length
   const ignored = summary.conformesTravadas.length + summary.excecoesTravadas.length
@@ -190,14 +198,19 @@ export function BulkModal({
             )}
           </div>
 
-          {/* Textarea de descrição */}
-          <Textarea
-            placeholder="Descrição opcional..."
-            rows={3}
-            value={descricao}
-            onChange={e => setDescricao(e.target.value)}
-            disabled={isPending}
-          />
+          {/* Textarea de descrição (obrigatória) */}
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium text-foreground">
+              Descrição <span className="text-destructive">*</span>
+            </label>
+            <Textarea
+              placeholder="Descreva a verificação em massa..."
+              rows={3}
+              value={descricao}
+              onChange={e => setDescricao(e.target.value)}
+              disabled={isPending}
+            />
+          </div>
 
           {/* Progress indeterminado durante loading */}
           {isPending && (
@@ -217,7 +230,7 @@ export function BulkModal({
           </Button>
           <Button
             onClick={handleConfirm}
-            disabled={isPending || actionable === 0}
+            disabled={isPending || actionable === 0 || descricao.trim().length === 0}
           >
             {isPending ? 'Processando...' : 'Confirmar'}
           </Button>

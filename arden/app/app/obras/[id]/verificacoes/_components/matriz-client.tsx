@@ -115,9 +115,13 @@ export function MatrizClient({ initialData, obraId }: MatrizClientProps) {
 
   const handleSelectRow = useCallback((servicoId: string) => {
     setSelectedCells(prev => {
+      const keys = visibleUnits.map(u => `${servicoId}:${u.id}`)
+      const allSelected = keys.every(k => prev.has(k))
       const next = new Set(prev)
-      for (const unit of visibleUnits) {
-        next.add(`${servicoId}:${unit.id}`)
+      if (allSelected) {
+        for (const k of keys) next.delete(k)
+      } else {
+        for (const k of keys) next.add(k)
       }
       return next
     })
@@ -125,9 +129,13 @@ export function MatrizClient({ initialData, obraId }: MatrizClientProps) {
 
   const handleSelectColumn = useCallback((unidadeId: string) => {
     setSelectedCells(prev => {
+      const keys = servicos.map(s => `${s.id}:${unidadeId}`)
+      const allSelected = keys.every(k => prev.has(k))
       const next = new Set(prev)
-      for (const servico of servicos) {
-        next.add(`${servico.id}:${unidadeId}`)
+      if (allSelected) {
+        for (const k of keys) next.delete(k)
+      } else {
+        for (const k of keys) next.add(k)
       }
       return next
     })
@@ -297,7 +305,7 @@ export function MatrizClient({ initialData, obraId }: MatrizClientProps) {
           </DropdownMenu>
         )}
 
-        {/* Botão Selecionar */}
+        {/* Botão Verificação em Massa */}
         <Button
           variant={isSelectionMode ? 'default' : 'outline'}
           size="sm"
@@ -311,7 +319,7 @@ export function MatrizClient({ initialData, obraId }: MatrizClientProps) {
           }}
         >
           <CheckSquare className="w-3.5 h-3.5" />
-          <span>{isSelectionMode ? 'Selecionando...' : 'Selecionar'}</span>
+          <span>{isSelectionMode ? 'Modo de seleção ativo' : 'Verificação em massa'}</span>
         </Button>
 
         {/* Legenda de cores */}
