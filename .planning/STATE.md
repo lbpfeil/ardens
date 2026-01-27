@@ -10,12 +10,12 @@ See: .planning/CONVENTIONS.md (regras obrigatórias para novas páginas/tabelas)
 
 ## Current Position
 
-Phase: 10 - Seleção e Operações em Massa — Complete
-Plan: 2 of 2 complete (10-01, 10-02)
-Status: Fase 10 completa — Seleção e operações em massa na matriz
-Last activity: 2026-01-27 — Completado 10-02-PLAN.md (toolbar flutuante, modal bulk, integração Server Action)
+Phase: 11 - Navegação e Integração — In Progress
+Plan: 1 of 3 complete (11-01)
+Status: Fase 11 iniciada — NC feed com navegação e contexto de agrupamento
+Last activity: 2026-01-27 — Completado 11-01-PLAN.md (NC feed clicável com agrupamento)
 
-Progress: [████████..] 4/5 fases | 24/28 requisitos
+Progress: [████████░.] 4.3/5 fases | 26/28 requisitos
 
 ## Performance Metrics
 
@@ -26,13 +26,14 @@ Progress: [████████..] 4/5 fases | 24/28 requisitos
 - Timeline: 5 days (2026-01-19 to 2026-01-24)
 
 **v1.1 Summary:**
-- Total plans completed: 8
-- Average duration: 4.5 min (Phase 7-10)
+- Total plans completed: 9
+- Average duration: 4.4 min (Phase 7-11)
 - Started: 2026-01-26
 - Phase 7: 3 plans, 2 waves — COMPLETE
 - Phase 8: 2 plans — COMPLETE
 - Phase 9: 2 plans — COMPLETE
 - Phase 10: 2 plans — COMPLETE
+- Phase 11: 1 plan (in progress) — 1 of 3 complete
 
 ## Accumulated Context
 
@@ -76,6 +77,8 @@ All v1.0 decisions documented in PROJECT.md Key Decisions table.
 - **computeBulkSummary com 4 categorias** (10-02) — pendentes/NC/conformesTravadas/excecoesTravadas
 - **Toast com contagens condicionais** (10-02) — mostra apenas partes relevantes (created/reinspected/skipped)
 - **Modal reset on close** (10-02) — resultado e descrição voltam ao default ao fechar
+- **NC feed display: "Agrupamento > Unidade"** (11-01) — hierarquia espacial na linha principal, serviço na linha secundária
+- **Click-through navigation with searchParams** (11-01) — from=dashboard + servico + unidade para contexto de breadcrumb
 
 ### Pending Todos
 
@@ -96,7 +99,7 @@ v1.1 roadmap created: .planning/ROADMAP.md (Fases 7-11, 28 requisitos)
 ## Session Continuity
 
 Last session: 2026-01-27
-Stopped at: Completado 10-02-PLAN.md (toolbar flutuante, modal bulk, integração bulkVerificar)
+Stopped at: Completado 11-01-PLAN.md (NC feed clicável com agrupamento e navegação)
 Resume file: None
 
 ## Completed Phases (v1.1)
@@ -147,6 +150,21 @@ Key artifacts:
 - 10 RLS policies otimizadas com initPlan
 
 ## Active Phases (v1.1)
+
+### Phase 11: Navegação e Integração (IN PROGRESS 2026-01-27)
+
+3 plans, 2 requisitos (NAVEG-01 a NAVEG-02) — 1 of 3 plans complete.
+Focus: Breadcrumb navigation, NC feed enhancement, matriz navigation.
+
+**Plan 11-01 (COMPLETE 2026-01-27):** NC Feed Enhancement
+- 2 tasks, 2 commits (0198d42, 2ca885c), 3.6 min
+- Extended NCFeedItem com verificacaoId e agrupamentoNome
+- Query join através de agrupamentos table
+- Display format: "Agrupamento > Unidade" na linha principal
+- Click-through navigation com router.push
+- SearchParams: from=dashboard, servico, unidade
+- Removido botão "Ver todas as NCs"
+- Requisito implementado: NAVEG-01 (parcial - NC feed clicável)
 
 ### Phase 10: Seleção e Operações em Massa (COMPLETE 2026-01-27)
 
