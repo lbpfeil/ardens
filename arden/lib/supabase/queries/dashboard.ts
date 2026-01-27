@@ -14,8 +14,10 @@ export interface ChartDataPoint {
  */
 export interface NCFeedItem {
   id: string
+  verificacaoId: string           // NEW — the verificacao UUID for navigation
   servicoNome: string
   unidadeCodigo: string
+  agrupamentoNome: string | null  // NEW — agrupamento name for display
   observacao: string | null
   createdAt: string  // ISO date string
 }
@@ -277,7 +279,7 @@ export async function getRecentNCs(obraId: string, limit: number = 5): Promise<N
   const supabase = createClient()
 
   // Query itens_verificacao with joins to get servico nome and unidade codigo
-  // Join path: itens_verificacao -> verificacoes -> servicos/unidades
+  // Join path: itens_verificacao -> verificacoes -> servicos/unidades -> agrupamentos
   const { data, error } = await supabase
     .from('itens_verificacao')
     .select(`
@@ -285,13 +287,15 @@ export async function getRecentNCs(obraId: string, limit: number = 5): Promise<N
       observacao,
       created_at,
       verificacao:verificacoes!inner(
+        id,
         obra_id,
         servico:servicos(
           nome
         ),
         unidade:unidades(
           nome,
-          codigo
+          codigo,
+          agrupamento:agrupamentos(nome)
         )
       )
     `)
@@ -314,14 +318,17 @@ export async function getRecentNCs(obraId: string, limit: number = 5): Promise<N
   return data.map(item => {
     // Type assertion for nested joins (Supabase returns objects for singular relations)
     const verificacao = item.verificacao as unknown as {
+      id: string
       servico: { nome: string } | null
-      unidade: { nome: string; codigo: string | null } | null
+      unidade: { nome: string; codigo: string | null; agrupamento: { nome: string } | null } | null
     }
 
     return {
       id: item.id,
+      verificacaoId: verificacao.id || item.id,
       servicoNome: verificacao.servico?.nome || 'Serviço desconhecido',
       unidadeCodigo: verificacao.unidade?.codigo || verificacao.unidade?.nome || 'Unidade desconhecida',
+      agrupamentoNome: verificacao.unidade?.agrupamento?.nome || null,
       observacao: item.observacao,
       createdAt: item.created_at
     }
