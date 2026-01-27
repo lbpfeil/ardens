@@ -1,7 +1,7 @@
 'use client'
 
-import { useState, useCallback, useMemo } from 'react'
-import { Filter, Search } from 'lucide-react'
+import { useState, useCallback, useMemo, useEffect } from 'react'
+import { CheckSquare, Filter, Search } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -92,6 +92,57 @@ export function MatrizClient({ initialData, obraId }: MatrizClientProps) {
       expandedGroups.has(ag.id) ? ag.unidades : []
     )
   }, [filteredAgrupamentos, expandedGroups])
+
+  // ======== Estado de seleção ========
+  const [isSelectionMode, setIsSelectionMode] = useState(false)
+  const [selectedCells, setSelectedCells] = useState<Set<string>>(new Set())
+
+  const handleToggleCell = useCallback((cellKey: string) => {
+    setSelectedCells(prev => {
+      const next = new Set(prev)
+      if (next.has(cellKey)) {
+        next.delete(cellKey)
+      } else {
+        next.add(cellKey)
+      }
+      return next
+    })
+  }, [])
+
+  const handleSelectRow = useCallback((servicoId: string) => {
+    setSelectedCells(prev => {
+      const next = new Set(prev)
+      for (const unit of visibleUnits) {
+        next.add(`${servicoId}:${unit.id}`)
+      }
+      return next
+    })
+  }, [visibleUnits])
+
+  const handleSelectColumn = useCallback((unidadeId: string) => {
+    setSelectedCells(prev => {
+      const next = new Set(prev)
+      for (const servico of servicos) {
+        next.add(`${servico.id}:${unidadeId}`)
+      }
+      return next
+    })
+  }, [servicos])
+
+  const handleExitSelectionMode = useCallback(() => {
+    setIsSelectionMode(false)
+    setSelectedCells(new Set())
+  }, [])
+
+  // Esc key listener
+  useEffect(() => {
+    if (!isSelectionMode) return
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') handleExitSelectionMode()
+    }
+    document.addEventListener('keydown', handler)
+    return () => document.removeEventListener('keydown', handler)
+  }, [isSelectionMode, handleExitSelectionMode])
 
   // Template dinâmico: 48px por unidade expandida, 80px por grupo colapsado
   const gridTemplateColumns = useMemo(() => {
@@ -189,6 +240,23 @@ export function MatrizClient({ initialData, obraId }: MatrizClientProps) {
           </DropdownMenu>
         )}
 
+        {/* Botão Selecionar */}
+        <Button
+          variant={isSelectionMode ? 'default' : 'outline'}
+          size="sm"
+          className="h-7 text-xs gap-1.5"
+          onClick={() => {
+            if (isSelectionMode) {
+              handleExitSelectionMode()
+            } else {
+              setIsSelectionMode(true)
+            }
+          }}
+        >
+          <CheckSquare className="w-3.5 h-3.5" />
+          <span>{isSelectionMode ? 'Selecionando...' : 'Selecionar'}</span>
+        </Button>
+
         {/* Legenda de cores */}
         <div className="flex items-center gap-4 flex-wrap ml-auto">
           {(Object.entries(STATUS_COLORS) as [MatrizCellStatus, string][]).map(([status, colorClass]) => (
@@ -210,6 +278,11 @@ export function MatrizClient({ initialData, obraId }: MatrizClientProps) {
         onToggleGroup={handleToggleGroup}
         obraId={obraId}
         gridTemplateColumns={gridTemplateColumns}
+        isSelectionMode={isSelectionMode}
+        selectedCells={selectedCells}
+        onToggleCell={handleToggleCell}
+        onSelectRow={handleSelectRow}
+        onSelectColumn={handleSelectColumn}
       />
     </>
   )
