@@ -65,6 +65,7 @@ All v1.0 decisions documented in PROJECT.md Key Decisions table.
 
 1. **Excluir serviço permanentemente (admin only)** (biblioteca) - Cascade delete com confirmação forte
 2. **Sidebar flutuante com transição suave** (ui) - Overlay sobre conteúdo, ícones fixos, transição suave
+3. **Breadcrumb estilo Supabase com troca rápida de contexto** (ui) - Chevrons, badges, dropdown para trocar obra/seção
 
 ### Blockers/Concerns
 
