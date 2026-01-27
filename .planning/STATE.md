@@ -10,12 +10,12 @@ See: .planning/CONVENTIONS.md (regras obrigatórias para novas páginas/tabelas)
 
 ## Current Position
 
-Phase: 10 - Seleção e Operações em Massa — In progress
-Plan: 1 of ? complete (10-01)
-Status: Plan 10-01 completo — Infraestrutura de seleção na matriz
-Last activity: 2026-01-27 — Completado 10-01-PLAN.md (modo de seleção com toggle, headers, feedback visual)
+Phase: 10 - Seleção e Operações em Massa — Complete
+Plan: 2 of 2 complete (10-01, 10-02)
+Status: Fase 10 completa — Seleção e operações em massa na matriz
+Last activity: 2026-01-27 — Completado 10-02-PLAN.md (toolbar flutuante, modal bulk, integração Server Action)
 
-Progress: [███████...] 3.5/5 fases | 20/28 requisitos
+Progress: [████████..] 4/5 fases | 24/28 requisitos
 
 ## Performance Metrics
 
@@ -32,7 +32,7 @@ Progress: [███████...] 3.5/5 fases | 20/28 requisitos
 - Phase 7: 3 plans, 2 waves — COMPLETE
 - Phase 8: 2 plans — COMPLETE
 - Phase 9: 2 plans — COMPLETE
-- Phase 10: 1 plan complete (10-01) — IN PROGRESS
+- Phase 10: 2 plans — COMPLETE
 
 ## Accumulated Context
 
@@ -72,6 +72,10 @@ All v1.0 decisions documented in PROJECT.md Key Decisions table.
 - **Dual-mode event delegation** (10-01) — isSelectionMode branching no handleClick existente
 - **data-header-servico/unidade condicionais** (10-01) — só existem quando isSelectionMode=true
 - **ring-2 ring-brand para células selecionadas** (10-01) — feedback visual sem obscurecer heatmap
+- **useTransition para operações bulk** (10-02) — consistente com padrão de verificação individual
+- **computeBulkSummary com 4 categorias** (10-02) — pendentes/NC/conformesTravadas/excecoesTravadas
+- **Toast com contagens condicionais** (10-02) — mostra apenas partes relevantes (created/reinspected/skipped)
+- **Modal reset on close** (10-02) — resultado e descrição voltam ao default ao fechar
 
 ### Pending Todos
 
@@ -91,10 +95,18 @@ v1.1 roadmap created: .planning/ROADMAP.md (Fases 7-11, 28 requisitos)
 ## Session Continuity
 
 Last session: 2026-01-27
-Stopped at: Completado 10-01-PLAN.md (infraestrutura de seleção na matriz)
+Stopped at: Completado 10-02-PLAN.md (toolbar flutuante, modal bulk, integração bulkVerificar)
 Resume file: None
 
 ## Completed Phases (v1.1)
+
+### Phase 10: Seleção e Operações em Massa (COMPLETE 2026-01-27)
+
+2 plans, 4 tasks, 9 requisitos (BULK-01 a BULK-09) -- all implemented.
+Key artifacts:
+- arden/app/app/obras/[id]/verificacoes/_components/matriz-client.tsx (orchestrador com seleção + bulk)
+- arden/app/app/obras/[id]/verificacoes/_components/matriz-selection-toolbar.tsx (bottom bar flutuante)
+- arden/app/app/obras/[id]/verificacoes/_components/matriz-bulk-modal.tsx (modal com resumo de conflitos)
 
 ### Phase 9: Matriz de Verificações (COMPLETE 2026-01-27)
 
@@ -135,7 +147,13 @@ Key artifacts:
 
 ## Active Phases (v1.1)
 
-### Phase 10: Seleção e Operações em Massa (IN PROGRESS)
+### Phase 10: Seleção e Operações em Massa (COMPLETE 2026-01-27)
+
+2 plans, 4 tasks, 9 requisitos (BULK-01 a BULK-09) -- all implemented.
+Key artifacts:
+- arden/app/app/obras/[id]/verificacoes/_components/matriz-client.tsx (orchestrador com seleção + bulk)
+- arden/app/app/obras/[id]/verificacoes/_components/matriz-selection-toolbar.tsx (bottom bar flutuante)
+- arden/app/app/obras/[id]/verificacoes/_components/matriz-bulk-modal.tsx (modal com resumo de conflitos)
 
 **Plan 10-01 (COMPLETE 2026-01-27):** Infraestrutura de Seleção na Matriz
 - 2 tasks, 2 commits (a489e03, d37bdb9), 3.8 min
@@ -146,6 +164,14 @@ Key artifacts:
 - Feedback visual: ring-2 ring-brand ring-offset-1 nas células selecionadas
 - Cursor-cell no modo de seleção, Esc key listener
 - Requisitos implementados: BULK-01 a BULK-05
+
+**Plan 10-02 (COMPLETE 2026-01-27):** Toolbar Flutuante + Modal de Verificação em Massa
+- 2 tasks, 2 commits (4fdd224, 1c6c143), 2.4 min
+- SelectionToolbar: bottom bar fixa com contagem e botões Verificar/Exceção/Cancelar
+- BulkModal: Dialog com seleção Conforme/NC, resumo de conflitos, textarea, Progress
+- computeBulkSummary: classifica Set<string> em pendentes/NC/conformes/exceções
+- Integração: useTransition + bulkVerificar + toast com contagens + cleanup automático
+- Requisitos implementados: BULK-06 a BULK-09
 
 ### Phase 9: Matriz de Verificações (COMPLETE 2026-01-27)
 
