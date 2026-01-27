@@ -529,6 +529,7 @@ CREATE TABLE verificacoes (
 
   -- Status geral
   status status_verificacao DEFAULT 'pendente',
+  descricao TEXT, -- Descrição geral da verificação
 
   -- Quem e quando (primeira verificação)
   inspetor_id UUID REFERENCES usuarios(id) ON DELETE SET NULL,

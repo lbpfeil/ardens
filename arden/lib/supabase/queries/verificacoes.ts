@@ -72,6 +72,7 @@ export interface VerificacaoComItens {
   unidade_id: string
   servico_id: string
   status: string
+  descricao: string | null
   total_itens: number
   itens_verificados: number
   itens_conformes: number
@@ -174,7 +175,7 @@ export async function getVerificacaoComItens(
     .from('verificacoes')
     .select(
       `
-      id, obra_id, unidade_id, servico_id, status,
+      id, obra_id, unidade_id, servico_id, status, descricao,
       total_itens, itens_verificados, itens_conformes, itens_nc, itens_excecao,
       data_inicio, data_conclusao, created_at,
       itens_verificacao(
