@@ -10,12 +10,12 @@ See: .planning/CONVENTIONS.md (regras obrigatórias para novas páginas/tabelas)
 
 ## Current Position
 
-Phase: 9 - Matriz de Verificações — In progress
-Plan: 1 of 2 complete (09-01)
-Status: Camada de dados e utilitários da matriz preparados
-Last activity: 2026-01-27 — Completado 09-01-PLAN.md (tem_reinspecao + query + tooltip + status utility)
+Phase: 9 - Matriz de Verificações — COMPLETE
+Plan: 2 of 2 complete (09-01, 09-02)
+Status: Fase 9 completa — Matriz de Verificações implementada
+Last activity: 2026-01-27 — Completado 09-02-PLAN.md (página da matriz com CSS Grid interativo)
 
-Progress: [███.......] 2/5 fases | 10/28 requisitos
+Progress: [██████....] 3/5 fases | 15/28 requisitos
 
 ## Performance Metrics
 
@@ -26,12 +26,12 @@ Progress: [███.......] 2/5 fases | 10/28 requisitos
 - Timeline: 5 days (2026-01-19 to 2026-01-24)
 
 **v1.1 Summary:**
-- Total plans completed: 6
-- Average duration: 4.4 min (Phase 7-9)
+- Total plans completed: 7
+- Average duration: 4.6 min (Phase 7-9)
 - Started: 2026-01-26
 - Phase 7: 3 plans, 2 waves — COMPLETE
 - Phase 8: 2 plans — COMPLETE
-- Phase 9: 1/2 plans — IN PROGRESS
+- Phase 9: 2 plans — COMPLETE
 
 ## Accumulated Context
 
@@ -63,6 +63,9 @@ All v1.0 decisions documented in PROJECT.md Key Decisions table.
 - **isExcecao computed from item counts** (08-02) — verificação é Exceção quando todos itens são exceção
 - **6 estados visuais do heatmap** (09-01) — pendente/conforme/NC/exceção/conforme_reinspecao/nc_reinspecao derivados de status + tem_reinspecao
 - **CSS theme extension para cores -600** (09-01) — bg-brand-600 e bg-destructive-600 mapeados no @theme inline
+- **max-w-full para página da matriz** (09-02) — matriz precisa de largura total, não max-w-6xl
+- **Event delegation com data attributes** (09-02) — um onClick no container do grid, closest('[data-cell]') para performance
+- **Reduce funcional para posições de coluna** (09-02) — evita mutação durante render (React Compiler)
 
 ### Pending Todos
 
@@ -82,10 +85,20 @@ v1.1 roadmap created: .planning/ROADMAP.md (Fases 7-11, 28 requisitos)
 ## Session Continuity
 
 Last session: 2026-01-27
-Stopped at: Completado 09-01-PLAN.md (camada de dados da matriz)
+Stopped at: Completado 09-02-PLAN.md (página da matriz com CSS Grid interativo)
 Resume file: None
 
 ## Completed Phases (v1.1)
+
+### Phase 9: Matriz de Verificações (COMPLETE 2026-01-27)
+
+2 plans, 4 tasks, 5 requisitos (MATRZ-01 a MATRZ-05) — all implemented.
+Key artifacts:
+- arden/app/app/obras/[id]/verificacoes/page.tsx (página Server Component)
+- arden/app/app/obras/[id]/verificacoes/_components/matriz-client.tsx (orquestrador com colapso e legenda)
+- arden/app/app/obras/[id]/verificacoes/_components/matriz-grid.tsx (CSS Grid com sticky headers e heatmap)
+- arden/app/app/obras/[id]/verificacoes/_components/matriz-header.tsx (headers multinível colapsáveis)
+- arden/app/app/obras/[id]/verificacoes/_components/matriz-status.ts (6 estados visuais do heatmap)
 
 ### Phase 8: Verificação Individual (COMPLETE 2026-01-27)
 
@@ -116,7 +129,9 @@ Key artifacts:
 
 ## Active Phases (v1.1)
 
-### Phase 9: Matriz de Verificações (IN PROGRESS)
+None — Phase 9 complete. Next: Phase 10 (Relatórios).
+
+### Phase 9: Matriz de Verificações (COMPLETE 2026-01-27)
 
 **Plan 09-01 (COMPLETE 2026-01-27):** Camada de Dados e Utilitários da Matriz
 - 2 tasks, 2 commits (a37038a, c682860), 5.6 min
@@ -127,6 +142,16 @@ Key artifacts:
 - Componente tooltip shadcn/ui instalado
 - Utilitário matriz-status.ts com 6 estados visuais e deriveMatrizCellStatus()
 - Mapeamento CSS bg-brand-600 e bg-destructive-600 no @theme inline
+
+**Plan 09-02 (COMPLETE 2026-01-27):** Página da Matriz de Verificações
+- 2 tasks, 2 commits (08afc05, e2e8d55), 6.3 min
+- Página Server Component em /app/obras/[id]/verificacoes
+- CSS Grid com sticky headers multinível (z-30/z-20/z-10)
+- Agrupamentos colapsáveis com primeiro expandido por padrão
+- Células heatmap com 6 cores + tooltips
+- Progresso por serviço (fração + mini barra Progress)
+- Event delegation para navegação por clique
+- Legenda de cores com 6 status
 
 ### Phase 8: Verificação Individual (COMPLETE 2026-01-27)
 
