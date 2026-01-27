@@ -1,6 +1,7 @@
 'use client'
 
 import React, { memo, useCallback } from 'react'
+import { cn } from '@/lib/utils'
 import { useRouter } from 'next/navigation'
 import {
   Tooltip,
@@ -31,6 +32,11 @@ interface MatrizGridProps {
   onToggleGroup: (groupId: string) => void
   obraId: string
   gridTemplateColumns: string
+  isSelectionMode: boolean
+  selectedCells: Set<string>
+  onToggleCell: (key: string) => void
+  onSelectRow: (servicoId: string) => void
+  onSelectColumn: (unidadeId: string) => void
 }
 
 export const MatrizGrid = memo(function MatrizGrid({
@@ -42,12 +48,31 @@ export const MatrizGrid = memo(function MatrizGrid({
   onToggleGroup,
   obraId,
   gridTemplateColumns,
+  isSelectionMode,
+  selectedCells,
+  onToggleCell,
+  onSelectRow,
+  onSelectColumn,
 }: MatrizGridProps) {
   const router = useRouter()
 
-  // Event delegation para cliques nas células
+  // Event delegation para cliques nas células (dual-mode: navegação ou seleção)
   const handleClick = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
+      // No modo de seleção, checar headers de serviço e unidade primeiro
+      if (isSelectionMode) {
+        const headerRow = (e.target as HTMLElement).closest('[data-header-servico]') as HTMLElement | null
+        if (headerRow) {
+          onSelectRow(headerRow.dataset.headerServico!)
+          return
+        }
+        const headerCol = (e.target as HTMLElement).closest('[data-header-unidade]') as HTMLElement | null
+        if (headerCol) {
+          onSelectColumn(headerCol.dataset.headerUnidade!)
+          return
+        }
+      }
+
       const cell = (e.target as HTMLElement).closest('[data-cell]') as HTMLElement | null
       if (!cell) return
 
@@ -55,16 +80,22 @@ export const MatrizGrid = memo(function MatrizGrid({
       const unidadeId = cell.dataset.unidadeId
       if (!servicoId || !unidadeId) return
 
-      const key = `${servicoId}:${unidadeId}`
-      const verificacao = verificacoesMap[key]
-
-      if (verificacao) {
-        router.push(`/app/obras/${obraId}/verificacoes/${verificacao.id}`)
+      if (isSelectionMode) {
+        // Modo de seleção: toggle da célula
+        onToggleCell(`${servicoId}:${unidadeId}`)
       } else {
-        router.push(`/app/obras/${obraId}/verificacoes/nova?servico=${servicoId}&unidade=${unidadeId}`)
+        // Modo normal: navegação
+        const key = `${servicoId}:${unidadeId}`
+        const verificacao = verificacoesMap[key]
+
+        if (verificacao) {
+          router.push(`/app/obras/${obraId}/verificacoes/${verificacao.id}`)
+        } else {
+          router.push(`/app/obras/${obraId}/verificacoes/nova?servico=${servicoId}&unidade=${unidadeId}`)
+        }
       }
     },
-    [verificacoesMap, obraId, router]
+    [isSelectionMode, verificacoesMap, obraId, router, onToggleCell, onSelectRow, onSelectColumn]
   )
 
   return (
@@ -75,6 +106,7 @@ export const MatrizGrid = memo(function MatrizGrid({
       <TooltipProvider delayDuration={200}>
         <div
           onClick={handleClick}
+          data-selection-mode={isSelectionMode || undefined}
           style={{
             display: 'grid',
             gridTemplateColumns,
@@ -111,6 +143,7 @@ export const MatrizGrid = memo(function MatrizGrid({
                   key={`unit-header-${unidade.id}`}
                   unidade={unidade}
                   gridRow={2}
+                  isSelectionMode={isSelectionMode}
                 />
               ))
             }
@@ -139,7 +172,11 @@ export const MatrizGrid = memo(function MatrizGrid({
               <React.Fragment key={servico.id}>
                 {/* Service name cell — sticky left, z-10 */}
                 <div
-                  className="bg-surface-100 border-b border-r border-border px-3 py-1 flex flex-col justify-center"
+                  data-header-servico={isSelectionMode ? servico.id : undefined}
+                  className={cn(
+                    "bg-surface-100 border-b border-r border-border px-3 py-1 flex flex-col justify-center",
+                    isSelectionMode && "cursor-cell hover:bg-surface-200"
+                  )}
                   style={{
                     position: 'sticky',
                     left: 0,
@@ -171,6 +208,7 @@ export const MatrizGrid = memo(function MatrizGrid({
                       const verificacao = verificacoesMap[key]
                       const cellStatus = deriveMatrizCellStatus(verificacao)
                       const colorClass = STATUS_COLORS[cellStatus]
+                      const isSelected = isSelectionMode && selectedCells.has(key)
 
                       const cellDiv = (
                         <div
@@ -178,10 +216,17 @@ export const MatrizGrid = memo(function MatrizGrid({
                           data-cell=""
                           data-servico-id={servico.id}
                           data-unidade-id={unidade.id}
-                          className="cursor-pointer hover:opacity-80 transition-opacity border-r border-b border-border/30 flex items-center justify-center"
+                          className={cn(
+                            "transition-opacity border-r border-b border-border/30 flex items-center justify-center",
+                            isSelectionMode ? "cursor-cell" : "cursor-pointer hover:opacity-80"
+                          )}
                           style={{ gridRow }}
                         >
-                          <div className={`w-7 h-7 rounded-md ${colorClass}`} />
+                          <div className={cn(
+                            "w-7 h-7 rounded-md",
+                            colorClass,
+                            isSelected && "ring-2 ring-brand ring-offset-1 ring-offset-surface-100"
+                          )} />
                         </div>
                       )
 

@@ -2,6 +2,7 @@
 
 import { useMemo } from 'react'
 import { ChevronRight } from 'lucide-react'
+import { cn } from '@/lib/utils'
 import type { MatrizAgrupamento, MatrizUnidade } from '@/lib/supabase/queries/verificacoes'
 
 // ============================================================================
@@ -66,12 +67,17 @@ export function AgrupamentoHeaders({ agrupamentos, expandedGroups, onToggle }: A
 interface UnitHeaderCellProps {
   unidade: MatrizUnidade
   gridRow: number
+  isSelectionMode?: boolean
 }
 
-export function UnitHeaderCell({ unidade, gridRow }: UnitHeaderCellProps) {
+export function UnitHeaderCell({ unidade, gridRow, isSelectionMode }: UnitHeaderCellProps) {
   return (
     <div
-      className="bg-surface-100 border-b border-r border-border flex items-center justify-center"
+      data-header-unidade={isSelectionMode ? unidade.id : undefined}
+      className={cn(
+        "bg-surface-100 border-b border-r border-border flex items-center justify-center",
+        isSelectionMode && "cursor-cell hover:bg-surface-200"
+      )}
       style={{
         position: 'sticky',
         top: 40,
