@@ -34,7 +34,7 @@ export function AgrupamentoHeaders({ agrupamentos, expandedGroups, onToggle }: A
       {headerPositions.map(({ ag, isExpanded, span, startCol }) => (
         <div
           key={ag.id}
-          className="bg-surface-100 border-b border-r border-border flex items-center gap-1 px-2 cursor-pointer hover:bg-surface-200 select-none"
+          className="bg-surface-100 border-b border-r border-border cursor-pointer hover:bg-surface-200 select-none flex items-center gap-1 px-2 overflow-hidden"
           style={{
             position: 'sticky',
             top: 0,
@@ -47,7 +47,10 @@ export function AgrupamentoHeaders({ agrupamentos, expandedGroups, onToggle }: A
           <ChevronRight
             className={`w-3 h-3 shrink-0 transition-transform ${isExpanded ? 'rotate-90' : ''}`}
           />
-          <span className="text-xs font-medium text-foreground-light truncate">
+          <span
+            className="text-xs font-medium text-foreground-light truncate"
+            title={ag.nome}
+          >
             {ag.nome}
           </span>
         </div>
@@ -76,7 +79,7 @@ export function UnitHeaderCell({ unidade, gridRow }: UnitHeaderCellProps) {
         gridRow,
       }}
     >
-      <span className="text-[10px] text-foreground-lighter text-center leading-tight">
+      <span className="text-xs text-foreground-lighter text-center leading-tight">
         {unidade.nome}
       </span>
     </div>
@@ -92,13 +95,15 @@ export function CollapsedHeaderPlaceholder({ groupId, gridRow }: CollapsedHeader
   return (
     <div
       key={`collapsed-header-${groupId}`}
-      className="bg-surface-100 border-b border-r border-border"
+      className="bg-surface-100 border-b border-r border-border flex items-center justify-center"
       style={{
         position: 'sticky',
         top: 40,
         zIndex: 20,
         gridRow,
       }}
-    />
+    >
+      <span className="text-xs text-foreground-muted">···</span>
+    </div>
   )
 }

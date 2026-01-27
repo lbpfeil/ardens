@@ -189,6 +189,29 @@ Used for neutrals. Supabase uses `slate` (cool gray) extensively.
 
 *Note: Supabase uses a lot of `text-sm` for standard interface text and `text-xs` for labels/metadata.*
 
+### Tamanho Mínimo de Texto
+
+**O tamanho mínimo permitido é `text-xs` (12px).** Nunca usar `text-[10px]`, `text-[8px]` ou qualquer valor arbitrário abaixo de 12px.
+
+- Legibilidade em telas comuns (notebooks, monitores 1080p)
+- Consistência com a escala tipográfica do Tailwind
+- Acessibilidade (WCAG recomenda mínimo de 12px para texto de interface)
+
+**Se o texto parecer grande demais com `text-xs`, resolva com cor mais sutil (`text-foreground-muted`) ou peso mais leve (`font-normal`) — nunca reduzindo o tamanho.**
+
+### Papéis Semânticos do Texto
+
+| Papel | Classe | Cor | Quando Usar |
+|-------|--------|-----|-------------|
+| **Corpo** | `text-sm` (14px) | `text-foreground` | Texto principal, conteúdo legível |
+| **Corpo secundário** | `text-sm` | `text-foreground-light` | Descrições, texto de apoio |
+| **Label** | `text-xs` (12px) | `text-foreground-lighter` | Rótulos de campos, metadata, timestamps |
+| **Caption** | `text-xs` | `text-foreground-muted` | Contadores (ex: "3/5"), informação sutil |
+| **Ação auxiliar** | `text-xs` | `text-brand` | Links/botões secundários em menus ou toolbars |
+| **Badge inline** | `text-xs` + `font-medium` | variável | Contadores em badges (ex: "3/5" num botão) |
+| **Label de seção** | `text-xs` + `uppercase tracking-wider` | `text-foreground-muted` | Headers de seção em sidebars e menus |
+| **Label de grid denso** | `text-xs` | `text-foreground-lighter` | Headers em grids e matrizes compactas |
+
 ## 📏 Spacing Scale
 
 Supabase uses a consistent spacing scale based on a 4px base unit.

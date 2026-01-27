@@ -30,7 +30,7 @@ interface MatrizGridProps {
   verificacoesMap: Record<string, MatrizVerificacao>
   onToggleGroup: (groupId: string) => void
   obraId: string
-  totalDataColumns: number
+  gridTemplateColumns: string
 }
 
 export const MatrizGrid = memo(function MatrizGrid({
@@ -41,7 +41,7 @@ export const MatrizGrid = memo(function MatrizGrid({
   verificacoesMap,
   onToggleGroup,
   obraId,
-  totalDataColumns,
+  gridTemplateColumns,
 }: MatrizGridProps) {
   const router = useRouter()
 
@@ -77,8 +77,8 @@ export const MatrizGrid = memo(function MatrizGrid({
           onClick={handleClick}
           style={{
             display: 'grid',
-            gridTemplateColumns: `280px repeat(${totalDataColumns}, 40px)`,
-            gridTemplateRows: `40px 32px repeat(${servicos.length}, 56px)`,
+            gridTemplateColumns,
+            gridTemplateRows: `40px 32px repeat(${servicos.length}, 48px)`,
           }}
         >
           {/* 1. CORNER CELL — z-30, sticky top+left */}
@@ -155,7 +155,7 @@ export const MatrizGrid = memo(function MatrizGrid({
                     {servico.nome}
                   </span>
                   <div className="flex items-center gap-2 mt-0.5">
-                    <span className="text-[10px] text-foreground-lighter whitespace-nowrap">
+                    <span className="text-xs text-foreground-lighter whitespace-nowrap">
                       {verificadas}/{total}
                     </span>
                     <Progress value={pct} className="h-0.5 w-16" />
@@ -178,9 +178,11 @@ export const MatrizGrid = memo(function MatrizGrid({
                           data-cell=""
                           data-servico-id={servico.id}
                           data-unidade-id={unidade.id}
-                          className={`${colorClass} cursor-pointer hover:opacity-80 transition-opacity border-r border-b border-border/30`}
+                          className="cursor-pointer hover:opacity-80 transition-opacity border-r border-b border-border/30 flex items-center justify-center"
                           style={{ gridRow }}
-                        />
+                        >
+                          <div className={`w-7 h-7 rounded-md ${colorClass}`} />
+                        </div>
                       )
 
                       // Tooltip somente para células não-pendentes
