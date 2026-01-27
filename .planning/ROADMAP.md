@@ -125,6 +125,12 @@ Plans:
 
 **Requisitos:** INTEG-01, INTEG-02, INTEG-03, INTEG-04
 
+**Plans:** 2 plans
+
+Plans:
+- [ ] 11-01-PLAN.md — NC Feed: agrupamento na exibição, click-through para verificação individual, remoção de "Ver todas as NCs"
+- [ ] 11-02-PLAN.md — Navegação matriz ↔ individual: back button, preservação de estado, highlight animation, breadcrumb contextual
+
 **Criterios de Sucesso:**
 
 1. O item "Verificacoes" aparece na sidebar da obra e leva diretamente a pagina da matriz de verificacoes
