@@ -13,6 +13,7 @@ Trazer extrema rapidez e praticidade na verificação de serviços, tornando a q
 ## Current State
 
 **Shipped:** v1.1 Verificações no Portal Web (2026-01-27)
+**In progress:** v1.2 Feed de Verificações e Novo Modelo de Status
 **Codebase:** 16,807 lines TypeScript across ~121 files
 **Tech stack:** Next.js 16 + React 19 + Supabase + shadcn/ui + Recharts + date-fns
 
@@ -76,9 +77,18 @@ Trazer extrema rapidez e praticidade na verificação de serviços, tornando a q
 
 ### Active
 
-<!-- Next milestone — to be defined with /gsd:new-milestone -->
+<!-- v1.2 Feed de Verificações e Novo Modelo de Status -->
 
-(Nenhum — próximo milestone ainda não definido)
+- [ ] Matriz refatorada: seleção em massa como padrão (remove click → verificação individual)
+- [ ] Nova página de feed: serviços empilhados como mini-matrizes (itens × unidades) com método/tolerância
+- [ ] Seleção em massa no feed: mesma mecânica da matriz (célula, header serviço, header unidade, header item)
+- [ ] Toolbar inteligente: ações baseadas na intersecção de status dos itens selecionados
+- [ ] Modal de confirmação antes de aplicar status no feed
+- [ ] Novo modelo de status da verificação: Pendente / Verificado com Pendências / Finalizada
+- [ ] Status granulares (NC, Retrabalho, etc.) exclusivos do nível de item
+- [ ] Verificação individual refatorada: página de consulta/detalhe (fotos, histórico, observações)
+- [ ] Navegação: feed → matriz (seleção limpa), dashboard NC → verificação individual
+- [ ] Botão Exceção amarelo na toolbar de seleção
 
 ### Out of Scope
 
@@ -105,7 +115,8 @@ Trazer extrema rapidez e praticidade na verificação de serviços, tornando a q
 - Verificação = Serviço + Unidade
 - Verificação tem itens (um por item de verificação do serviço)
 - Cada item: Conforme / Não Conforme / Não Aplicável
-- Status da verificação: Pendente | Conforme | NC | Exceção | Conforme após Reinspeção | NC após Reinspeção
+- Status da verificação (v1.2): Pendente | Verificado com Pendências | Verificação Finalizada (calculado automaticamente dos itens)
+- Status do item: Pendente | Conforme | NC | Exceção | Retrabalho | Liberado com Concessão | Conforme após Reinspeção | NC após Retrabalho
 - Exceção = serviço não se aplica àquela unidade (ex: serviço de lotes em ruas)
 
 **Volumetria típica:**
@@ -150,6 +161,10 @@ Trazer extrema rapidez e praticidade na verificação de serviços, tornando a q
 | SECURITY DEFINER para bulk_verificar | Bypassa RLS, verifica permissões manualmente | Good |
 | sessionStorage para estado da matriz | Preserva scroll + expanded groups entre navegações | Good |
 | Event delegation com data attributes | Um onClick no container do grid para performance | Good |
+| Feed de verificações como fluxo principal | Matriz para visão macro + seleção, feed para ação nos itens | — Pending |
+| Status da verificação calculado (não setado) | Verificação é container, status deriva dos itens | — Pending |
+| Verificação individual como consulta/detalhe | Feed para ação, individual para análise (fotos, disputas) | — Pending |
+| Toolbar com intersecção de ações | Só mostra ações comuns a todos os itens selecionados | — Pending |
 
 ---
-*Last updated: 2026-01-28 after v1.1 milestone completion*
+*Last updated: 2026-01-28 after v1.2 milestone start*
