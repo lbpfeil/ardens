@@ -59,11 +59,12 @@ CREATE TYPE status_reinspecao AS ENUM (
 );
 
 -- Status geral de uma verificação (serviço em unidade)
+-- Calculado automaticamente pelo trigger atualizar_contadores_verificacao()
 CREATE TYPE status_verificacao AS ENUM (
-  'pendente',        -- Nenhum item verificado ainda
-  'em_andamento',    -- Alguns itens verificados
-  'concluida',       -- Todos itens verificados, sem NC aberta
-  'com_nc'           -- Tem pelo menos 1 NC aberta
+  'pendente',                      -- Nenhum item verificado ainda (ou apenas exceção)
+  'em_andamento',                  -- Alguns itens verificados, sem NC aberta
+  'verificacao_finalizada',        -- Todos itens finalizados (sem NC aberta)
+  'verificado_com_pendencias'      -- Tem pelo menos 1 NC aberta (domina outros estados)
 );
 
 -- Tipos de notificação no feed
@@ -889,13 +890,13 @@ BEGIN
 
     IF v_verificacao_id IS NOT NULL THEN
       -- Verificação existe
-      IF v_existing_status = 'concluida' THEN
-        -- Conforme travada: skip
+      IF v_existing_status = 'verificacao_finalizada' THEN
+        -- Verificação finalizada: skip (não permite alteração)
         v_count_skipped := v_count_skipped + 1;
         CONTINUE;
 
-      ELSIF v_existing_status = 'com_nc' THEN
-        -- Reinspeção
+      ELSIF v_existing_status = 'verificado_com_pendencias' THEN
+        -- Verificação com pendências: permitir reinspeção
         IF p_resultado = 'conforme' THEN
           UPDATE itens_verificacao
           SET status_reinspecao = 'conforme_apos_reinspecao',
@@ -1005,26 +1006,69 @@ CREATE TRIGGER tr_relatorios_agendados_updated_at BEFORE UPDATE ON relatorios_ag
 
 
 -- Função para atualizar contadores da verificação
+-- Calcula status automaticamente com prioridade: NC > Finalizado > Progresso > Pendente
+-- Exceção NÃO conta como progresso
 CREATE OR REPLACE FUNCTION atualizar_contadores_verificacao()
 RETURNS TRIGGER AS $$
+DECLARE
+  v_verificacao_id UUID;
+  v_total INT;
+  v_nc_abertas INT;
+  v_finalizados INT;
+  v_conformes INT;
+  v_verificados INT;
+  v_excecao INT;
+  v_tem_reinspecao BOOLEAN;
+  v_new_status status_verificacao;
 BEGIN
-  -- Recalcula contadores
-  UPDATE verificacoes v SET
-    total_itens = (SELECT COUNT(*) FROM itens_verificacao WHERE verificacao_id = v.id),
-    itens_verificados = (SELECT COUNT(*) FROM itens_verificacao WHERE verificacao_id = v.id AND status != 'nao_verificado'),
-    itens_conformes = (SELECT COUNT(*) FROM itens_verificacao WHERE verificacao_id = v.id AND status = 'conforme'),
-    itens_nc = (SELECT COUNT(*) FROM itens_verificacao WHERE verificacao_id = v.id AND status = 'nao_conforme' AND status_reinspecao IS NULL),
-    itens_excecao = (SELECT COUNT(*) FROM itens_verificacao WHERE verificacao_id = v.id AND status = 'excecao'),
-    tem_reinspecao = EXISTS(SELECT 1 FROM itens_verificacao WHERE verificacao_id = v.id AND status_reinspecao IS NOT NULL),
-    -- Atualiza status geral
-    status = CASE
-      WHEN (SELECT COUNT(*) FROM itens_verificacao WHERE verificacao_id = v.id AND status = 'nao_verificado') =
-           (SELECT COUNT(*) FROM itens_verificacao WHERE verificacao_id = v.id) THEN 'pendente'
-      WHEN (SELECT COUNT(*) FROM itens_verificacao WHERE verificacao_id = v.id AND status = 'nao_conforme' AND status_reinspecao IS NULL) > 0 THEN 'com_nc'
-      WHEN (SELECT COUNT(*) FROM itens_verificacao WHERE verificacao_id = v.id AND status = 'nao_verificado') > 0 THEN 'em_andamento'
-      ELSE 'concluida'
-    END
-  WHERE v.id = COALESCE(NEW.verificacao_id, OLD.verificacao_id);
+  -- Obter verificacao_id de NEW ou OLD (funciona para INSERT, UPDATE, DELETE)
+  v_verificacao_id := COALESCE(NEW.verificacao_id, OLD.verificacao_id);
+
+  -- Calcular todos os contadores em uma única query (performance otimizada)
+  SELECT
+    COUNT(*) AS total,
+    COUNT(*) FILTER (
+      WHERE (status = 'nao_conforme' AND status_reinspecao IS NULL)
+         OR status_reinspecao = 'reprovado_apos_retrabalho'
+    ) AS nc_abertas,
+    COUNT(*) FILTER (
+      WHERE status IN ('conforme', 'excecao')
+         OR status_reinspecao IN ('conforme_apos_reinspecao', 'retrabalho', 'aprovado_com_concessao')
+    ) AS finalizados,
+    COUNT(*) FILTER (WHERE status = 'conforme') AS conformes,
+    COUNT(*) FILTER (WHERE status != 'nao_verificado') AS verificados,
+    COUNT(*) FILTER (WHERE status = 'excecao') AS excecao,
+    bool_or(status_reinspecao IS NOT NULL) AS tem_reinspecao
+  INTO v_total, v_nc_abertas, v_finalizados, v_conformes, v_verificados, v_excecao, v_tem_reinspecao
+  FROM itens_verificacao
+  WHERE verificacao_id = v_verificacao_id;
+
+  -- Calcular status com prioridade estrita: NC > Finalizado > Progresso > Pendente
+  IF v_nc_abertas > 0 THEN
+    -- Prioridade 1: NC aberta domina tudo
+    v_new_status := 'verificado_com_pendencias';
+  ELSIF v_finalizados = v_total THEN
+    -- Prioridade 2: Todos os itens finalizados
+    v_new_status := 'verificacao_finalizada';
+  ELSIF v_conformes > 0 THEN
+    -- Prioridade 3: Tem progresso (Exceção NÃO conta como progresso)
+    v_new_status := 'em_andamento';
+  ELSE
+    -- Prioridade 4: Nenhum progresso (todos Não Verificado ou apenas Exceção)
+    v_new_status := 'pendente';
+  END IF;
+
+  -- Atualizar verificação com todos os contadores + status
+  UPDATE verificacoes SET
+    total_itens = v_total,
+    itens_verificados = v_verificados,
+    itens_conformes = v_conformes,
+    itens_nc = v_nc_abertas,
+    itens_excecao = v_excecao,
+    tem_reinspecao = v_tem_reinspecao,
+    status = v_new_status,
+    updated_at = NOW()
+  WHERE id = v_verificacao_id;
 
   RETURN COALESCE(NEW, OLD);
 END;

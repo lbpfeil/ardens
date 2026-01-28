@@ -440,7 +440,7 @@ CREATE POLICY "verificacoes_update" ON verificacoes
     )
     AND (
       (SELECT is_admin())
-      OR (inspetor_id = (SELECT auth.uid()) AND status != 'concluida')
+      OR (inspetor_id = (SELECT auth.uid()) AND status != 'verificacao_finalizada')
     )
   );
 
