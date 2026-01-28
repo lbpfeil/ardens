@@ -16,12 +16,14 @@ import {
   UnitHeaderCell,
   CollapsedHeaderPlaceholder,
 } from './matriz-header'
+import { toast } from 'sonner'
 import type {
   MatrizServico,
   MatrizUnidade,
   MatrizAgrupamento,
   MatrizVerificacao,
 } from '@/lib/supabase/queries/verificacoes'
+import { criarVerificacao } from '@/lib/supabase/actions/verificacoes'
 
 interface MatrizGridProps {
   servicos: MatrizServico[]
@@ -62,7 +64,7 @@ export const MatrizGrid = memo(function MatrizGrid({
 
   // Event delegation para cliques nas células (dual-mode: navegação ou seleção)
   const handleClick = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
+    async (e: React.MouseEvent<HTMLDivElement>) => {
       // No modo de seleção, checar headers de serviço e unidade primeiro
       if (isSelectionMode) {
         const headerRow = (e.target as HTMLElement).closest('[data-header-servico]') as HTMLElement | null
@@ -107,7 +109,17 @@ export const MatrizGrid = memo(function MatrizGrid({
         if (verificacao) {
           router.push(`/app/obras/${obraId}/verificacoes/${verificacao.id}?${params.toString()}`)
         } else {
-          router.push(`/app/obras/${obraId}/verificacoes/nova?servico=${servicoId}&unidade=${unidadeId}`)
+          // Criar verificação on the fly para célula pendente
+          const result = await criarVerificacao({
+            obra_id: obraId,
+            unidade_id: unidadeId,
+            servico_id: servicoId,
+          })
+          if ('error' in result) {
+            toast.error(result.error)
+            return
+          }
+          router.push(`/app/obras/${obraId}/verificacoes/${result.data.id}?${params.toString()}`)
         }
       }
     },

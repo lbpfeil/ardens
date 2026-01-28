@@ -26,27 +26,22 @@ export default async function VerificacaoIndividualPage({ params }: PageProps) {
     )
   }
 
-  // Fetch context (service name, unit name, obra name)
-  const { data: context } = await supabase
-    .from('verificacoes')
-    .select('servicos(nome, codigo), unidades(nome), obras(nome)')
-    .eq('id', verificacaoId)
-    .single()
-
-  // Extract single objects from arrays (Supabase many-to-one relationships)
-  const servico = (context?.servicos as any)?.[0]
-  const unidade = (context?.unidades as any)?.[0]
-  const obra = (context?.obras as any)?.[0]
+  // Fetch context names using FK IDs from the verification
+  const [servicoRes, unidadeRes, obraRes] = await Promise.all([
+    supabase.from('servicos').select('nome, codigo').eq('id', verificacao.servico_id).single(),
+    supabase.from('unidades').select('nome').eq('id', verificacao.unidade_id).single(),
+    supabase.from('obras').select('nome').eq('id', verificacao.obra_id).single(),
+  ])
 
   return (
     <div className="p-6 bg-background min-h-full">
       <div className="max-w-4xl mx-auto">
         <VerificacaoIndividualClient
           verificacao={verificacao}
-          servicoNome={servico?.nome}
-          servicoCodigo={servico?.codigo}
-          unidadeNome={unidade?.nome}
-          obraNome={obra?.nome}
+          servicoNome={servicoRes.data?.nome}
+          servicoCodigo={servicoRes.data?.codigo}
+          unidadeNome={unidadeRes.data?.nome}
+          obraNome={obraRes.data?.nome}
           obraId={obraId}
         />
       </div>
