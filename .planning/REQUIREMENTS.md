@@ -75,38 +75,38 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| MAT-01 | — | Pending |
-| MAT-02 | — | Pending |
-| MAT-03 | — | Pending |
-| MAT-04 | — | Pending |
-| MAT-05 | — | Pending |
-| FEED-01 | — | Pending |
-| FEED-02 | — | Pending |
-| FEED-03 | — | Pending |
-| FEED-04 | — | Pending |
-| FEED-05 | — | Pending |
-| FEED-06 | — | Pending |
-| FEED-07 | — | Pending |
-| FEED-08 | — | Pending |
-| FEED-09 | — | Pending |
-| TOOL-01 | — | Pending |
-| TOOL-02 | — | Pending |
-| TOOL-03 | — | Pending |
-| TOOL-04 | — | Pending |
-| STAT-01 | — | Pending |
-| STAT-02 | — | Pending |
-| STAT-03 | — | Pending |
-| STAT-04 | — | Pending |
-| DET-01 | — | Pending |
-| DET-02 | — | Pending |
-| DET-03 | — | Pending |
-| DET-04 | — | Pending |
+| STAT-01 | Phase 12 | Pending |
+| STAT-02 | Phase 12 | Pending |
+| STAT-03 | Phase 12 | Pending |
+| STAT-04 | Phase 12 | Pending |
+| MAT-01 | Phase 13 | Pending |
+| MAT-02 | Phase 13 | Pending |
+| MAT-03 | Phase 13 | Pending |
+| MAT-04 | Phase 13 | Pending |
+| MAT-05 | Phase 13 | Pending |
+| FEED-01 | Phase 14 | Pending |
+| FEED-02 | Phase 14 | Pending |
+| FEED-03 | Phase 14 | Pending |
+| FEED-04 | Phase 14 | Pending |
+| FEED-05 | Phase 14 | Pending |
+| FEED-06 | Phase 14 | Pending |
+| FEED-07 | Phase 14 | Pending |
+| FEED-08 | Phase 14 | Pending |
+| FEED-09 | Phase 14 | Pending |
+| TOOL-01 | Phase 14 | Pending |
+| TOOL-02 | Phase 14 | Pending |
+| TOOL-03 | Phase 14 | Pending |
+| TOOL-04 | Phase 14 | Pending |
+| DET-01 | Phase 15 | Pending |
+| DET-02 | Phase 15 | Pending |
+| DET-03 | Phase 15 | Pending |
+| DET-04 | Phase 15 | Pending |
 
 **Coverage:**
 - v1.2 requirements: 22 total
-- Mapped to phases: 0
-- Unmapped: 22 ⚠️
+- Mapped to phases: 22
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-01-28*
-*Last updated: 2026-01-28 after initial definition*
+*Last updated: 2026-01-28 after roadmap creation*
