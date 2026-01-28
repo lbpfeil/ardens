@@ -2,33 +2,39 @@
 
 ## What This Is
 
-Plataforma SaaS para gestão de qualidade na construção civil, focada em verificações de serviços (FVS) para certificação PBQP-H. O portal web permite que engenheiros gerenciem obras, agrupamentos, unidades, biblioteca de serviços FVS com revisões e tags, executem verificações de serviços via matriz interativa, e acompanhem KPIs de qualidade via dashboard com gráficos.
+Plataforma SaaS para gestão de qualidade na construção civil, focada em verificações de serviços (FVS) para certificação PBQP-H. O portal web permite que engenheiros gerenciem obras, agrupamentos, unidades, biblioteca de serviços FVS com revisões e tags, executem verificações de serviços via matriz interativa com operações em massa, e acompanhem KPIs de qualidade via dashboard com gráficos alimentados por dados reais.
 
-**Usuario:** Engenheiro Civil com expertise em gestao de qualidade e obras, sem conhecimento tecnico em programacao. Precisa de apoio detalhado em cada etapa de desenvolvimento.
+**Usuário:** Engenheiro Civil com expertise em gestão de qualidade e obras, sem conhecimento técnico em programação. Precisa de apoio detalhado em cada etapa de desenvolvimento.
 
 ## Core Value
 
-Trazer extrema rapidez e praticidade na verificacao de servicos, tornando a qualidade uma aliada (nao um entrave) do andamento da obra.
+Trazer extrema rapidez e praticidade na verificação de serviços, tornando a qualidade uma aliada (não um entrave) do andamento da obra.
 
 ## Current State
 
-**Shipped:** v1.0 MVP (2026-01-24)
-**Codebase:** 13,355 lines TypeScript across ~100 files
+**Shipped:** v1.1 Verificações no Portal Web (2026-01-27)
+**Codebase:** 16,807 lines TypeScript across ~121 files
 **Tech stack:** Next.js 16 + React 19 + Supabase + shadcn/ui + Recharts + date-fns
 
 **What's working:**
-- Portal web completo com gestao de obras, agrupamentos, unidades
-- Biblioteca FVS com servicos, itens de verificacao, tags coloridas
-- Sistema de revisoes com historico e rastreabilidade por obra
-- Modo rascunho (editar sem gerar revisao antes da primeira ativacao)
-- Dashboard do engenheiro com KPIs, feed de NCs e grafico temporal
-- Navegacao contextual (sidebar global + sidebar de obra)
-- Drag-and-drop para reordenacao e movimentacao de itens
+- Portal web completo com gestão de obras, agrupamentos, unidades
+- Biblioteca FVS com serviços, itens de verificação, tags coloridas
+- Sistema de revisões com histórico e rastreabilidade por obra
+- Modo rascunho (editar sem gerar revisão antes da primeira ativação)
+- Matriz interativa de verificações serviço × unidade com heatmap de 6 estados
+- Verificação individual com checklist de itens (C/NC/NA), exceção e reinspeção
+- Operações em massa com seleção por célula/linha/coluna e resolução de conflitos
+- Dashboard do engenheiro com KPIs reais, feed de NCs clicável e gráfico temporal
+- Navegação contextual (sidebar global + sidebar de obra)
+- Navegação bidirecional matriz ↔ verificação individual com preservação de estado
+- Drag-and-drop para reordenação e movimentação de itens
 
 **Known tech debt:**
 - DEV_CLIENTE_ID hardcoded (precisa auth integration)
 - Nome da construtora hardcoded no breadcrumb
 - isOnline=true hardcoded no status indicator
+- atualizarStatusVerificacao exported but unused (status via triggers)
+- Upload de fotos diferido para v1.2
 
 ## Requirements
 
@@ -37,117 +43,113 @@ Trazer extrema rapidez e praticidade na verificacao de servicos, tornando a qual
 <!-- Shipped and confirmed working -->
 
 - [x] Setup Next.js 16 + React 19 + Tailwind CSS 4 — existing
-- [x] Integracao Supabase (client/server/middleware) — existing
-- [x] Autenticacao email/senha com Supabase Auth — existing
+- [x] Integração Supabase (client/server/middleware) — existing
+- [x] Autenticação email/senha com Supabase Auth — existing
 - [x] Rotas protegidas com middleware — existing
 - [x] Landing page com CTAs — existing
 - [x] Layout do app (sidebar + topbar) — existing
 - [x] Schema do banco de dados completo — existing
 - [x] Design system com shadcn/ui (13 componentes) — existing
-- [x] Gestao de Obras (CRUD completo) — v1.0
-- [x] Gestao de Agrupamentos (criar, editar, excluir, lote, reordenar) — v1.0
-- [x] Gestao de Unidades (criar, editar, excluir, lote) — v1.0
-- [x] Biblioteca FVS global (servicos e itens de verificacao) — v1.0
-- [x] Ativar servicos por obra (obra_servicos) — v1.0
-- [x] Sistema de revisoes FVS com historico — v1.0
-- [x] Tags para itens de verificacao — v1.0
-- [x] Revisao condicional (modo rascunho) — v1.0
+- [x] Gestão de Obras (CRUD completo) — v1.0
+- [x] Gestão de Agrupamentos (criar, editar, excluir, lote, reordenar) — v1.0
+- [x] Gestão de Unidades (criar, editar, excluir, lote) — v1.0
+- [x] Biblioteca FVS global (serviços e itens de verificação) — v1.0
+- [x] Ativar serviços por obra (obra_servicos) — v1.0
+- [x] Sistema de revisões FVS com histórico — v1.0
+- [x] Tags para itens de verificação — v1.0
+- [x] Revisão condicional (modo rascunho) — v1.0
 - [x] Home do Engenheiro com KPIs e feed de NCs — v1.0
-- [x] Grafico de evolucao temporal de conformidade — v1.0
-- [x] Navegacao contextual (sidebar global + obra) — v1.0
+- [x] Gráfico de evolução temporal de conformidade — v1.0
+- [x] Navegação contextual (sidebar global + obra) — v1.0
 - [x] Zustand para state management — v1.0
-- [x] React Hook Form + Zod para validacao de formularios — v1.0
+- [x] React Hook Form + Zod para validação de formulários — v1.0
+- [x] Server Actions para CRUD de verificações e itens — v1.1
+- [x] RPC PostgreSQL para verificação em massa (bulk insert atômico) — v1.1
+- [x] Queries otimizadas para alimentar a matriz — v1.1
+- [x] Matriz interativa serviço × unidade com heatmap de 6 estados — v1.1
+- [x] Verificação individual com itens C/NC/NA, exceção e reinspeção — v1.1
+- [x] Seleção estilo planilha: célula, header de coluna, header de linha — v1.1
+- [x] Verificação em massa via modal com resolução de conflitos — v1.1
+- [x] Ciclo de vida: Pendente → Conforme | NC | Exceção → Reinspeção — v1.1
+- [x] Dashboard com KPIs reais e feed de NCs clicável — v1.1
+- [x] Navegação bidirecional matriz ↔ verificação individual — v1.1
 
 ### Active
 
-<!-- v1.1 — Verificações no Portal Web -->
+<!-- Next milestone — to be defined with /gsd:new-milestone -->
 
-- [ ] Página de verificações na sidebar da obra (matriz serviço × unidade)
-- [ ] Matriz interativa com colunas agrupadas por agrupamento (colapsável)
-- [ ] Seleção estilo planilha: célula individual, header de coluna, header de linha
-- [ ] Verificação em massa via modal (Conforme / NC / Exceção + descrição por lote)
-- [ ] Verificação individual via página dedicada (itens C/NC/NA + fotos por item + descrição)
-- [ ] Resultado automático: qualquer item NC → verificação NC
-- [ ] Marcação automática de todos os itens na verificação em massa
-- [ ] Ciclo de vida: Pendente → Conforme | NC | Exceção → Reinspeção
-- [ ] Conflitos inteligentes na massa: pula Conformes, NCs viram "após Reinspeção"
-- [ ] Upload de fotos vinculadas a itens de verificação (Supabase Storage)
+(Nenhum — próximo milestone ainda não definido)
 
 ### Out of Scope
 
 <!-- Explicit boundaries -->
 
-- App Mobile (Expo) — Mes 2
-- ~~Verificações no portal web~~ — **Movido para Active (v1.1)**
-- Sync offline — Mes 2
-- Relatorios PDF — Mes 3
-- Condicoes de Inicio (CI) — Fase 2
-- Dashboard Telao — Fase 3
-- Integracoes ERPs — Fase 3
+- App Mobile (Expo) — Mês 2
+- Sync offline — Mês 2
+- Relatórios PDF — Mês 3
+- Condições de Início (CI) — Fase 2
+- Dashboard Telão — Fase 3
+- Integrações ERPs — Fase 3
 - iOS — Fase 2
 - 2FA/SSO — Fase 2
+- Edição inline na célula da matriz — Anti-feature: célula é indicador de status
 
 ## Context
 
-**Publico-alvo:** Construtoras pequenas/medias (4-1000 unidades) com certificacao PBQP-H.
+**Público-alvo:** Construtoras pequenas/médias (4-1000 unidades) com certificação PBQP-H.
 
-**Modelo de dominio:**
-- Obra > Agrupamento > Unidade (hierarquia de 2 niveis)
-- Biblioteca FVS por construtora (nao compartilhada)
-- Servico tem itens de verificacao (observacao, metodo, tolerancia)
+**Modelo de domínio:**
+- Obra > Agrupamento > Unidade (hierarquia de 2 níveis)
+- Biblioteca FVS por construtora (não compartilhada)
+- Serviço tem itens de verificação (observação, método, tolerância)
 - Verificação = Serviço + Unidade
 - Verificação tem itens (um por item de verificação do serviço)
 - Cada item: Conforme / Não Conforme / Não Aplicável
 - Status da verificação: Pendente | Conforme | NC | Exceção | Conforme após Reinspeção | NC após Reinspeção
 - Exceção = serviço não se aplica àquela unidade (ex: serviço de lotes em ruas)
 
-**Volumetria tipica:**
-- Obra: 15-25 servicos ativos
-- Construtora pequena: ~40 servicos total
-- Construtora grande: ~100 servicos total
+**Volumetria típica:**
+- Obra: 15-25 serviços ativos
+- Construtora pequena: ~40 serviços total
+- Construtora grande: ~100 serviços total
 
-**Documentacao existente:**
+**Documentação existente:**
 - `docs/product/` — PRD completo (10 documentos)
 - `docs/design/` — Design system
 - `database/schema.sql` — Schema PostgreSQL completo
-- `.planning/codebase/` — Mapeamento do codigo atual
-- `.planning/milestones/` — Historico de milestones
+- `.planning/codebase/` — Mapeamento do código atual
+- `.planning/milestones/` — Histórico de milestones
 
 ## Constraints
 
-- **Tech stack**: Next.js 16 + React 19 + Supabase + shadcn/ui — ja definido
+- **Tech stack**: Next.js 16 + React 19 + Supabase + shadcn/ui — já definido
 - **UI**: Usar APENAS componentes existentes em `arden/components/ui/` — consultar `docs/design/README.md`
-- **Variaveis CSS**: Usar tokens do `globals.css` — nunca valores hardcoded
-- **Multi-tenancy**: RLS via `cliente_id` — ja configurado no schema
-- **Commits**: Em portugues, formato `tipo: descricao`
+- **Variáveis CSS**: Usar tokens do `globals.css` — nunca valores hardcoded
+- **Multi-tenancy**: RLS via `cliente_id` — já configurado no schema
+- **Commits**: Em português, formato `tipo: descrição`
 
 ## Key Decisions
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| Hierarquia 2 niveis (Obra > Agrupamento > Unidade) | Simplicidade e flexibilidade para 99% dos casos | Good |
-| Biblioteca FVS por construtora | Cada construtora tem seus padroes proprios | Good |
+| Hierarquia 2 níveis (Obra > Agrupamento > Unidade) | Simplicidade e flexibilidade para 99% dos casos | Good |
+| Biblioteca FVS por construtora | Cada construtora tem seus padrões próprios | Good |
 | Supabase como backend | Elimina necessidade de API layer, RLS nativo | Good |
 | Schema SQL definido antes do frontend | Garante modelo de dados consistente | Good |
-| Server Component + Client Wrapper pattern | Separacao de data fetching e interatividade | Good |
+| Server Component + Client Wrapper pattern | Separação de data fetching e interatividade | Good |
 | createStore from zustand/vanilla | App Router per-request isolation | Good |
 | Zod v3.x (not v4) | RHF compatibility | Good |
 | Revision stored as VARCHAR(5) zero-padded | Sortability across revisions | Good |
-| primeira_ativacao_em NULL = draft mode | Edits before first activation dont create revisions | Good |
+| primeira_ativacao_em NULL = draft mode | Edits before first activation don't create revisions | Good |
 | DashboardKPIs with current/previous | Trend calculation pattern | Good |
 | date-fns with ptBR locale | Relative dates in Portuguese | Good |
 | Recharts for charts | Lightweight, React-native integration | Good |
-
-## Current Milestone: v1.1 Verificações no Portal Web
-
-**Goal:** Permitir que engenheiros executem verificações de serviços FVS diretamente pelo portal web, com matriz interativa serviço × unidade, verificação em massa e individual com fotos.
-
-**Target features:**
-- Matriz de verificações (serviço × unidade) com seleção estilo planilha
-- Verificação em massa (Conforme/NC/Exceção) via modal com descrição
-- Verificação individual com itens C/NC/NA, fotos por item, descrição geral
-- Ciclo de vida completo: Pendente → Conforme/NC/Exceção → Reinspeção
-- Upload de fotos vinculadas a itens de verificação
+| CSS Grid customizado para matriz | Controle total, economia de ~200KB vs AG Grid | Good |
+| ActionResult<T> com { data } ou { error } | Nunca throw em Server Actions | Good |
+| initPlan pattern em RLS policies | Caching per-statement para performance | Good |
+| SECURITY DEFINER para bulk_verificar | Bypassa RLS, verifica permissões manualmente | Good |
+| sessionStorage para estado da matriz | Preserva scroll + expanded groups entre navegações | Good |
+| Event delegation com data attributes | Um onClick no container do grid para performance | Good |
 
 ---
-*Last updated: 2026-01-26 after v1.1 milestone start*
+*Last updated: 2026-01-28 after v1.1 milestone completion*
