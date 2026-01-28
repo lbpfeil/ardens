@@ -128,8 +128,8 @@ Plans:
 **Plans:** 2 plans
 
 Plans:
-- [ ] 11-01-PLAN.md — NC Feed: agrupamento na exibição, click-through para verificação individual, remoção de "Ver todas as NCs"
-- [ ] 11-02-PLAN.md — Navegação matriz ↔ individual: back button, preservação de estado, highlight animation, breadcrumb contextual
+- [x] 11-01-PLAN.md — NC Feed: agrupamento na exibição, click-through para verificação individual, remoção de "Ver todas as NCs"
+- [x] 11-02-PLAN.md — Navegação matriz ↔ individual: back button, preservação de estado, highlight animation, breadcrumb contextual
 
 **Criterios de Sucesso:**
 
@@ -148,7 +148,7 @@ Plans:
 | 8 | Verificacao Individual | VERIF-01, VERIF-02, VERIF-03, VERIF-04, VERIF-05, VERIF-06 | Completo ✓ |
 | 9 | Matriz de Verificacoes | MATRZ-01, MATRZ-02, MATRZ-03, MATRZ-04, MATRZ-05 | Completo ✓ |
 | 10 | Selecao e Operacoes em Massa | BULK-01 a BULK-09 | Completo ✓ |
-| 11 | Navegacao e Integracao | INTEG-01, INTEG-02, INTEG-03, INTEG-04 | Pendente |
+| 11 | Navegacao e Integracao | INTEG-01, INTEG-02, INTEG-03, INTEG-04 | Completo ✓ |
 
 **Cobertura:** 28/28 requisitos v1.1 mapeados
 

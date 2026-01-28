@@ -43,10 +43,10 @@
 
 ### Integracao e Navegacao
 
-- [ ] **INTEG-01**: Item "Verificacoes" na sidebar da obra com link para a matriz
-- [ ] **INTEG-02**: Dashboard do engenheiro com KPIs alimentados por dados reais de verificacoes
-- [ ] **INTEG-03**: Feed de atividades com verificacoes realizadas (substituir dados mock)
-- [ ] **INTEG-04**: Navegacao da matriz para pagina individual (clique na celula) e volta
+- [x] **INTEG-01**: Item "Verificacoes" na sidebar da obra com link para a matriz
+- [x] **INTEG-02**: Dashboard do engenheiro com KPIs alimentados por dados reais de verificacoes
+- [x] **INTEG-03**: Feed de atividades com verificacoes realizadas (substituir dados mock)
+- [x] **INTEG-04**: Navegacao da matriz para pagina individual (clique na celula) e volta
 
 ## v1.2 Requirements
 
@@ -108,10 +108,10 @@
 | VERIF-04 | Phase 8 | Complete |
 | VERIF-05 | Phase 8 | Complete |
 | VERIF-06 | Phase 8 | Complete |
-| INTEG-01 | Phase 11 | Pending |
-| INTEG-02 | Phase 11 | Pending |
-| INTEG-03 | Phase 11 | Pending |
-| INTEG-04 | Phase 11 | Pending |
+| INTEG-01 | Phase 11 | Complete |
+| INTEG-02 | Phase 11 | Complete |
+| INTEG-03 | Phase 11 | Complete |
+| INTEG-04 | Phase 11 | Complete |
 
 **Coverage:**
 - v1.1 requirements: 28 total
@@ -120,4 +120,4 @@
 
 ---
 *Requirements defined: 2026-01-26*
-*Last updated: 2026-01-27 after Phase 10 completion*
+*Last updated: 2026-01-27 after Phase 11 completion — v1.1 COMPLETE*
