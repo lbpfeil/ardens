@@ -12,7 +12,7 @@ Este milestone refatora o fluxo de verificação: a matriz se torna ferramenta d
 
 ## Phases
 
-- [ ] **Phase 12: Modelo de Status** -- Migration de banco e lógica de cálculo para o novo modelo de 3 estados
+- [ ] **Phase 12: Modelo de Status** -- Migration de banco e lógica de cálculo para o novo modelo de 4 estados
 - [ ] **Phase 13: Refatoração da Matriz** -- Matriz como ferramenta de seleção com heatmap de 3 estados
 - [ ] **Phase 14: Feed de Verificações e Toolbar** -- Nova página de feed com mini-matrizes e toolbar inteligente
 - [ ] **Phase 15: Consulta de Verificação** -- Página de detalhe read-only com histórico de transições
@@ -29,11 +29,11 @@ Este milestone refatora o fluxo de verificação: a matriz se torna ferramenta d
   2. Itens de verificação possuem os status granulares (Conforme, NC, Exceção, Retrabalho, etc.) e a verificação-pai calcula seu status a partir deles
   3. As transições de status de item obedecem ao fluxograma: Pendente pode ir para C/NC/Exceção; NC pode ter 4 outcomes; NC após Retrabalho pode ter 2 outcomes
   4. Dashboard e matriz existentes continuam funcionando com o novo modelo (sem regressão)
-**Plans:** TBD
+**Plans:** 2 plans
 
 Plans:
-- [ ] 12-01: [TBD]
-- [ ] 12-02: [TBD]
+- [ ] 12-01-PLAN.md — Migration de ENUM, trigger, bulk_verificar e recálculo de dados
+- [ ] 12-02-PLAN.md — Atualização de tipos e lógica TypeScript para novos ENUMs
 
 ---
 
@@ -101,7 +101,7 @@ Plans:
 
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
-| 12. Modelo de Status | v1.2 | 0/TBD | Not started | - |
+| 12. Modelo de Status | v1.2 | 0/2 | Planned | - |
 | 13. Refatoração da Matriz | v1.2 | 0/TBD | Not started | - |
 | 14. Feed e Toolbar | v1.2 | 0/TBD | Not started | - |
 | 15. Consulta de Verificação | v1.2 | 0/TBD | Not started | - |
