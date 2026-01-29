@@ -34,10 +34,10 @@
 
 ### Modelo de Status
 
-- [ ] **STAT-01**: Status da verificação calculado automaticamente: Pendente / Verificado com Pendências / Verificação Finalizada
-- [ ] **STAT-02**: Status granulares migrados exclusivamente para nível de item
-- [ ] **STAT-03**: Fluxograma de transições: Pendente → C/NC/Exceção; NC → 4 outcomes; NC após Retrabalho → 2 outcomes
-- [ ] **STAT-04**: Migration de banco para refletir novo modelo de status
+- [x] **STAT-01**: Status da verificação calculado automaticamente: Pendente / Verificado com Pendências / Verificação Finalizada
+- [x] **STAT-02**: Status granulares migrados exclusivamente para nível de item
+- [x] **STAT-03**: Fluxograma de transições: Pendente → C/NC/Exceção; NC → 4 outcomes; NC após Retrabalho → 2 outcomes
+- [x] **STAT-04**: Migration de banco para refletir novo modelo de status
 
 ### Verificação Individual — Consulta
 
@@ -75,10 +75,10 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| STAT-01 | Phase 12 | Pending |
-| STAT-02 | Phase 12 | Pending |
-| STAT-03 | Phase 12 | Pending |
-| STAT-04 | Phase 12 | Pending |
+| STAT-01 | Phase 12 | Complete |
+| STAT-02 | Phase 12 | Complete |
+| STAT-03 | Phase 12 | Complete |
+| STAT-04 | Phase 12 | Complete |
 | MAT-01 | Phase 13 | Pending |
 | MAT-02 | Phase 13 | Pending |
 | MAT-03 | Phase 13 | Pending |

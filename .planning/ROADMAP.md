@@ -12,7 +12,7 @@ Este milestone refatora o fluxo de verificação: a matriz se torna ferramenta d
 
 ## Phases
 
-- [ ] **Phase 12: Modelo de Status** -- Migration de banco e lógica de cálculo para o novo modelo de 4 estados
+- [x] **Phase 12: Modelo de Status** -- Migration de banco e lógica de cálculo para o novo modelo de 4 estados
 - [ ] **Phase 13: Refatoração da Matriz** -- Matriz como ferramenta de seleção com heatmap de 3 estados
 - [ ] **Phase 14: Feed de Verificações e Toolbar** -- Nova página de feed com mini-matrizes e toolbar inteligente
 - [ ] **Phase 15: Consulta de Verificação** -- Página de detalhe read-only com histórico de transições
@@ -32,8 +32,8 @@ Este milestone refatora o fluxo de verificação: a matriz se torna ferramenta d
 **Plans:** 2 plans
 
 Plans:
-- [ ] 12-01-PLAN.md — Migration de ENUM, trigger, bulk_verificar e recálculo de dados
-- [ ] 12-02-PLAN.md — Atualização de tipos e lógica TypeScript para novos ENUMs
+- [x] 12-01-PLAN.md — Migration de ENUM, trigger, bulk_verificar e recálculo de dados
+- [x] 12-02-PLAN.md — Atualização de tipos e lógica TypeScript para novos ENUMs
 
 ---
 
@@ -101,11 +101,11 @@ Plans:
 
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
-| 12. Modelo de Status | v1.2 | 0/2 | Planned | - |
+| 12. Modelo de Status | v1.2 | 2/2 | ✓ Verified | 2026-01-28 |
 | 13. Refatoração da Matriz | v1.2 | 0/TBD | Not started | - |
 | 14. Feed e Toolbar | v1.2 | 0/TBD | Not started | - |
 | 15. Consulta de Verificação | v1.2 | 0/TBD | Not started | - |
 
 ---
 *Roadmap created: 2026-01-28*
-*Last updated: 2026-01-28*
+*Last updated: 2026-01-28 (Phase 12 complete)*
