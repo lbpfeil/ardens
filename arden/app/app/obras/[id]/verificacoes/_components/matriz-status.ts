@@ -44,13 +44,13 @@ export function deriveMatrizCellStatus(
 
   if (status === 'pendente') return 'pendente'
 
-  if (status === 'concluida') {
+  if (status === 'verificacao_finalizada') {
     if (itens_excecao === total_itens) return 'excecao'
     if (tem_reinspecao) return 'conforme_reinspecao'
     return 'conforme'
   }
 
-  if (status === 'com_nc') {
+  if (status === 'verificado_com_pendencias') {
     if (tem_reinspecao) return 'nc_reinspecao'
     return 'nao_conforme'
   }

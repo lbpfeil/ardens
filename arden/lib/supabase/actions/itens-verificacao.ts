@@ -44,7 +44,7 @@ function isVerificacaoTravada(verificacao: {
   total_itens: number
 }): boolean {
   return (
-    verificacao.status === 'concluida' &&
+    verificacao.status === 'verificacao_finalizada' &&
     verificacao.total_itens > 0 &&
     verificacao.itens_conformes === verificacao.total_itens
   )

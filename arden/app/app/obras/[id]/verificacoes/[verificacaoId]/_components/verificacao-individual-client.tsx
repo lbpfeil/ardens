@@ -48,7 +48,7 @@ export function VerificacaoIndividualClient({
 
   // Compute locked state (Conforme concluída = travada)
   const isLocked =
-    verificacao.status === 'concluida' &&
+    verificacao.status === 'verificacao_finalizada' &&
     verificacao.total_itens > 0 &&
     verificacao.itens_conformes === verificacao.total_itens
 
