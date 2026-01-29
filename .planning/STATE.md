@@ -10,11 +10,11 @@ See: .planning/PROJECT.md (updated 2026-01-28)
 ## Current Position
 
 Phase: 12 of 15 (Modelo de Status)
-Plan: 01 complete, executing 02
-Status: Executing phase 12
-Last activity: 2026-01-28 -- Plan 12-01 complete (ENUM, trigger, bulk_verificar, dados migrados)
+Plan: 02 of 02 complete
+Status: Phase 12 complete
+Last activity: 2026-01-28 -- Completed 12-02-PLAN.md (TypeScript atualizado para novos ENUMs)
 
-Progress: v1.0 [##########] | v1.1 [##########] | v1.2 [#.........] 10%
+Progress: v1.0 [##########] | v1.1 [##########] | v1.2 [##........] 20%
 
 ## Performance Metrics
 
@@ -31,8 +31,8 @@ Progress: v1.0 [##########] | v1.1 [##########] | v1.2 [#.........] 10%
 - Timeline: 2 days (2026-01-26 to 2026-01-27)
 
 **v1.2 (in progress):**
-- Plans completed: 1
-- Phase 12: 1/2 plans complete
+- Plans completed: 2
+- Phase 12: 2/2 plans complete (PHASE COMPLETE)
 
 ## Accumulated Context
 
@@ -49,6 +49,8 @@ v1.2 decisions implemented:
 - Exceção NÃO conta como progresso — verificação com apenas Exceção + Não Verificado permanece Pendente
 - NC aberta = nao_conforme sem reinspeção OU reprovado_apos_retrabalho
 - Recálculo de status via trigger (nunca setado manualmente) — single source of truth
+- ENUM status_verificacao renomeado: concluida → verificacao_finalizada, com_nc → verificado_com_pendencias (12-01)
+- TypeScript sincronizado com banco: tipos, Zod schemas, lógica de status (12-02)
 
 ### Pending Todos
 
@@ -63,7 +65,7 @@ None.
 ## Session Continuity
 
 Last session: 2026-01-28
-Stopped at: Plan 12-01 complete, executing Wave 2 (plan 12-02)
+Stopped at: Phase 12 complete (Modelo de Status) — pronto para Fase 13
 Resume file: None
 
 ## Completed Milestones
