@@ -43,11 +43,11 @@ export type AtualizarResultadoInput = z.infer<typeof atualizarResultadoSchema>
 
 /**
  * Schema para alterar o status de uma verificação.
- * Status: pendente, em_andamento, concluida, com_nc.
+ * Status: pendente, em_andamento, verificado_com_pendencias, verificacao_finalizada.
  */
 export const atualizarStatusSchema = z.object({
   verificacao_id: uuidString(),
-  status: z.enum(['pendente', 'em_andamento', 'concluida', 'com_nc'], {
+  status: z.enum(['pendente', 'em_andamento', 'verificado_com_pendencias', 'verificacao_finalizada'], {
     required_error: 'Status é obrigatório',
     invalid_type_error: 'Status inválido',
   }),

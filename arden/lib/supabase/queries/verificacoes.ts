@@ -29,7 +29,7 @@ export interface MatrizVerificacao {
   id: string
   unidade_id: string
   servico_id: string
-  status: 'pendente' | 'em_andamento' | 'concluida' | 'com_nc'
+  status: 'pendente' | 'em_andamento' | 'verificado_com_pendencias' | 'verificacao_finalizada'
   total_itens: number
   itens_verificados: number
   itens_conformes: number
