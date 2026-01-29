@@ -10,11 +10,11 @@ See: .planning/PROJECT.md (updated 2026-01-28)
 ## Current Position
 
 Phase: 12 of 15 (Modelo de Status)
-Plan: 0 -- Ready to plan
-Status: Ready for /gsd:plan-phase 12
-Last activity: 2026-01-28 -- Roadmap v1.2 criado com 4 fases (12-15), 22 requirements mapeados
+Plan: 01 complete, executing 02
+Status: Executing phase 12
+Last activity: 2026-01-28 -- Plan 12-01 complete (ENUM, trigger, bulk_verificar, dados migrados)
 
-Progress: v1.0 [##########] | v1.1 [##########] | v1.2 [..........] 0%
+Progress: v1.0 [##########] | v1.1 [##########] | v1.2 [#.........] 10%
 
 ## Performance Metrics
 
@@ -30,7 +30,9 @@ Progress: v1.0 [##########] | v1.1 [##########] | v1.2 [..........] 0%
 - Total execution time: ~50 min
 - Timeline: 2 days (2026-01-26 to 2026-01-27)
 
-**v1.2:** Not started
+**v1.2 (in progress):**
+- Plans completed: 1
+- Phase 12: 1/2 plans complete
 
 ## Accumulated Context
 
@@ -39,9 +41,14 @@ Progress: v1.0 [##########] | v1.1 [##########] | v1.2 [..........] 0%
 All v1.0 and v1.1 decisions documented in PROJECT.md Key Decisions table.
 Pending v1.2 decisions (awaiting implementation):
 - Feed de verificações como fluxo principal (matriz para seleção, feed para ação)
-- Status da verificação calculado automaticamente (não setado manualmente)
+- Status da verificação calculado automaticamente (não setado manualmente) ✓ IMPLEMENTED (12-01)
 - Verificação individual refatorada como consulta/detalhe
 - Toolbar com intersecção de ações (só mostra ações comuns a todos os selecionados)
+
+v1.2 decisions implemented:
+- Exceção NÃO conta como progresso — verificação com apenas Exceção + Não Verificado permanece Pendente
+- NC aberta = nao_conforme sem reinspeção OU reprovado_apos_retrabalho
+- Recálculo de status via trigger (nunca setado manualmente) — single source of truth
 
 ### Pending Todos
 
@@ -56,7 +63,7 @@ None.
 ## Session Continuity
 
 Last session: 2026-01-28
-Stopped at: Roadmap v1.2 criado, pronto para planejar Phase 12
+Stopped at: Plan 12-01 complete, executing Wave 2 (plan 12-02)
 Resume file: None
 
 ## Completed Milestones
